@@ -17,7 +17,8 @@ int HardwareSerial::available(void)			// Serial.available function
 }
 
 int main() {
-	bi_decl(bi_program_description("This is a Shift register binary number increment test script."));  //Binary info for picotool 
+							//Binary info for picotool
+	bi_decl(bi_program_description("This script loads instruction sets into shift registers for RTS Noise evaluation."));   
 	bi_decl(bi_1pin_with_name(LED_PIN, "On-board LED"));
 
 	uart_init(uart0, 115200);			// initialize the pico UART ports
@@ -47,6 +48,6 @@ int main() {
 //		gpio_put(SR2_PIN, sr2Data[byte]);	//load SR2 bit into data pin
 //		gpio_put(SRCLK_PIN, 0);	// clock pin low
 //	}
-	puts("transistor xx is on");  //send transistor number to CPU
-	gpio_put(LED_PIN, 0);			//
+	puts("transistor xx is on");  			//send transistor number to CPU
+	gpio_put(LED_PIN, 0);				//
 }
