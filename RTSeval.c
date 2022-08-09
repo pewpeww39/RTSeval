@@ -20,6 +20,14 @@ int main() {
 	bi_decl(bi_program_description("This is a Shift register binary number increment test script."));
 	bi_decl(bi_1pin_with_name(LED_PIN, "On-board LED"));
 
+	uart_init(uart0, 115200);
+	uart_init(uart1, 115200);
+
+	gpio_set_function(0, GPIO_FUNC_UART);
+	gpio_set_function(1, GPIO_FUNC_UART);
+
+	uart_puts(uart1, "Hello World");
+
 	stdio_init(LED_PIN);
 	gpio_set_dir(LED_PIN, GPIO_OUT);
 
@@ -30,12 +38,12 @@ int main() {
 		uint8_t sr1Data[8] = [1,1,1,1,1,1,1,1]
 		uint8_t sr2Data[8] = [1,1,1,1,1,1,1,1]
 
-		for(int byte=0; byte <8, byte++) {
-			gpio_put(SRCLK_PIN, 1);		//set clock pin high
-			gpio_put(SR1_PIN, sr1Data[byte]);	//load SR1 bit into data pin
-			gpio_put(SR2_PIN, sr2Data[byte]);	//load SR2 bit into data pin
-		gpio_put(SRCLK_PIN, 0);	// clock pin low
+//		for(int byte=0; byte <8, byte++) {
+//			gpio_put(SRCLK_PIN, 1);		//set clock pin high
+//			gpio_put(SR1_PIN, sr1Data[byte]);	//load SR1 bit into data pin
+//			gpio_put(SR2_PIN, sr2Data[byte]);	//load SR2 bit into data pin
+//		gpio_put(SRCLK_PIN, 0);	// clock pin low
 	
 	puts("transistor xx is on");  //send transistor number to CPU
-
+	gpio_put(LED_PIN, 0);
 }
