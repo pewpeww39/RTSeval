@@ -40,9 +40,10 @@ int main() {
 	/////algorithm code
 	
 	//store SR instructions to array(s)
-	uint8_t sr1Data[8] = [1,1,1,1,1,1,1,1]	
-	uint8_t sr2Data[8] = [1,1,1,1,1,1,1,1]
-	
+	uint8_t sr1Data[8] = [1,1,1,1,1,1,1,1];	
+	uint8_t sr2Data[8] = [1,1,1,1,1,1,1,1];
+	gpio_put(SR1_LATCH, 0);
+	gpio_put(SR2_LATCH, 0);
 	////  Load the Shift register with instruction ////
 //	for(int byte=0; byte <8, byte++) {
 //		gpio_put(SRCLK_PIN, 1);			//set clock pin high
@@ -50,6 +51,8 @@ int main() {
 //		gpio_put(SR2_PIN, sr2Data[byte]);	//load SR2 bit into data pin
 //		gpio_put(SRCLK_PIN, 0);	// clock pin low
 //	}
+	gpio_put(SR1_LATCH, 1);
+	gpio_put(SR2_LATCH, 1);
 	puts("transistor xx is on");  			//send transistor number to CPU
 	gpio_put(LED_PIN, 0);				//
 }
