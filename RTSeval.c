@@ -3,11 +3,11 @@
 #include "hardware/gpio.h"
 #include "pico/binary_info.h"
 
-#define SR1_PIN		16
-#define SR2_PIN		17
-#define SRCLK_PIN 	18
-#define SR1_LATCH	19
-#define SR2_LATCH	20
+#define SR1_DATA	16	// Horizontal Shift Register
+#define SR2_DATA	17	// Vertical Shift Register
+#define SRCLK	 	18	// Clock for both shift registers
+#define CSIN		19	
+#define RESET		20
 
 const uint LED_PIN = 25;
 int counter = 0;
@@ -33,7 +33,7 @@ int main() {
 
 	stdio_init(LED_PIN);				// initialize LED pin
 	gpio_set_dir(LED_PIN, GPIO_OUT);		// Set LED pin direction
-
+	gpio_set_dir(SR1_LATCH, GPIO_OUT);		// Set SR1 Latch pin to output
 	 
 	gpio_put(LED_PIN, 1);				// Set LED to high
 	
