@@ -6,12 +6,12 @@
 #define SR1_DATA	16	// Horizontal Shift Register
 #define SR2_DATA	17	// Vertical Shift Register
 #define SRCLK	 	18	// Clock for both shift registers
-#define CSIN		19	
-#define RESET		20
+#define CSIN		19	// Chip Select?
+#define RESET		20	// Reset for SR?
 
 const uint LED_PIN = 25;
 int counter = 0;
-int 0;
+int SRbyte = 0;
 
 int HardwareSerial::available(void)			// Serial.available function
 {
@@ -24,7 +24,7 @@ int main() {
 	bi_decl(bi_1pin_with_name(LED_PIN, "On-board LED"));
 
 	uart_init(uart0, 115200);			// initialize the pico UART ports
-	uart_init(uart1, 115200);
+//	uart_init(uart1, 115200);
 
 	gpio_set_function(0, GPIO_FUNC_UART);		// set gpio function to UART
 	gpio_set_function(1, GPIO_FUNC_UART);
@@ -42,17 +42,18 @@ int main() {
 	//store SR instructions to array(s)
 	uint8_t sr1Data[8] = [1,1,1,1,1,1,1,1];	
 	uint8_t sr2Data[8] = [1,1,1,1,1,1,1,1];
-	gpio_put(SR1_LATCH, 0);
-	gpio_put(SR2_LATCH, 0);
+	
 	////  Load the Shift register with instruction ////
-//	for(int byte=0; byte <8, byte++) {
-//		gpio_put(SRCLK_PIN, 1);			//set clock pin high
-//		gpio_put(SR1_PIN, sr1Data[byte]);	//load SR1 bit into data pin
-//		gpio_put(SR2_PIN, sr2Data[byte]);	//load SR2 bit into data pin
-//		gpio_put(SRCLK_PIN, 0);	// clock pin low
+	
+//	for(SRbyte=0; SRbyte <8, SRbyte++) {
+//		gpio_put(SRCLK, 1);			//set clock pin high
+//		gpio_put(SR1_DATA, sr1Data[SRbyte]);	//load SR1 bit into data pin
+//		gpio_put(SR2_DATA, sr2Data[SRbyte]);	//load SR2 bit into data pin
+//		gpio_put(SRCLK, 0);			// clock pin low
 //	}
-	gpio_put(SR1_LATCH, 1);
-	gpio_put(SR2_LATCH, 1);
+//	gpio_put(RESET, 0);
+//	SRbyte = 0;
+	
 	puts("transistor xx is on");  			//send transistor number to CPU
 	gpio_put(LED_PIN, 0);				//
 }
