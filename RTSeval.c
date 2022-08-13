@@ -6,6 +6,8 @@
 #define SR1_PIN		16
 #define SR2_PIN		17
 #define SRCLK_PIN 	18
+#define SR1_LATCH	19
+#define SR2_LATCH	20
 
 const uint LED_PIN = 25;
 int counter = 0;
