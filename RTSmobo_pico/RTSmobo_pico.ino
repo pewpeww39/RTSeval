@@ -29,8 +29,10 @@
 #define ch5v4   27  // Select which amplifier output is on channel 5  vout4
 
 int command = 0;
-int increment = 0;
+int colSelect = 0;
+int rowSelect = 0;
 int horSR = 0;
+int verSR = 0;
 
 uint32_t timer = millis();
 void setup()
@@ -67,69 +69,89 @@ void loop()
         // adjust gain to provide a 1:1 input/output
         break;
       }
-    case 2: {
-        int num = 1234;
-
-        uint8_t bitsCount = sizeof( num ) * 8;
-        if (debug == true) {
-          Serial.println(bitsCount);
-          Serial.println(sizeof(num));
-        }
-        char str[ bitsCount + 1 ];
-
-
-        uint8_t i = 0;
-        while ( bitsCount-- ) {
-          str[ i++ ] = bitRead( num, bitsCount ) + '0';
-        }
-        str[ i ] = '\0';
-
-        Serial.println( str );
-        break;
-      }
-    case 3: {
-        for (int j = 0; j < 32; j = j + 1) {
-          int64_t horInput = pow(2, j);
-          Serial.println(horInput);
-
-          horizBinary(horInput);
-          delay(500);
-        }
-        break;
-      }
-    case 4: {
-      
-        timer == millis();
+    case 2: {                                 // increment through columns and hold row
         for (int j = 2048; j > 0; j--) {
-          if (pow(2, increment) == j){
-            
+          if (pow(2, colSelect) == j) {
+
             horSR = 1;
-        } else {
-          horSR = 0;
-        }
-     //   if (millis() - timer == 10)
-        digitalWrite(SCL, HIGH);
-        delay(10);
-        digitalWrite(SDA_A, horSR);
-        delay(10);
-        digitalWrite(SCL, LOW);
-        delay(10);
-                
-        if (debug == true){
-        Serial.print(horSR);
-        }
-    }
-    
-        increment++;
-        if (debug == true){
-        Serial.println();
+          } else {
+            horSR = 0;
+          }
+          if (pow(2, rowSelect) == j){
+            verSR = 1;
+          } else {
+            verSR = 0;
+          }
+          //   if (millis() - timer == 10)
+          digitalWrite(SCL, HIGH);
+          delay(10);
+          digitalWrite(SDA_A, horSR);
+          digitalWrite(SDA_B, verSR);
+          delay(10);
+          digitalWrite(SCL, LOW);
+          delay(10);
+
+          if (debug == true) {
+            Serial.print(horSR );
+            Serial.println(verSR);
+          }
         }
 
-        
-
+        colSelect++;
+        if (debug == true) {
+          Serial.println();
+        }
+        flashLED();
+        command = 0;
         break;
-}
-}
+      }
+      case 3: {
+        rowSelect++;
+        command = 0;
+        break;
+      }
+      case 4: {                             // increment through rows and hold columns
+        for (int j = 2048; j > 0; j--) {    // for loop for the number of columns
+          if (pow(2, colSelect) == j) {     // check if 2^j = desired column i.e. 0000..0100
+            horSR = 1;                      // if it does set SDA_ to high
+          } else {
+            horSR = 0;                      // if not set it to low (most cases)
+          }
+          if (pow(2, rowSelect) == j){
+            verSR = 1;                      // same as above for vertical SR
+          } else {
+            verSR = 0;
+          }
+          digitalWrite(RESET, HIGH);        // Flush the SR
+          delay(10);
+          digitalWrite(RESET, LOW);
+          delay(10);
+          //   if (millis() - timer == 10)
+          digitalWrite(SCL, HIGH);          // set the SR clock high 
+          delay(10);
+          digitalWrite(SDA_A, horSR);       // set SDA_A pin to horSR value
+          digitalWrite(SDA_B, verSR);       // set SDA_B pin to verSR value
+          delay(10);
+          digitalWrite(SCL, LOW);    delay(10);        // set the SR clock Low
+          if (debug == true) {
+            Serial.print(horSR );
+            Serial.println(verSR);
+          }
+        }
+        rowSelect++;
+        if (debug == true) {
+          Serial.println();
+        }
+        flashLED();
+        command = 0;
+        break;        
+      }
+      case 5: {
+        colSelect++;
+        command = 0;
+        break;
+      }
+  }
 }
 
 void horizBinary(int horizDecim)
@@ -151,13 +173,20 @@ void printFullBin(int number)
   Serial.println();
 }
 void flashLED() {
-  digitalWrite(LED, HIGH);
-  delay(500);
-  digitalWrite(LED, LOW);
-  delay(500);
-  digitalWrite(LED, HIGH);
-  delay(500);
-  digitalWrite(LED, LOW);
+  if (millis() - timer <= 500) {
+    digitalWrite(LED, HIGH);
+  }
+  if (millis() - timer > 500) {
+    digitalWrite(LED, LOW);
+  }
+  if (millis() - timer > 1000) {
+    digitalWrite(LED, HIGH);
+  }
+  if (millis() - timer > 1500) {
+    digitalWrite(LED, LOW);
+
+    timer = millis();
+  }
 }
 void turnOff()
 {
