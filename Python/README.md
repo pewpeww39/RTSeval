@@ -1,22 +1,22 @@
 Python
-	Dataframe to hold
-		Column Shift register #
-		Row Shift register #
-		Vdd
-		Vg
-		Vs
-		I_bias
-		Output
-		Output transition # 
-		Record time
-	Send serial commands to pi pico
-	communicate to SMU
-	communicate to bkprecision
-	communicate to Oscope
-	Output
-	o	Each transistor output needs to be stored separately 
-			By columns and rows of the chip
-	o	Record time for test needs stored with appropriate transistor
-	o	Analyze the output for emission and capture time constants
-	o	Record until appropriate number of transitions are seen?
-	o	
+-	Dataframe to hold
+-		Column Shift register #
+-		Row Shift register #
+-		Vdd
+-		Vg
+-		Vs
+-		I_bias
+-		Output
+-		Output transition # 
+-		Record time
+-	Send serial commands to pi pico
+-	communicate to SMU
+-	communicate to bkprecision
+-	communicate to Oscope
+-	Output
+-	o	Each transistor output needs to be stored separately 
+-			By columns and rows of the chip
+-	o	Record time for test needs stored with appropriate transistor
+-	o	Analyze the output for emission and capture time constants
+-	o	Record until appropriate number of transitions are seen?
+-	o	

@@ -1,5 +1,5 @@
 Python
--	Dataframe to hold /n
+	Dataframe to hold
 		Column Shift register #
 		Row Shift register #
 		Vdd
@@ -9,11 +9,11 @@ Python
 		Output
 		Output transition # 
 		Record time
--	Send serial commands to pi pico
--	communicate to SMU
--	communicate to bkprecision
--	communicate to Oscope
--	Output
+	Send serial commands to pi pico
+	communicate to SMU
+	communicate to bkprecision
+	communicate to Oscope
+	Output
 	o	Each transistor output needs to be stored separately 
 			By columns and rows of the chip
 	o	Record time for test needs stored with appropriate transistor
