@@ -61,27 +61,31 @@ void loop()
         flashLED();
         break;
       }
-    case 1: {                     // set channel 1 for amp characterization
-        turnOff();                  // by setting the SR inputs to low
-        digitalWrite(Csin, HIGH);   // close amp bypass
-        digitalWrite(ch1v0, HIGH);  // chanel 1 has vout0
+    case 1: {                               // set channel 1 for amp characterization
+        turnOff();                          // by setting the SR inputs to low
+        digitalWrite(Csin, HIGH);           // close amp bypass
+        digitalWrite(ch1v0, HIGH);          // chanel 1 has vout0
         // apply a voltage to vout1BYP jumper
         // adjust gain to provide a 1:1 input/output
         break;
       }
-    case 2: {                                 // increment through columns and hold row
-        for (int j = 2048; j > 0; j--) {
-          if (pow(2, colSelect) == j) {
-
-            horSR = 1;
+    case 2: {                               // increment through columns and hold row
+        digitalWrite(LED, HIGH);
+        for (int j = 2048; j > 0; j--) {    // for loop for the number of columns
+          if (pow(2, colSelect) == j) {     // check if 2^j = desired column i.e. 0000..0100
+            horSR = 1;                      // if it does set SDA_ to high
           } else {
-            horSR = 0;
+            horSR = 0;                      // if not set it to low (most cases)
           }
-          if (pow(2, rowSelect) == j){
-            verSR = 1;
+          if (pow(2, rowSelect) == j) {
+            verSR = 1;                      // same as above for vertical SR
           } else {
             verSR = 0;
           }
+          digitalWrite(RESET, HIGH);        // Flush the SR
+          delay(10);
+          digitalWrite(RESET, LOW);
+          delay(10);
           //   if (millis() - timer == 10)
           digitalWrite(SCL, HIGH);
           delay(10);
@@ -105,19 +109,20 @@ void loop()
         command = 0;
         break;
       }
-      case 3: {
+    case 3: {
         rowSelect++;
         command = 0;
         break;
       }
-      case 4: {                             // increment through rows and hold columns
+    case 4: {                             // increment through rows and hold columns
+        digitalWrite(LED, HIGH);
         for (int j = 2048; j > 0; j--) {    // for loop for the number of columns
           if (pow(2, colSelect) == j) {     // check if 2^j = desired column i.e. 0000..0100
             horSR = 1;                      // if it does set SDA_ to high
           } else {
             horSR = 0;                      // if not set it to low (most cases)
           }
-          if (pow(2, rowSelect) == j){
+          if (pow(2, rowSelect) == j) {
             verSR = 1;                      // same as above for vertical SR
           } else {
             verSR = 0;
@@ -127,7 +132,7 @@ void loop()
           digitalWrite(RESET, LOW);
           delay(10);
           //   if (millis() - timer == 10)
-          digitalWrite(SCL, HIGH);          // set the SR clock high 
+          digitalWrite(SCL, HIGH);          // set the SR clock high
           delay(10);
           digitalWrite(SDA_A, horSR);       // set SDA_A pin to horSR value
           digitalWrite(SDA_B, verSR);       // set SDA_B pin to verSR value
@@ -144,9 +149,9 @@ void loop()
         }
         flashLED();
         command = 0;
-        break;        
+        break;
       }
-      case 5: {
+    case 5: {
         colSelect++;
         command = 0;
         break;
@@ -184,7 +189,6 @@ void flashLED() {
   }
   if (millis() - timer > 1500) {
     digitalWrite(LED, LOW);
-
     timer = millis();
   }
 }
