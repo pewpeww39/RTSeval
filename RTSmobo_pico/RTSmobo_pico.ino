@@ -35,6 +35,7 @@ int horSR = 0;
 int verSR = 0;
 
 uint32_t timer = millis();
+uint32_t timerB = millis();
 void setup()
 {
   Serial.begin(115200);
@@ -83,17 +84,17 @@ void loop()
             verSR = 0;
           }
           digitalWrite(RESET, HIGH);        // Flush the SR
-          delay(10);
+          waitFor(10);
           digitalWrite(RESET, LOW);
-          delay(10);
+          waitFor(10);
           //   if (millis() - timer == 10)
           digitalWrite(SCL, HIGH);
-          delay(10);
+          waitFor(10);
           digitalWrite(SDA_A, horSR);
           digitalWrite(SDA_B, verSR);
-          delay(10);
+          waitFor(10);
           digitalWrite(SCL, LOW);
-          delay(10);
+          waitFor(10);
 
           if (debug == true) {
             Serial.print(horSR );
@@ -115,7 +116,8 @@ void loop()
         break;
       }
     case 4: {                             // increment through rows and hold columns
-        digitalWrite(LED, HIGH);
+        digitalWrite(LED, LOW);
+        timerB = millis();
         for (int j = 2048; j > 0; j--) {    // for loop for the number of columns
           if (pow(2, colSelect) == j) {     // check if 2^j = desired column i.e. 0000..0100
             horSR = 1;                      // if it does set SDA_ to high
@@ -128,15 +130,18 @@ void loop()
             verSR = 0;
           }
           digitalWrite(RESET, HIGH);        // Flush the SR
-          delay(10);
+          waitFor(10);
           digitalWrite(RESET, LOW);
-          delay(10);
+          waitFor(10);
           //   if (millis() - timer == 10)
           digitalWrite(SCL, HIGH);          // set the SR clock high
-          delay(10);
+          digitalWrite(LED, HIGH);
+          waitFor(10);
+          digitalWrite(LED, LOW);
+          waitFor(10);
           digitalWrite(SDA_A, horSR);       // set SDA_A pin to horSR value
           digitalWrite(SDA_B, verSR);       // set SDA_B pin to verSR value
-          delay(10);
+          waitFor(10);
           digitalWrite(SCL, LOW);    delay(10);        // set the SR clock Low
           if (debug == true) {
             Serial.print(horSR );
@@ -159,6 +164,17 @@ void loop()
   }
 }
 
+void waitFor(int msec){
+  timerB = millis();
+  while (int hold = true){
+  if (millis() - timerB >= msec){
+    hold == false;
+    return;
+  } else {
+    
+  }
+  }
+}
 void horizBinary(int horizDecim)
 {
   for (int bit = 32; bit >= 0; bit--) {
