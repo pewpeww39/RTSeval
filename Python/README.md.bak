@@ -1,14 +1,14 @@
 Python
--	Dataframe to hold \n
-	o	Column Shift register #
-	o	Row Shift register #
-	o	Vdd
-	o	Vg
-	o	Vs
-	o	I_bias
-	o	Output
-	o	Output transition # 
-	o	Record time
+-	Dataframe to hold
+		Column Shift register #
+		Row Shift register #
+		Vdd
+		Vg
+		Vs
+		I_bias
+		Output
+		Output transition # 
+		Record time
 -	Send serial commands to pi pico
 -	communicate to SMU
 -	communicate to bkprecision
