@@ -71,7 +71,10 @@ void loop()
         break;
       }
     case 2: {                               // increment through columns and hold row
-        digitalWrite(LED, HIGH);
+        digitalWrite(LED, LOW);
+        if (debug == true) {
+            Serial.println("H V");
+        }
         for (int j = 2048; j > 0; j--) {    // for loop for the number of columns
           if (pow(2, colSelect) == j) {     // check if 2^j = desired column i.e. 0000..0100
             horSR = 1;                      // if it does set SDA_ to high
@@ -87,25 +90,24 @@ void loop()
           waitFor(10);
           digitalWrite(RESET, LOW);
           waitFor(10);
-          //   if (millis() - timer == 10)
-          digitalWrite(SCL, HIGH);
+          digitalWrite(SCL, HIGH);          
+          digitalWrite(LED, HIGH);
           waitFor(10);
           digitalWrite(SDA_A, horSR);
           digitalWrite(SDA_B, verSR);
           waitFor(10);
-          digitalWrite(SCL, LOW);
+          digitalWrite(SCL, LOW);          
+          digitalWrite(LED, LOW);
           waitFor(10);
 
           if (debug == true) {
             Serial.print(horSR );
+            Serial.print(' ');
             Serial.println(verSR);
           }
         }
 
-        colSelect++;
-        if (debug == true) {
-          Serial.println();
-        }
+        colSelect++;\
         flashLED();
         command = 0;
         break;
@@ -118,6 +120,9 @@ void loop()
     case 4: {                             // increment through rows and hold columns
         digitalWrite(LED, LOW);
         timerB = millis();
+        if (debug == true) {
+            Serial.println("H V");
+        }
         for (int j = 2048; j > 0; j--) {    // for loop for the number of columns
           if (pow(2, colSelect) == j) {     // check if 2^j = desired column i.e. 0000..0100
             horSR = 1;                      // if it does set SDA_ to high
@@ -133,25 +138,23 @@ void loop()
           waitFor(10);
           digitalWrite(RESET, LOW);
           waitFor(10);
-          //   if (millis() - timer == 10)
           digitalWrite(SCL, HIGH);          // set the SR clock high
           digitalWrite(LED, HIGH);
-          waitFor(10);
-          digitalWrite(LED, LOW);
           waitFor(10);
           digitalWrite(SDA_A, horSR);       // set SDA_A pin to horSR value
           digitalWrite(SDA_B, verSR);       // set SDA_B pin to verSR value
           waitFor(10);
-          digitalWrite(SCL, LOW);    delay(10);        // set the SR clock Low
+          digitalWrite(SCL, LOW);           // set the SR clock Low          
+          digitalWrite(LED, LOW);
+          waitFor(10);
+          
           if (debug == true) {
             Serial.print(horSR );
+            Serial.print(' ');
             Serial.println(verSR);
           }
         }
         rowSelect++;
-        if (debug == true) {
-          Serial.println();
-        }
         flashLED();
         command = 0;
         break;
