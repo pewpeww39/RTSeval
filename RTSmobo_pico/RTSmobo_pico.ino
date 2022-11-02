@@ -42,12 +42,9 @@ void setup()
   while (!Serial & debug == true) {
     yield();
   }
-
   definePins();   // set Pinmode for pins
   turnOff();      // digital write pins low
-
 }
-
 
 void loop()
 {
@@ -66,8 +63,8 @@ void loop()
         turnOff();                          // by setting the SR inputs to low
         digitalWrite(Csin, HIGH);           // close amp bypass
         digitalWrite(ch1v0, HIGH);          // chanel 1 has vout0
-        // apply a voltage to vout1BYP jumper
-        // adjust gain to provide a 1:1 input/output
+                                            // apply a voltage to vout1BYP jumper
+                                            // adjust gain to provide a 1:1 input/output
         break;
       }
     case 2: {                               // increment through columns and hold row
@@ -107,7 +104,7 @@ void loop()
           }
         }
 
-        colSelect++;\
+        colSelect++;
         flashLED();
         command = 0;
         break;
@@ -124,7 +121,7 @@ void loop()
             Serial.println("H V");
         }
         for (int j = 2048; j > 0; j--) {    // for loop for the number of columns
-          if (pow(2, colSelect) == j) {     // check if 2^j = desired column i.e. 0000..0100
+          if (pow(2, colSelect) == j) {     // check if 2^j = desired column i.e. 0000...0100
             horSR = 1;                      // if it does set SDA_ to high
           } else {
             horSR = 0;                      // if not set it to low (most cases)
@@ -134,6 +131,7 @@ void loop()
           } else {
             verSR = 0;
           }
+          
           digitalWrite(RESET, HIGH);        // Flush the SR
           waitFor(10);
           digitalWrite(RESET, LOW);
@@ -155,6 +153,9 @@ void loop()
           }
         }
         rowSelect++;
+        if (rowSelect >= 96){
+          rowSelect = 0;
+        }
         flashLED();
         command = 0;
         break;
@@ -167,15 +168,22 @@ void loop()
   }
 }
 
+void checkSerial(){
+  if (Serial.available() > 0){
+    command = Serial.readString().toInt();
+    if (debug == true){
+    Serial.println(command);
+    }
+  }
+}
+
 void waitFor(int msec){
   timerB = millis();
   while (int hold = true){
   if (millis() - timerB >= msec){
     hold == false;
     return;
-  } else {
-    
-  }
+  } else {}
   }
 }
 void horizBinary(int horizDecim)
