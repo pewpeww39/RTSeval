@@ -5,8 +5,9 @@ import re
 import pandas as pd
 import matplotlib.pyplot as plt
 from keithley2600 import Keithley2600
-from BKPrecision import lib1785b
+from BKPrecision import lib1785b as bk
 
+port = serial.Serial('COM4', baudrate=115200)
 smu = Keithley2600('TCPIP0::192.168.4.11::INSTR')               #set ip addr for smu
 smu._write(value='smua.source.autorangei = smua.AUTORANGE_ON')  #set auto range for smua 
 smu.set_integration_time(smu.smua, 0.001)                       # sets integration time in sec
@@ -16,9 +17,10 @@ bkPS = serial.Serial('com6',9600)                               #set com port fo
 bkdmm = serial.Serial('com7', 9600)                             #set com port for BK power supply
 
 dmmData = pd.DataFrame(data=[], index=[], columns=[])           #create dataframe
-#bkPS.remoteMode(True, bkPS) #set remote mode for power supply
-#bkPS.setMaxVoltage(3.3, bkPS)   #set max voltage for PS
-#bkPS.volt(3.3, bkPS)    #set voltage for power supply
+bk.remoteMode(True, bkPS) #set remote mode for power supply
+bk.setMaxVoltage(3.33, bkPS)   #set max voltage for PS
+bk.outputOn(True, bkPS)     #turn the powersupply on
+bk.volt(3.3, bkPS)    #set voltage for power supply
 
 bkdmm.write(b'func volt:dc\n')                                  #set dmm to volt
 bkdmm.write(b'volt:dc:rang:auto 1\n')                           #set ddm to auto range
@@ -72,6 +74,8 @@ print(dmmData)
 dmmData.to_csv('~/miniconda3/envs/testequ/Skywater/Data/ampcharData.csv')
 smu._write(value='smua.source.output = smua.OUTPUT_OFF')
 smu._write(value='smub.source.output = smub.OUTPUT_OFF')
+bk.outputOn(False, bkPS)     #turn the powersupply off
+
 plt.plot(dmmData.VoltIn, dmmData.VoltOut001, label = "0 mA")
 plt.plot(dmmData.VoltIn, dmmData.VoltOut002, label = "0.1 mA")
 plt.plot(dmmData.VoltIn, dmmData.VoltOut003, label = "0.2 mA")
