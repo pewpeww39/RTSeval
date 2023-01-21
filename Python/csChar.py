@@ -69,14 +69,16 @@ for c in range(colNum):
     column = write_cmd(c)                                                   # increments the column to test
     RFID = pico.read_until()                                                # checks if pico is done with shift register
     commandRX = RFID.decode()
-    if commandRX[:-1] == 1:
+    if RFID == b'1\r\n':
         currIn = 0.000005                                                   # the current applied to currentSource
         smu.apply_current(smu.smua, currIn)
-    startT = int(time.perf_counter())
-    for t in range(startT - int(time.perf_counter()) <= 60):                # checks if the run time has reached 60 sec
+    RFID = None
+    startT = time.perf_counter()
+    while time.perf_counter() - startT <= 60:                 # checks if the run time has reached 60 sec
         csData.at[row, str(cIn)] = smu.smua.measurei()
         csData.at[row, str(cOut)] = smu.smub.measurei()
         row = row + 1
+        time.sleep(.1)
     plt.plot(csData.CurrIn, cOutDF, label = str(cOut))
     plt.title("Current In vs Current Out")
     plt.xlabel("Current Into AMPBIAS")

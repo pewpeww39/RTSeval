@@ -10,7 +10,7 @@ from BKPrecision import lib1785b as bk
 
 
 
-pico = serial.Serial('COM12', baudrate=115200, timeout = 30)
+pico = serial.Serial('COM12', baudrate=115200, timeout = 20)
 # smu = Keithley2600('TCPIP0::192.168.4.11::INSTR')               #set ip addr for smu
 # smu._write(value='smua.source.autorangei = smua.AUTORANGE_ON')  #set auto range for smua 
 # smu.set_integration_time(smu.smua, 0.001)                       # sets integration time in sec
@@ -53,7 +53,7 @@ vOut = "VoltOut001"
 cIn = "CurrIn"
 fileName = "~/miniconda3/envs/testequ/RTSeval/Python/Data/cdCharacterization/cs001.png"
 time.sleep(1)
-c = 1 
+colSelect = 1 
 for c in range(colNum):
 
     if counter > 0:
@@ -66,22 +66,28 @@ for c in range(colNum):
         fileName = re.sub(r'[0-9]+$',
              lambda x: f"{str(int(x.group())+1).zfill(len(x.group()))}",    # increments the number in the column name
              fileName)
-    WC = write_cmd(str(2))                                                  # increments the column to test
-    column = pico.write(c)
+    WC = write_cmd(str(2))                                       # increments the column to test
+    commandRX = pico.read_until()
+    time.sleep(.5)
+    print('pico confirmed: '+ str(commandRX))
+
+    column = write_cmd(str(colSelect))
+    columnRX = pico.read_until()
+    print('pico selected column: ' + str(columnRX))
     RFID = pico.read_until()                                                      # checks if pico is done with shift register
-    commandRX = RFID.decode()
+    #commandRX = RFID.decode()
     if RFID == b'1\r\n':
         currIn = 0.000005                                                   # the current applied to currentSource
         # smu.apply_current(smu.smua, currIn)
-    commandRX = 0
-    startT = (time.perf_counter())
-    timer = (time.perf_counter() - startT)
-    print(startT)
-    while time.perf_counter() - startT <= 60:                # checks if the run time has reached 60 sec
+        startT = (time.perf_counter())
+        timer = (time.perf_counter() - startT)
+        while time.perf_counter() - startT <= 3:                # checks if the run time has reached 60 sec
         # csData.at[row, str(cIn)] = smu.smua.measurei()
         # csData.at[row, str(cOut)] = smu.smub.measurei()
-        row = row + 1
-        time.sleep(.1)
+            print(time.perf_counter()-startT)
+            row = row + 1
+            time.sleep(.1)
+    RFID = b''
     # plt.plot(csData.CurrIn, cOutDF, label = str(cOut))
     # plt.title("Current In vs Current Out")
     # plt.xlabel("Current Into AMPBIAS")
@@ -91,7 +97,8 @@ for c in range(colNum):
     # plt.show()
     # plt.close()
     row = 0
-    counter = counter + 1
+    counter = counter + 1    
+    colSelect = colSelect + 1
     time.sleep(.2)
         
 # print(csData)
