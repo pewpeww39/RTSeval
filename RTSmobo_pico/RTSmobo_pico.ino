@@ -43,8 +43,9 @@ void setup()
 
 void loop()
 {
-  if (Serial.available() >= 1) {
+  if (Serial.available() > 0) {
     command = Serial.readString().toInt();
+    //command = Serial.parseInt();
     if (debug == true) {
       Serial.println(command);
     }
