@@ -47,52 +47,56 @@ currentInc = 11   #int(input('How many steps for current?'))
 voltInc = 34      #int(input('How many steps for Voltage?'))
 
 smu.apply_current(smu.smua, 0)
-cOut = "CurrOut001"                                            #variable to store column names
-cOutDF = "csData.CurrOut001"
+cOut = "CurrOut000"           
 vOut = "VoltOut001"
 cIn = "CurrIn"
-fileName = "~/miniconda3/envs/testequ/RTSeval/Python/Data/cs001.png"
+picLoc = "~/miniconda3/envs/testequ/RTSeval/Python/Data/"
+picName = "cs001"
+
 time.sleep(1)
-c = 1
+colSelect = 1
 for c in range(colNum):
 
     if counter > 0:
         cOut = re.sub(r'[0-9]+$',
              lambda x: f"{str(int(x.group())+1).zfill(len(x.group()))}",    # increments the number in the column name
              cOut)
-        cOutDF = re.sub(r'[0-9]+$',
+        picName = re.sub(r'[0-9]+$',
              lambda x: f"{str(int(x.group())+1).zfill(len(x.group()))}",    # increments the number in the column name
-             cOutDF)
-        fileName = re.sub(r'[0-9]+$',
-             lambda x: f"{str(int(x.group())+1).zfill(len(x.group()))}",    # increments the number in the column name
-             fileName)
-    column = write_cmd(c)                                                   # increments the column to test
+             picName)
+    commandTX = write_cmd(2)                                                   # increments the column to test
+    commandRX = pico.read_until()
+    time.sleep(.5)
+    print('pico confirmed: ' + str(commandRX))
+    column = write_cmd(str(colSelect))
+    columnRX = pico.read_until()
+    print('pico selected column: ' + str(columnRX))
     RFID = pico.read_until()                                                # checks if pico is done with shift register
     commandRX = RFID.decode()
     if RFID == b'1\r\n':
         currIn = 0.000005                                                   # the current applied to currentSource
         smu.apply_current(smu.smua, currIn)
-    RFID = None
-    startT = time.perf_counter()
-    while time.perf_counter() - startT <= 60:                 # checks if the run time has reached 60 sec
-        csData.at[row, str(cIn)] = smu.smua.measurei()
-        csData.at[row, str(cOut)] = smu.smub.measurei()
-        row = row + 1
-        time.sleep(.1)
-    plt.plot(csData.CurrIn, cOutDF, label = str(cOut))
-    plt.title("Current In vs Current Out")
-    plt.xlabel("Current Into AMPBIAS")
-    plt.ylabel("Currnet Out Vout Bypass")
-    plt.legend()
-    plt.savefig(fileName)
-    plt.show()
-    plt.close()
+        startT = time.perf_counter()
+        while time.perf_counter() - startT <= 60:                 # checks if the run time has reached 60 sec
+            csData.at[row, str(cIn)] = smu.smua.measurei()
+            csData.at[row, str(cOut)] = smu.smub.measurei()
+            row = row + 1
+            time.sleep(.1)
+        csData.plot(x=cIn, y=cOut)
+        plt.title("Current In vs Current Out")
+        plt.xlabel("Current Into Current source")
+        plt.ylabel("Current Out of Current source")
+        plt.savefig(str(picLoc) + str(picName) + '.png')
+        fig = plt.show(block = False)
+        plt.pause(3)
+        plt.close(fig)
+    RFID = b''
     row = 0
     counter = counter + 1
     time.sleep(.2)
         
 print(csData)
-csData.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/cscharData.csv')
+csData.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/csCharacterizaton/cscharData.csv')
 smu._write(value='smua.source.output = smua.OUTPUT_OFF')
 smu._write(value='smub.source.output = smub.OUTPUT_OFF')
 bk.outputOn(False, bkPS)     #turn the powersupply off

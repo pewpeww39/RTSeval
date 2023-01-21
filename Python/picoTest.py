@@ -48,8 +48,7 @@ currentInc = 11   #int(input('How many steps for current?'))
 voltInc = 34      #int(input('How many steps for Voltage?'))
 
 #smu.apply_current(smu.smua, 0)
-cOut = "CurrOut000"                                            #variable to store column names
-#cOutDF = csData.CurrOut000
+cOut = "CurrOut000"            
 vOut = "VoltOut001"
 cIn = "CurrIn"
 picLoc = "C:\\Users\\jpew\\AppData\\Local\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\csCharacterization\\"
@@ -70,7 +69,6 @@ for c in range(colNum):
     commandRX = pico.read_until()
     time.sleep(.5)
     print('pico confirmed: '+ str(commandRX))
-
     column = write_cmd(str(colSelect))
     columnRX = pico.read_until()
     print('pico selected column: ' + str(columnRX))
@@ -79,7 +77,6 @@ for c in range(colNum):
         currIn = 0.000005                                                   # the current applied to currentSource
         # smu.apply_current(smu.smua, currIn)
         startT = (time.perf_counter())
-        timer = (time.perf_counter() - startT)
         while time.perf_counter() - startT <= 3:                # checks if the run time has reached 60 sec
             csData.at[row, str(cIn)] = row
             csData.at[row, str(cOut)] = random.randint(1, 9)
