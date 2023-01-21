@@ -1,6 +1,6 @@
 #include <SPI.h>
 
-#define debug true
+#define debug           true
 #define vgHVP           0   // point Vg input voltage to High Voltage Pmos transistors
 #define vgLVP           1   // point Vg input voltage to Low Voltage Pmos transistors
 #define HCLKin          2   // Shift Register Clock
@@ -11,7 +11,7 @@
 #define vgLVN           7   // set VG input voltage to Low Voltage Nmos transistors
 #define vgHVN           8   // set VG input voltaget to High Voltage Nmos Transistors
 #define vddLV           9   // set VDD input voltage to Low Voltage Tansistors
-#define ch1_vooff      10  // Select which amplifier output is on channel 1  vout0
+#define ch1_vooff       10  // Select which amplifier output is on channel 1  vout0
 #define ch1vo1          11  // Select which amplifier output is on channel 1  vout4
 #define ch1vo2          12  // Select which amplifier output is on channel 2  vout1
 #define ch1vo3          13  // Select which amplifier output is on channel 2  vout5
@@ -53,36 +53,34 @@ void loop()
         //turnOff();
         break;
       }
-    case 1: {                               // amp characterization
+    case 1: {                               // opamp characterization
         turnOff();
         digitalWrite(resetBIN, LOW);        // by setting the SR inputs to low
         digitalWrite(Csin, HIGH);           // close amp bypass
-        // apply a voltage to vout1BYP jumper
-        // adjust gain to provide a 1:1 input/output
         flashLED();
         command = 0;
         Serial.println("Ready for OpAmp characterization");
         break;
       }
-    case 2: {                               // increment through columns and hold row
+    case 2: {                               // current source characterization
         digitalWrite(LED, LOW);
         if (debug == true) {
           Serial.println("H V");
         }
         for (int j = 256; j > 0; j--) {    // for loop for the number of columns
-          if (pow(2, colSelect) == j) {     // check if 2^j = desired column i.e. 0000..0100
+          if (colSelect == j) {     // check if j = desired column i.e. 0000..0100
             horSR = 1;                      // if it does set SDA_ to high
           } else {
             horSR = 0;                      // if not set it to low (most cases)
           }
-          if (pow(2, rowSelect) == j) {
+          if (rowSelect == j) {
             verSR = 1;                      // same as above for vertical SR
           } else {
             verSR = 0;
           }
-          digitalWrite(resetBIN, HIGH);        // Flush the SR
+          digitalWrite(resetBIN, LOW);        // Flush the SR
           waitFor(10);
-          digitalWrite(resetBIN, LOW);
+          digitalWrite(resetBIN, HIGH);
           waitFor(10);
           digitalWrite(HCLKin, HIGH);          // set the SR clock high
           digitalWrite(LED, HIGH);
@@ -105,8 +103,49 @@ void loop()
         command = 0;
         break;
       }
+//    case 2: {                               // increment through columns and hold row
+//        digitalWrite(LED, LOW);
+//        if (debug == true) {
+//          Serial.println("H V");
+//        }
+//        for (int j = 256; j > 0; j--) {    // for loop for the number of columns
+//          if (pow(2, colSelect) == j) {     // check if 2^j = desired column i.e. 0000..0100
+//            horSR = 1;                      // if it does set SDA_ to high
+//          } else {
+//            horSR = 0;                      // if not set it to low (most cases)
+//          }
+//          if (pow(2, rowSelect) == j) {
+//            verSR = 1;                      // same as above for vertical SR
+//          } else {
+//            verSR = 0;
+//          }
+//          digitalWrite(resetBIN, LOW);        // Flush the SR
+//          waitFor(10);
+//          digitalWrite(resetBIN, HIGH);
+//          waitFor(10);
+//          digitalWrite(HCLKin, HIGH);          // set the SR clock high
+//          digitalWrite(LED, HIGH);
+//          waitFor(10);
+//          digitalWrite(Din, horSR);       // set SDA_A pin to horSR value
+//          digitalWrite(DHin, verSR);       // set SDA_B pin to verSR value
+//          waitFor(10);
+//          digitalWrite(HCLKin, LOW);           // set the SR clock Low
+//          digitalWrite(LED, LOW);
+//
+//          if (debug == true) {
+//            Serial.print(horSR );
+//            Serial.print(' ');
+//            Serial.println(verSR);
+//          }
+//        }
+//
+//        colSelect++;
+//        flashLED();
+//        command = 0;
+//        break;
+//      }
     case 3: {
-        rowSelect++;
+        colSelect++;
         command = 0;
         break;
       }
@@ -128,9 +167,9 @@ void loop()
             verSR = 0;
           }
 
-          digitalWrite(resetBIN, HIGH);        // Flush the SR
+          digitalWrite(resetBIN, LOW);        // Flush the SR
           waitFor(10);
-          digitalWrite(resetBIN, LOW);
+          digitalWrite(resetBIN, HIGH);
           waitFor(10);
           digitalWrite(HCLKin, HIGH);          // set the SR clock high
           digitalWrite(LED, HIGH);
@@ -157,8 +196,9 @@ void loop()
         break;
       }
     case 5: {
-        colSelect++;
+        rowSelect++;
         command = 0;
+        Serial.println(rowSelect);
         break;
       }
   }
@@ -215,9 +255,6 @@ void flashLED() {
     if (millis() - timer >= 1500) {
       digitalWrite(LED, LOW);
     }
-    if (debug == true){
-    Serial.println(millis()-timer);
-  }
   }
 }
 void turnOff()
