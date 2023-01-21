@@ -69,6 +69,8 @@ void loop()
         }
         for (int j = 256; j > 0; j--) {    // for loop for the number of columns
           if (colSelect == j) {     // check if j = desired column i.e. 0000..0100
+          // if (pow(2, colSelect) == j) {     // check if 2^j = desired column i.e. 0000..0100
+          }
             horSR = 1;                      // if it does set SDA_ to high
           } else {
             horSR = 0;                      // if not set it to low (most cases)
@@ -103,47 +105,7 @@ void loop()
         command = 0;
         break;
       }
-//    case 2: {                               // increment through columns and hold row
-//        digitalWrite(LED, LOW);
-//        if (debug == true) {
-//          Serial.println("H V");
-//        }
-//        for (int j = 256; j > 0; j--) {    // for loop for the number of columns
-//          if (pow(2, colSelect) == j) {     // check if 2^j = desired column i.e. 0000..0100
-//            horSR = 1;                      // if it does set SDA_ to high
-//          } else {
-//            horSR = 0;                      // if not set it to low (most cases)
-//          }
-//          if (pow(2, rowSelect) == j) {
-//            verSR = 1;                      // same as above for vertical SR
-//          } else {
-//            verSR = 0;
-//          }
-//          digitalWrite(resetBIN, LOW);        // Flush the SR
-//          waitFor(10);
-//          digitalWrite(resetBIN, HIGH);
-//          waitFor(10);
-//          digitalWrite(HCLKin, HIGH);          // set the SR clock high
-//          digitalWrite(LED, HIGH);
-//          waitFor(10);
-//          digitalWrite(Din, horSR);       // set SDA_A pin to horSR value
-//          digitalWrite(DHin, verSR);       // set SDA_B pin to verSR value
-//          waitFor(10);
-//          digitalWrite(HCLKin, LOW);           // set the SR clock Low
-//          digitalWrite(LED, LOW);
-//
-//          if (debug == true) {
-//            Serial.print(horSR );
-//            Serial.print(' ');
-//            Serial.println(verSR);
-//          }
-//        }
-//
-//        colSelect++;
-//        flashLED();
-//        command = 0;
-//        break;
-//      }
+
     case 3: {
         colSelect++;
         command = 0;
@@ -156,12 +118,12 @@ void loop()
           Serial.println("H V");
         }
         for (int j = 256; j > 0; j--) {    // for loop for the number of columns
-          if (pow(2, colSelect) == j) {     // check if 2^j = desired column i.e. 0000...0100
+          if (colSelect == j) {     // check if 2^j = desired column i.e. 0000...0100
             horSR = 1;                      // if it does set SDA_ to high
           } else {
             horSR = 0;                      // if not set it to low (most cases)
           }
-          if (pow(2, rowSelect) == j) {
+          if (rowSelect == j) {
             verSR = 1;                      // same as above for vertical SR
           } else {
             verSR = 0;
