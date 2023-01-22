@@ -51,13 +51,11 @@ currentInc = 11   #int(input('How many steps for current?'))
 voltInc = 34      #int(input('How many steps for Voltage?'))
 
 #smu.apply_current(smu.smua, 0)
-cOut = "CurrOut000" 
-cIn = "CurrIn000"
-ampVal = "ampVal01"
-pltX = "CurrIn1"
-pltY = "pltY"
+cOut = "CS000" 
+pltY = " ampsOut E-9"
+pltX = " ampsIn E-9"
 picLoc = "C:\\Users\\jpew\\AppData\\Local\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\csCharacterization\\"
-picName = "cs000"
+
 
 time.sleep(1)
 for c in range(colNum):
@@ -65,12 +63,6 @@ for c in range(colNum):
         cOut = re.sub(r'[0-9]+$',
              lambda x: f"{str(int(x.group())+1).zfill(len(x.group()))}",    # increments the number in the column name
              cOut)
-        cIn = re.sub(r'[0-9]+$',
-             lambda x: f"{str(int(x.group())+1).zfill(len(x.group()))}",    # increments the number in the column name
-             cIn)
-        picName = re.sub(r'[0-9]+$',
-             lambda x: f"{str(int(x.group())+1).zfill(len(x.group()))}",    # increments the number in the column name
-             picName)
     WC = write_cmd(str(2))                                                  # increments the column to test
     commandRX = pico.read_until().strip().decode()
     time.sleep(.5)
@@ -86,40 +78,40 @@ for c in range(colNum):
             startT = round(time.perf_counter(), 4)
             while round(time.perf_counter(), 4) - startT <= 3.1:                         # checks if the run time has reached 60 sec
                 currentTime = round(time.perf_counter(), 4)-startT
-                #if counter == 0:
-                csData.at[row, 'Time'] = currentTime
-                pltData.at[row, pltX] = currIn # smu.smua.measurei()
-                pltData.at[row, str(ampVal)] = random.randint(1, 9)
+                if counter == 0:
+                    pltData.at[row, 'Time'] = currentTime
+                #pltData.at[row, pltX] = currIn # smu.smua.measurei()                    # current into current Source
+                pltData.at[row, pltY] = random.randint(1, 9)                     # current out of current source
                 row = row + 1
-                time.sleep(.1000)
-            csData[str(cOut+ampVal)] = pltData[str(ampVal)]
+                time.sleep(.1000)            
+            csData['Time'] = pltData['Time']
+            csData[str(cOut+pltY)] = pltData[str(pltY)]
             if a < 4:
-                ampVal = re.sub(r'[0-9]+$',
-                lambda x: f"{str(int(x.group())+1).zfill(len(x.group()))}",    # increments the number in the column name
-                ampVal)
+                pltY = re.sub(r'[0-9]+$',
+                lambda x: f"{str(int(x.group())-1).zfill(len(x.group()))}",    # increments the number in the column name
+                pltY)
                 pltX = re.sub(r'[0-9]+$',
-                lambda x: f"{str(int(x.group())+1).zfill(len(x.group()))}",    # increments the number in the column name
+                lambda x: f"{str(int(x.group())-1).zfill(len(x.group()))}",    # increments the number in the column name
                 pltX)
             row = 0
             power = power - 1
         power = 9
-        pltX = 'CurrIn1'            
-        ampVal = "ampVal01"
+        pltX = ' ampsIn E-9'            
+        pltY = " ampsOut E-9"
         print(pltData)
-        pltData.plot(xlabel="Time", ylabel="Current Out", sharey=True, title="Current In vs. Current Out", legend=True, subplots=[('CurrIn1','ampVal01'),('CurrIn2','ampVal02'),('CurrIn3','ampVal03'),
-                                ('CurrIn4','ampVal04'),('CurrIn5','ampVal05')])
-        #ax=[pltData.Time1,pltData.Time2,pltData.Time3,pltData.Time4,pltData.Time5], 
-        #plt.title("Current In vs Current Out")
-        plt.savefig(str(picLoc) + str(picName) + '.png')
+        pltData.plot(x= 'Time', xlabel="Time", ylabel="Current Out", sharey=True, title="Current In vs. Current Out", legend=True,
+                    subplots=True)
+        # pltData.plot(x= 'Time', xlabel="Time", ylabel="Current Out", sharey=True, title="Current In vs. Current Out", legend=True,
+        #             subplots=[(' ampsIn E-9',' ampsOut E-9'),(' ampsIn E-8',' ampsOut E-8'),(' ampsIn E-7',' ampsOut E-7'), 
+        #             (' ampsIn E-6',' ampsOut E-6'),(' ampsIn E-5',' ampsOut E-5')])
+        plt.savefig(str(picLoc) + str(cOut) + '.png')
         fig = plt.show(block = False)
-        #pltData.to_csv('C:\\Users\\jpew\\AppData\\Local\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\csCharacterization\\csCharData'+ampVal+'.csv')
-        plt.pause(3)
+        plt.pause(5)
         plt.close(fig)
-    RFID = b''
+    commandRX = 0
     counter = counter + 1    
     colSelect = colSelect + 1
     time.sleep(.1)
-#plt.show()        
 print(csData)
 csData.to_csv('C:\\Users\\jpew\\AppData\\Local\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\csCharacterization\\cscharData.csv')
 # csData.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/cscharData.csv')
