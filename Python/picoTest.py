@@ -87,7 +87,7 @@ for c in range(colNum):
             while round(time.perf_counter(), 4) - startT <= 3.1:                         # checks if the run time has reached 60 sec
                 currentTime = round(time.perf_counter(), 4)-startT
                 #if counter == 0:
-                csData.at[row, 'Time'] = currentTime
+                csData.at[row, str(cOut+ampVal)+'Time'] = currentTime
                 pltData.at[row, pltX] = currIn # smu.smua.measurei()
                 pltData.at[row, str(ampVal)] = random.randint(1, 9)
                 row = row + 1
