@@ -28,7 +28,8 @@ def write_cmd(x):
     pico.write(bytes(x, 'utf-8'))
     time.sleep(0.05)
 
-csData = pd.DataFrame(data=[], index=[], columns=[])           #create dataframe
+csData = pd.DataFrame(data=[], index=[], columns=[])  
+pltData = pd.datafrme(data=[], index=[], columns=[])         #create dataframe
 bk.remoteMode(True, bkPS) #set remote mode for power supply
 bk.setMaxVoltage(3.33, bkPS)   #set max voltage for PS
 bk.outputOn(True, bkPS)     #turn the powersupply on
@@ -36,6 +37,7 @@ bk.volt(3.3, bkPS)    #set voltage for power supply
 
 bkdmm.write(b'func volt:dc\n')                                  #set dmm to volt
 bkdmm.write(b'volt:dc:rang:auto 1\n')                           #set ddm to auto range
+debug = False
 row = 0
 counter = 0
 voltIn = 0
@@ -49,11 +51,11 @@ voltInc = 34      #int(input('How many steps for Voltage?'))
 
 smu.apply_current(smu.smua, 0)
 cOut = "CurrOut000"           
-vOut = "VoltOut001"
 cIn = "CurrIn"
 ampVal = "ampVal01"
+pltX = "pltX"
 picLoc = "~/miniconda3/envs/testequ/RTSeval/Python/Data/"
-picName = "cs001"
+picName = "cs000"
 
 time.sleep(1)
 for c in range(colNum):
@@ -61,6 +63,9 @@ for c in range(colNum):
         cOut = re.sub(r'[0-9]+$',
              lambda x: f"{str(int(x.group())+1).zfill(len(x.group()))}",    # increments the number in the column name
              cOut)
+        cIn = re.sub(r'[0-9]+$',
+             lambda x: f"{str(int(x.group())+1).zfill(len(x.group()))}",    # increments the number in the column name
+             cIn)
         picName = re.sub(r'[0-9]+$',
              lambda x: f"{str(int(x.group())+1).zfill(len(x.group()))}",    # increments the number in the column name
              picName)

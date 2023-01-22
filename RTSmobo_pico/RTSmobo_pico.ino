@@ -49,7 +49,7 @@ void loop()
     Serial.println(command);
     //command = Serial.parseInt();
     
-    while (command == 2) {
+    while (command == 2) {                  // hold amp characterization command for column select
       colSelect = Serial.readString().toInt();
       if (colSelect > 0) {break;}
     }
@@ -67,7 +67,7 @@ void loop()
     case 1: {                               // nmos opamp characterization
         turnOff();
         digitalWrite(resetBIN, LOW);        // by setting the SR inputs to low
-        digitalWrite(Csin, HIGH);           // close amp bypass
+        digitalWrite(Csin, HIGH);           // close NMOS amp bypass
         flashLED();
         command = 0;
         if (debug == true){
@@ -78,7 +78,7 @@ void loop()
     case 2: {                               // pmos opamp characterization
       turnOff();
       digitalWrite(resetBIN, LOW);
-      digitalWrite(Csin, LOW);
+      digitalWrite(Csin, LOW);              // close PMOS amp bypass
       flashLED();
       command = 0;
       if (debug == true) {
@@ -87,13 +87,9 @@ void loop()
       break;
     }
     case 3: {                               // Current Source Characterization
-        digitalWrite(LED, HIGH);
-        if (debug == true) {
-          Serial.println("What column would you like to index?");
-        }
-       // if (Serial.available() > 0) {
-       // colSelect = Serial.parseInt();     // read serial input for selected column
-        Serial.println(colSelect);
+      digitalWrite(Csin, HIGH);             // close NMOS amp bypass
+      digitalWrite(
+        Serial.println(colSelect);          // tell CPU what column was selected
         digitalWrite(LED, LOW);
         if (debug == true) {
           Serial.println("H V");
