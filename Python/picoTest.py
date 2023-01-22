@@ -30,6 +30,7 @@ def write_cmd(x):
     time.sleep(0.05)
 
 csData = pd.DataFrame(data=[], index=[], columns=[])           #create dataframe
+pltData = pd.DataFrame(data=[], index=[], columns=[])
 # bk.remoteMode(True, bkPS) #set remote mode for power supply
 # bk.setMaxVoltage(3.33, bkPS)   #set max voltage for PS
 # bk.outputOn(True, bkPS)     #turn the powersupply on
@@ -42,17 +43,19 @@ counter = 0
 voltIn = 0
 currOut = 0
 commandTX = 0
+power = 8
 
 colNum = 2      #int(input('How many colums do you want to test?'))
 currentInc = 11   #int(input('How many steps for current?'))
 voltInc = 34      #int(input('How many steps for Voltage?'))
 
 #smu.apply_current(smu.smua, 0)
-cOut = "CurrOut000"            
-vOut = "VoltOut001"
-cIn = "CurrIn"
+cOut = "CurrOut000" 
+cIn = "CurrIn000"
+ampVal = "ampVal01"
+pltX = "pltX"
 picLoc = "C:\\Users\\jpew\\AppData\\Local\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\csCharacterization\\"
-picName = "cs001"
+picName = "cs000"
 
 time.sleep(1)
 colSelect = 1 
@@ -62,6 +65,9 @@ for c in range(colNum):
         cOut = re.sub(r'[0-9]+$',
              lambda x: f"{str(int(x.group())+1).zfill(len(x.group()))}",    # increments the number in the column name
              cOut)
+        cIn = re.sub(r'[0-9]+$',
+             lambda x: f"{str(int(x.group())+1).zfill(len(x.group()))}",    # increments the number in the column name
+             cIn)
         picName = re.sub(r'[0-9]+$',
              lambda x: f"{str(int(x.group())+1).zfill(len(x.group()))}",    # increments the number in the column name
              picName)
@@ -74,25 +80,41 @@ for c in range(colNum):
     print('pico selected column: ' + str(columnRX))
     RFID = pico.read_until()                                                      # checks if pico is done with shift register
     if RFID == b'1\r\n':
-        currIn = 0.000005                                                   # the current applied to currentSource
-        # smu.apply_current(smu.smua, currIn)
-        startT = (time.perf_counter())
-        while time.perf_counter() - startT <= 3:                # checks if the run time has reached 60 sec
-            csData.at[row, str(cIn)] = row
-            csData.at[row, str(cOut)] = random.randint(1, 9)
-            print(time.perf_counter()-startT)
-            row = row + 1
-            time.sleep(.1)
-        csData.plot(x=cIn, y=cOut)
+        for a in range(5):
+            currIn = 1 / pow(10, power)                                                    # the current applied to currentSource
+            # smu.apply_current(smu.smua, currIn)
+            startT = (time.perf_counter())
+            while time.perf_counter() - startT <= 3:                # checks if the run time has reached 60 sec
+                if counter == 0:
+                    csData.at[row, str(cIn)] = row/10
+                csData.at[row, str(cOut+ampVal)] = random.randint(1, 9)
+                pltData.at[row, str(pltX+ampVal)] = row/10
+                pltData.at[row, str(pltX+ampVal)] = csData.at[row, str(cOut+ampVal)]
+                print(time.perf_counter()-startT)
+                row = row + 1
+                time.sleep(.1)
+            if a < 4:
+                ampVal = re.sub(r'[0-9]+$',
+                lambda x: f"{str(int(x.group())+1).zfill(len(x.group()))}",    # increments the number in the column name
+                ampVal)
+                # pltX = re.sub(r'[0-9]+$',
+                # lambda x: f"{str(int(x.group())+1).zfill(len(x.group()))}",    # increments the number in the column name
+                # pltX)
+            row = 0
+            
+        ampVal = "ampVal01"
+        print(pltX)
+        pltData.plot(subplots=[(pltX+'ampVal01',(pltX+'ampVal01')), ((pltX+'ampVal02'),(pltX+'ampVal02')),
+            ((pltX+'ampVal03'),(pltX+'ampVal03')), ((pltX+'ampVal04'),(pltX+'ampVal04')), ((pltX+'ampVal05'),(pltX+'ampVal05'))])
+        
         plt.title("Current In vs Current Out")
-        plt.xlabel("Current Into Current source")
+        plt.xlabel("Time")
         plt.ylabel("Current Out of Current source")
         plt.savefig(str(picLoc) + str(picName) + '.png')
         fig = plt.show(block = False)
         plt.pause(3)
         plt.close(fig)
     RFID = b''
-    row = 0
     counter = counter + 1    
     colSelect = colSelect + 1
     time.sleep(.2)

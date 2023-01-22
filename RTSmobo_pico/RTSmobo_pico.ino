@@ -64,18 +64,29 @@ void loop()
         //turnOff();
         break;
       }
-    case 1: {                               // opamp characterization
+    case 1: {                               // nmos opamp characterization
         turnOff();
         digitalWrite(resetBIN, LOW);        // by setting the SR inputs to low
         digitalWrite(Csin, HIGH);           // close amp bypass
         flashLED();
         command = 0;
         if (debug == true){
-        Serial.println("Ready for OpAmp characterization");
+        Serial.println("Ready for NMOS OpAmp characterization");
         }
         break;
       }
-    case 2: {                               // Current Source Characterization
+    case 2: {                               // pmos opamp characterization
+      turnOff();
+      digitalWrite(resetBIN, LOW);
+      digitalWrite(Csin, LOW);
+      flashLED();
+      command = 0;
+      if (debug == true) {
+        Serial.println("Ready for PMOS OpAmp characterization");
+      }
+      break;
+    }
+    case 3: {                               // Current Source Characterization
         digitalWrite(LED, HIGH);
         if (debug == true) {
           Serial.println("What column would you like to index?");

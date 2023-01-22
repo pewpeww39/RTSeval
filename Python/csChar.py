@@ -41,7 +41,8 @@ counter = 0
 voltIn = 0
 currOut = 0
 commandTX = 0
-
+colSelect = 1
+power = 8
 colNum = 256      #int(input('How many colums do you want to test?'))
 currentInc = 11   #int(input('How many steps for current?'))
 voltInc = 34      #int(input('How many steps for Voltage?'))
@@ -50,13 +51,12 @@ smu.apply_current(smu.smua, 0)
 cOut = "CurrOut000"           
 vOut = "VoltOut001"
 cIn = "CurrIn"
+ampVal = "ampVal01"
 picLoc = "~/miniconda3/envs/testequ/RTSeval/Python/Data/"
 picName = "cs001"
 
 time.sleep(1)
-colSelect = 1
 for c in range(colNum):
-
     if counter > 0:
         cOut = re.sub(r'[0-9]+$',
              lambda x: f"{str(int(x.group())+1).zfill(len(x.group()))}",    # increments the number in the column name
@@ -71,25 +71,29 @@ for c in range(colNum):
     column = write_cmd(str(colSelect))
     columnRX = pico.read_until()
     print('pico selected column: ' + str(columnRX))
-    RFID = pico.read_until()                                                # checks if pico is done with shift register
-    commandRX = RFID.decode()
+    RFID = pico.read_until() 
     if RFID == b'1\r\n':
-        currIn = 0.000005                                                   # the current applied to currentSource
-        smu.apply_current(smu.smua, currIn)
-        startT = time.perf_counter()
-        while time.perf_counter() - startT <= 60:                 # checks if the run time has reached 60 sec
-            csData.at[row, str(cIn)] = smu.smua.measurei()
-            csData.at[row, str(cOut)] = smu.smub.measurei()
-            row = row + 1
-            time.sleep(.1)
-        csData.plot(x=cIn, y=cOut)
-        plt.title("Current In vs Current Out")
-        plt.xlabel("Current Into Current source")
-        plt.ylabel("Current Out of Current source")
-        plt.savefig(str(picLoc) + str(picName) + '.png')
-        fig = plt.show(block = False)
-        plt.pause(3)
-        plt.close(fig)
+        for a in range(5):
+            currIn = 1 / pow(10, power)                                                   # the current applied to currentSource
+            smu.apply_current(smu.smua, currIn)
+            startT = time.perf_counter()
+            while time.perf_counter() - startT <= 60:
+                csData.at[row, str(cIn + ampVal)] = smu.smua.measurei()
+                csData.at[row, str(cOut + ampVal)] = smu.smub.measurei()
+                row = row + 1
+                time.sleep(.1)
+            csData.plot(x=(cIn+ampVal), y=(cOut+ampVal))
+            ampVal = re.sub(r'[0-9]+$',
+            lambda x: f"{str(int(x.group())+1).zfill(len(x.group()))}",    # increments the number in the column name
+                    ampVal)
+            power = power - 1
+            plt.title("Current In vs Current Out")
+            plt.xlabel("Current Into Current source")
+            plt.ylabel("Current Out of Current source")
+            plt.savefig(str(picLoc) + str(picName) + '.png')
+            fig = plt.show(block = False)
+            plt.pause(3)
+            plt.close(fig)
     RFID = b''
     row = 0
     counter = counter + 1
