@@ -44,7 +44,7 @@ voltIn = 0
 currOut = 0
 commandTX = 0
 colSelect = 1
-power = 8
+power = 9
 colNum = 256      #int(input('How many colums do you want to test?'))
 currentInc = 11   #int(input('How many steps for current?'))
 voltInc = 34      #int(input('How many steps for Voltage?'))
@@ -53,8 +53,8 @@ smu.apply_current(smu.smua, 0)
 cOut = "CurrOut000"           
 cIn = "CurrIn"
 ampVal = "ampVal01"
-pltX = "pltX"
-picLoc = "~/miniconda3/envs/testequ/RTSeval/Python/Data/"
+pltX = "CurrIn1"
+picLoc = "~/miniconda3/envs/testequ/RTSeval/Python/Data/csCharacterization"
 picName = "cs000"
 
 time.sleep(1)
@@ -69,41 +69,50 @@ for c in range(colNum):
         picName = re.sub(r'[0-9]+$',
              lambda x: f"{str(int(x.group())+1).zfill(len(x.group()))}",    # increments the number in the column name
              picName)
-    commandTX = write_cmd(2)                                                   # increments the column to test
-    commandRX = pico.read_until()
+    commandTX = write_cmd(str(2))                                                   # increments the column to test
+    commandRX = pico.read_until().strip().decode()
     time.sleep(.5)
     print('pico confirmed: ' + str(commandRX))
     column = write_cmd(str(colSelect))
     columnRX = pico.read_until()
     print('pico selected column: ' + str(columnRX))
-    RFID = pico.read_until() 
-    if RFID == b'1\r\n':
+    commandRX = int(pico.read_until().strip().decode())
+    if commandRX == 1:
         for a in range(5):
-            currIn = 1 / pow(10, power)                                                   # the current applied to currentSource
+            currIn = pow(10, -power)                                                   # the current applied to currentSource
             smu.apply_current(smu.smua, currIn)
-            startT = time.perf_counter()
-            while time.perf_counter() - startT <= 60:
-                csData.at[row, str(cIn + ampVal)] = smu.smua.measurei()
-                csData.at[row, str(cOut + ampVal)] = smu.smub.measurei()
+            startT = round(time.perf_counter(), 4)
+            while round(time.perf_counter(), 4) - startT <= 60.1:
+                currentTime = round(time.perf_counter(), 4) - startT
+                csData.at[row, 'Time'] = currentTime
+                pltData.at[row, pltX] = smu.smua.measurei()
+                pltData.at[row, str(ampVal)] = smu.smub.measurei()
                 row = row + 1
-                time.sleep(.1)
-            csData.plot(x=(cIn+ampVal), y=(cOut+ampVal))
-            ampVal = re.sub(r'[0-9]+$',
-            lambda x: f"{str(int(x.group())+1).zfill(len(x.group()))}",    # increments the number in the column name
-                    ampVal)
+                time.sleep(.1000)
+            csData[str(cOut+ampVal)] = pltData[str(ampVal)]
+            if a < 4:
+                ampVal = re.sub(r'[0-9]+$',
+                lambda x: f"{str(int(x.group())+1).zfill(len(x.group()))}",    # increments the number in the column name
+                ampVal)
+                pltX = re.sub(r'[0-9]+$',
+                lambda x: f"{str(int(x.group())+1).zfill(len(x.group()))}",    # increments the number in the column name
+                pltX)
+            row = 0
             power = power - 1
-            plt.title("Current In vs Current Out")
-            plt.xlabel("Current Into Current source")
-            plt.ylabel("Current Out of Current source")
-            plt.savefig(str(picLoc) + str(picName) + '.png')
-            fig = plt.show(block = False)
-            plt.pause(3)
-            plt.close(fig)
-    RFID = b''
-    row = 0
+        power = 9
+        pltX = 'CurrIn1'
+        ampVal = 'ampVal01'
+        if debug is True:
+            print(pltData)
+        pltData.plot(xlabel="Time", ylabel="Current Out", sharey=True, title="Current In vs. Current Out", legend=True, subplots=[('CurrIn1','ampVal01'),('CurrIn2','ampVal02'),('CurrIn3','ampVal03'),
+                                ('CurrIn4','ampVal04'),('CurrIn5','ampVal05')])
+        plt.savefig(picLoc+picName+'.png')
+        fig = plt.show(block = False)
+        plt.pause(3)
+        plt.close(fig)
+    commandRX=0
     counter = counter + 1
-    time.sleep(.2)
-        
+    colSelect = colSelect + 1
 print(csData)
 csData.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/csCharacterizaton/cscharData.csv')
 smu._write(value='smua.source.output = smua.OUTPUT_OFF')
