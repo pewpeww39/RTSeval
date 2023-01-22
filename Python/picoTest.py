@@ -38,6 +38,7 @@ pltData = pd.DataFrame(data=[], index=[], columns=[])
 
 # bkdmm.write(b'func volt:dc\n')                                  #set dmm to volt
 # bkdmm.write(b'volt:dc:rang:auto 1\n')                           #set ddm to auto range
+debug = False
 row = 0
 counter = 0
 voltIn = 0
@@ -45,7 +46,8 @@ currOut = 0
 commandTX = 0
 power = 8
 
-colNum = 2      #int(input('How many colums do you want to test?'))
+
+colNum = 3      #int(input('How many colums do you want to test?'))
 currentInc = 11   #int(input('How many steps for current?'))
 voltInc = 34      #int(input('How many steps for Voltage?'))
 
@@ -54,6 +56,7 @@ cOut = "CurrOut000"
 cIn = "CurrIn000"
 ampVal = "ampVal01"
 pltX = "pltX"
+pltY = "pltY"
 picLoc = "C:\\Users\\jpew\\AppData\\Local\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\csCharacterization\\"
 picName = "cs000"
 
@@ -88,27 +91,25 @@ for c in range(colNum):
                 if counter == 0:
                     csData.at[row, str(cIn)] = row/10
                 csData.at[row, str(cOut+ampVal)] = random.randint(1, 9)
-                pltData.at[row, str(pltX+ampVal)] = row/10
+                #pltData.at[row, str(pltX+ampVal)] = row/10
                 pltData.at[row, str(pltX+ampVal)] = csData.at[row, str(cOut+ampVal)]
-                print(time.perf_counter()-startT)
+                if debug is True:
+                    print(time.perf_counter()-startT)
                 row = row + 1
                 time.sleep(.1)
             if a < 4:
                 ampVal = re.sub(r'[0-9]+$',
                 lambda x: f"{str(int(x.group())+1).zfill(len(x.group()))}",    # increments the number in the column name
                 ampVal)
-                # pltX = re.sub(r'[0-9]+$',
-                # lambda x: f"{str(int(x.group())+1).zfill(len(x.group()))}",    # increments the number in the column name
-                # pltX)
             row = 0
             
         ampVal = "ampVal01"
-        print(pltX)
-        pltData.plot(subplots=[(pltX+'ampVal01',(pltX+'ampVal01')), ((pltX+'ampVal02'),(pltX+'ampVal02')),
+        print(pltData)
+        pltData.plot(sharex=True, subplots=[(pltX+'ampVal01',(pltX+'ampVal01')), ((pltX+'ampVal02'),(pltX+'ampVal02')),
             ((pltX+'ampVal03'),(pltX+'ampVal03')), ((pltX+'ampVal04'),(pltX+'ampVal04')), ((pltX+'ampVal05'),(pltX+'ampVal05'))])
         
         plt.title("Current In vs Current Out")
-        plt.xlabel("Time")
+        plt.xlabel("Time (Sec/10)")
         plt.ylabel("Current Out of Current source")
         plt.savefig(str(picLoc) + str(picName) + '.png')
         fig = plt.show(block = False)
