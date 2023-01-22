@@ -50,12 +50,10 @@ currentInc = 11   #int(input('How many steps for current?'))
 voltInc = 34      #int(input('How many steps for Voltage?'))
 
 smu.apply_current(smu.smua, 0)
-cOut = "CurrOut000"           
-cIn = "CurrIn"
-ampVal = "ampVal01"
-pltX = "CurrIn1"
+cOut = "CS000"   
+pltY = " ampsOut E-9"
+pltX = " ampsIn E-9"
 picLoc = "~/miniconda3/envs/testequ/RTSeval/Python/Data/csCharacterization"
-picName = "cs000"
 
 time.sleep(1)
 for c in range(colNum):
@@ -63,12 +61,6 @@ for c in range(colNum):
         cOut = re.sub(r'[0-9]+$',
              lambda x: f"{str(int(x.group())+1).zfill(len(x.group()))}",    # increments the number in the column name
              cOut)
-        cIn = re.sub(r'[0-9]+$',
-             lambda x: f"{str(int(x.group())+1).zfill(len(x.group()))}",    # increments the number in the column name
-             cIn)
-        picName = re.sub(r'[0-9]+$',
-             lambda x: f"{str(int(x.group())+1).zfill(len(x.group()))}",    # increments the number in the column name
-             picName)
     commandTX = write_cmd(str(2))                                                   # increments the column to test
     commandRX = pico.read_until().strip().decode()
     time.sleep(.5)
@@ -84,29 +76,34 @@ for c in range(colNum):
             startT = round(time.perf_counter(), 4)
             while round(time.perf_counter(), 4) - startT <= 60.1:
                 currentTime = round(time.perf_counter(), 4) - startT
-                csData.at[row, 'Time'] = currentTime
-                pltData.at[row, pltX] = smu.smua.measurei()
-                pltData.at[row, str(ampVal)] = smu.smub.measurei()
+                if counter == 0:
+                    csData.at[row, 'Time'] = currentTime
+                #pltData.at[row, pltX] = smu.smua.measurei()
+                pltData.at[row, pltY] = smu.smub.measurei()
                 row = row + 1
                 time.sleep(.1000)
-            csData[str(cOut+ampVal)] = pltData[str(ampVal)]
+            csData['Time'] = pltData['Time']
+            csData[str(cOut+pltY)] = pltData[str(pltY)]
             if a < 4:
-                ampVal = re.sub(r'[0-9]+$',
-                lambda x: f"{str(int(x.group())+1).zfill(len(x.group()))}",    # increments the number in the column name
-                ampVal)
+                pltY = re.sub(r'[0-9]+$',
+                lambda x: f"{str(int(x.group())-1).zfill(len(x.group()))}",    # increments the number in the column name
+                pltY)
                 pltX = re.sub(r'[0-9]+$',
-                lambda x: f"{str(int(x.group())+1).zfill(len(x.group()))}",    # increments the number in the column name
+                lambda x: f"{str(int(x.group())-1).zfill(len(x.group()))}",    # increments the number in the column name
                 pltX)
             row = 0
             power = power - 1
         power = 9
-        pltX = 'CurrIn1'
-        ampVal = 'ampVal01'
+        pltX = 'ampsIn E-9'
+        ampVal = 'ampsOut E-9'
         if debug is True:
             print(pltData)
-        pltData.plot(xlabel="Time", ylabel="Current Out", sharey=True, title="Current In vs. Current Out", legend=True, subplots=[('CurrIn1','ampVal01'),('CurrIn2','ampVal02'),('CurrIn3','ampVal03'),
-                                ('CurrIn4','ampVal04'),('CurrIn5','ampVal05')])
-        plt.savefig(picLoc+picName+'.png')
+        pltData.plot(x= 'Time', xlabel="Time", ylabel="Current Out", sharey=True, title="Current In vs. Current Out", legend=True,
+                    subplots=True)
+        # pltData.plot(x= 'Time', xlabel="Time", ylabel="Current Out", sharey=True, title="Current In vs. Current Out", legend=True,
+        #             subplots=[(' ampsIn E-9',' ampsOut E-9'),(' ampsIn E-8',' ampsOut E-8'),(' ampsIn E-7',' ampsOut E-7'), 
+        #             (' ampsIn E-6',' ampsOut E-6'),(' ampsIn E-5',' ampsOut E-5')])
+        plt.savefig(picLoc+cOut+'.png')
         fig = plt.show(block = False)
         plt.pause(3)
         plt.close(fig)

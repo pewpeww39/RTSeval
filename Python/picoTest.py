@@ -46,7 +46,7 @@ currOut = 0
 commandTX = 0
 colSelect = 1 
 power = 9
-colNum = 1      #int(input('How many colums do you want to test?'))
+colNum = 3      #int(input('How many colums do you want to test?'))
 currentInc = 11   #int(input('How many steps for current?'))
 voltInc = 34      #int(input('How many steps for Voltage?'))
 
