@@ -88,7 +88,6 @@ void loop()
     }
     case 3: {                               // Current Source Characterization
       digitalWrite(Csin, HIGH);             // close NMOS amp bypass
-      digitalWrite(
         Serial.println(colSelect);          // tell CPU what column was selected
         digitalWrite(LED, LOW);
         if (debug == true) {
