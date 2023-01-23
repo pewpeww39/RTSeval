@@ -132,7 +132,7 @@ void loop()
         command = 0;
         int commandTX = 1;
         Serial.println(commandTX);
-        commandTX = 0; //send command
+        commandTX = 0; 
         colSelect = 0; // colSelect + 1;
         break;
       }
