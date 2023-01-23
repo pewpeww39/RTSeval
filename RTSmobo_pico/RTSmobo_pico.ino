@@ -143,24 +143,22 @@ void loop()
         if (debug == true) {
           Serial.println("H V");
         }
-        horSR = 1; 
-        verSR = 0;
         digitalWrite(resetBIN, LOW);        // Flush the SR
         waitFor(20);
         digitalWrite(resetBIN, HIGH);
         waitFor(20);
-        for (int j = 300; j > 0; j--) {     // for loop for the number of columns
+        for (int j = 257; j > 0; j--) {     // for loop for the number of columns
 
-//          if (colSelect == j) {             // check if j = desired column i.e. 0000...0100
-//            horSR = 1;                      // if it does set SDA_ to high
-//          } else {
-//            horSR = 0;                      // if not set it to low (most cases)
-//          }
-//          if (rowSelect == j) {
-//            verSR = 1;                      // same as above for vertical SR
-//          } else {
-//            verSR = 0;
-//          }
+          if (colSelect == j) {             // check if j = desired column i.e. 0000...0100
+            horSR = 1;                      // if it does set SDA_ to high
+          } else {
+            horSR = 0;                      // if not set it to low (most cases)
+          }
+          if (rowSelect == j) {
+            verSR = 1;                      // same as above for vertical SR
+          } else {
+            verSR = 0;
+          }
 
 
           digitalWrite(HCLKin, HIGH);          // set the SR clock high
