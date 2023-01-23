@@ -38,7 +38,8 @@ row = 0
 counter = 0
 voltIn = 0
 currOut = 0
-
+NMOS = 1
+PMOS = 2
 currentInc = 11   #int(input('How many steps for current?'))
 voltInc = 34      #int(input('How many steps for Voltage?'))
 
@@ -47,7 +48,7 @@ cOut = "CurrVOut001"                                            #variable to sto
 vOut = "VoltOut001"
 cIn = "CurrIn001"
 #bkPS.outputON(True, bkPS)
-commandTX = write_cmd(str(1))  
+commandTX = write_cmd(str(NMOS))  
 time.sleep(1)
 
 for c in range(currentInc):
