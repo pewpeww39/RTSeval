@@ -10,7 +10,9 @@ from os import system, name
 
 pico = serial.Serial('COM4', baudrate=115200)
 smu = Keithley2600('TCPIP0::192.168.4.11::INSTR')               #set ip addr for smu
-smu._write(value='smua.source.autorangei = smua.AUTORANGE_ON')  #set auto range for smua 
+smu._write(value='smua.source.autorangei = smua.AUTORANGE_ON')  #set auto range for smua
+smu._write(value='smub.source.autorangev = smub.AUTORANGE_ON')  #set auto range for smua 
+
 smu.set_integration_time(smu.smua, 0.001)                       # sets integration time in sec
 smu._write(value= 'smua.source.limitv = 3.3')                   #set v liimit smua
 smu._write(value= "smub.source.limitv = 3.3")                   #set v liimit smub
@@ -81,7 +83,7 @@ for c in range(currentInc):
         dmmData.at[row, str(cOut)] = float(currVOut)    #records the voltage at ampBias
         dmmData.at[row, str(vOut)] = float(dmmVolt)     #records the output voltage
         row = row + 1
-        
+commandTX = write_cmd(str(9))          
 print(dmmData)
 dmmData.to_csv('~/miniconda3/envs/testequ/Skywater/Data/ampcharData.csv')
 smu._write(value='smua.source.output = smua.OUTPUT_OFF')
