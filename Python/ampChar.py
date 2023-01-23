@@ -6,14 +6,25 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from keithley2600 import Keithley2600
 from BKPrecision import lib1785b as bk
+from os import system, name
 
+pico = serial.Serial('COM4', baudrate=115200)
 smu = Keithley2600('TCPIP0::192.168.4.11::INSTR')               #set ip addr for smu
 smu._write(value='smua.source.autorangei = smua.AUTORANGE_ON')  #set auto range for smua 
 smu.set_integration_time(smu.smua, 0.001)                       # sets integration time in sec
 smu._write(value= 'smua.source.limitv = 3.3')                   #set v liimit smua
 smu._write(value= "smub.source.limitv = 3.3")                   #set v liimit smub
 bkPS = serial.Serial('com6',9600)                               #set com port for BK power supply
-bkdmm = serial.Serial('com7', 9600)                             #set com port for BK power supply
+bkdmm = serial.Serial('com7', 9600)  
+                           #set com port for BK power supply
+def clear ():
+    if name == 'nt':
+        _ = system('cls')
+    else:
+        _ = system('clear')
+def write_cmd(x):
+    pico.write(bytes(x, 'utf-8'))
+    time.sleep(0.05)
 
 dmmData = pd.DataFrame(data=[], index=[], columns=[])           #create dataframe
 bk.remoteMode(True, bkPS) #set remote mode for power supply
@@ -36,6 +47,7 @@ cOut = "CurrVOut001"                                            #variable to sto
 vOut = "VoltOut001"
 cIn = "CurrIn001"
 #bkPS.outputON(True, bkPS)
+commandTX = write_cmd(str(1))  
 time.sleep(1)
 
 for c in range(currentInc):

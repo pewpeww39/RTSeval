@@ -234,6 +234,11 @@ void loop()
 //        break;
 //
 //      }
+  case 9:
+    turnOff();
+    flashLED();
+    command = 0;
+    break;
   }
 }
 

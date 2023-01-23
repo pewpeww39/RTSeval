@@ -61,7 +61,7 @@ for c in range(colNum):
         cOut = re.sub(r'[0-9]+$',
              lambda x: f"{str(int(x.group())+1).zfill(len(x.group()))}",    # increments the number in the column name
              cOut)
-    commandTX = write_cmd(str(2))                                                   # increments the column to test
+    commandTX = write_cmd(str(3))                                                   # increments the column to test
     commandRX = pico.read_until().strip().decode()
     time.sleep(.5)
     print('pico confirmed: ' + str(commandRX))
