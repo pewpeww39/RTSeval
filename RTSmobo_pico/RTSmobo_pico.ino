@@ -136,7 +136,7 @@ void loop()
         colSelect = 0; // colSelect + 1;
         break;
       }
-      case 4: {                               // Clock Characterization
+      case 4: {                               // Clock, Shift Register Characterization
         digitalWrite(Csin, HIGH);             // close NMOS amp bypass
         Serial.println(colSelect);          // tell CPU what column was selected
         digitalWrite(LED, LOW);
