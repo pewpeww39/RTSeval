@@ -144,9 +144,9 @@ void loop()
           Serial.println("H V");
         }
         digitalWrite(resetBIN, LOW);        // Flush the SR
-        waitFor(20);
+        waitFor(100);
         digitalWrite(resetBIN, HIGH);
-        waitFor(20);
+        waitFor(100);
         for (int j = 257; j > 0; j--) {     // for loop for the number of columns
 
           if (colSelect == j) {             // check if j = desired column i.e. 0000...0100
@@ -163,13 +163,13 @@ void loop()
 
           digitalWrite(HCLKin, HIGH);          // set the SR clock high
           digitalWrite(LED, HIGH);
-          waitFor(20);
+          waitFor(100);
           digitalWrite(DHin, horSR);       // set SDA_A pin to horSR value
           digitalWrite(Din, verSR);       // set SDA_B pin to verSR value
-          waitFor(20);
+          waitFor(100);
           digitalWrite(HCLKin, LOW);           // set the SR clock Low
           digitalWrite(LED, LOW);
-          waitFor(20);
+          waitFor(100);
 
           if (debug == true) {
             Serial.print(horSR );
