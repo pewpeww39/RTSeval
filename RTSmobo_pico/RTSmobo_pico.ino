@@ -23,7 +23,7 @@
 #define LED             25  // Pico LED
 
 int command = 0;
-int colSelect = 300;
+int colSelect = 1;
 int rowSelect = 0;
 int horSR = 0;
 int verSR = 0;
@@ -142,7 +142,7 @@ void loop()
         digitalWrite(resetBIN, HIGH);
         waitFor(100);
         
-        for (int j = 300; j > 0; j--) {     // for loop for the number of columns
+        for (int j = 0; j < 300; j++) {     // for loop for the number of columns
 
           if ( colSelect == j) {             // check if j = desired column i.e. 0000...0100
             horSR = HIGH;                      // if it does set SDA_ to high
@@ -160,15 +160,12 @@ void loop()
           waitFor(10);
           digitalWrite(DHin, horSR);       // set SDA_A pin to horSR value
           digitalWrite(Din, verSR);       // set SDA_B pin to verSR value
-          horSR = 0;
-          verSR = 0;
+
           waitFor(10);
           digitalWrite(HCLKin, LOW);           // set the SR clock Low
           digitalWrite(LED, LOW);
           waitFor(10);
-          digitalWrite(DHin, horSR);       // set SDA_A pin to horSR value
-          digitalWrite(Din, verSR);       // set SDA_B pin to verSR value
-          waitFor(10);
+
 
           
           if (debug == true) {
@@ -182,7 +179,12 @@ void loop()
         int commandTX = 1;
         Serial.println(commandTX);
         commandTX = 0;
-        colSelect = 300; // colSelect + 1;
+        colSelect = 1; // colSelect + 1;
+        break;
+      }
+
+      case 5: {
+        digitalWrite(resetBIN, HIGH);
         break;
       }
 
