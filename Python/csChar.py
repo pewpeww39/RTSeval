@@ -32,8 +32,8 @@ csData = pd.DataFrame(data=[], index=[], columns=[])
 pltData = pd.datafrme(data=[], index=[], columns=[])         #create dataframe
 bk.remoteMode(True, bkPS) #set remote mode for power supply
 bk.setMaxVoltage(3.33, bkPS)   #set max voltage for PS
-bk.outputOn(True, bkPS)     #turn the powersupply on
-bk.volt(3.3, bkPS)    #set voltage for power supply
+#bk.outputOn(True, bkPS)     #turn the powersupply on
+#bk.volt(3.3, bkPS)    #set voltage for power supply
 
 bkdmm.write(b'func volt:dc\n')                                  #set dmm to volt
 bkdmm.write(b'volt:dc:rang:auto 1\n')                           #set ddm to auto range
@@ -45,7 +45,7 @@ currOut = 0
 commandTX = 0
 colSelect = 1
 power = 9
-colNum = 256      #int(input('How many colums do you want to test?'))
+colNum = 1      #int(input('How many colums do you want to test?'))
 currentInc = 11   #int(input('How many steps for current?'))
 voltInc = 34      #int(input('How many steps for Voltage?'))
 
@@ -74,7 +74,7 @@ for c in range(colNum):
             currIn = pow(10, -power)                                                   # the current applied to currentSource
             smu.apply_current(smu.smua, currIn)
             startT = round(time.perf_counter(), 4)
-            while round(time.perf_counter(), 4) - startT <= 60.1:
+            while round(time.perf_counter(), 4) - startT <= 1.1:
                 currentTime = round(time.perf_counter(), 4) - startT
                 if counter == 0:
                     csData.at[row, 'Time'] = currentTime
@@ -114,4 +114,4 @@ print(csData)
 csData.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/csCharacterizaton/cscharData.csv')
 smu._write(value='smua.source.output = smua.OUTPUT_OFF')
 smu._write(value='smub.source.output = smub.OUTPUT_OFF')
-bk.outputOn(False, bkPS)     #turn the powersupply off
+#bk.outputOn(False, bkPS)     #turn the powersupply off
