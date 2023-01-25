@@ -23,7 +23,7 @@
 #define LED             25  // Pico LED
 
 int command = 0;
-int colSelect = 1;
+int colSelect = 300;
 int rowSelect = 0;
 int horSR = 0;
 int verSR = 0;
@@ -141,50 +141,36 @@ void loop()
         waitFor(100);
         digitalWrite(resetBIN, HIGH);
         waitFor(100);
-<<<<<<< HEAD
-        for (int j = 1; j < 350; j++) {     // for loop for the number of columns
-=======
-        for (int j = 257; j > 0; j--) {     // for loop for the number of columns
->>>>>>> 62357512abe42cad4aab4903bc919be2961adf5f
+        
+        for (int j = 300; j > 0; j--) {     // for loop for the number of columns
 
-//          if (colSelect == j) {             // check if j = desired column i.e. 0000...0100
+          if ( colSelect == j) {             // check if j = desired column i.e. 0000...0100
             horSR = HIGH;                      // if it does set SDA_ to high
-//          } else {
-//            horSR = LOW;                      // if not set it to low (most cases)
-//          }
+          } else {
+            horSR = LOW;                      // if not set it to low (most cases)
+          }
           if (rowSelect == j) {
             verSR = HIGH;                      // same as above for vertical SR
           } else {
             verSR = LOW;
           }
 
-          
-          waitFor(100);
-          digitalWrite(HCLKin, HIGH);          // set the SR clock high
+          digitalWrite(HCLKin, HIGH);           // set the SR clock Low
           digitalWrite(LED, HIGH);
-<<<<<<< HEAD
+          waitFor(10);
           digitalWrite(DHin, horSR);       // set SDA_A pin to horSR value
           digitalWrite(Din, verSR);       // set SDA_B pin to verSR value
-          //horSR = LOW;
-          verSR = LOW;
-
-          waitFor(100);
+          horSR = 0;
+          verSR = 0;
+          waitFor(10);
           digitalWrite(HCLKin, LOW);           // set the SR clock Low
           digitalWrite(LED, LOW);
+          waitFor(10);
           digitalWrite(DHin, horSR);       // set SDA_A pin to horSR value
           digitalWrite(Din, verSR);       // set SDA_B pin to verSR value
-          //waitFor(10);
+          waitFor(10);
+
           
-=======
-          waitFor(100);
-          digitalWrite(DHin, horSR);       // set SDA_A pin to horSR value
-          digitalWrite(Din, verSR);       // set SDA_B pin to verSR value
-          waitFor(100);
-          digitalWrite(HCLKin, LOW);           // set the SR clock Low
-          digitalWrite(LED, LOW);
-          waitFor(100);
-
->>>>>>> 62357512abe42cad4aab4903bc919be2961adf5f
           if (debug == true) {
             Serial.print(horSR );
             Serial.print(' ');
@@ -196,7 +182,7 @@ void loop()
         int commandTX = 1;
         Serial.println(commandTX);
         commandTX = 0;
-        colSelect = 0; // colSelect + 1;
+        colSelect = 300; // colSelect + 1;
         break;
       }
 
@@ -304,7 +290,7 @@ void loop()
       turnOff();
       flashLED();
       command = 0;
-      colSelect = 1;
+      colSelect = 300;
       break;
   }
 }

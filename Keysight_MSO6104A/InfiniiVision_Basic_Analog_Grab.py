@@ -32,7 +32,7 @@
 
 ## Import python modules - Not all of these are used in this program; provided for reference
 import sys
-import visa
+import pyvisa
 import time
 import struct
 import numpy as np
@@ -78,12 +78,12 @@ import matplotlib.pyplot as plt
 ##############################################################################################################################################################################
 
 ## Initialization constants
-VISA_ADDRESS = "USB0::0x0957::0x17A0::MY51500437::0::INSTR" # Get this from Keysight IO Libraries Connection Expert #Note: sockets are not supported in this revision of the script, and pyVisa 1.6.3 does not support HiSlip
+VISA_ADDRESS = "'TCPIP0::192.168.4.12::INSTR'" # Get this from Keysight IO Libraries Connection Expert #Note: sockets are not supported in this revision of the script, and pyVisa 1.6.3 does not support HiSlip
 GLOBAL_TOUT =  10000 # IO time out in milliseconds
 
 ## Save Locations
 BASE_FILE_NAME = "my_data"
-BASE_DIRECTORY = "C:\\Users\\Public\\"
+BASE_DIRECTORY = "C:\\Users\\jacob\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\MSO6104A"
     ## IMPORTANT NOTE:  This script WILL overwrite previously saved files!
 
 ##############################################################################################################################################################################
@@ -102,7 +102,7 @@ sys.stdout.write("Script is running.  This may take a while...")
 
 ## Define VISA Resource Manager & Install directory
 ## This directory will need to be changed if VISA was installed somewhere else.
-rm = visa.ResourceManager('C:\\Windows\\System32\\visa32.dll') # this uses pyvisa
+rm = pyvisa.ResourceManager() # this uses pyvisa  'C:\\Windows\\System32\\visa32.dll'
 ## This is more or less ok too: rm = visa.ResourceManager('C:\\Program Files (x86)\\IVI Foundation\\VISA\\WinNT\\agvisa\\agbin\\visa32.dll')
 ## In fact, it is generally not needed to call it explicitly
 ## rm = visa.ResourceManager()
@@ -401,7 +401,7 @@ if CHS_ON[0] == 1: # Recall that python indices start at 0, so ch1 is index 0
         np.savetxt(filehandle, np.vstack((DataTime,Data_Ch1)).T, delimiter=',')
             ## np.vstack basically concatenates the timing info and analog data into one array, but it will be shape (2 rows, NPoints columns),
             ## and typically one wants (NPoints rows,2 columns), and the .T (transpose) at the end takes care of that
-    print "It took " + str(time.clock() - now) + " seconds to save 1 channel in csv format."
+    print ("It took " + str(time.clock() - now) + " seconds to save 1 channel in csv format.")
     del now
 
     ## Read the csv data back into python with:
@@ -420,7 +420,7 @@ if CHS_ON[0] == 1: # Recall that python indices start at 0, so ch1 is index 0
         ## NOTE, if one were to not use with open, and just do np.save like this:
             ## np.save(filename, np.vstack((DataTime,Data_Ch1)).T)
             ## this method automatically appends a .npy to the file name...
-    print "It took " + str(time.clock() - now) + " seconds to save 1 channel in binary format."
+    print ("It took " + str(time.clock() - now) + " seconds to save 1 channel in binary format.")
     del now
 
     ## Read the NUMPY BINARY data back into python with:
@@ -463,7 +463,7 @@ with open(filename, 'w') as filehandle: # w means open for writing; can overwrit
     np.savetxt(filehandle, np.insert(Wav_Data,0,DataTime,axis=0).T, delimiter=',')
         ## The np.insert essentially deals with the fact that Wav_Data is a multi-dimensional array and DataTime is a
         ## 1 1D array, and cannot otherwise be concatenated easily.  As described above, the .T is a transpose
-print "It took " + str(time.clock() - now) + " seconds to save " + str(NUMBER_CHANNELS_ON) + " channels in csv format."
+print ("It took " + str(time.clock() - now) + " seconds to save " + str(NUMBER_CHANNELS_ON) + " channels in csv format.")
 del now
 
 ## Read csv data back into python with:
@@ -479,7 +479,7 @@ now = time.clock() # Only to show how long it takes to save
 filename = BASE_DIRECTORY + BASE_FILE_NAME + ".npy"
 with open(filename, 'wb') as filehandle: # wb means open for writing in binary; can overwrite
     np.save(filehandle, np.insert(Wav_Data,0,DataTime,axis=0).T)
-print "It took " + str(time.clock() - now) + " seconds to save " + str(NUMBER_CHANNELS_ON) + " channels in binary format."
+print ("It took " + str(time.clock() - now) + " seconds to save " + str(NUMBER_CHANNELS_ON) + " channels in binary format.")
 del now
 
 ## Read the NUMPY BINARY data back into python with:
@@ -497,7 +497,7 @@ del filename, filehandle
 ##############################################################################################################################################################################
 ##############################################################################################################################################################################
 
-print "Done."
+print ("Done.")
 
 ##############################################################################################################################################################################
 ##############################################################################################################################################################################
