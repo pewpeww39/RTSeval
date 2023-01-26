@@ -23,11 +23,12 @@
 #define LED             25  // Pico LED
 
 int command = 0;
-int colSelect = 200;
-int rowSelect = 15;
+int colSelect = 156;
+int rowSelect = 23;
 int horSR = 0;
 int verSR = 0;
 int holdRow = 0;
+int clkPulse = 0;
 
 uint32_t timer = millis();
 uint32_t timerB = millis();
@@ -94,7 +95,7 @@ void loop()
         waitFor(10);
         digitalWrite(resetBIN, HIGH);
         waitFor(10);
-        for (int j = 300; j > 0; j--) {     // for loop for the number of columns
+        for (int j = 256; j > 0; j--) {     // for loop for the number of columns
           if (colSelect == j) {             // check if j = desired column i.e. 0000...0100
             horSR = 1;                      // if it does set SDA_ to high
           } else {
@@ -139,25 +140,18 @@ void loop()
           Serial.println("H V");
         }
         digitalWrite(resetBIN, LOW);        // Flush the SR
-        waitFor(100);
+        waitFor(1);
         digitalWrite(resetBIN, HIGH);
-        waitFor(100);
-        if (colSelect > 96) {
-        holdRow = colSelect + rowSelect;
-        } else {holdRow = rowSelect;}
-        for (int j = 0; j < 257+96; j++) {     // for loop for the number of columns
+        waitFor(1);
 
-          if ( colSelect == j & colSelect > 0) {             // check if j = desired column i.e. 0000...0100
+        
+        for (int j = 256; j > 0; j--) {     // for loop for the number of columns
+          if ( colSelect == j) {             // check if j = desired column i.e. 0000...0100
             horSR = HIGH;                      // if it does set SDA_ to high
           } else {
             horSR = LOW;                      // if not set it to low (most cases)
           }
-//          if (holdRow > 0){
-//            verSR = LOW;
-//            holdRow = holdRow - 1;
-//          }
-          if (holdRow == j & rowSelect > 0) {
-            Serial.println(j);
+          if (rowSelect == j) {
             verSR = HIGH;                      // same as above for vertical SR
           } else {
             verSR = LOW;
@@ -165,14 +159,13 @@ void loop()
 
           digitalWrite(HCLKin, LOW);           // set the SR clock Low
           digitalWrite(LED, LOW);
-          waitFor(10);
+          waitFor(1);
           digitalWrite(DHin, horSR);       // set SDA_A pin to horSR value
           digitalWrite(Din, verSR);       // set SDA_B pin to verSR value
-
-          waitFor(10);
+          waitFor(1);
           digitalWrite(HCLKin, HIGH);           // set the SR clock Low
           digitalWrite(LED, HIGH);
-          waitFor(10);
+          waitFor(1);
           digitalWrite(DHin, LOW);       // set SDA_A pin to horSR value
           digitalWrite(Din, LOW);          
 
@@ -189,7 +182,7 @@ void loop()
         int commandTX = 1;
         Serial.println(commandTX);
         commandTX = 0;
-        colSelect = 1; // colSelect + 1;
+        //colSelect = 1; // colSelect + 1;
         break;
       }
 
