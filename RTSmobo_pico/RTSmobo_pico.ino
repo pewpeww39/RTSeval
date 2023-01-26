@@ -142,9 +142,9 @@ void loop()
         waitFor(100);
         digitalWrite(resetBIN, HIGH);
         waitFor(100);
-        
+        if (colSelect > 96) {
         holdRow = colSelect + rowSelect;
-        
+        } else {holdRow = rowSelect;}
         for (int j = 0; j < 257+96; j++) {     // for loop for the number of columns
 
           if ( colSelect == j & colSelect > 0) {             // check if j = desired column i.e. 0000...0100
