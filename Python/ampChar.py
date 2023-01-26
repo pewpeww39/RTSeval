@@ -8,7 +8,7 @@ from keithley2600 import Keithley2600
 from BKPrecision import lib1785b as bk
 from os import system, name
 
-pico = serial.Serial('COM5', baudrate=115200)
+pico = serial.Serial('COM4', baudrate=115200)
 smu = Keithley2600('TCPIP0::192.168.4.11::INSTR')               #set ip addr for smu
 smu._write(value='smua.source.autorangei = smua.AUTORANGE_ON')  #set auto range for smua
 smu._write(value='smub.source.autorangev = smub.AUTORANGE_ON')  #set auto range for smua 

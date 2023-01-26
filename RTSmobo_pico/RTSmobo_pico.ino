@@ -23,8 +23,8 @@
 #define LED             25  // Pico LED
 
 int command = 0;
-int colSelect = 156;
-int rowSelect = 23;
+int colSelect = 0;
+int rowSelect = 0;
 int horSR = 0;
 int verSR = 0;
 int holdRow = 0;
@@ -142,10 +142,11 @@ void loop()
         digitalWrite(resetBIN, LOW);        // Flush the SR
         waitFor(1);
         digitalWrite(resetBIN, HIGH);
+        
         waitFor(1);
 
         
-        for (int j = 256; j > 0; j--) {     // for loop for the number of columns
+        for (int j = 257; j >= 1; j--) {     // for loop for the number of columns
           if ( colSelect == j) {             // check if j = desired column i.e. 0000...0100
             horSR = HIGH;                      // if it does set SDA_ to high
           } else {
@@ -187,7 +188,8 @@ void loop()
       }
 
       case 5: {
-        digitalWrite(resetBIN, HIGH);
+        digitalWrite(Csin, HIGH);
+        //digitalWrite(resetBIN, HIGH);
         break;
       }
 
@@ -295,7 +297,6 @@ void loop()
       turnOff();
       flashLED();
       command = 0;
-      colSelect = 200;
       break;
   }
 }
