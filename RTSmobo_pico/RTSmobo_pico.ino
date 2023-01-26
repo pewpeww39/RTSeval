@@ -142,7 +142,7 @@ void loop()
         digitalWrite(resetBIN, HIGH);
         waitFor(100);
         
-        for (int j = 0; j < 300; j++) {     // for loop for the number of columns
+        for (int j = 0; j < 257; j++) {     // for loop for the number of columns
 
           if ( colSelect == j) {             // check if j = desired column i.e. 0000...0100
             horSR = HIGH;                      // if it does set SDA_ to high
@@ -155,16 +155,18 @@ void loop()
             verSR = LOW;
           }
 
-          digitalWrite(HCLKin, HIGH);           // set the SR clock Low
-          digitalWrite(LED, HIGH);
+          digitalWrite(HCLKin, LOW);           // set the SR clock Low
+          digitalWrite(LED, LOW);
           waitFor(10);
           digitalWrite(DHin, horSR);       // set SDA_A pin to horSR value
           digitalWrite(Din, verSR);       // set SDA_B pin to verSR value
 
           waitFor(10);
-          digitalWrite(HCLKin, LOW);           // set the SR clock Low
-          digitalWrite(LED, LOW);
+          digitalWrite(HCLKin, HIGH);           // set the SR clock Low
+          digitalWrite(LED, HIGH);
           waitFor(10);
+          digitalWrite(DHin, LOW);       // set SDA_A pin to horSR value
+          digitalWrite(Din, LOW);          
 
 
           
