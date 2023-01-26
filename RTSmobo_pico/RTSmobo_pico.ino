@@ -23,10 +23,11 @@
 #define LED             25  // Pico LED
 
 int command = 0;
-int colSelect = 1;
-int rowSelect = 0;
+int colSelect = 200;
+int rowSelect = 15;
 int horSR = 0;
 int verSR = 0;
+int holdRow = 0;
 
 uint32_t timer = millis();
 uint32_t timerB = millis();
@@ -142,14 +143,21 @@ void loop()
         digitalWrite(resetBIN, HIGH);
         waitFor(100);
         
-        for (int j = 0; j < 257; j++) {     // for loop for the number of columns
+        holdRow = colSelect + rowSelect;
+        
+        for (int j = 0; j < 257+96; j++) {     // for loop for the number of columns
 
-          if ( colSelect == j) {             // check if j = desired column i.e. 0000...0100
+          if ( colSelect == j & colSelect > 0) {             // check if j = desired column i.e. 0000...0100
             horSR = HIGH;                      // if it does set SDA_ to high
           } else {
             horSR = LOW;                      // if not set it to low (most cases)
           }
-          if (rowSelect == j) {
+//          if (holdRow > 0){
+//            verSR = LOW;
+//            holdRow = holdRow - 1;
+//          }
+          if (holdRow == j & rowSelect > 0) {
+            Serial.println(j);
             verSR = HIGH;                      // same as above for vertical SR
           } else {
             verSR = LOW;
@@ -294,7 +302,7 @@ void loop()
       turnOff();
       flashLED();
       command = 0;
-      colSelect = 300;
+      colSelect = 200;
       break;
   }
 }
