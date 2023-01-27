@@ -189,7 +189,7 @@ void loop()
 
       case 5: {
         digitalWrite(Csin, HIGH);
-        //digitalWrite(resetBIN, HIGH);
+        digitalWrite(resetBIN, LOW);
         break;
       }
 
