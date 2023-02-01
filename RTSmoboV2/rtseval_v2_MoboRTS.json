@@ -1,0 +1,57 @@
+{
+	"Gate Swap" : [],
+	"Ref Des" : [],
+	"Pin Swap" : [],
+	"Component Property" : [],
+	"Net Property" : [
+		{
+			"Name" : "GND2",
+			"C_PATH" : "@rtseval_v2.rtsmb_v2(sch_1):gnd2",
+			"PropName" : "NET_SHORT",
+			"Logical" : "GND2",
+			"Physical" : null
+		}
+	],
+	"Pin Property" : [],
+	"Component" : [
+		{
+			"Name" : "J38",
+			"C_PATH" : "@rtseval_v2.rtsmb_v2(sch_1):ins190885@orcapturedownload.\\22-23-2031.normal\\(chips)",
+			"Logical" : null,
+			"Physical" : "J38"
+		},
+		{
+			"Name" : "J55",
+			"C_PATH" : "@rtseval_v2.rtsmb_v2(sch_1):ins390452@orcapturedownload.\\10129378-904001blf.normal\\(chips)",
+			"Logical" : "J55",
+			"Physical" : null
+		}
+	],
+	"Net" : [],
+	"Connection" : [
+		{
+			"Name" : "J55.2",
+			"C_PATH" : "@rtseval_v2.rtsmb_v2(sch_1):ins390452@orcapturedownload.\\10129378-904001blf.normal\\(chips):\\2\\",
+			"Logical" : "QHOUT",
+			"Physical" : null
+		},
+		{
+			"Name" : "J55.1",
+			"C_PATH" : "@rtseval_v2.rtsmb_v2(sch_1):ins390452@orcapturedownload.\\10129378-904001blf.normal\\(chips):\\1\\",
+			"Logical" : "QPOUT",
+			"Physical" : null
+		},
+		{
+			"Name" : "J55.3",
+			"C_PATH" : "@rtseval_v2.rtsmb_v2(sch_1):ins390452@orcapturedownload.\\10129378-904001blf.normal\\(chips):\\3\\",
+			"Logical" : "QNOUT",
+			"Physical" : null
+		},
+		{
+			"Name" : "J55.4",
+			"C_PATH" : "@rtseval_v2.rtsmb_v2(sch_1):ins390452@orcapturedownload.\\10129378-904001blf.normal\\(chips):\\4\\",
+			"Logical" : "VCLKOUT",
+			"Physical" : null
+		}
+	]
+}
