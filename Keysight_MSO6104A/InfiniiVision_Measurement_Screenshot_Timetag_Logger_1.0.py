@@ -119,7 +119,7 @@ INVERT_BACKGROUND = "YES" # "YES or "NO"
 
 ##############################################################################################################################################################################
 ## Scope Connection constants
-SCOPE_VISA_ADDRESS = "USB0::2391::2048::MY51500437::0::INSTR" # Get this from Keysight IO Libraries Connection Expert #Note: sockets are not supported in this revision of the script, and pyVisa 1.6.3 does not support HiSlip
+SCOPE_VISA_ADDRESS = "TCPIP0::mso6104-00000::INSTR" # Get this from Keysight IO Libraries Connection Expert #Note: sockets are not supported in this revision of the script, and pyVisa 1.6.3 does not support HiSlip
 GLOBAL_TOUT =  10000 # IO time out in milliseconds - this is not the acquisition time out
 
 ##############################################################################################################################################################################
@@ -313,10 +313,10 @@ def method1(TO, SMR, SMH):
 
     except Exception:
         if ACQUISITION_TIMEOUT_BEHAVIOR == "SAVE_AND_ABORT":
-            print "The acquisition timed out, most likely due to no trigger, or improper setup causing no trigger. Properly closing scope connection, saving data, and exiting script.\n"
-            print "Visually check the scope for a trigger, adjust settings accordingly.\n"
+            print ("The acquisition timed out, most likely due to no trigger, or improper setup causing no trigger. Properly closing scope connection, saving data, and exiting script.\n")
+            print ("Visually check the scope for a trigger, adjust settings accordingly.\n")
             if int(len(SMR)) == 0:
-                print "No data acquired.  Not saving anything.  Properly closing scope."
+                print ("No data acquired.  Not saving anything.  Properly closing scope.")
                 KsInfiniiVisionX.clear()
                 KsInfiniiVisionX.write(":SYSTem:LOCK 0")
                 KsInfiniiVisionX.write(":STOP")
@@ -326,7 +326,7 @@ def method1(TO, SMR, SMH):
                 KsInfiniiVisionX.clear()
                 KsInfiniiVisionX.write(":SYSTem:LOCK 0")
                 KsInfiniiVisionX.write(":STOP")
-                print "Forcing a trigger to properly correct trigger time stamps."
+                print ("Forcing a trigger to properly correct trigger time stamps.")
                 KsInfiniiVisionX.write(":TRIGger:SWEep AUTO")
                 KsInfiniiVisionX.query(":DIGitize;*OPC?")
                 KsInfiniiVisionX.write(":TRIGger:SWEep " + str(TRIGGER_SWEEP))
@@ -335,25 +335,25 @@ def method1(TO, SMR, SMH):
                 KsInfiniiVisionX.close()
                 Save_Data(SMR, SMH)
                 do_stats(SMR, SMH, SRP)
-                print "The acquisition timed out, most likely due to no trigger, or improper setup causing no trigger. Properly closing scope connection, saving data, and exiting script.\n"
-                print "Visually check the scope for a trigger, adjust settings accordingly.\n"
-                print "Some data was captured and saved."
+                print ("The acquisition timed out, most likely due to no trigger, or improper setup causing no trigger. Properly closing scope connection, saving data, and exiting script.\n")
+                print ("Visually check the scope for a trigger, adjust settings accordingly.\n")
+                print ("Some data was captured and saved.")
                 sys.exit("Exiting script.")
         else:
-            print "The acquisition timed out, most likely due to no trigger, or improper setup causing no trigger. Trying again once with twice the timeout, which will be reset...\n"
+            print ("The acquisition timed out, most likely due to no trigger, or improper setup causing no trigger. Trying again once with twice the timeout, which will be reset...\n")
             KsInfiniiVisionX.timeout = TO*2.0
             try:
                 KsInfiniiVisionX.clear()
                 #KsInfiniiVisionX.query(":TRIGger:SWEep AUTO;*OPC?")
                 KsInfiniiVisionX.query(":DIGitize;*OPC?")
                 fin_time = time.clock()
-                print "Success."
+                print ("Success.")
                 #KsInfiniiVisionX.query(":TRIGger:SWEep " + str(TRIGGER_SWEEP) + ";*OPC?")
                 KsInfiniiVisionX.timeout = TO
                 return fin_time
             except Exception:
                 if int(len(SMR)) == 0:
-                    print "No data acquired.  Not saving anything.  Properly closing scope."
+                    print ("No data acquired.  Not saving anything.  Properly closing scope.")
                     KsInfiniiVisionX.clear()
                     KsInfiniiVisionX.write(":SYSTem:LOCK 0")
                     KsInfiniiVisionX.write(":STOP")
@@ -363,7 +363,7 @@ def method1(TO, SMR, SMH):
                     KsInfiniiVisionX.clear()
                     KsInfiniiVisionX.write(":SYSTem:LOCK 0")
                     KsInfiniiVisionX.write(":STOP")
-                    print "Forcing a trigger to properly correct trigger time stamps."
+                    print ("Forcing a trigger to properly correct trigger time stamps.")
                     KsInfiniiVisionX.write(":TRIGger:SWEep AUTO")
                     KsInfiniiVisionX.query(":DIGitize;*OPC?")
                     KsInfiniiVisionX.write(":TRIGger:SWEep " + str(TRIGGER_SWEEP))
@@ -372,9 +372,9 @@ def method1(TO, SMR, SMH):
                     KsInfiniiVisionX.close()
                     Save_Data(SMR, SMH)
                     do_stats(SMR, SMH, SRP)
-                    print "The acquisition timed out, most likely due to no trigger, or improper setup causing no trigger. Properly closing scope connection, saving data, and exiting script.\n"
-                    print "Visually check the scope for a trigger, adjust settings accordingly.\n"
-                    print "Some data was captured and saved."
+                    print ("The acquisition timed out, most likely due to no trigger, or improper setup causing no trigger. Properly closing scope connection, saving data, and exiting script.\n")
+                    print ("Visually check the scope for a trigger, adjust settings accordingly.\n")
+                    print ("Some data was captured and saved.")
                     sys.exit("Exiting script.")
 
 def method2(TO, SMR, SMH):
@@ -396,10 +396,10 @@ def method2(TO, SMR, SMH):
         return fin_time
     else:
         if ACQUISITION_TIMEOUT_BEHAVIOR == "SAVE_AND_ABORT":
-            print "The acquisition timed out, most likely due to no trigger, or improper setup causing no trigger. Properly closing scope connection, saving data, and exiting script.\n"
-            print "Visually check the scope for a trigger, adjust settings accordingly.\n"
+            print ("The acquisition timed out, most likely due to no trigger, or improper setup causing no trigger. Properly closing scope connection, saving data, and exiting script.\n")
+            print ("Visually check the scope for a trigger, adjust settings accordingly.\n")
             if int(len(SMR)) == 0:
-                    print "No data acquired.  Not saving anything.  Properly closing scope."
+                    print ("No data acquired.  Not saving anything.  Properly closing scope.")
                     KsInfiniiVisionX.clear()
                     KsInfiniiVisionX.write(":SYSTem:LOCK 0")
                     KsInfiniiVisionX.write(":STOP")
@@ -409,7 +409,7 @@ def method2(TO, SMR, SMH):
                 KsInfiniiVisionX.clear()
                 KsInfiniiVisionX.write(":SYSTem:LOCK 0")
                 KsInfiniiVisionX.write(":STOP")
-                print "Forcing a trigger to properly correct trigger time stamps."
+                print ("Forcing a trigger to properly correct trigger time stamps.")
                 KsInfiniiVisionX.write(":TRIGger:SWEep AUTO")
                 KsInfiniiVisionX.write(":STOP;*CLS;:SINGle")
                 Status = int(KsInfiniiVisionX.query(":OPERegister:CONDition?"))
@@ -424,12 +424,12 @@ def method2(TO, SMR, SMH):
                 KsInfiniiVisionX.close()
                 Save_Data(SMR, SMH)
                 do_stats(SMR, SMH, SRP)
-                print "The acquisition timed out, most likely due to no trigger, or improper setup causing no trigger. Properly closing scope connection, saving data, and exiting script.\n"
-                print "Visually check the scope for a trigger, adjust settings accordingly.\n"
-                print "Some data was captured and saved."
+                print ("The acquisition timed out, most likely due to no trigger, or improper setup causing no trigger. Properly closing scope connection, saving data, and exiting script.\n")
+                print ("Visually check the scope for a trigger, adjust settings accordingly.\n")
+                print ("Some data was captured and saved.")
                 sys.exit("Exiting script.")
         else:
-            print "The acquisition timed out, most likely due to no trigger, or improper setup causing no trigger. Trying again once with twice the timeout, which will be reset...\n"
+            print ("The acquisition timed out, most likely due to no trigger, or improper setup causing no trigger. Trying again once with twice the timeout, which will be reset...\n")
             MAX_TIME_TO_WAIT = TO/1000*2.0
             KsInfiniiVisionX.write(":STOP;*CLS;:SINGle")
             Status = int(KsInfiniiVisionX.query(":OPERegister:CONDition?"))
@@ -441,13 +441,13 @@ def method2(TO, SMR, SMH):
                 Acq_State = (Status & RUN_MASK)
             if Acq_State == ACQ_DONE:
                 fin_time = time.clock()
-                print "Success."
+                print ("Success.")
                 return fin_time
             else:
-                print "The acquisition timed out again, most likely due to no trigger, or improper setup causing no trigger. Properly closing scope connection, saving data, and exiting script.\n"
-                print "Visually check the scope for a trigger, adjust settings accordingly.\n"
+                print ("The acquisition timed out again, most likely due to no trigger, or improper setup causing no trigger. Properly closing scope connection, saving data, and exiting script.\n")
+                print ("Visually check the scope for a trigger, adjust settings accordingly.\n")
                 if int(len(SMR)) == 0:
-                    print "No data acquired.  Not saving anything.  Properly closing scope."
+                    print ("No data acquired.  Not saving anything.  Properly closing scope.")
                     KsInfiniiVisionX.clear()
                     KsInfiniiVisionX.write(":SYSTem:LOCK 0")
                     KsInfiniiVisionX.write(":STOP")
@@ -457,7 +457,7 @@ def method2(TO, SMR, SMH):
                     KsInfiniiVisionX.clear()
                     KsInfiniiVisionX.write(":SYSTem:LOCK 0")
                     KsInfiniiVisionX.write(":STOP")
-                    print "Forcing a trigger to properly correct trigger time stamps."
+                    print ("Forcing a trigger to properly correct trigger time stamps.")
                     KsInfiniiVisionX.write(":TRIGger:SWEep AUTO")
                     KsInfiniiVisionX.write(":STOP;*CLS;:SINGle")
                     Status = int(KsInfiniiVisionX.query(":OPERegister:CONDition?"))
@@ -472,9 +472,7 @@ def method2(TO, SMR, SMH):
                     KsInfiniiVisionX.close()
                     Save_Data(SMR, SMH)
                     do_stats(SMR, SMH, SRP)
-                    print "The acquisition timed out, most likely due to no trigger, or improper setup causing no trigger. Properly closing scope connection, saving data, and exiting script.\n"
-                    print "Visually check the scope for a trigger, adjust settings accordingly.\n"
-                    print "Some data was captured and saved."
+                    print ("The acquisition timed out, most likely due to no trigger, or improper setup causing no trigger. Properly closing scope connection, saving data, and exiting script.\n")
                     sys.exit("Exiting script.")
 
 ##############################################################################################################################################################################
@@ -493,8 +491,8 @@ def ErrCheck():
     ErrorList = KsInfiniiVisionX.query(":SYSTem:ERRor?").split(',')
     Error = ErrorList[0]
     while int(Error)!=0:
-        print "Error #: " + ErrorList[0]
-        print "Error Description: " + ErrorList[1]
+        print ("Error #: " + ErrorList[0])
+        print ("Error Description: " + ErrorList[1])
         myError.append(ErrorList[0])
         myError.append(ErrorList[1])
         ErrorList = KsInfiniiVisionX.query(":SYSTem:ERRor?").split(',')
@@ -642,13 +640,13 @@ def Correct_Time_Stamps(SMR):
         return SMR
 
     except Exception as err:
-        print 'Exception: ' + str(err.message) + "\n"
-        print 'Exception occured when trying to correct timestamps.\n'
-        print 'Data not saved yet.\n'
-        print 'Type or copy/pase this into the python console to save data with uncorrected time stamps: Save_Data(Scope_Measurement_Results, SCOPE_MEASUREMENT_HEADER)'
-        print 'That the timestamps are uncorrected just means that they are too long by about up to (depends on timebase setup and SYNCH_MODE) several scope screen widths; this is alwyas the same amount,\
-            and thus the differences between timetags are still good.'
-        print 'Attempting to save data...\n'
+        print ('Exception: ' + str(err.message) + "\n")
+        print ('Exception occured when trying to correct timestamps.\n')
+        print ('Data not saved yet.\n')
+        print ('Type or copy/pase this into the python console to save data with uncorrected time stamps: Save_Data(Scope_Measurement_Results, SCOPE_MEASUREMENT_HEADER)')
+        print ('That the timestamps are uncorrected just means that they are too long by about up to (depends on timebase setup and SYNCH_MODE) several scope screen widths; this is alwyas the same amount,\
+            and thus the differences between timetags are still good.')
+        print ('Attempting to save data...\n')
         if int(len(SMR)) > 0:
             try:
                 Save_Data(SMR, SCOPE_MEASUREMENT_HEADER)
@@ -656,23 +654,23 @@ def Correct_Time_Stamps(SMR):
                     IVScopeSafeExitCustomMessage("Properly closing scope and exiting script. In some cases scope may already be closed: 'InvalidSession: Invalid session handle. The resource might be closed.'")
                 except:
                     if LOCK_SCOPE == "YES":
-                        print 'Scope connection lost. The scope front panel is likely locked.  Use Keysight IO Libraries connection expert to unlock it with :SYSTem:LOCK 0  You may need to re-enable the scope connection and do a device clear, as well as reset the Pythion interface.'
+                        print ('Scope connection lost. The scope front panel is likely locked.  Use Keysight IO Libraries connection expert to unlock it with :SYSTem:LOCK 0  You may need to re-enable the scope connection and do a device clear, as well as reset the Pythion interface.')
                     else:
-                        print 'Scope connection lost. Use Keysight IO Libraries connection expert to unlock it with :SYSTem:LOCK 0  You may need to re-enable the scope connection and do a device clear, as well as reset the Pythion interface.'
+                        print ('Scope connection lost. Use Keysight IO Libraries connection expert to unlock it with :SYSTem:LOCK 0  You may need to re-enable the scope connection and do a device clear, as well as reset the Pythion interface.')
             except Exception as err:
-                print 'Exception: ' + str(err.message) + "\n"
-                print "Generic error, possibly a timeout."
-                print 'Attempting to save data...\n'
+                print ('Exception: ' + str(err.message) + "\n")
+                print ("Generic error, possibly a timeout.")
+                print ('Attempting to save data...\n')
                 Save_Data(SMR, SCOPE_MEASUREMENT_HEADER)
         else:
-            print "No data to save."
+            print ("No data to save.")
         try:
             IVScopeSafeExitCustomMessage("Properly closing scope and exiting script. In some cases scope may already be closed: 'InvalidSession: Invalid session handle. The resource might be closed.'")
         except:
             if LOCK_SCOPE == "YES":
-                print 'Scope connection lost. The scope front panel is likely locked.  Use Keysight IO Libraries connection expert to unlock it with :SYSTem:LOCK 0  You may need to re-enable the scope connection and do a device clear, as well as reset the Pythion interface.'
+                print ('Scope connection lost. The scope front panel is likely locked.  Use Keysight IO Libraries connection expert to unlock it with :SYSTem:LOCK 0  You may need to re-enable the scope connection and do a device clear, as well as reset the Pythion interface.')
             else:
-                print 'Scope connection lost. Use Keysight IO Libraries connection expert to unlock it with :SYSTem:LOCK 0  You may need to re-enable the scope connection and do a device clear, as well as reset the Pythion interface.'
+                print ('Scope connection lost. Use Keysight IO Libraries connection expert to unlock it with :SYSTem:LOCK 0  You may need to re-enable the scope connection and do a device clear, as well as reset the Pythion interface.')
 
 ##############################################################################################################################################################################
 ##############################################################################################################################################################################
@@ -755,20 +753,20 @@ def Save_Data(SMR, SMH):
         sys.stdout.write("Data saved.\n\n")
 
     except IOError as err:
-        print 'Scope connection already closed (not a scope error).'
-        print 'Unable to open file: ' + str(err.strerror) + str(err.message)
-        print 'Most likely the file is already opened manually.  Close it and run manually run that section of code.'
-        print 'Type or copy/pase this into the python console to save: Save_Data(Scope_Measurement_Results, SCOPE_MEASUREMENT_HEADER)'
+        print ('Scope connection already closed (not a scope error).')
+        print ('Unable to open file: ' + str(err.strerror) + str(err.message))
+        print ('Most likely the file is already opened manually.  Close it and run manually run that section of code.')
+        print ('Type or copy/pase this into the python console to save: Save_Data(Scope_Measurement_Results, SCOPE_MEASUREMENT_HEADER)')
         sys.exit("Aborting script.")
 
     except Exception as err:
-        print 'Scope connection already closed (not a scope error).'
-        print 'Exception: ' + str(err.message) + "\n"
+        print ('Scope connection already closed (not a scope error).')
+        print ('Exception: ' + str(err.message) + "\n")
         sys.exit("Unable to save data, possibly due to a memory error.  Aborting script.")
 
     except MemoryError as err:
-        print 'Scope connection already closed (not a scope error).'
-        print 'Exception: MemoryError\n'
+        print ('Scope connection already closed (not a scope error).')
+        print ('Exception: MemoryError\n')
 
 ##############################################################################################################################################################################
 ##############################################################################################################################################################################
@@ -783,7 +781,7 @@ def do_stats(SMR, SMH, SRP):
 
         NUMBER_ACQUISITIONS = np.shape(SMR)
         NUMBER_ACQUISITIONS = NUMBER_ACQUISITIONS[0]
-        print str(NUMBER_ACQUISITIONS) + " total acquisitions were performed.\n"
+        print (str(NUMBER_ACQUISITIONS) + " total acquisitions were performed.\n")
 
         if (REPORT_MEASUREMENT_STATISTICS == "YES" or REPORT_THRUPUT_STATISTICS == "YES") and NUMBER_ACQUISITIONS > 1:
             DELTA_TIMES = np.zeros([NUMBER_ACQUISITIONS-1])
@@ -799,24 +797,24 @@ def do_stats(SMR, SMH, SRP):
             LAST_TIME = TIMES[NUMBER_ACQUISITIONS-1]
 
         if REPORT_MEASUREMENT_STATISTICS == "YES" and USE_AS_TRIGGER_TIME_RECORDER_ONLY == "NO" and NUMBER_ACQUISITIONS > 1 and NUMBER_MEASUREMENTS > 0:
-            print "MEASURMENT STATISTICS:\n"
+            print ("MEASURMENT STATISTICS:\n")
 
-            print "Number of measurements: " + str(NUMBER_ACQUISITIONS)
-            print "Total time of acquisition was " + str('%.3f' % (LAST_TIME)) + " seconds.\n"
-            print "The measurments were made on a "  + str('{:,.0f}'.format(SRP [1])) + " point record."
-            print "The actual sample rate was:       " + str('{:,.0f}'.format(SRP[0])) + " Sa/s"
-            print "                                  " + str('{:,.0f}'.format(SRP[0]/1e9)) + " GSa/s"
-            print "                                  " + str('{:,.0f}'.format(SRP[0]/1e6)) + " MSa/s"
-            print "                                  " + str('{:,.0f}'.format(SRP[0]/1e3)) + " kSa/s\n"
-            print "The time capture per trigger was: " + str('{:,.3e}'.format(TimeScale*10.0)) + " seconds"
-            print "                                  " + str('{:,.3e}'.format(TimeScale*10.0/1.0e-3)) + " ms"
-            print "                                  " + str('{:,.3e}'.format(TimeScale*10.0/1.0e-6)) + " us"
-            print "                                  " + str('{:,.3e}'.format(TimeScale*10.0/1.0e-9)) + " ns"
-            print "                                  " + str('{:,.3e}'.format(TimeScale*10.0/1.0e-12)) + " ps\n"
-            print "This gave an effective sample rate of: " + str('{:,.0f}'.format(SRP[1]/TimeScale/10.0)) + " Sa/s"
-            print "                                       " + str('{:,.0f}'.format(SRP[1]/TimeScale/10.0/1.0e9)) + " GSa/s"
-            print "                                       " + str('{:,.0f}'.format(SRP[1]/TimeScale/10.0/1.0e6)) + " MSa/s"
-            print "                                       " + str('{:,.0f}'.format(SRP[1]/TimeScale/10.0/1.0e3)) + " kSa/s\n"
+            print ("Number of measurements: " + str(NUMBER_ACQUISITIONS))
+            print ("Total time of acquisition was " + str('%.3f' % (LAST_TIME)) + " seconds.\n")
+            print ("The measurments were made on a "  + str('{:,.0f}'.format(SRP [1])) + " point record.")
+            print ("The actual sample rate was:       " + str('{:,.0f}'.format(SRP[0])) + " Sa/s")
+            print ("                                  " + str('{:,.0f}'.format(SRP[0]/1e9)) + " GSa/s")
+            print ("                                  " + str('{:,.0f}'.format(SRP[0]/1e6)) + " MSa/s")
+            print ("                                  " + str('{:,.0f}'.format(SRP[0]/1e3)) + " kSa/s\n")
+            print ("The time capture per trigger was: " + str('{:,.3e}'.format(TimeScale*10.0)) + " seconds")
+            print ("                                  " + str('{:,.3e}'.format(TimeScale*10.0/1.0e-3)) + " ms")
+            print ("                                  " + str('{:,.3e}'.format(TimeScale*10.0/1.0e-6)) + " us")
+            print ("                                  " + str('{:,.3e}'.format(TimeScale*10.0/1.0e-9)) + " ns")
+            print ("                                  " + str('{:,.3e}'.format(TimeScale*10.0/1.0e-12)) + " ps\n")
+            print ("This gave an effective sample rate of: " + str('{:,.0f}'.format(SRP[1]/TimeScale/10.0)) + " Sa/s")
+            print ("                                       " + str('{:,.0f}'.format(SRP[1]/TimeScale/10.0/1.0e9)) + " GSa/s")
+            print ("                                       " + str('{:,.0f}'.format(SRP[1]/TimeScale/10.0/1.0e6)) + " MSa/s")
+            print ("                                       " + str('{:,.0f}'.format(SRP[1]/TimeScale/10.0/1.0e3)) + " kSa/s\n")
 
             for n in range (0,NUMBER_MEASUREMENTS,1):
                 m_avg     = np.mean(SMR[:,n+2])
@@ -825,12 +823,12 @@ def do_stats(SMR, SMH, SRP):
                 m_min     = np.min(SMR[:,n+2])
                 m_range    = m_max - m_min
 
-                print "Measurement  Statistics for " + str(list(SMH.strip('\n').split(','))[n+2]) + ":"
-                print "\tAverage:                " + str('%.5e' % (m_avg))
-                print "\tStandard deviation:     " + str('%.5e' % (m_std_dev))
-                print "\tMinimum:                " + str('%.5e' % (m_min))
-                print "\tMaximum:                " + str('%.5e' % (m_max))
-                print "\tRange:                  " + str('%.5e' % (m_range)) + "\n"
+                print ("Measurement  Statistics for " + str(list(SMH.strip('\n').split(','))[n+2]) + ":")
+                print ("\tAverage:                " + str('%.5e' % (m_avg)))
+                print ("\tStandard deviation:     " + str('%.5e' % (m_std_dev)))
+                print ("\tMinimum:                " + str('%.5e' % (m_min)))
+                print ("\tMaximum:                " + str('%.5e' % (m_max)))
+                print ("\tRange:                  " + str('%.5e' % (m_range)) + "\n")
 
                 Ymax = m_max
                 if Ymax > 0:
@@ -848,24 +846,24 @@ def do_stats(SMR, SMH, SRP):
                 elif Ymin == 0:
                     Ymin = -0.1
 
-                print str(list(SMH.strip('\n').split(','))[n+2]) + ") vs. apparent trigger time (s):"
-                print "\tNOTE:  Trigger timestamps are based off of computer clock, not scope clock.\n"
+                print (str(list(SMH.strip('\n').split(','))[n+2]) + ") vs. apparent trigger time (s):")
+                print ("\tNOTE:  Trigger timestamps are based off of computer clock, not scope clock.\n")
                 if ACQ_TYPE == "AVER":
-                    print "\tNOTE: Trigger time stamps for average acquisition mode are incorrect (too short).  Further, they mean:  How long to complete N averages.\n"
+                    print ("\tNOTE: Trigger time stamps for average acquisition mode are incorrect (too short).  Further, they mean:  How long to complete N averages.\n")
                 if SYNCH_METHOD == "HIGH_SR":
-                    print "\tNOTE: Trigger time stamps for the acquisition method used (HIGH_SR) are up to 100 ms too long, and this can vary with each acquisition.\n"
+                    print ("\tNOTE: Trigger time stamps for the acquisition method used (HIGH_SR) are up to 100 ms too long, and this can vary with each acquisition.\n")
                 if MATH_ON == 1:
-                    print "\tNOTE: Trigger time stamps for when math is on are not really valid because the math takes extra time to synchronize. They will be somewhat too long. Consider characterizing the throughput with math on and off.\n"
+                    print ("\tNOTE: Trigger time stamps for when math is on are not really valid because the math takes extra time to synchronize. They will be somewhat too long. Consider characterizing the throughput with math on and off.\n")
                 if ENABLE_PRECISION_MODE == "YES":
-                    print "\tNOTE:  Trigger time stamps for when precion mode is on are not really valid because the math takes extra time to synchronize. They will be somewhat too long. Consider characterizing the throughput with precision mode on and off.\n"
+                    print ("\tNOTE:  Trigger time stamps for when precion mode is on are not really valid because the math takes extra time to synchronize. They will be somewhat too long. Consider characterizing the throughput with precision mode on and off.\n" )
                 plt.plot(TIMES,SMR[:,n+2],'r+')
                 plt.ylim(Ymin,Ymax)
                 plt.xlabel("Apparent Trigger Time (s)")
                 plt.ylabel(str(list(SMH.strip('\n').split(','))[n+2]))
                 plt.show()
 
-                print "\n"
-                print "Historgam of " +  str(list(SMH.strip('\n').split(','))[n+2]) + ":"
+
+                print ("\n Historgam of " +  str(list(SMH.strip('\n').split(','))[n+2]) + ":")
                 plt.hist(SMR[:,n+2],bins = NUMBER_BINS)
                 plt.xlabel( str(list(SMH.split(','))[n+2]))
                 plt.ylabel("Hits")
@@ -880,25 +878,25 @@ def do_stats(SMR, SMH, SRP):
             thruput_min     = np.min(DELTA_TIMES)
             thruputrange    = thruput_max - thruput_min
 
-            print "THROUGHPUT STATISTICS:\n"
-            print "\tNOTE:  Trigger timestamps are based off of computer clock, not scope clock.\n"
+            print ("THROUGHPUT STATISTICS:\n")
+            print ("\tNOTE:  Trigger timestamps are based off of computer clock, not scope clock.\n")
             if ACQ_TYPE == "AVER":
-                    print "\tNOTE: Trigger time stamps for average acquisition mode are incorrect (too short).  Further, they mean:  How long to complete N averages.\n"
+                    print ("\tNOTE: Trigger time stamps for average acquisition mode are incorrect (too short).  Further, they mean:  How long to complete N averages.\n")
             if SYNCH_METHOD == "HIGH_SR":
-                print "\t NOTE: Trigger time stamps for the acquisition method used (HIGH_SR) are up to 100 ms too long, and this can vary with each acquisition."
+                print ("\t NOTE: Trigger time stamps for the acquisition method used (HIGH_SR) are up to 100 ms too long, and this can vary with each acquisition.")
             if MATH_ON == 1:
-                print "\tNOTE: Trigger time stamps for when math is on are not really valid because the math takes extra time to synchronize. They will be somewhat too long. Consider characterizing the throughput with math on and off.\n"
+                print ("\tNOTE: Trigger time stamps for when math is on are not really valid because the math takes extra time to synchronize. They will be somewhat too long. Consider characterizing the throughput with math on and off.\n")
             if ENABLE_PRECISION_MODE == "YES":
-                print "\tNOTE:  Trigger time stamps for when precion mode is on are not really valid because the math takes extra time to synchronize. They will be somewhat too long. Consider characterizing the throughput with precision mode on and off.\n"
-            print "Trigger Time Differences (s):"
-            print "\tAverage time betweentriggers"
-            print "\t   was no more than:       " + str('%.5f' % (thruput_avg)) + " seconds (" +     str('%.2f' % (1.0/thruput_avg)) + " Hz)."
-            print "\tStandard deviation:        " + str('%.5f' % (thruput_std_dev)) + " seconds (" + str('%.2f' % ((thruput_std_dev/thruput_avg)*float(10**3))) + " parts per thousand)."
-            print "\tMinimum:                   " + str('%.5f' % (thruput_min)) + " seconds"
-            print "\tMaximum:                   " + str('%.5f' % (thruput_max)) + " seconds"
-            print "\tRange:                     " + str('%.5f' % (thruputrange)) + " seconds"
-            print "\tTotal time of acquisition: " + str('%.5f' % (LAST_TIME)) + " seconds"
-            print "\tNumber of triggers:        " + str('%.0f' % (NUMBER_ACQUISITIONS)) + "\n"
+                print ("\tNOTE:  Trigger time stamps for when precion mode is on are not really valid because the math takes extra time to synchronize. They will be somewhat too long. Consider characterizing the throughput with precision mode on and off.\n")
+            print ("Trigger Time Differences (s):")
+            print ("\tAverage time betweentriggers")
+            print ("\t   was no more than:       " + str('%.5f' % (thruput_avg)) + " seconds (" +     str('%.2f' % (1.0/thruput_avg)) + " Hz).")
+            print ("\tStandard deviation:        " + str('%.5f' % (thruput_std_dev)) + " seconds (" + str('%.2f' % ((thruput_std_dev/thruput_avg)*float(10**3))) + " parts per thousand).")
+            print ("\tMinimum:                   " + str('%.5f' % (thruput_min)) + " seconds")
+            print ("\tMaximum:                   " + str('%.5f' % (thruput_max)) + " seconds") 
+            print ("\tRange:                     " + str('%.5f' % (thruputrange)) + " seconds")
+            print ("\tTotal time of acquisition: " + str('%.5f' % (LAST_TIME)) + " seconds")
+            print ("\tNumber of triggers:        " + str('%.0f' % (NUMBER_ACQUISITIONS)) + "\n")
 
             indices = np.linspace(1,NUMBER_ACQUISITIONS,NUMBER_ACQUISITIONS,dtype=int)
             plt.plot(indices,TIMES,'r+')
@@ -907,14 +905,14 @@ def do_stats(SMR, SMH, SRP):
             plt.ylabel("Apparent Trigger Time (s)")
             plt.show()
 
-            print "\n"
+            print ("\n")
             indices = np.linspace(1,NUMBER_ACQUISITIONS-1,NUMBER_ACQUISITIONS-1,dtype=int)
             plt.plot(indices,DELTA_TIMES,'r+')
             plt.xlabel("Acquisition Number-1")
             plt.ylabel("Delta Trigger Times (s)")
             plt.show()
 
-            print "\n"
+            print ("\n")
             plt.hist(DELTA_TIMES,bins = NUMBER_BINS)
             plt.xlabel("Trigger Time Differences (s)")
             plt.ylabel("Hits")
@@ -924,18 +922,18 @@ def do_stats(SMR, SMH, SRP):
 
         ## Re-Issue some warnings
         if ACQ_TYPE == "AVER":
-            print "WARNING! Trigger time stamps for average acquisition mode are incorrect (too short).  Further, they mean:  How long to complete N averages.\n"
+            print ("WARNING! Trigger time stamps for average acquisition mode are incorrect (too short).  Further, they mean:  How long to complete N averages.\n")
         if SYNCH_METHOD == "HIGH_SR":
-            print "WARNING! Trigger time stamps for the acquisition method used (HIGH_SR) are up to 100 ms too long, and this can vary with each acquisition\n."
+            print ("WARNING! Trigger time stamps for the acquisition method used (HIGH_SR) are up to 100 ms too long, and this can vary with each acquisition\n.")
         if MATH_ON == 1:
-            print "WARNING! Trigger time stamps for when math is on are not really valid because the math takes extra time to synchronize. They will be somewhat too long. Consider characterizing the throughput with math on and off.\n"
+            print ("WARNING! Trigger time stamps for when math is on are not really valid because the math takes extra time to synchronize. They will be somewhat too long. Consider characterizing the throughput with math on and off.\n")
         if ENABLE_PRECISION_MODE == "YES":
-            print "WARNING! Trigger time stamps for when precion mode is on are not really valid because the math takes extra time to synchronize. They will be somewhat too long. Consider characterizing the throughput with precision mode on and off.\n"
+            print ("WARNING! Trigger time stamps for when precion mode is on are not really valid because the math takes extra time to synchronize. They will be somewhat too long. Consider characterizing the throughput with precision mode on and off.\n")
 
     except Exception as err:
-        print 'Exception: ' + str(err.message) + "\n"
-        print 'Exception occurred in Statistics and Throughput reporting section. Scope already closed (not a scope error).\n'
-        print 'Data should/could already be saved...'
+        print ('Exception: ' + str(err.message) + "\n")
+        print ('Exception occurred in Statistics and Throughput reporting section. Scope already closed (not a scope error).\n')
+        print ('Data should/could already be saved...')
         sys.exit("Exiting script.")
 
 ##############################################################################################################################################################################
@@ -946,7 +944,7 @@ def do_stats(SMR, SMH, SRP):
 
 try:
     if GLOBAL_TOUT < 10000:
-        print "Global time out (GLOBAL_TOUT) less than 10,000 milliseconds.  Setting it to 10,000 ms."
+        print ("Global time out (GLOBAL_TOUT) less than 10,000 milliseconds.  Setting it to 10,000 ms.")
         GLOBAL_TOUT = 10000
 
     if RUN_CONTROL_BY_TIME_OR_NUMBER == "TIME" and TIME_TO_RUN < 1:
@@ -997,8 +995,8 @@ try:
         NUMBER_BINS = 10
 
 except Exception as err:
-    print 'Exception: ' + str(err.message) + "\n"
-    print 'One of the initialization constants is not defined or has been re-named. \n'
+    print ('Exception: ' + str(err.message) + "\n")
+    print ('One of the initialization constants is not defined or has been re-named. \n')
     sys.exit("Exiting script. Connection to scope not yet made... ")
 
 ##############################################################################################################################################################################
@@ -1032,8 +1030,8 @@ try:
     try:
         KsInfiniiVisionX = rm.open_resource(SCOPE_VISA_ADDRESS)
     except Exception as err:
-        print 'Exception: ' + str(err.message) + "\n"
-        print "Unable to connect to oscillopscope at " + str(SCOPE_VISA_ADDRESS) + ". Aborting script.\n"
+        print ('Exception: ' + str(err.message) + "\n")
+        print ("Unable to connect to oscillopscope at " + str(SCOPE_VISA_ADDRESS) + ". Aborting script.\n")
         sys.exit()
 
     ## Set Global Timeout
@@ -1420,7 +1418,7 @@ try:
                     else:
                         IVScopeSafeExitCustomMessage("Measurement M" + str(m) + " has errors.  Properly closing scope and exiting script.\n")
         except Exception:
-            print "Measurement M" + str(m) + " has errors.  Properly closing scope and exiting script.\n"
+            print ("Measurement M" + str(m) + " has errors.  Properly closing scope and exiting script.\n")
             KsInfiniiVisionX.clear()
             KsInfiniiVisionX.write(":SYSTem:LOCK 0")
             KsInfiniiVisionX.write(":STOP")
@@ -1457,7 +1455,7 @@ try:
             for i in test:
                 if i != 0:
                     ABORT = 1
-                    print "One of the user defined measurements in this script turned on analog channel #" + str(ch) + ", which was previously off.  This indicates that bad data is likely to be captured.  Aborting script.\n"
+                    print ("One of the user defined measurements in this script turned on analog channel #" + str(ch) + ", which was previously off.  This indicates that bad data is likely to be captured.  Aborting script.\n")
                 ch += 1
             del ch, i, test
         
@@ -1467,7 +1465,7 @@ try:
                 for i in test:
                     if i != 0:
                         ABORT = 1
-                        print "One of the user defined measurements in this script turned on digital channel #" + str(int(i)) + ", which was previously off.  This indicates that bad data is likely to be captured.  Aborting script.\n"
+                        print ("One of the user defined measurements in this script turned on digital channel #" + str(int(i)) + ", which was previously off.  This indicates that bad data is likely to be captured.  Aborting script.\n")
                 del i, test
 
         if ABORT == 1:
@@ -1519,8 +1517,8 @@ try:
     ##############################################################################################################################################################################
 
 except Exception as err:
-    print 'Exception: ' + str(err.message) + "\n"
-    print "Generic error, possibly a timeout."
+    #print ('Exception: ' + str(err.message) + "\n")
+    print ("Generic error, possibly a timeout.")
     IVScopeSafeExitCustomMessage("Properly closing scope and exiting script. In some cases scope may already be closed: 'InvalidSession: Invalid session handle. The resource might be closed.'")
 
 ##############################################################################################################################################################################
@@ -1633,54 +1631,54 @@ try:
         KsInfiniiVisionX.timeout = GLOBAL_TOUT
 
 except KeyboardInterrupt:
-    print 'Keyboard interupt.\n'
-    print 'Attempting to save data...\n'
+    print ('Keyboard interupt.\n')
+    print ('Attempting to save data...\n')
     if int(len(Scope_Measurement_Results)) > 0:
         Scope_Measurement_Results = Correct_Time_Stamps(Scope_Measurement_Results)
         Save_Data(Scope_Measurement_Results, SCOPE_MEASUREMENT_HEADER)
     IVScopeSafeExitCustomMessage("Properly closing scope and exiting script.")
 
 except OSError as err:
-    print 'Library error: ' + str(err.strerror) + str(err.message)
-    print 'Attempting to save data...\n'
+    print ('Library error: ' + str(err.strerror) + str(err.message))
+    print ('Attempting to save data...\n') 
     if int(len(Scope_Measurement_Results)) > 0:
         Scope_Measurement_Results = Correct_Time_Stamps(Scope_Measurement_Results)
         Save_Data(Scope_Measurement_Results, SCOPE_MEASUREMENT_HEADER)
     IVScopeSafeExitCustomMessage("Properly closing scope and exiting script.")
 
 except MemoryError as err:
-    print 'Exception: MemoryError\n'
-    print "This exception most likely occurred because the data array is too large."
-    print "\t1: Use the script that saves data during the acquisition cycle.  This will reduce throughput somewhat."
-    print 'Attempting to save data...\n'
+    print ('Exception: MemoryError\n')
+    print ("This exception most likely occurred because the data array is too large.")
+    print ("\t1: Use the script that saves data during the acquisition cycle.  This will reduce throughput somewhat.")
+    print ('Attempting to save data...\n' )
     if int(len(Scope_Measurement_Results)) > 0:
         Scope_Measurement_Results = Correct_Time_Stamps(Scope_Measurement_Results)
         Save_Data(Scope_Measurement_Results, SCOPE_MEASUREMENT_HEADER)
     IVScopeSafeExitCustomMessage("Properly closing scope and exiting script. In some cases scope may already be closed: 'InvalidSession: Invalid session handle. The resource might be closed.'")
 
 except Exception as err:
-    print 'Exception: ' + str(err.message) + "\n"
-    print "Generic error, possibly a timeout."
-    print 'Attempting to save data...\n'
+    print ('Exception: ' + str(err.message) + "\n")
+    print ("Generic error, possibly a timeout.")
+    print ('Attempting to save data...\n')
     if int(len(Scope_Measurement_Results)) > 0:
         try:
             Scope_Measurement_Results = Correct_Time_Stamps(Scope_Measurement_Results)
             Save_Data(Scope_Measurement_Results, SCOPE_MEASUREMENT_HEADER)
             IVScopeSafeExitCustomMessage("Properly closing scope and exiting script. In some cases scope may already be closed: 'InvalidSession: Invalid session handle. The resource might be closed.'")
         except Exception as err:
-            print 'Exception: ' + str(err.message) + "\n"
-            print "Generic error, possibly a timeout."
-            print 'Attempting to save data...\n'
+            print ('Exception: ' + str(err.message) + "\n")
+            print ("Generic error, possibly a timeout.")
+            print ('Attempting to save data...\n')
             Save_Data(Scope_Measurement_Results, SCOPE_MEASUREMENT_HEADER)
     else:
-        print "No data to save."
+        print ("No data to save.")
     try:
         IVScopeSafeExitCustomMessage("Properly closing scope and exiting script. In some cases scope may already be closed: 'InvalidSession: Invalid session handle. The resource might be closed.'")
     except:
         if LOCK_SCOPE == "YES":
-            print 'Scope connection lost. The scope front panel is likely locked.  Use Keysight IO Libraries connection expert to unlock it with :SYSTem:LOCK 0  You may need to re-enable the scope connection and do a device clear, as well as reset the Pythion interface.'
+            print ('Scope connection lost. The scope front panel is likely locked.  Use Keysight IO Libraries connection expert to unlock it with :SYSTem:LOCK 0  You may need to re-enable the scope connection and do a device clear, as well as reset the Pythion interface.')
         else:
-            print 'Scope connection lost. Use Keysight IO Libraries connection expert to unlock it with :SYSTem:LOCK 0  You may need to re-enable the scope connection and do a device clear, as well as reset the Pythion interface.'
+            print ('Scope connection lost. Use Keysight IO Libraries connection expert to unlock it with :SYSTem:LOCK 0  You may need to re-enable the scope connection and do a device clear, as well as reset the Pythion interface.')
 
 ##############################################################################################################################################################################
 ##############################################################################################################################################################################
@@ -1703,7 +1701,7 @@ else:
 ##############################################################################################################################################################################
 ## Properly disconnect from scope
 
-print "Done with oscilloscope operations.\n"
+print ("Done with oscilloscope operations.\n")
 KsInfiniiVisionX.clear() # Clear scope communications interface
 KsInfiniiVisionX.write(":SYSTem:LOCK 0")
 KsInfiniiVisionX.close() # Close communications interface to scope
@@ -1728,7 +1726,7 @@ do_stats(Scope_Measurement_Results, SCOPE_MEASUREMENT_HEADER,SAMPLE_RATE_AND_POI
 ##############################################################################################################################################################################
 ##############################################################################################################################################################################
 
-print "Done."
+print ("Done.")
 
 ##############################################################################################################################################################################
 ##############################################################################################################################################################################

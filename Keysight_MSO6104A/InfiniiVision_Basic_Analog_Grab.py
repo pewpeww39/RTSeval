@@ -32,6 +32,7 @@
 
 ## Import python modules - Not all of these are used in this program; provided for reference
 import sys
+import visa
 import pyvisa
 import time
 import struct
@@ -78,7 +79,7 @@ import matplotlib.pyplot as plt
 ##############################################################################################################################################################################
 
 ## Initialization constants
-VISA_ADDRESS = "'TCPIP0::192.168.4.12::INSTR'" # Get this from Keysight IO Libraries Connection Expert #Note: sockets are not supported in this revision of the script, and pyVisa 1.6.3 does not support HiSlip
+VISA_ADDRESS = "TCPIP0::mso6104-00000::INSTR" # Get this from Keysight IO Libraries Connection Expert #Note: sockets are not supported in this revision of the script, and pyVisa 1.6.3 does not support HiSlip
 GLOBAL_TOUT =  10000 # IO time out in milliseconds
 
 ## Save Locations
@@ -102,10 +103,10 @@ sys.stdout.write("Script is running.  This may take a while...")
 
 ## Define VISA Resource Manager & Install directory
 ## This directory will need to be changed if VISA was installed somewhere else.
-rm = pyvisa.ResourceManager() # this uses pyvisa  'C:\\Windows\\System32\\visa32.dll'
+#rm = visa.ResourceManager() # this uses pyvisa  'C:\\Windows\\System32\\visa32.dll'
 ## This is more or less ok too: rm = visa.ResourceManager('C:\\Program Files (x86)\\IVI Foundation\\VISA\\WinNT\\agvisa\\agbin\\visa32.dll')
 ## In fact, it is generally not needed to call it explicitly
-## rm = visa.ResourceManager()
+rm = pyvisa.ResourceManager()
 
 ## Open Connection
 ## Define & open the scope by the VISA address ; # this uses pyvisa
