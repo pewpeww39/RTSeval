@@ -11,7 +11,7 @@ from BKPrecision import lib1785b as bk
 
 
 
-pico = serial.Serial('COM12', baudrate=115200, timeout = 20)
+pico = serial.Serial('COM5', baudrate=115200, timeout = 20)
 # smu = Keithley2600('TCPIP0::192.168.4.11::INSTR')               #set ip addr for smu
 # smu._write(value='smua.source.autorangei = smua.AUTORANGE_ON')  #set auto range for smua 
 # smu.set_integration_time(smu.smua, 0.001)                       # sets integration time in sec
@@ -54,7 +54,9 @@ voltInc = 34      #int(input('How many steps for Voltage?'))
 cOut = "CS000" 
 pltY = " ampsOut E-9"
 pltX = " ampsIn E-9"
-picLoc = "C:\\Users\\jpew\\AppData\\Local\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\csCharacterization\\"
+picLoc = "RTSeval\\Python\\Data\\csCharacterization\\"
+
+#picLoc = "C:\\Users\\jpew\\AppData\\Local\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\csCharacterization\\"
 
 
 time.sleep(1)
@@ -63,7 +65,7 @@ for c in range(colNum):
         cOut = re.sub(r'[0-9]+$',
              lambda x: f"{str(int(x.group())+1).zfill(len(x.group()))}",    # increments the number in the column name
              cOut)
-    WC = write_cmd(str(2))                                                  # increments the column to test
+    WC = write_cmd(str(4))                                                  # increments the column to test
     commandRX = pico.read_until().strip().decode()
     time.sleep(.5)
     print('pico confirmed: '+ str(commandRX))
@@ -104,7 +106,7 @@ for c in range(colNum):
         # pltData.plot(x= 'Time', xlabel="Time", ylabel="Current Out", sharey=True, title="Current In vs. Current Out", legend=True,
         #             subplots=[(' ampsIn E-9',' ampsOut E-9'),(' ampsIn E-8',' ampsOut E-8'),(' ampsIn E-7',' ampsOut E-7'), 
         #             (' ampsIn E-6',' ampsOut E-6'),(' ampsIn E-5',' ampsOut E-5')])
-        plt.savefig(str(picLoc) + str(cOut) + '.png')
+        plt.savefig(picLoc + cOut + ".png")
         fig = plt.show(block = False)
         plt.pause(5)
         plt.close(fig)
@@ -113,7 +115,8 @@ for c in range(colNum):
     colSelect = colSelect + 1
     time.sleep(.1)
 print(csData)
-csData.to_csv('C:\\Users\\jpew\\AppData\\Local\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\csCharacterization\\cscharData.csv')
+csData.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/csCharacterizaton/cscharData.csv')
+#csData.to_csv('C:\\Users\\jpew\\AppData\\Local\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\csCharacterization\\cscharData.csv')
 # csData.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/cscharData.csv')
 # smu._write(value='smua.source.output = smua.OUTPUT_OFF')
 # smu._write(value='smub.source.output = smub.OUTPUT_OFF')

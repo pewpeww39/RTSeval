@@ -7,6 +7,16 @@ import matplotlib.pyplot as plt
 from keithley2600 import Keithley2600
 from BKPrecision import lib1785b as bk
 from os import system, name
+from datetime import datetime
+
+# datetime object containing current date and time
+#now = datetime.now()
+ 
+#print("now =", now)
+
+# dd/mm/YY H:M:S
+dt_string = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p")
+#print("date and time =", dt_string)
 
 pico = serial.Serial('COM4', baudrate=115200)
 smu = Keithley2600('TCPIP0::192.168.4.11::INSTR')               #set ip addr for smu
@@ -85,7 +95,7 @@ for c in range(currentInc):
         row = row + 1
 commandTX = write_cmd(str(9))          
 print(dmmData)
-dmmData.to_csv('~/miniconda3/envs/testequ/Skywater/Data/ampcharData.csv')
+dmmData.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/ampCharacterization/ampcharData' + dt_string + '.csv')
 smu._write(value='smua.source.output = smua.OUTPUT_OFF')
 smu._write(value='smub.source.output = smub.OUTPUT_OFF')
 bk.outputOn(False, bkPS)     #turn the powersupply on

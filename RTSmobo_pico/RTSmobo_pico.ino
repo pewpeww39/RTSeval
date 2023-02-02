@@ -135,6 +135,7 @@ void loop()
       case 4: {                               // Clock, Shift Register Characterization
         digitalWrite(Csin, HIGH);             // close NMOS amp bypass
         digitalWrite(LED, LOW);
+        Serial.println(colSelect);            // tell CPU what column was selected
         if (debug == true) {
           Serial.println("H V");
         }
@@ -148,8 +149,7 @@ void loop()
         for (int j = 257; j >= 1; j--) {     // for loop for the number of columns
           if ( colSelect == j) {             // check if j = desired column i.e. 0000...0100
             horSR = HIGH;                      // if it does set SDA_ to high
-            Serial.println(colSelect);            // tell CPU what column was selected
-            colSelect = colSelect - 1;
+            //colSelect = colSelect - 1;
           } else {
             horSR = LOW;                      // if not set it to low (most cases)
           }

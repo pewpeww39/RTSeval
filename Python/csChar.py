@@ -7,8 +7,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from keithley2600 import Keithley2600
 from BKPrecision import lib1785b as bk
+from datetime import datetime
 
-
+dt_string = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p")
 
 pico = serial.Serial('COM4', baudrate=115200)
 smu = Keithley2600('TCPIP0::192.168.4.11::INSTR')               #set ip addr for smu
@@ -29,7 +30,7 @@ def write_cmd(x):
     time.sleep(0.05)
 
 csData = pd.DataFrame(data=[], index=[], columns=[])  
-pltData = pd.datafrme(data=[], index=[], columns=[])         #create dataframe
+pltData = pd.DataFrame(data=[], index=[], columns=[])         #create dataframe
 bk.remoteMode(True, bkPS) #set remote mode for power supply
 bk.setMaxVoltage(3.33, bkPS)   #set max voltage for PS
 #bk.outputOn(True, bkPS)     #turn the powersupply on
@@ -53,7 +54,8 @@ smu.apply_current(smu.smua, 0)
 cOut = "CS000"   
 pltY = " ampsOut E-9"
 pltX = " ampsIn E-9"
-picLoc = "~/miniconda3/envs/testequ/RTSeval/Python/Data/csCharacterization"
+picLoc = "C:\\Users\\jacob\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\csCharacterization\\"
+# picLoc = "~/miniconda3/envs/testequ/RTSeval/Python/Data/csCharacterization/"
 
 time.sleep(1)
 for c in range(colNum):
@@ -66,7 +68,7 @@ for c in range(colNum):
     time.sleep(.5)
     print('pico confirmed: ' + str(commandRX))
     column = write_cmd(str(colSelect))
-    columnRX = pico.read_until()
+    columnRX = pico.read_until().strip().decode()
     print('pico selected column: ' + str(columnRX))
     commandRX = int(pico.read_until().strip().decode())
     if commandRX == 1:
@@ -77,9 +79,9 @@ for c in range(colNum):
             while round(time.perf_counter(), 4) - startT <= 1.1:
                 currentTime = round(time.perf_counter(), 4) - startT
                 if counter == 0:
-                    csData.at[row, 'Time'] = currentTime
+                    pltData.at[row, 'Time'] = currentTime
                 #pltData.at[row, pltX] = smu.smua.measurei()
-                pltData.at[row, pltY] = smu.smub.measurei()
+                pltData.at[row, pltY] = smu.smub.measure.i()
                 row = row + 1
                 time.sleep(.1000)
             csData['Time'] = pltData['Time']
@@ -103,7 +105,7 @@ for c in range(colNum):
         # pltData.plot(x= 'Time', xlabel="Time", ylabel="Current Out", sharey=True, title="Current In vs. Current Out", legend=True,
         #             subplots=[(' ampsIn E-9',' ampsOut E-9'),(' ampsIn E-8',' ampsOut E-8'),(' ampsIn E-7',' ampsOut E-7'), 
         #             (' ampsIn E-6',' ampsOut E-6'),(' ampsIn E-5',' ampsOut E-5')])
-        plt.savefig(picLoc+cOut+'.png')
+        plt.savefig(picLoc + cOut + ".png")
         fig = plt.show(block = False)
         plt.pause(3)
         plt.close(fig)
@@ -111,7 +113,7 @@ for c in range(colNum):
     counter = counter + 1
     colSelect = colSelect + 1
 print(csData)
-csData.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/csCharacterizaton/cscharData.csv')
+csData.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/csCharacterization/cscharData' + dt_string + '.csv')
 smu._write(value='smua.source.output = smua.OUTPUT_OFF')
 smu._write(value='smub.source.output = smub.OUTPUT_OFF')
 #bk.outputOn(False, bkPS)     #turn the powersupply off
