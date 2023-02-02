@@ -23,7 +23,7 @@
 #define LED             25  // Pico LED
 
 int command = 0;
-int colSelect = 5;
+int colSelect = 257;
 int rowSelect = 0;
 int horSR = 0;
 int verSR = 0;
@@ -95,7 +95,7 @@ void loop()
         waitFor(10);
         digitalWrite(resetBIN, HIGH);
         waitFor(10);
-        for (int j = 256; j > 0; j--) {     // for loop for the number of columns
+        for (int j = 257; j > 0; j--) {     // for loop for the number of columns
           if (colSelect == j) {             // check if j = desired column i.e. 0000...0100
             horSR = 1;                      // if it does set SDA_ to high
           } else {
@@ -133,7 +133,7 @@ void loop()
         break;
       }
       case 4: {                               // Clock, Shift Register Characterization
-        digitalWrite(Csin, HIGH);             // close NMOS amp bypass
+        digitalWrite(Csin, LOW);             // close NMOS amp bypass
         digitalWrite(LED, LOW);
         Serial.println(colSelect);            // tell CPU what column was selected
         if (debug == true) {
@@ -149,7 +149,8 @@ void loop()
         for (int j = 257; j >= 1; j--) {     // for loop for the number of columns
           if ( colSelect == j) {             // check if j = desired column i.e. 0000...0100
             horSR = HIGH;                      // if it does set SDA_ to high
-            //colSelect = colSelect - 1;
+            if (j>225){
+            colSelect = colSelect - 1;}
           } else {
             horSR = LOW;                      // if not set it to low (most cases)
           }
@@ -158,15 +159,15 @@ void loop()
           } else {
             verSR = LOW;
           }
-
-          digitalWrite(HCLKin, LOW);           // set the SR clock Low
-          digitalWrite(LED, LOW);
           waitFor(1);
           digitalWrite(DHin, horSR);       // set SDA_A pin to horSR value
           digitalWrite(Din, verSR);       // set SDA_B pin to verSR value
           waitFor(1);
           digitalWrite(HCLKin, HIGH);           // set the SR clock Low
           digitalWrite(LED, HIGH);
+          waitFor(1);
+          digitalWrite(HCLKin, LOW);           // set the SR clock Low
+          digitalWrite(LED, LOW);
           waitFor(1);
           digitalWrite(DHin, LOW);       // set SDA_A pin to horSR value
           digitalWrite(Din, LOW);          
