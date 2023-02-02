@@ -1,0 +1,1420 @@
+FILE_TYPE = EXPANDEDPARTLIST;
+{ Using PSTWRITER 17.4.0 d001Jan-26-2023 at 00:23:12 }
+DIRECTIVES
+ PST_VERSION='PST_HDL_CENTRIC_VERSION_0';
+ ROOT_DRAWING='RTSEVAL_V2';
+ POST_TIME='Jul 23 2022 21:42:55';
+ SOURCE_TOOL='CAPTURE_WRITER';
+END_DIRECTIVES;
+
+PART_NAME
+ 1 'M3MOUNTINGHOLE_M3MOUNTINGHOLE_ELEC_GND MOUNTING HOLE':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS344428@NANOAMP.M3MOUNTINGHOLE.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins344428@nanoamp.\m3mountinghole.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins344428@nanoamp.\m3mountinghole.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ 2 'M3MOUNTINGHOLE_M3MOUNTINGHOLE_ELEC_GND2 MOUNTING HOLE':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS344394@NANOAMP.M3MOUNTINGHOLE.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins344394@nanoamp.\m3mountinghole.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins344394@nanoamp.\m3mountinghole.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ 3 'M3MOUNTINGHOLE_M3MOUNTINGHOLE_ELEC_GND MOUNTING HOLE':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS344442@NANOAMP.M3MOUNTINGHOLE.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins344442@nanoamp.\m3mountinghole.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins344442@nanoamp.\m3mountinghole.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ 4 'M3MOUNTINGHOLE_M3MOUNTINGHOLE_ELEC_GND MOUNTING HOLE':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS344380@NANOAMP.M3MOUNTINGHOLE.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins344380@nanoamp.\m3mountinghole.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins344380@nanoamp.\m3mountinghole.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ C1 'C0805R104J5RACTU_C0805_0.1UF':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS208958@ORCAPTUREDOWNLOAD.C0805R104J5RACTU.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins208958@orcapturedownload.\c0805r104j5ractu.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins208958@orcapturedownload.\c0805r104j5ractu.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ C10 'C0805X200J5GACTU_C0805_4.7UF':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS51120@ORCAPTUREDOWNLOAD.C0805X200J5GACTU.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins51120@orcapturedownload.\c0805x200j5gactu.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page_ins51120@orcapturedownload.\c0805x200j5gactu.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ C11 'C0805C106M3PAC7210_C0805_10UF':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS208078@ORCAPTUREDOWNLOAD.C0805C106M3PAC7210.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins208078@orcapturedownload.\c0805c106m3pac7210.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page_ins208078@orcapturedownload.\c0805c106m3pac7210.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ C12 '0805ZC105JAT2A_C0805_1 UF':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS344142@NANOAMP.0805ZC105JAT2A.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins344142@nanoamp.\0805zc105jat2a.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins344142@nanoamp.\0805zc105jat2a.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ C13 '08053A100KAT2A_CAPC2013X94N_10PF':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS211862@ORCAPTUREDOWNLOAD.08053A100KAT2A.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins211862@orcapturedownload.\08053a100kat2a.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page_ins211862@orcapturedownload.\08053a100kat2a.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ C14 'C0805C395K9PACTU_C0805_3.9UF':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS212358@ORCAPTUREDOWNLOAD.C0805C395K9PACTU.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins212358@orcapturedownload.\c0805c395k9pactu.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page_ins212358@orcapturedownload.\c0805c395k9pactu.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ C15 'C0805R104J5RACTU_C0805_0.1UF':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS208599@ORCAPTUREDOWNLOAD.C0805R104J5RACTU.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins208599@orcapturedownload.\c0805r104j5ractu.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page_ins208599@orcapturedownload.\c0805r104j5ractu.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ C17 'C0805X200J5GACTU_C0805_20PF':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS238515@ORCAPTUREDOWNLOAD.C0805X200J5GACTU.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins238515@orcapturedownload.\c0805x200j5gactu.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page_ins238515@orcapturedownload.\c0805x200j5gactu.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ C18 'C0805C106M3PAC7210_C0805_10UF':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS208278@ORCAPTUREDOWNLOAD.C0805C106M3PAC7210.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins208278@orcapturedownload.\c0805c106m3pac7210.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page_ins208278@orcapturedownload.\c0805c106m3pac7210.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ C19 'C0805R104J5RACTU_C0805_0.1UF':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS207590@ORCAPTUREDOWNLOAD.C0805R104J5RACTU.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins207590@orcapturedownload.\c0805r104j5ractu.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page_ins207590@orcapturedownload.\c0805r104j5ractu.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ C2 'C0805R104J5RACTU_C0805_0.1UF':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS208780@ORCAPTUREDOWNLOAD.C0805R104J5RACTU.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins208780@orcapturedownload.\c0805r104j5ractu.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins208780@orcapturedownload.\c0805r104j5ractu.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ C20 '08053A100KAT2A_CAPC2013X94N_10PF':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS243715@ORCAPTUREDOWNLOAD.08053A100KAT2A.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins243715@orcapturedownload.\08053a100kat2a.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page_ins243715@orcapturedownload.\08053a100kat2a.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ C21 'C0805X200J5GACTU_C0805_0.015UF':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS238217@ORCAPTUREDOWNLOAD.C0805X200J5GACTU.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins238217@orcapturedownload.\c0805x200j5gactu.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page_ins238217@orcapturedownload.\c0805x200j5gactu.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ C22 'C0805C106M3PAC7210_C0805_10UF':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS211721@ORCAPTUREDOWNLOAD.C0805C106M3PAC7210.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins211721@orcapturedownload.\c0805c106m3pac7210.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page_ins211721@orcapturedownload.\c0805c106m3pac7210.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ C23 'C0805R104J5RACTU_C0805_0.1UF':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS209979@ORCAPTUREDOWNLOAD.C0805R104J5RACTU.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins209979@orcapturedownload.\c0805r104j5ractu.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page_ins209979@orcapturedownload.\c0805r104j5ractu.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ C24 '0805ZC105JAT2A_C0805_1 UF':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS342033@NANOAMP.0805ZC105JAT2A.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins342033@nanoamp.\0805zc105jat2a.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins342033@nanoamp.\0805zc105jat2a.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ C26 '0805ZC105JAT2A_C0805_1 UF':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS380085@NANOAMP.0805ZC105JAT2A.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins380085@nanoamp.\0805zc105jat2a.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins380085@nanoamp.\0805zc105jat2a.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ C3 '0805ZC105JAT2A_C0805_1 UF':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS363651@NANOAMP.0805ZC105JAT2A.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins363651@nanoamp.\0805zc105jat2a.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page_ins363651@nanoamp.\0805zc105jat2a.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ C4 '0805ZC105JAT2A_C0805_1 UF':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS342787@NANOAMP.0805ZC105JAT2A.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins342787@nanoamp.\0805zc105jat2a.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins342787@nanoamp.\0805zc105jat2a.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ C5 '0805ZC105JAT2A_C0805_1 UF':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS343741@NANOAMP.0805ZC105JAT2A.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins343741@nanoamp.\0805zc105jat2a.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins343741@nanoamp.\0805zc105jat2a.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ C6 '0805ZC105JAT2A_C0805_1 UF':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS343761@NANOAMP.0805ZC105JAT2A.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins343761@nanoamp.\0805zc105jat2a.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins343761@nanoamp.\0805zc105jat2a.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ C7 'C0805X200J5GACTU_C0805_0.015UF':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS238693@ORCAPTUREDOWNLOAD.C0805X200J5GACTU.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins238693@orcapturedownload.\c0805x200j5gactu.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page_ins238693@orcapturedownload.\c0805x200j5gactu.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ C8 '0805ZC105JAT2A_C0805_1 UF':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS1832@NANOAMP.0805ZC105JAT2A.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins1832@nanoamp.\0805zc105jat2a.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page_ins1832@nanoamp.\0805zc105jat2a.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ C9 '08053A100KAT2A_CAPC2013X94N_10PF':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS243852@ORCAPTUREDOWNLOAD.08053A100KAT2A.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins243852@orcapturedownload.\08053a100kat2a.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page_ins243852@orcapturedownload.\08053a100kat2a.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ CR1 'LD1117S33TR_SOT-223_STM_LD1117S33TR':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS342729@ORCAPTUREDOWNLOAD.LD1117S33TR.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins342729@orcapturedownload.\ld1117s33tr.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins342729@orcapturedownload.\ld1117s33tr.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ CR2 'LD1117S33TR_SOT-223_STM_LD1117S33TR':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS380029@ORCAPTUREDOWNLOAD.LD1117S33TR.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins380029@orcapturedownload.\ld1117s33tr.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins380029@orcapturedownload.\ld1117s33tr.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ D1 'FM4002-W_DIOM5025X231N_FM4002-W':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS238102@ORCAPTUREDOWNLOAD.FM4002-W.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins238102@orcapturedownload.\fm4002-w.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page_ins238102@orcapturedownload.\fm4002-w.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ IC10 'NCV8164ASN120T1G_SOT95P275X110-5N_1P2VREGULATORR':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS343673@ORCAPTUREDOWNLOAD.NCV8164ASN120T1G.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins343673@orcapturedownload.\ncv8164asn120t1g.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins343673@orcapturedownload.\ncv8164asn120t1g.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ IC11 'UCC284DP-ADJ_SOIC127P600X175-8N_UCC284DP-ADJ':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS1792@NANOAMP.UCC284DP-ADJ.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins1792@nanoamp.\ucc284dp-adj.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page_ins1792@nanoamp.\ucc284dp-adj.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ IC12 'LTC6082IGN#PBF_SOP64P601X175-16N_LTC6082IGN#PBF':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS1750@NANOAMP.LTC6082IGN#PBF.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins1750@nanoamp.\ltc6082ign#pbf.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page_ins1750@nanoamp.\ltc6082ign#pbf.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ IC13 'MAX660CSA+_SOIC127P600X175-8N_MAX660CSA+':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS1566@NANOAMP.MAX660CSA+.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins1566@nanoamp.\max660csa+.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page_ins1566@nanoamp.\max660csa+.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ IC14 'NCV5501DT50RKG_NCV5501DT50RKG_5VREG':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS344184@ORCAPTUREDOWNLOAD.NCV5501DT50RKG.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins344184@orcapturedownload.\ncv5501dt50rkg.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins344184@orcapturedownload.\ncv5501dt50rkg.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ IC15 'LM317MDTG_TO229P990X238-4N_LM317MDTG':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS1518@NANOAMP.LM317MDTG.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins1518@nanoamp.\lm317mdtg.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page_ins1518@nanoamp.\lm317mdtg.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ IC2 'OPA202IDGKR_SOP65P490X110-8N_OPA202IDGKR':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS349839@ORCAPTUREDOWNLOAD.OPA202IDGKR.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins349839@orcapturedownload.\opa202idgkr.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins349839@orcapturedownload.\opa202idgkr.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ IC3 'OPA202IDGKR_SOP65P490X110-8N_OPA202IDGKR':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS349955@ORCAPTUREDOWNLOAD.OPA202IDGKR.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins349955@orcapturedownload.\opa202idgkr.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins349955@orcapturedownload.\opa202idgkr.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ IC8 'OPA202IDGKR_SOP65P490X110-8N_OPA202IDGKR':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS349701@ORCAPTUREDOWNLOAD.OPA202IDGKR.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins349701@orcapturedownload.\opa202idgkr.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins349701@orcapturedownload.\opa202idgkr.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ IC9 'OPA202IDGKR_SOP65P490X110-8N_OPA202IDGKR':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS349537@ORCAPTUREDOWNLOAD.OPA202IDGKR.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins349537@orcapturedownload.\opa202idgkr.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins349537@orcapturedownload.\opa202idgkr.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ J1 '1-1337445-0_1-1337445-0_CSINPUT':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS363505@ORCAPTUREDOWNLOAD.1-1337445-0.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins363505@orcapturedownload.\1-1337445-0.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page_ins363505@orcapturedownload.\1-1337445-0.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ J15 '1-1337445-0_1-1337445-0_CH7':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS53757@ORCAPTUREDOWNLOAD.1-1337445-0.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins53757@orcapturedownload.\1-1337445-0.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins53757@orcapturedownload.\1-1337445-0.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ J16 '1-1337445-0_1-1337445-0_CH8':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS53795@ORCAPTUREDOWNLOAD.1-1337445-0.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins53795@orcapturedownload.\1-1337445-0.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins53795@orcapturedownload.\1-1337445-0.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ J19 '1-1337445-0_1-1337445-0_VG':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS47879@ORCAPTUREDOWNLOAD.1-1337445-0.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins47879@orcapturedownload.\1-1337445-0.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins47879@orcapturedownload.\1-1337445-0.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ J2 '1-1337445-0_1-1337445-0_LOSENSE':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS160423@ORCAPTUREDOWNLOAD.1-1337445-0.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins160423@orcapturedownload.\1-1337445-0.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins160423@orcapturedownload.\1-1337445-0.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ J21 'M22-2020205_HDRV4W67P254_2X2_508X483X858P_AMP0GAIN':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS382386@ORCAPTUREDOWNLOAD.M22-2020205.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins382386@orcapturedownload.\m22-2020205.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins382386@orcapturedownload.\m22-2020205.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ J22 'M22-2020205_HDRV4W67P254_2X2_508X483X858P_ISOURCESELECT':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS363441@ORCAPTUREDOWNLOAD.M22-2020205.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins363441@orcapturedownload.\m22-2020205.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page_ins363441@orcapturedownload.\m22-2020205.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ J23 'M22-2020205_HDRV4W67P254_2X2_508X483X858P_AMP1GAIN':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS382544@ORCAPTUREDOWNLOAD.M22-2020205.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins382544@orcapturedownload.\m22-2020205.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins382544@orcapturedownload.\m22-2020205.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ J24 'M22-2020205_HDRV4W67P254_2X2_508X483X858P_AMP2GAIN':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS382696@ORCAPTUREDOWNLOAD.M22-2020205.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins382696@orcapturedownload.\m22-2020205.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins382696@orcapturedownload.\m22-2020205.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ J25 'M22-2020205_HDRV4W67P254_2X2_508X483X858P_P5MACS0,1':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS352576@ORCAPTUREDOWNLOAD.M22-2020205.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins352576@orcapturedownload.\m22-2020205.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins352576@orcapturedownload.\m22-2020205.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ J26 'M22-2020205_HDRV4W67P254_2X2_508X483X858P_P5MACS2,3':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS352860@ORCAPTUREDOWNLOAD.M22-2020205.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins352860@orcapturedownload.\m22-2020205.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins352860@orcapturedownload.\m22-2020205.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ J29 'M22-2020205_HDRV4W67P254_2X2_508X483X858P_AMP3GAIN':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS382856@ORCAPTUREDOWNLOAD.M22-2020205.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins382856@orcapturedownload.\m22-2020205.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins382856@orcapturedownload.\m22-2020205.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ J3 '1-1337445-0_1-1337445-0_VDDIN':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS48138@ORCAPTUREDOWNLOAD.1-1337445-0.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins48138@orcapturedownload.\1-1337445-0.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins48138@orcapturedownload.\1-1337445-0.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ J30 'M22-2020205_HDRV4W67P254_2X2_508X483X858P_AMP4GAIN':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS382418@ORCAPTUREDOWNLOAD.M22-2020205.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins382418@orcapturedownload.\m22-2020205.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins382418@orcapturedownload.\m22-2020205.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ J31 'M22-2020205_HDRV4W67P254_2X2_508X483X858P_AMP5GAIN':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS382576@ORCAPTUREDOWNLOAD.M22-2020205.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins382576@orcapturedownload.\m22-2020205.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins382576@orcapturedownload.\m22-2020205.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ J32 'M22-2020205_HDRV4W67P254_2X2_508X483X858P_AMP6GAIN':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS382728@ORCAPTUREDOWNLOAD.M22-2020205.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins382728@orcapturedownload.\m22-2020205.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins382728@orcapturedownload.\m22-2020205.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ J34 'M22-2020205_HDRV4W67P254_2X2_508X483X858P_AMP7GAIN':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS382888@ORCAPTUREDOWNLOAD.M22-2020205.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins382888@orcapturedownload.\m22-2020205.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins382888@orcapturedownload.\m22-2020205.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ J35 'M22-2020205_HDRV4W67P254_2X2_508X483X858P_VOUT1BYP':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS382450@ORCAPTUREDOWNLOAD.M22-2020205.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins382450@orcapturedownload.\m22-2020205.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins382450@orcapturedownload.\m22-2020205.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ J37 'M22-2020205_HDRV4W67P254_2X2_508X483X858P_BIASTEEBYP':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS58841@ORCAPTUREDOWNLOAD.M22-2020205.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins58841@orcapturedownload.\m22-2020205.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page_ins58841@orcapturedownload.\m22-2020205.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ J39 'M22-2020205_HDRV4W67P254_2X2_508X483X858P_VOUT3BYP':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS382608@ORCAPTUREDOWNLOAD.M22-2020205.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins382608@orcapturedownload.\m22-2020205.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins382608@orcapturedownload.\m22-2020205.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ J4 '1-1337445-0_1-1337445-0_CH1':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS54147@ORCAPTUREDOWNLOAD.1-1337445-0.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins54147@orcapturedownload.\1-1337445-0.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins54147@orcapturedownload.\1-1337445-0.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ J41 'M22-2020205_HDRV4W67P254_2X2_508X483X858P_VOUT5BYP':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS382760@ORCAPTUREDOWNLOAD.M22-2020205.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins382760@orcapturedownload.\m22-2020205.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins382760@orcapturedownload.\m22-2020205.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ J42 'M22-2020205_HDRV4W67P254_2X2_508X483X858P_VOUT7BYP':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS382920@ORCAPTUREDOWNLOAD.M22-2020205.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins382920@orcapturedownload.\m22-2020205.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins382920@orcapturedownload.\m22-2020205.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ J47 'IC51-1004-405-1_IC5110044051_IC51-1004-405-1':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS320689@ORCAPTUREDOWNLOAD.IC51-1004-405-1.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins320689@orcapturedownload.\ic51-1004-405-1.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins320689@orcapturedownload.\ic51-1004-405-1.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='A';
+
+PART_NAME
+ J48 'IC51-1004-405-1_6_CONN_5749070-9_TYC_IC51-1004-405-1':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS328992@RTSEVAL_V2.IC51-1004-405-1_6.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins328992@rtseval_v2.\ic51-1004-405-1_6.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins328992@rtseval_v2.\ic51-1004-405-1_6.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ J49 '10129381-908001BLF_10129381908001BLF_10129381-908001BLF':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS343036@ORCAPTUREDOWNLOAD.10129381-908001BLF.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins343036@orcapturedownload.\10129381-908001blf.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins343036@orcapturedownload.\10129381-908001blf.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ J5 '1-1337445-0_1-1337445-0_CH2':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS54181@ORCAPTUREDOWNLOAD.1-1337445-0.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins54181@orcapturedownload.\1-1337445-0.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins54181@orcapturedownload.\1-1337445-0.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ J50 '10129381-908001BLF_10129381908001BLF_10129381-908001BLF':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS343114@ORCAPTUREDOWNLOAD.10129381-908001BLF.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins343114@orcapturedownload.\10129381-908001blf.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins343114@orcapturedownload.\10129381-908001blf.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ J51 'PJ-202AH_PJ202AH_12VPS':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS342055@ORCAPTUREDOWNLOAD.PJ-202AH.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins342055@orcapturedownload.\pj-202ah.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins342055@orcapturedownload.\pj-202ah.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ J52 '68602-116HLF_HDRV16W67P254X254_2X8_2032X483X858P_68602-116HLF':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS363361@ORCAPTUREDOWNLOAD.68602-116HLF.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins363361@orcapturedownload.\68602-116hlf.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page_ins363361@orcapturedownload.\68602-116hlf.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ J53 '10129381-908001BLF_10129381908001BLF_10129381-908001BLF':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS358187@ORCAPTUREDOWNLOAD.10129381-908001BLF.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins358187@orcapturedownload.\10129381-908001blf.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins358187@orcapturedownload.\10129381-908001blf.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ J54 '68602-116HLF_HDRV16W67P254X254_2X8_2032X483X858P_68602-116HLF':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS372186@ORCAPTUREDOWNLOAD.68602-116HLF.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins372186@orcapturedownload.\68602-116hlf.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins372186@orcapturedownload.\68602-116hlf.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ J55 '10129378-904001BLF_HDRV4W67P0X254_1X4_1270X241X858P_10129378-904001BLF':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS390452@ORCAPTUREDOWNLOAD.10129378-904001BLF.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins390452@orcapturedownload.\10129378-904001blf.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins390452@orcapturedownload.\10129378-904001blf.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ J6 '1-1337445-0_1-1337445-0_CH3':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS54291@ORCAPTUREDOWNLOAD.1-1337445-0.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins54291@orcapturedownload.\1-1337445-0.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins54291@orcapturedownload.\1-1337445-0.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ J7 '1-1337445-0_1-1337445-0_CH4':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS54325@ORCAPTUREDOWNLOAD.1-1337445-0.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins54325@orcapturedownload.\1-1337445-0.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins54325@orcapturedownload.\1-1337445-0.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ J8 '1-1337445-0_1-1337445-0_CH5':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS54435@ORCAPTUREDOWNLOAD.1-1337445-0.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins54435@orcapturedownload.\1-1337445-0.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins54435@orcapturedownload.\1-1337445-0.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ J9 '1-1337445-0_1-1337445-0_CH6':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS54469@ORCAPTUREDOWNLOAD.1-1337445-0.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins54469@orcapturedownload.\1-1337445-0.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins54469@orcapturedownload.\1-1337445-0.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ K1 'ALQ105_ALQ105_ALQ105':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS366191@ORCAPTUREDOWNLOAD.ALQ105.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins366191@orcapturedownload.\alq105.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins366191@orcapturedownload.\alq105.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ K2 'ALQ105_ALQ105_ALQ105':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS375560@ORCAPTUREDOWNLOAD.ALQ105.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins375560@orcapturedownload.\alq105.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins375560@orcapturedownload.\alq105.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ K3 'ALQ105_ALQ105_ALQ105':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS375598@ORCAPTUREDOWNLOAD.ALQ105.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins375598@orcapturedownload.\alq105.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins375598@orcapturedownload.\alq105.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ K4 'ALQ105_ALQ105_ALQ105':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS375636@ORCAPTUREDOWNLOAD.ALQ105.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins375636@orcapturedownload.\alq105.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins375636@orcapturedownload.\alq105.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ K5 'ALQ105_ALQ105_ALQ105':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS375674@ORCAPTUREDOWNLOAD.ALQ105.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins375674@orcapturedownload.\alq105.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins375674@orcapturedownload.\alq105.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ K6 'ALQ105_ALQ105_ALQ105':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS375712@ORCAPTUREDOWNLOAD.ALQ105.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins375712@orcapturedownload.\alq105.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins375712@orcapturedownload.\alq105.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ K7 'ALQ105_ALQ105_ALQ105':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS375750@ORCAPTUREDOWNLOAD.ALQ105.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins375750@orcapturedownload.\alq105.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins375750@orcapturedownload.\alq105.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ K8 'ALQ105_ALQ105_ALQ105':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS375788@ORCAPTUREDOWNLOAD.ALQ105.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins375788@orcapturedownload.\alq105.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins375788@orcapturedownload.\alq105.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ L1 '1812FS-104JLC_1812FS104JLC_100 UH':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS24231@ORCAPTUREDOWNLOAD.1812FS-104JLC.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins24231@orcapturedownload.\1812fs-104jlc.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page_ins24231@orcapturedownload.\1812fs-104jlc.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ Q1 'ALD210800ASCL_SOIC127P600X175-16N_ALD210800ASCL':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS350813@ORCAPTUREDOWNLOAD.ALD210800ASCL.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins350813@orcapturedownload.\ald210800ascl.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins350813@orcapturedownload.\ald210800ascl.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ Q11 'DMN2004DMK-7_SOT95P285X145-6N_CHAN3':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS55324@ORCAPTUREDOWNLOAD.DMN2004DMK-7.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins55324@orcapturedownload.\dmn2004dmk-7.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins55324@orcapturedownload.\dmn2004dmk-7.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ Q14 'DMN2004DMK-7_SOT95P285X145-6N_CHAN4':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS55442@ORCAPTUREDOWNLOAD.DMN2004DMK-7.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins55442@orcapturedownload.\dmn2004dmk-7.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins55442@orcapturedownload.\dmn2004dmk-7.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ Q16 'DMN2004DMK-7_SOT95P285X145-6N_VGLSELECT':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS50269@ORCAPTUREDOWNLOAD.DMN2004DMK-7.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins50269@orcapturedownload.\dmn2004dmk-7.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins50269@orcapturedownload.\dmn2004dmk-7.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ Q18 'DMN2004DMK-7_SOT95P285X145-6N_VDDSELECT':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS48997@ORCAPTUREDOWNLOAD.DMN2004DMK-7.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins48997@orcapturedownload.\dmn2004dmk-7.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins48997@orcapturedownload.\dmn2004dmk-7.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ Q2 'ALD210800ASCL_SOIC127P600X175-16N_ALD210800ASCL':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS351007@ORCAPTUREDOWNLOAD.ALD210800ASCL.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins351007@orcapturedownload.\ald210800ascl.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins351007@orcapturedownload.\ald210800ascl.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ Q20 'DMN2004DMK-7_SOT95P285X145-6N_VGPSELECT':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS48627@ORCAPTUREDOWNLOAD.DMN2004DMK-7.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins48627@orcapturedownload.\dmn2004dmk-7.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins48627@orcapturedownload.\dmn2004dmk-7.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ Q22 'ALD210800ASCL_SOIC127P600X175-16N_ALD210800ASCL':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS355090@ORCAPTUREDOWNLOAD.ALD210800ASCL.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins355090@orcapturedownload.\ald210800ascl.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins355090@orcapturedownload.\ald210800ascl.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ Q23 'ALD210800ASCL_SOIC127P600X175-16N_ALD210800ASCL':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS365535@ORCAPTUREDOWNLOAD.ALD210800ASCL.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins365535@orcapturedownload.\ald210800ascl.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page_ins365535@orcapturedownload.\ald210800ascl.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ Q24 'ALD210800ASCL_SOIC127P600X175-16N_ALD210800ASCL':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS365717@ORCAPTUREDOWNLOAD.ALD210800ASCL.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins365717@orcapturedownload.\ald210800ascl.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page_ins365717@orcapturedownload.\ald210800ascl.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ Q25 'ALD210800ASCL_SOIC127P600X175-16N_ALD210800ASCL':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS365887@ORCAPTUREDOWNLOAD.ALD210800ASCL.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins365887@orcapturedownload.\ald210800ascl.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page_ins365887@orcapturedownload.\ald210800ascl.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ Q4 'DMN2004DMK-7_SOT95P285X145-6N_CHAN1':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS54569@ORCAPTUREDOWNLOAD.DMN2004DMK-7.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins54569@orcapturedownload.\dmn2004dmk-7.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins54569@orcapturedownload.\dmn2004dmk-7.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ Q5 'DMN2004DMK-7_SOT95P285X145-6N_CHAN2':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS54611@ORCAPTUREDOWNLOAD.DMN2004DMK-7.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins54611@orcapturedownload.\dmn2004dmk-7.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins54611@orcapturedownload.\dmn2004dmk-7.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ Q6 'DMN2004DMK-7_SOT95P285X145-6N_P5MACS0,1':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS352394@ORCAPTUREDOWNLOAD.DMN2004DMK-7.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins352394@orcapturedownload.\dmn2004dmk-7.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins352394@orcapturedownload.\dmn2004dmk-7.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ Q8 'DMN2004DMK-7_SOT95P285X145-6N_P5MACS2,3':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS352650@ORCAPTUREDOWNLOAD.DMN2004DMK-7.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins352650@orcapturedownload.\dmn2004dmk-7.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins352650@orcapturedownload.\dmn2004dmk-7.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ R10 'SDR10EZPF2001_RESC2012X65N_1K':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS352682@ORCAPTUREDOWNLOAD.SDR10EZPF2001.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins352682@orcapturedownload.\sdr10ezpf2001.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins352682@orcapturedownload.\sdr10ezpf2001.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ R13 'SDR10EZPF2001_RESC2012X65N_1K':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS352370@ORCAPTUREDOWNLOAD.SDR10EZPF2001.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins352370@orcapturedownload.\sdr10ezpf2001.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins352370@orcapturedownload.\sdr10ezpf2001.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ R17 'SDR10EZPF2001_RESC2012X65N_1K':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS352474@ORCAPTUREDOWNLOAD.SDR10EZPF2001.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins352474@orcapturedownload.\sdr10ezpf2001.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins352474@orcapturedownload.\sdr10ezpf2001.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ R2 'SDR10EZPF2001_RESC2012X65N_300':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS363627@ORCAPTUREDOWNLOAD.SDR10EZPF2001.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins363627@orcapturedownload.\sdr10ezpf2001.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page_ins363627@orcapturedownload.\sdr10ezpf2001.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ R21 'SDR10EZPF2001_RESC2012X65N_1K':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS352792@ORCAPTUREDOWNLOAD.SDR10EZPF2001.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins352792@orcapturedownload.\sdr10ezpf2001.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins352792@orcapturedownload.\sdr10ezpf2001.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ R3 'SDR10EZPF2001_RESC2012X65N_300':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS363411@ORCAPTUREDOWNLOAD.SDR10EZPF2001.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins363411@orcapturedownload.\sdr10ezpf2001.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page_ins363411@orcapturedownload.\sdr10ezpf2001.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ R31 'MCU08050C1005FP500_RESC2012X55N_10M':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS212462@ORCAPTUREDOWNLOAD.MCU08050C1005FP500.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins212462@orcapturedownload.\mcu08050c1005fp500.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page_ins212462@orcapturedownload.\mcu08050c1005fp500.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ R34 'AT0805FRE0710KL_RESC2012X60N_10K':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS213717@ORCAPTUREDOWNLOAD.AT0805FRE0710KL.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins213717@orcapturedownload.\at0805fre0710kl.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page_ins213717@orcapturedownload.\at0805fre0710kl.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ R36 'AT0805FRE0710KL_RESC2012X60N_10K':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS213741@ORCAPTUREDOWNLOAD.AT0805FRE0710KL.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins213741@orcapturedownload.\at0805fre0710kl.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page_ins213741@orcapturedownload.\at0805fre0710kl.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ R37 'AT0805FRE0710KL_RESC2012X60N_10K':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS213765@ORCAPTUREDOWNLOAD.AT0805FRE0710KL.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins213765@orcapturedownload.\at0805fre0710kl.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page_ins213765@orcapturedownload.\at0805fre0710kl.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ R38 'SDR10EZPF2001_RESC2012X65N_300':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS372162@ORCAPTUREDOWNLOAD.SDR10EZPF2001.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins372162@orcapturedownload.\sdr10ezpf2001.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins372162@orcapturedownload.\sdr10ezpf2001.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ R39 'SDR10EZPF2001_RESC2012X65N_300':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS372236@ORCAPTUREDOWNLOAD.SDR10EZPF2001.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins372236@orcapturedownload.\sdr10ezpf2001.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins372236@orcapturedownload.\sdr10ezpf2001.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ R4 'SDR10EZPF2001_RESC2012X65N_300':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS363735@ORCAPTUREDOWNLOAD.SDR10EZPF2001.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins363735@orcapturedownload.\sdr10ezpf2001.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page_ins363735@orcapturedownload.\sdr10ezpf2001.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ R40 'SDR10EZPF2001_RESC2012X65N_300':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS372266@ORCAPTUREDOWNLOAD.SDR10EZPF2001.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins372266@orcapturedownload.\sdr10ezpf2001.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins372266@orcapturedownload.\sdr10ezpf2001.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ R41 'SDR10EZPF2001_RESC2012X65N_300':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS372296@ORCAPTUREDOWNLOAD.SDR10EZPF2001.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins372296@orcapturedownload.\sdr10ezpf2001.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins372296@orcapturedownload.\sdr10ezpf2001.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ R42 'SDR10EZPF2001_RESC2012X65N_300':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS372326@ORCAPTUREDOWNLOAD.SDR10EZPF2001.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins372326@orcapturedownload.\sdr10ezpf2001.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins372326@orcapturedownload.\sdr10ezpf2001.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ R43 'SDR10EZPF2001_RESC2012X65N_300':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS372356@ORCAPTUREDOWNLOAD.SDR10EZPF2001.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins372356@orcapturedownload.\sdr10ezpf2001.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins372356@orcapturedownload.\sdr10ezpf2001.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ R44 'SDR10EZPF2001_RESC2012X65N_300':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS372386@ORCAPTUREDOWNLOAD.SDR10EZPF2001.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins372386@orcapturedownload.\sdr10ezpf2001.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins372386@orcapturedownload.\sdr10ezpf2001.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ R45 'SDR10EZPF2001_RESC2012X65N_300':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS372416@ORCAPTUREDOWNLOAD.SDR10EZPF2001.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins372416@orcapturedownload.\sdr10ezpf2001.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins372416@orcapturedownload.\sdr10ezpf2001.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ R5 'SDR10EZPF2001_RESC2012X65N_300':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS363583@ORCAPTUREDOWNLOAD.SDR10EZPF2001.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins363583@orcapturedownload.\sdr10ezpf2001.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page_ins363583@orcapturedownload.\sdr10ezpf2001.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ R6 'SDR10EZPF2001_RESC2012X65N_300':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS363711@ORCAPTUREDOWNLOAD.SDR10EZPF2001.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins363711@orcapturedownload.\sdr10ezpf2001.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page_ins363711@orcapturedownload.\sdr10ezpf2001.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ R7 'SDR10EZPF2001_RESC2012X65N_300':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS363467@ORCAPTUREDOWNLOAD.SDR10EZPF2001.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins363467@orcapturedownload.\sdr10ezpf2001.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page_ins363467@orcapturedownload.\sdr10ezpf2001.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ R8 'SDR10EZPF2001_RESC2012X65N_300':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS363533@ORCAPTUREDOWNLOAD.SDR10EZPF2001.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins363533@orcapturedownload.\sdr10ezpf2001.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page_ins363533@orcapturedownload.\sdr10ezpf2001.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ R9 'SDR10EZPF2001_RESC2012X65N_300':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS363681@ORCAPTUREDOWNLOAD.SDR10EZPF2001.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins363681@orcapturedownload.\sdr10ezpf2001.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page_ins363681@orcapturedownload.\sdr10ezpf2001.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ RE1 'DS4303RTR_21-0057F_MXM_P5MACS3':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS349983@ORCAPTUREDOWNLOAD.DS4303RTR.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins349983@orcapturedownload.\ds4303rtr.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins349983@orcapturedownload.\ds4303rtr.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ RE10 'MCU08050C1003FP500_MCU0805_VIS_100K':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS212624@ORCAPTUREDOWNLOAD.MCU08050C1003FP500.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins212624@orcapturedownload.\mcu08050c1003fp500.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page_ins212624@orcapturedownload.\mcu08050c1003fp500.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ RE11 'MCU08050C1003FP500_MCU0805_VIS_100K':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS212672@ORCAPTUREDOWNLOAD.MCU08050C1003FP500.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins212672@orcapturedownload.\mcu08050c1003fp500.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page_ins212672@orcapturedownload.\mcu08050c1003fp500.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ RE12 'RT0805FRE0797K6L_RC0805N_YAG_97.6K':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS215818@ORCAPTUREDOWNLOAD.RT0805FRE0797K6L.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins215818@orcapturedownload.\rt0805fre0797k6l.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page_ins215818@orcapturedownload.\rt0805fre0797k6l.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ RE13 'MCU08050C1003FP500_MCU0805_VIS_100K':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS212656@ORCAPTUREDOWNLOAD.MCU08050C1003FP500.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins212656@orcapturedownload.\mcu08050c1003fp500.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page_ins212656@orcapturedownload.\mcu08050c1003fp500.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ RE14 'PVG5A502C03R00_POT_PVGA5_BRN_POT':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS6701@ORCAPTUREDOWNLOAD.PVG5A502C03R00.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins6701@orcapturedownload.\pvg5a502c03r00.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page_ins6701@orcapturedownload.\pvg5a502c03r00.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ RE15 'RT0805FRE071KL_RC0805N_YAG_1K':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS215887@ORCAPTUREDOWNLOAD.RT0805FRE071KL.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins215887@orcapturedownload.\rt0805fre071kl.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page_ins215887@orcapturedownload.\rt0805fre071kl.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ RE16 'RT0805BRE07100RL_RC0805N_YAG_100':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS215555@ORCAPTUREDOWNLOAD.RT0805BRE07100RL.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins215555@orcapturedownload.\rt0805bre07100rl.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page_ins215555@orcapturedownload.\rt0805bre07100rl.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ RE17 'MCU08050C1003FP500_MCU0805_VIS_100K':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS212640@ORCAPTUREDOWNLOAD.MCU08050C1003FP500.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins212640@orcapturedownload.\mcu08050c1003fp500.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page_ins212640@orcapturedownload.\mcu08050c1003fp500.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ RE18 'RT0805BRE07100RL_RC0805N_YAG_100':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS215571@ORCAPTUREDOWNLOAD.RT0805BRE07100RL.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins215571@orcapturedownload.\rt0805bre07100rl.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page_ins215571@orcapturedownload.\rt0805bre07100rl.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ RE19 'RT0805DRD07470RL_RC0805N_YAG_470':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS215344@ORCAPTUREDOWNLOAD.RT0805DRD07470RL.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins215344@orcapturedownload.\rt0805drd07470rl.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page_ins215344@orcapturedownload.\rt0805drd07470rl.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ RE3 'DS4303RTR_21-0057F_MXM_P5MACS2':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS349817@ORCAPTUREDOWNLOAD.DS4303RTR.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins349817@orcapturedownload.\ds4303rtr.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins349817@orcapturedownload.\ds4303rtr.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ RE7 'SC0915_SC0915_RPI_SC0915':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS8571@ORCAPTUREDOWNLOAD.SC0915.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins8571@orcapturedownload.\sc0915.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins8571@orcapturedownload.\sc0915.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ RE8 'DS4303RTR_21-0057F_MXM_P5MACS1':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS349679@ORCAPTUREDOWNLOAD.DS4303RTR.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins349679@orcapturedownload.\ds4303rtr.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins349679@orcapturedownload.\ds4303rtr.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+PART_NAME
+ RE9 'DS4303RTR_21-0057F_MXM_P5MACS0':;
+
+SECTION_NUMBER 1
+ '@RTSEVAL_V2.RTSMB_V2(SCH_1):INS349565@ORCAPTUREDOWNLOAD.DS4303RTR.NORMAL(CHIPS)':
+ C_PATH='@rtseval_v2.rtsmb_v2(sch_1):ins349565@orcapturedownload.\ds4303rtr.normal\(chips)',
+ P_PATH='@rtseval_v2.rtsmb_v2(sch_1):page1_ins349565@orcapturedownload.\ds4303rtr.normal\(chips)',
+ PRIM_FILE='.\pstchip.dat',
+ SECTION='';
+
+END.

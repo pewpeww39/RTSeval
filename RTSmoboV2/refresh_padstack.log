@@ -1,0 +1,219 @@
+(---------------------------------------------------------------------)
+(                                                                     )
+(    Refresh Padstack                                                 )
+(                                                                     )
+(    Drawing          : rtsevalv2.brd                                 )
+(    Software Version : 17.4S031                                      )
+(    Date/Time        : Sat Jan 14 09:34:13 2023                      )
+(                                                                     )
+(---------------------------------------------------------------------)
+
+
+Sat Jan 14 09:34:13 2023				Page     1
+
+
+------ Pad Stack Refresh Options ------
+
+Input design  = 'd:/onedrive - university of tennessee/college/utc/master/skywater/rtseval/rtsmobov2/rtsevalv2.brd'
+Output design = ''
+Reset symbol text and size locations   = 'NO'
+
+
+------ Library Paths ------
+PSMPATH =  . 
+           symbols 
+           .. 
+           ../symbols 
+           D:/OneDrive - University of Tennessee/College/UTC/Master/Summer 2022/RTS_MotherBoard/allegro 
+           D:/OneDrive - University of Tennessee/College/UTC/Software/Allegro 
+           C:/Cadence/SPB_17.4/share/local/pcb/symbols 
+           C:/Cadence/SPB_17.4/share/pcb/pcb_lib/symbols 
+           C:/Cadence/SPB_17.4/share/pcb/allegrolib/symbols 
+           C:/SPB_Data/cdssetup/OrCAD_Capture/17.4.0/downloaded_parts/allegropcb 
+
+PADPATH =  . 
+           symbols 
+           .. 
+           ../symbols 
+           D:/OneDrive - University of Tennessee/College/UTC/Software/Allegro/PewPads 
+           D:/OneDrive - University of Tennessee/College/UTC/Software/Allegro 
+           C:/Cadence/SPB_17.4/share/local/pcb/padstacks 
+           C:/Cadence/SPB_17.4/share/pcb/pcb_lib/symbols 
+           C:/Cadence/SPB_17.4/share/pcb/allegrolib/symbols 
+           C:/SPB_Data/cdssetup/OrCAD_Capture/17.4.0/downloaded_parts/allegropcb 
+
+
+------ Pad Stack Refresh Messages ------
+
+'RX41Y57D0T'  pad stack refresh starting.
+
+     'RX41Y57D0T'  pad stack refreshed successfully.
+     
+'RX43Y71D0T'  pad stack refresh starting.
+
+     'RX43Y71D0T'  pad stack refreshed successfully.
+     
+'RX59Y59D0T'  pad stack refresh starting.
+
+     'RX59Y59D0T'  pad stack refreshed successfully.
+     
+'RX126Y63D0T'  pad stack refresh starting.
+
+     'RX126Y63D0T'  pad stack refreshed successfully.
+     
+'RX63Y79D0T'  pad stack refresh starting.
+
+     'RX63Y79D0T'  pad stack refreshed successfully.
+     
+'RX63Y51D0TSM2'  pad stack refresh starting.
+
+     'RX63Y51D0TSM2'  pad stack refreshed successfully.
+     
+'RX63Y51D0T'  pad stack refresh starting.
+
+     'RX63Y51D0T'  pad stack refreshed successfully.
+     
+'RX40Y48D0T'  pad stack refresh starting.
+
+     'RX40Y48D0T'  pad stack refreshed successfully.
+     
+'RX22Y49D0T'  pad stack refresh starting.
+
+     'RX22Y49D0T'  pad stack refreshed successfully.
+     
+'RX38P5Y20D0T'  pad stack refresh starting.
+
+     'RX38P5Y20D0T'  pad stack refreshed successfully.
+     
+'R140_95'  pad stack refresh starting.
+
+     'R140_95'  pad stack refreshed successfully.
+     
+'R145_90'  pad stack refresh starting.
+
+     'R145_90'  pad stack refreshed successfully.
+     
+'R330_119'  pad stack refresh starting.
+
+     'R330_119'  pad stack refreshed successfully.
+     
+'R140_100'  pad stack refresh starting.
+
+     'R140_100'  pad stack refreshed successfully.
+     
+'R120_60'  pad stack refresh starting.
+
+     'R120_60'  pad stack refreshed successfully.
+     
+'R163_8_65'  pad stack refresh starting.
+
+     'R163_8_65'  pad stack refreshed successfully.
+     
+'R305_114'  pad stack refresh starting.
+
+     'R305_114'  pad stack refreshed successfully.
+     
+'C465_H310'  pad stack refresh starting.
+
+     'C465_H310'  pad stack refreshed successfully.
+     
+'C540_H360'  pad stack refresh starting.
+
+     'C540_H360'  pad stack refreshed successfully.
+     
+'C480_H320'  pad stack refresh starting.
+
+     'C480_H320'  pad stack refreshed successfully.
+     
+'C130_H80'  pad stack refresh starting.
+
+     'C130_H80'  pad stack refreshed successfully.
+     
+'C150_H100'  pad stack refresh starting.
+
+     'C150_H100'  pad stack refreshed successfully.
+     
+'S150_H100'  pad stack refresh starting.
+
+     'S150_H100'  pad stack refreshed successfully.
+     
+'C489_H326'  pad stack refresh starting.
+
+     'C489_H326'  pad stack refreshed successfully.
+     
+'C154_H99'  pad stack refresh starting.
+
+     'C154_H99'  pad stack refreshed successfully.
+     Sat Jan 14 09:34:13 2023				Page     2
+
+
+     
+'S154_H99'  pad stack refresh starting.
+
+     'S154_H99'  pad stack refreshed successfully.
+     
+'C172_5_H115'  pad stack refresh starting.
+
+     'C172_5_H115'  pad stack refreshed successfully.
+     
+'S172_5_H115'  pad stack refresh starting.
+
+     'S172_5_H115'  pad stack refreshed successfully.
+     
+'C180_H120'  pad stack refresh starting.
+
+     'C180_H120'  pad stack refreshed successfully.
+     
+'C170_H110'  pad stack refresh starting.
+
+     'C170_H110'  pad stack refreshed successfully.
+     
+'R140_45'  pad stack refresh starting.
+
+     'R140_45'  pad stack refreshed successfully.
+     
+'R595_555'  pad stack refresh starting.
+
+     'R595_555'  pad stack refreshed successfully.
+     
+'R285_100'  pad stack refresh starting.
+
+     'R285_100'  pad stack refreshed successfully.
+     
+'R620_580'  pad stack refresh starting.
+
+     'R620_580'  pad stack refreshed successfully.
+     
+'R300_160'  pad stack refresh starting.
+
+     'R300_160'  pad stack refreshed successfully.
+     
+'R152_6_43_5'  pad stack refresh starting.
+
+     'R152_6_43_5'  pad stack refreshed successfully.
+     
+'R152_5_65'  pad stack refresh starting.
+
+     'R152_5_65'  pad stack refreshed successfully.
+     
+'R125_60'  pad stack refresh starting.
+
+     'R125_60'  pad stack refreshed successfully.
+     
+'R225_160'  pad stack refresh starting.
+
+     'R225_160'  pad stack refreshed successfully.
+     
+'R144_78_91_44'  pad stack refresh starting.
+
+     'R144_78_91_44'  pad stack refreshed successfully.
+     
+'R145_115'  pad stack refresh starting.
+
+     'R145_115'  pad stack refreshed successfully.
+     
+'M3MOUNTINGHOLE_2'  pad stack refresh starting.
+
+     'M3MOUNTINGHOLE_2'  pad stack refreshed successfully.
+     
+Completed refreshing all pad stacks successfully.
