@@ -1,0 +1,366 @@
+(ExpressProject ""
+  (ProjectVersion "19981106")
+  (SoftwareVersion "17.4-2019 S031 (4044358)  [7/23/2022]-[01/14/23]")
+  (Folder "Design Resources"
+    (Folder "Library"
+      (File ".\nanoamp.olb"
+        (Type "Schematic Library")
+        (DisplayName ".\nanoamp.olb")))
+    ("Allegro Netlist Directory" "..\rtseval\rtsmobov2")
+    (File "..\rtseval\rtsmobov2\rtseval_v2.dsn"
+      (Type "Schematic Design")
+      (DisplayName ".\rtseval_v2.DSN"))
+    (BuildFileAddedOrDeleted "x")
+    (CompileFileAddedOrDeleted "x")
+    (DOCKED "TRUE")
+    (DOCKING_POSITION "59420")
+    (NoModify)
+    ("Allegro Netlist Output Board File" "..\rtseval\rtsmobov2\rtsevalv2.brd")
+    (DRC_Scope "1")
+    (DRC_Action "0")
+    (DRC_Create_Warnings "TRUE")
+    (DRC_View_Output "TRUE")
+    (DRC_View_Output_Type "2")
+    (DRC_Preserved_Waived "FALSE")
+    (RUN_Online_Rules "TRUE")
+    (DRC_Run_Electrical_Rules "TRUE")
+    (DRC_Check_Single_Node_Nets "FALSE")
+    (DRC_Check_No_Driving_Source "FALSE")
+    (DRC_Check_Duplicate_NetNames "TRUE")
+    (DRC_Check_Off-Page_Connectors "FALSE")
+    (DRC_Check_Ports "TRUE")
+    (DRC_Check_Unconnected_Nets "TRUE")
+    (DRC_Check_Floating_Pins "TRUE")
+    (DRC_SDT_Compatibility "FALSE")
+    (DRC_Check_Single_Node_Nets_Online "FALSE")
+    (DRC_Check_No_Driving_Source_Online "FALSE")
+    (DRC_Check_Duplicate_NetNames_Online "TRUE")
+    (DRC_Check_Off-Page_Connectors_Online "FALSE")
+    (DRC_Check_Ports_Online "FALSE")
+    (DRC_Check_Unconnected_Nets_Online "FALSE")
+    (DRC_Check_Floating_Pins_Online "FALSE")
+    (DRC_Run_Electrical_Reports "TRUE")
+    (DRC_Report_Netnames "FALSE")
+    (DRC_Report_Off-grid_Objects "FALSE")
+    (DRC_Report_Ports_and_Off-page_Connectors "FALSE")
+    (DRC_Check_for_Misleading_TAP "FALSE")
+    (DRC_Run_Physical_Rules "TRUE")
+    (DRC_Check_Physical_Power_Pins_Visibility "TRUE")
+    (DRC_Check_PCB_Footprint_Property "TRUE")
+    (DRC_Check_Normal_Convert_View_Sync "TRUE")
+    (DRC_Check_Incorrect_PinGroup_Assignment "TRUE")
+    (DRC_Check_High_Speed_Props_Syntax "TRUE")
+    (DRC_Check_Missing_Pin_Numbers "TRUE")
+    (DRC_Check_Device_With_No_Pins "TRUE")
+    (DRC_Check_Power_Ground_Short "TRUE")
+    (DRC_Check_Name_Prop_For_HierBlocks "TRUE")
+    (DRC_Check_Physical_Power_Pins_Visibility_Online "FALSE")
+    (DRC_Check_PCB_Footprint_Property_Online "TRUE")
+    (DRC_Check_Normal_Convert_View_Sync_Online "FALSE")
+    (DRC_Check_Incorrect_PinGroup_Assignment_Online "TRUE")
+    (DRC_Check_Missing_Pin_Numbers_Online "TRUE")
+    (DRC_Check_Device_With_No_Pins_Online "FALSE")
+    (DRC_Check_Power_Ground_Short_Online "FALSE")
+    (DRC_Check_Name_Prop_For_HierBlocks_Online "FALSE")
+    (DRC_Run_Physical_Reports "TRUE")
+    (DRC_Visible_Power_pins "FALSE")
+    (DRC_Report_Unused_Part_Packages "TRUE")
+    (DRC_Type_Mismatch "TRUE")
+    (DRC_Identical_References "TRUE")
+    (DRC_Run_Simulation_Rules "TRUE")
+    (DRC_Check_Pspice_Model_Lib_Path_Online "FALSE")
+    (DRC_Run_Custom_Rules "FALSE")
+    (DRC_Report_File
+       "D:\ONEDRIVE - UNIVERSITY OF TENNESSEE\COLLEGE\UTC\MASTER\SUMMER 2022\RTS_MOTHERBOARD\RTSMOTHERBOARD.DRC")
+    (RootChangedForceReNetlist "x")
+    (BOM_Scope "1")
+    (BOM_Mode "0")
+    (BOM_Report_File
+       "D:\OneDrive - University of Tennessee\College\UTC\Master\Skywater\Allegro\allegro\Gerber Files\RTSmobo\RTSmOBOfinal.BOM")
+    (BOM_Merge_Include "FALSE")
+    (BOM_Property_Combine_7.0
+       "{Item}\t{Quantity}\t{Reference}\t{Value}\t{Vendor}\t{Manufacturer_Name}\t{Manufacturer_Part_Number}")
+    (BOM_Header
+       "Item\tQuantity\tReference\tPart\tVendor\tManufacturer\tManufacturer Part Number")
+    (BOM_Include_File
+       "D:\ONEDRIVE - UNIVERSITY OF TENNESSEE\COLLEGE\UTC\MASTER\SUMMER 2022\RTS_MOTHERBOARD\RTSMOTHERBOARD.INC")
+    (BOM_Include_File_Combine_7.0 "{Item}\t{Quantity}\t{Reference}\t{Value}")
+    (BOM_One_Part_Per_Line "FALSE")
+    (Open_BOM_in_Excel "FALSE")
+    (BOM_View_Output "TRUE")
+    (Display_Online_DRC_Results "FALSE")
+    (ANNOTATE_Scope "0")
+    (ANNOTATE_Mode "1")
+    (ANNOTATE_Action "0")
+    (Annotate_Page_Order "0")
+    (ANNOTATE_Reset_References_to_1 "FALSE")
+    (ANNOTATE_No_Page_Number_Change "FALSE")
+    (ANNOTATE_Property_Combine "{Value}{Source Package}{POWER_GROUP}")
+    (ANNOTATE_IncludeNonPrimitive "FALSE")
+    (ANNOTATE_PreserveDesignator "FALSE")
+    (ANNOTATE_PreserveUserEdits "FALSE")
+    (ANNOTATE_Refdes_Control_Required "FALSE")
+    (Update_Instace_for_External_Design "FALSE")
+    (Annotate_type "Default")
+    (width_pages "100")
+    (width_start "80")
+    (width_End "80")
+    (Board_sim_option "VHDL_flow"))
+  (Folder "Layout"
+    (File ".\allegro\nanoamp.brd"
+      (Type "Board File")
+      (OutputBoard ".\allegro\nanoamp.brd")
+      (NetListPath ".\allegro")
+      (ActiveBoard "0"))
+    (File ".\allegro\lccbreakout.brd"
+      (Type "Board File")
+      (OutputBoard ".\allegro\lccbreakout.brd")
+      (NetListPath ".\allegro")
+      (ActiveBoard "0"))
+    (File ".\allegro\rtsmobo.brd"
+      (Type "Board File")
+      (OutputBoard ".\allegro\rtsmobo.brd")
+      (NetListPath ".\allegro")
+      (ActiveBoard "0"))
+    (File ".\allegro\moborts.brd"
+      (Type "Board File")
+      (OutputBoard ".\allegro\moborts.brd")
+      (NetListPath ".\allegro")
+      (ActiveBoard "0"))
+    (File ".\allegro\rtsevalv2.brd"
+      (Type "Board File")
+      (OutputBoard ".\allegro\rtsevalv2.brd")
+      (NetListPath "..\rtseval\rtsmobov2")
+      (ActiveBoard "0"))
+    (File "..\rtseval\rtsmobov2\rtsevalv2.brd"
+      (Type "Board File")
+      (OutputBoard "..\rtseval\rtsmobov2\rtsevalv2.brd")
+      (NetListPath "..\rtseval\rtsmobov2")
+      (ActiveBoard "1")))
+  (Folder "Outputs"
+    (File ".\allegro\pstxnet.dat"
+      (Type "Report")
+      (DisplayName "pstxnet.dat"))
+    (File ".\allegro\pstxprt.dat"
+      (Type "Report")
+      (DisplayName "pstxprt.dat"))
+    (File ".\allegro\pstchip.dat"
+      (Type "Report")
+      (DisplayName "pstchip.dat"))
+    (File ".\rtsmotherboard.drc"
+      (Type "Report")
+      (DisplayName ".\rtsmotherboard.drc"))
+    (File ".\rtsmotherboard.bom"
+      (Type "Report")
+      (DisplayName ".\rtsmotherboard.bom"))
+    (Sort User)
+    (File "RTSMOTHERBOARD_CORE_ENG BILL OF MATERIALS.BOM"
+      (Type "Report")
+      (DisplayName "RTSMOTHERBOARD_CORE_ENG BILL OF MATERIALS.BOM"))
+    (File ".\MovedFiles\rtsmotherboard.drc"
+      (Type "Report")
+      (DisplayName ".\MovedFiles\rtsmotherboard.drc"))
+    (File ".\bom.bom"
+      (Type "Report")
+      (DisplayName ".\bom.bom"))
+    (File ".\allegro\gerber files\rtsmobo\rtsmobo.bom"
+      (Type "Report")
+      (DisplayName ".\allegro\gerber files\rtsmobo\rtsmobo.bom"))
+    (File ".\allegro\gerber files\rtsmobo\rtsmobofinal.bom"
+      (Type "Report")
+      (DisplayName ".\allegro\gerber files\rtsmobo\rtsmobofinal.bom"))
+    (File ".\MovedFiles\pstxnet.dat"
+      (Type "Report")
+      (DisplayName "pstxnet.dat"))
+    (File ".\MovedFiles\pstxprt.dat"
+      (Type "Report")
+      (DisplayName "pstxprt.dat"))
+    (File ".\MovedFiles\pstchip.dat"
+      (Type "Report")
+      (DisplayName "pstchip.dat")))
+  (Folder "Referenced Projects")
+  (Folder "PSpice Resources"
+    (Folder "Simulation Profiles")
+    (Folder "Model Libraries"
+      (Sort User))
+    (Folder "Stimulus Files"
+      (Sort User))
+    (Folder "Include Files"
+      (Sort User)))
+  (Folder "Logs"
+    (File ".\allegro\netlist.log"
+      (Type "Log File")
+      (LogFile
+         "e:\onedrive - university of tennessee\college\utc\master\skywater\allegro\allegro\netlist.log"))
+    (File ".\allegro\netrev.lst"
+      (Type "Log File")
+      (LogFile
+         "e:\onedrive - university of tennessee\college\utc\master\skywater\allegro\allegro\netrev.lst"))
+    (File ".\allegro\eco.txt"
+      (Type "Log File")
+      (LogFile
+         "e:\onedrive - university of tennessee\college\utc\master\skywater\allegro\allegro\eco.txt"))
+    (File ".\allegro\genfeed.log"
+      (Type "Log File")
+      (LogFile
+         "e:\onedrive - university of tennessee\college\utc\master\skywater\allegro\allegro\genfeed.log"))
+    (File ".\allegro\swp.log"
+      (Type "Log File")
+      (LogFile
+         "d:\onedrive - university of tennessee\college\utc\master\summer 2022\rts_motherboard\allegro\swp.log"))
+    (File "..\rtseval\rtsmobov2\netlist.log"
+      (Type "Log File")
+      (LogFile
+         "d:\onedrive - university of tennessee\college\utc\master\skywater\rtseval\rtsmobov2\netlist.log"))
+    (File "..\rtseval\rtsmobov2\netrev.lst"
+      (Type "Log File")
+      (LogFile
+         "d:\onedrive - university of tennessee\college\utc\master\skywater\rtseval\rtsmobov2\netrev.lst"))
+    (File "..\rtseval\rtsmobov2\eco.txt"
+      (Type "Log File")
+      (LogFile
+         "d:\onedrive - university of tennessee\college\utc\master\skywater\rtseval\rtsmobov2\eco.txt")))
+  (GlobalState
+    (FileView
+      (Path "Design Resources")
+      (Path "Design Resources" "..\rtseval\rtsmobov2\rtseval_v2.dsn")
+      (Path "Design Resources" "..\rtseval\rtsmobov2\rtseval_v2.dsn" "rtsMB_v1")
+      (Path "Layout")
+      (Path "Outputs")
+      (Path "Logs")
+      (Select "Design Resources" "..\rtseval\rtsmobov2\rtseval_v2.dsn"
+         "rtsMB_v1"))
+    (HierarchyView)
+    (Doc
+      (Type "COrCapturePMDoc")
+      (Frame
+        (Placement "44 0 1 -1 -1 -1 -1 0 200 0 535"))
+      (Tab 0)))
+  (PartMRUSelector
+    (IC51-1004-405-1
+      (FullPartName "IC51-1004-405-1.Normal")
+      (LibraryName
+         "C:\SPB_DATA\CDSSETUP\ORCAD_CAPTURE\17.4.0\ORCAPTUREDOWNLOAD.OLB")
+      (DeviceIndex "0"))
+    (LD1117S33TR
+      (FullPartName "LD1117S33TR.Normal")
+      (LibraryName
+         "C:\USERS\JPEW\APPDATA\ROAMING\SPB_DATA\CDSSETUP\ORCAD_CAPTURE\17.4.0\ORCAPTUREDOWNLOAD.OLB")
+      (DeviceIndex "0"))
+    (LM1117MPX-33NOPB
+      (FullPartName "LM1117MPX-33NOPB.Normal")
+      (LibraryName
+         "C:\USERS\JPEW\APPDATA\ROAMING\SPB_DATA\CDSSETUP\ORCAD_CAPTURE\17.4.0\ORCAPTUREDOWNLOAD.OLB")
+      (DeviceIndex "0"))
+    (NCV4274CST33T3G
+      (FullPartName "NCV4274CST33T3G.Normal")
+      (LibraryName
+         "C:\SPB_DATA\CDSSETUP\ORCAD_CAPTURE\17.4.0\ORCAPTUREDOWNLOAD.OLB")
+      (DeviceIndex "0"))
+    (RT0805FRE071KL
+      (FullPartName "RT0805FRE071KL.Normal")
+      (LibraryName
+         "C:\SPB_DATA\CDSSETUP\ORCAD_CAPTURE\17.4.0\ORCAPTUREDOWNLOAD.OLB")
+      (DeviceIndex "0"))
+    (RT0805FRE0797K6L
+      (FullPartName "RT0805FRE0797K6L.Normal")
+      (LibraryName
+         "C:\SPB_DATA\CDSSETUP\ORCAD_CAPTURE\17.4.0\ORCAPTUREDOWNLOAD.OLB")
+      (DeviceIndex "0"))
+    (RT0805BRE07100RL
+      (FullPartName "RT0805BRE07100RL.Normal")
+      (LibraryName
+         "C:\SPB_DATA\CDSSETUP\ORCAD_CAPTURE\17.4.0\ORCAPTUREDOWNLOAD.OLB")
+      (DeviceIndex "0"))
+    (RT0805DRD07470RL
+      (FullPartName "RT0805DRD07470RL.Normal")
+      (LibraryName
+         "C:\SPB_DATA\CDSSETUP\ORCAD_CAPTURE\17.4.0\ORCAPTUREDOWNLOAD.OLB")
+      (DeviceIndex "0"))
+    (AT0805FRE0710KL
+      (FullPartName "AT0805FRE0710KL.Normal")
+      (LibraryName
+         "C:\SPB_DATA\CDSSETUP\ORCAD_CAPTURE\17.4.0\ORCAPTUREDOWNLOAD.OLB")
+      (DeviceIndex "0"))
+    (MCU08050C1003FP500
+      (FullPartName "MCU08050C1003FP500.Normal")
+      (LibraryName
+         "C:\SPB_DATA\CDSSETUP\ORCAD_CAPTURE\17.4.0\ORCAPTUREDOWNLOAD.OLB")
+      (DeviceIndex "0"))
+    (MCU08050C1005FP500
+      (FullPartName "MCU08050C1005FP500.Normal")
+      (LibraryName
+         "C:\SPB_DATA\CDSSETUP\ORCAD_CAPTURE\17.4.0\ORCAPTUREDOWNLOAD.OLB")
+      (DeviceIndex "0"))
+    (C0805C395K9PACTU
+      (FullPartName "C0805C395K9PACTU.Normal")
+      (LibraryName
+         "C:\SPB_DATA\CDSSETUP\ORCAD_CAPTURE\17.4.0\ORCAPTUREDOWNLOAD.OLB")
+      (DeviceIndex "0"))
+    (08053A100KAT2A
+      (FullPartName "08053A100KAT2A.Normal")
+      (LibraryName
+         "C:\SPB_DATA\CDSSETUP\ORCAD_CAPTURE\17.4.0\ORCAPTUREDOWNLOAD.OLB")
+      (DeviceIndex "0"))
+    (C0805C106M3PAC7210
+      (FullPartName "C0805C106M3PAC7210.Normal")
+      (LibraryName
+         "C:\SPB_DATA\CDSSETUP\ORCAD_CAPTURE\17.4.0\ORCAPTUREDOWNLOAD.OLB")
+      (DeviceIndex "0"))
+    (C0805R104J5RACTU
+      (FullPartName "C0805R104J5RACTU.Normal")
+      (LibraryName
+         "C:\SPB_DATA\CDSSETUP\ORCAD_CAPTURE\17.4.0\ORCAPTUREDOWNLOAD.OLB")
+      (DeviceIndex "0"))
+    (C0805H153J3GACTU
+      (FullPartName "C0805H153J3GACTU.Normal")
+      (LibraryName
+         "C:\SPB_DATA\CDSSETUP\ORCAD_CAPTURE\17.4.0\ORCAPTUREDOWNLOAD.OLB")
+      (DeviceIndex "0"))
+    (67996-104HLF
+      (FullPartName "67996-104HLF.Normal")
+      (LibraryName
+         "C:\SPB_DATA\CDSSETUP\ORCAD_CAPTURE\17.4.0\ORCAPTUREDOWNLOAD.OLB")
+      (DeviceIndex "0"))
+    (22-23-2031
+      (FullPartName "22-23-2031.Normal")
+      (LibraryName
+         "C:\SPB_DATA\CDSSETUP\ORCAD_CAPTURE\17.4.0\ORCAPTUREDOWNLOAD.OLB")
+      (DeviceIndex "0"))
+    (ALD210800ASCL
+      (FullPartName "ALD210800ASCL.Normal")
+      (LibraryName
+         "C:\SPB_DATA\CDSSETUP\ORCAD_CAPTURE\17.4.0\ORCAPTUREDOWNLOAD.OLB")
+      (DeviceIndex "0"))
+    (m3MountingHole
+      (FullPartName "m3MountingHole.Normal")
+      (LibraryName
+         "E:\ONEDRIVE - UNIVERSITY OF TENNESSEE\COLLEGE\UTC\MASTER\SUMMER 2022\RTS_MOTHERBOARD\NANOAMP.OLB")
+      (DeviceIndex "0"))
+    (SDR10EZPF2001
+      (FullPartName "SDR10EZPF2001.Normal")
+      (LibraryName
+         "C:\SPB_DATA\CDSSETUP\ORCAD_CAPTURE\17.4.0\ORCAPTUREDOWNLOAD.OLB")
+      (DeviceIndex "0"))
+    (3361S-1-102GLF
+      (FullPartName "3361S-1-102GLF.Normal")
+      (LibraryName
+         "C:\SPB_DATA\CDSSETUP\ORCAD_CAPTURE\17.4.0\ORCAPTUREDOWNLOAD.OLB")
+      (DeviceIndex "0"))
+    (5749070-9
+      (FullPartName "5749070-9.Normal")
+      (LibraryName
+         "C:\SPB_DATA\CDSSETUP\ORCAD_CAPTURE\17.4.0\ORCAPTUREDOWNLOAD.OLB")
+      (DeviceIndex "0"))
+    (1-1337445-0
+      (FullPartName "1-1337445-0.Normal")
+      (LibraryName
+         "C:\SPB_DATA\CDSSETUP\ORCAD_CAPTURE\17.4.0\ORCAPTUREDOWNLOAD.OLB")
+      (DeviceIndex "0"))
+    (IC51-1004-405-1_DOE1
+      (FullPartName "IC51-1004-405-1_DOE1.Normal")
+      (LibraryName
+         "C:\SPB_DATA\CDSSETUP\ORCAD_CAPTURE\17.4.0\ORCAPTUREDOWNLOAD.OLB")
+      (DeviceIndex "0")))
+  (MPSSessionName "jacob")
+  (LastUsedLibraryBrowseDirectory "C:\SPB_Data\cdssetup\OrCAD_Capture\17.4.0"))

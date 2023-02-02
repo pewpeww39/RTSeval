@@ -1,0 +1,1459 @@
+|------------------------------------------------------------------------------|
+|                                 ECO   REPORT                                 |
+|                                                                    Page   1  |
+|------------------------------------------------------------------------------|
+|  D:.../College/UTC/Master/Skywater/RTSeval/RTSmoboV2/MoboRTS.brd             |
+|                                                    Sun Jan 15 19:50:14 2023  |
+|------------------------------------------------------------------------------|
+| NET CHANGES                                                                  |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+|   net  name |  type of change |    pin_id     |   x   |   y   |   to  net    |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+  +3V_RELAY    pins ADDED TO this new net
+                                 C26.1                          
+                                 CR2.2                          
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  +5V          pins ADDED TO this existing net (pins not previously on any net)
+                                 Q22.12                         
+                                 Q23.12                         
+                                 Q24.12                         
+                                 Q25.12                         
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  AGND/GND     pins MOVED FROM this net (to net name listed on right)
+                                 RE7.33           770.00 3211.50
+                                                                            GND
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  AMPBIAS0_H   pins ADDED TO this new net
+                                 J54.2                          
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  AMPBIAS1_H   pins ADDED TO this new net
+                                 J54.4                          
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  AMPBIAS2_H   pins ADDED TO this new net
+                                 J54.6                          
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  AMPBIAS3_H   pins ADDED TO this new net
+                                 J54.8                          
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  AMPBIAS4_H   pins ADDED TO this new net
+                                 J54.10                         
+                                 Q22.15                         
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  AMPBIAS5_H   pins ADDED TO this new net
+                                 J54.12                         
+                                 Q22.6                          
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  AMPBIAS6_H   pins ADDED TO this new net
+                                 J54.14                         
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  AMPBIAS7_H   pins ADDED TO this new net
+                                 J54.16                         
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  AMPBIAS0     pins ADDED TO this new net
+                                 J47.86                         
+                                 J48.86                         
+                                 R38.1                          
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+|------------------------------------------------------------------------------|
+|                                 ECO   REPORT                                 |
+|                                                                    Page   2  |
+|------------------------------------------------------------------------------|
+|  D:.../College/UTC/Master/Skywater/RTSeval/RTSmoboV2/MoboRTS.brd             |
+|                                                    Sun Jan 15 19:50:14 2023  |
+|------------------------------------------------------------------------------|
+| NET CHANGES                                                                  |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+|   net  name |  type of change |    pin_id     |   x   |   y   |   to  net    |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+  AMPBIAS1     pins ADDED TO this new net
+                                 J47.83                         
+                                 J48.83                         
+                                 R39.2                          
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  AMPBIAS2     pins ADDED TO this new net
+                                 J47.78                         
+                                 J48.78                         
+                                 R40.1                          
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  AMPBIAS3     pins ADDED TO this new net
+                                 J47.75                         
+                                 J48.75                         
+                                 R41.2                          
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  AMPBIAS4     pins ADDED TO this new net
+                                 J47.69                         
+                                 J48.69                         
+                                 R42.1                          
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  AMPBIAS5     pins ADDED TO this new net
+                                 J47.66                         
+                                 J48.66                         
+                                 R43.2                          
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  AMPBIAS6     pins ADDED TO this new net
+                                 J47.63                         
+                                 J48.63                         
+                                 R44.1                          
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  AMPBIAS7     pins ADDED TO this new net
+                                 J47.55                         
+                                 J48.55                         
+                                 R45.2                          
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  BIASTEEBYP   net RENAMED (to net name listed on right)           N00145       
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  BIASTEEIN    net RENAMED (to net name listed on right)           N24468       
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  CH.1         pins MOVED FROM this net (to net name listed on right)
+                                 J4.1            2550.00 4350.00
+                                                                          CHAN1
+                                 Q4.1            1778.82 3507.40
+                                                                      VOUT1_OFF
+                                 Q4.4            1881.18 3432.60
+|------------------------------------------------------------------------------|
+|                                 ECO   REPORT                                 |
+|                                                                    Page   3  |
+|------------------------------------------------------------------------------|
+|  D:.../College/UTC/Master/Skywater/RTSeval/RTSmoboV2/MoboRTS.brd             |
+|                                                    Sun Jan 15 19:50:14 2023  |
+|------------------------------------------------------------------------------|
+| NET CHANGES                                                                  |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+|   net  name |  type of change |    pin_id     |   x   |   y   |   to  net    |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+                                                                      VOUT4_CH1
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  CH.2         pins MOVED FROM this net (to net name listed on right)
+                                 J5.1            3250.00 4350.00
+                                                                        N375917
+                                 Q5.1            2398.82 3187.40
+                                                                      VOUT2_CH1
+                                 Q5.4            2501.18 3112.60
+                                                                      VOUT2_CH1
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  CH.3         pins MOVED FROM this net (to net name listed on right)
+                                 J6.1            3950.00 4350.00
+                                                                        N374627
+                                 Q11.1           2398.82 2587.40
+                                                                      VOUT3_CH1
+                                 Q11.4           2501.18 2512.60
+                                                                      VOUT2_CH1
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  CH.4         pins MOVED FROM this net (to net name listed on right)
+                                 J7.1            4650.00 4350.00
+                                                                        N374620
+                                 Q14.1           2398.82 1987.40
+                                                                      VOUT4_CH1
+                                 Q14.4           2501.18 1912.60
+                                                                      VOUT2_CH1
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  CH.5         pins MOVED FROM this net (to net name listed on right)
+                                 J8.1            5350.00 4350.00
+                                                                         N55742
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  CH.6         pins ADDED TO this existing net (pins not previously on any net)
+                                 K6.2                           
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  CH.7         pins MOVED FROM this net (to net name listed on right)
+                                 J15.1           5360.00 3680.00
+                                                                        N375818
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  CH.8         pins ADDED TO this existing net (pins not previously on any net)
+                                 K8.2                           
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  CHAN1_VO0    pins MOVED FROM this net (to net name listed on right)
+                                 Q4.2            1778.82 3470.00
+                                                                    CHAN1_VOOFF
+                                 RE7.14          1370.00 2448.50
+                                                                    CHAN1_VOOFF
+|------------------------------------------------------------------------------|
+|                                 ECO   REPORT                                 |
+|                                                                    Page   4  |
+|------------------------------------------------------------------------------|
+|  D:.../College/UTC/Master/Skywater/RTSeval/RTSmoboV2/MoboRTS.brd             |
+|                                                    Sun Jan 15 19:50:14 2023  |
+|------------------------------------------------------------------------------|
+| NET CHANGES                                                                  |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+|   net  name |  type of change |    pin_id     |   x   |   y   |   to  net    |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+  CHAN1_VO4    pins MOVED FROM this net (to net name listed on right)
+                                 RE7.15          1470.00 2448.50
+                                                                      CHAN1_VO1
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  CHAN2_VO1    pins MOVED FROM this net (to net name listed on right)
+                                 Q5.2            2398.82 3150.00
+                                                                      CHAN1_VO1
+                                 RE7.16          1570.00 2448.50
+                                                                      CHAN1_VO2
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  CHAN2_VO5    pins MOVED FROM this net (to net name listed on right)
+                                 Q5.5            2501.18 3150.00
+                                                                      CHAN1_VO5
+                                 RE7.17          1670.00 2448.50
+                                                                      CHAN1_VO3
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  CHAN3_VO2    pins MOVED FROM this net (to net name listed on right)
+                                 Q11.2           2398.82 2550.00
+                                                                      CHAN1_VO2
+                                 RE7.19          1870.00 2448.50
+                                                                      CHAN1_VO4
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  CHAN3_VO6    pins MOVED FROM this net (to net name listed on right)
+                                 Q11.5           2501.18 2550.00
+                                                                      CHAN1_VO6
+                                 RE7.20          1970.00 2448.50
+                                                                      CHAN1_VO5
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  CHAN4_VO3    pins MOVED FROM this net (to net name listed on right)
+                                 Q14.2           2398.82 1950.00
+                                                                      CHAN1_VO3
+                                 RE7.21          1970.00 3211.50
+                                                                      CHAN1_VO6
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  CHAN4_VO7    pins MOVED FROM this net (to net name listed on right)
+                                 Q14.5           2501.18 1950.00
+                                                                      CHAN1_VO7
+                                 RE7.22          1870.00 3211.50
+                                                                      CHAN1_VO7
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  CHAN5_VO4    pins MOVED FROM this net (to net name listed on right)
+                                 RE7.32           870.00 3211.50
+                                                                         N65748
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  CHAN6_VO5    pins MOVED FROM this net (to net name listed on right)
+|------------------------------------------------------------------------------|
+|                                 ECO   REPORT                                 |
+|                                                                    Page   5  |
+|------------------------------------------------------------------------------|
+|  D:.../College/UTC/Master/Skywater/RTSeval/RTSmoboV2/MoboRTS.brd             |
+|                                                    Sun Jan 15 19:50:14 2023  |
+|------------------------------------------------------------------------------|
+| NET CHANGES                                                                  |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+|   net  name |  type of change |    pin_id     |   x   |   y   |   to  net    |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+                                 RE7.31           970.00 3211.50
+                                                                         N65777
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  CHAN7_VO6    pins MOVED FROM this net (to net name listed on right)
+                                 RE7.29          1170.00 3211.50
+                                                                         N65800
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  CHAN8_VO7    pins MOVED FROM this net (to net name listed on right)
+                                 RE7.27          1370.00 3211.50
+                                                                         N65828
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  CHAN1        pins ADDED TO this new net
+                                 K1.2                           
+                                 K2.3                           
+                                 K3.3                           
+                                 K4.3                           
+                                 K5.3                           
+                                 K6.3                           
+                                 K7.3                           
+                                 K8.3                           
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  CSIN         pins ADDED TO this existing net (pins not previously on any net)
+                                 J47.97                         
+                                 J48.97                         
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  DHIN         pins ADDED TO this new net
+                                 J47.95                         
+                                 J48.95                         
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  DIN          pins ADDED TO this new net
+                                 J47.6                          
+                                 J48.6                          
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  GND2         pins MOVED FROM this net (to net name listed on right)
+                                 J1.2             251.18 4151.18
+                                                                            GND
+                                 J1.3             648.82 4151.18
+                                                                            GND
+                                 J1.4             648.82 4548.82
+                                                                            GND
+                                 J1.5             251.18 4548.82
+                                                                            GND
+                                 J3.2            1651.18 4151.18
+                                                                            GND
+                                 J3.3            2048.82 4151.18
+|------------------------------------------------------------------------------|
+|                                 ECO   REPORT                                 |
+|                                                                    Page   6  |
+|------------------------------------------------------------------------------|
+|  D:.../College/UTC/Master/Skywater/RTSeval/RTSmoboV2/MoboRTS.brd             |
+|                                                    Sun Jan 15 19:50:14 2023  |
+|------------------------------------------------------------------------------|
+| NET CHANGES                                                                  |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+|   net  name |  type of change |    pin_id     |   x   |   y   |   to  net    |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+                                                                            GND
+                                 J3.4            2048.82 4548.82
+                                                                            GND
+                                 J3.5            1651.18 4548.82
+                                                                            GND
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  GND          pins ADDED TO this existing net (pins not previously on any net)
+                                 C24.2                          
+                                 C26.2                          
+                                 CR2.1                          
+                                 J47.1                          
+                                 J47.13                         
+                                 J47.16                         
+                                 J47.25                         
+                                 J47.26                         
+                                 J47.37                         
+                                 J47.39                         
+                                 J47.46                         
+                                 J47.49                         
+                                 J47.52                         
+                                 J47.81                         
+                                 J47.89                         
+                                 J48.1                          
+                                 J48.13                         
+                                 J48.16                         
+                                 J48.25                         
+                                 J48.26                         
+                                 J48.37                         
+                                 J48.39                         
+                                 J48.46                         
+                                 J48.49                         
+                                 J48.52                         
+                                 J48.81                         
+                                 J48.89                         
+                                 J51.2                          
+                                 J51.3                          
+                                 K1.5                           
+                                 K2.5                           
+                                 K3.5                           
+                                 K4.5                           
+                                 K5.5                           
+                                 K6.5                           
+                                 K7.5                           
+                                 K8.5                           
+                                 Q22.4                          
+|------------------------------------------------------------------------------|
+|                                 ECO   REPORT                                 |
+|                                                                    Page   7  |
+|------------------------------------------------------------------------------|
+|  D:.../College/UTC/Master/Skywater/RTSeval/RTSmoboV2/MoboRTS.brd             |
+|                                                    Sun Jan 15 19:50:14 2023  |
+|------------------------------------------------------------------------------|
+| NET CHANGES                                                                  |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+|   net  name |  type of change |    pin_id     |   x   |   y   |   to  net    |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+                                 Q22.5                          
+                                 Q22.8                          
+                                 Q22.9                          
+                                 Q22.13                         
+                                 Q23.4                          
+                                 Q23.5                          
+                                 Q23.8                          
+                                 Q23.9                          
+                                 Q23.13                         
+                                 Q24.4                          
+                                 Q24.5                          
+                                 Q24.8                          
+                                 Q24.9                          
+                                 Q24.13                         
+                                 Q25.4                          
+                                 Q25.5                          
+                                 Q25.8                          
+                                 Q25.9                          
+                                 Q25.13                         
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  GND_1        pins MOVED FROM this net (to net name listed on right)
+                                 RE7.8            770.00 2448.50
+                                                                            GND
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  GND_2        pins MOVED FROM this net (to net name listed on right)
+                                 RE7.13          1270.00 2448.50
+                                                                            GND
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  GND_3        pins MOVED FROM this net (to net name listed on right)
+                                 RE7.18          1770.00 2448.50
+                                                                            GND
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  GND_4        pins MOVED FROM this net (to net name listed on right)
+                                 RE7.23          1770.00 3211.50
+                                                                            GND
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  GND_5        pins MOVED FROM this net (to net name listed on right)
+                                 RE7.28          1270.00 3211.50
+                                                                            GND
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  GND_6        pins MOVED FROM this net (to net name listed on right)
+                                 RE7.38           270.00 3211.50
+                                                                            GND
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  GND_7        pins MOVED FROM this net (to net name listed on right)
+|------------------------------------------------------------------------------|
+|                                 ECO   REPORT                                 |
+|                                                                    Page   8  |
+|------------------------------------------------------------------------------|
+|  D:.../College/UTC/Master/Skywater/RTSeval/RTSmoboV2/MoboRTS.brd             |
+|                                                    Sun Jan 15 19:50:14 2023  |
+|------------------------------------------------------------------------------|
+| NET CHANGES                                                                  |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+|   net  name |  type of change |    pin_id     |   x   |   y   |   to  net    |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+                                 RE7.D2          1992.40 2830.00
+                                                                            GND
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  GND_8        pins MOVED FROM this net (to net name listed on right)
+                                 RE7.TP1          193.20 2830.00
+                                                                            GND
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  GND_9        pins MOVED FROM this net (to net name listed on right)
+                                 RE7.A             75.10 2722.70
+                                                                            GND
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  GND_10       pins MOVED FROM this net (to net name listed on right)
+                                 RE7.B             75.10 2937.30
+                                                                            GND
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  GND_11       pins MOVED FROM this net (to net name listed on right)
+                                 RE7.C            194.40 2734.50
+                                                                            GND
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  GND_12       pins MOVED FROM this net (to net name listed on right)
+                                 RE7.D            194.40 2925.50
+                                                                            GND
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  HCLKIN       pins ADDED TO this new net
+                                 J47.53                         
+                                 J48.53                         
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  IBIAS0_H     pins ADDED TO this new net
+                                 J52.2                          
+                                 Q23.15                         
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  IBIAS1_H     pins ADDED TO this new net
+                                 J52.4                          
+                                 Q23.6                          
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  IBIAS2_H     pins ADDED TO this new net
+                                 J52.6                          
+                                 Q23.11                         
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  IBIAS3_H     pins ADDED TO this new net
+                                 J52.8                          
+                                 Q24.2                          
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  IBIAS4_H     pins ADDED TO this new net
+                                 J52.10                         
+|------------------------------------------------------------------------------|
+|                                 ECO   REPORT                                 |
+|                                                                    Page   9  |
+|------------------------------------------------------------------------------|
+|  D:.../College/UTC/Master/Skywater/RTSeval/RTSmoboV2/MoboRTS.brd             |
+|                                                    Sun Jan 15 19:50:14 2023  |
+|------------------------------------------------------------------------------|
+| NET CHANGES                                                                  |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+|   net  name |  type of change |    pin_id     |   x   |   y   |   to  net    |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+                                 Q24.15                         
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  IBIAS5_H     pins ADDED TO this new net
+                                 J52.12                         
+                                 Q24.6                          
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  IBIAS6_H     pins ADDED TO this new net
+                                 J52.14                         
+                                 Q24.11                         
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  IBIAS7_H     pins ADDED TO this new net
+                                 J52.16                         
+                                 Q25.11                         
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  IBIAS0       pins ADDED TO this existing net (pins not previously on any net)
+                                 J47.17                         
+                                 J48.17                         
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  IBIAS1       pins ADDED TO this existing net (pins not previously on any net)
+                                 J47.19                         
+                                 J48.19                         
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  IBIAS2       pins ADDED TO this existing net (pins not previously on any net)
+                                 J47.21                         
+                                 J48.21                         
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  IBIAS3       pins ADDED TO this existing net (pins not previously on any net)
+                                 J47.23                         
+                                 J48.23                         
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  IBIAS4       pins ADDED TO this existing net (pins not previously on any net)
+                                 J47.29                         
+                                 J48.29                         
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  IBIAS5       pins ADDED TO this existing net (pins not previously on any net)
+                                 J47.31                         
+                                 J48.31                         
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  IBIAS6       pins ADDED TO this existing net (pins not previously on any net)
+                                 J47.33                         
+                                 J48.33                         
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  IBIAS7       pins ADDED TO this existing net (pins not previously on any net)
+                                 J47.35                         
+                                 J48.35                         
+|------------------------------------------------------------------------------|
+|                                 ECO   REPORT                                 |
+|                                                                    Page  10  |
+|------------------------------------------------------------------------------|
+|  D:.../College/UTC/Master/Skywater/RTSeval/RTSmoboV2/MoboRTS.brd             |
+|                                                    Sun Jan 15 19:50:14 2023  |
+|------------------------------------------------------------------------------|
+| NET CHANGES                                                                  |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+|   net  name |  type of change |    pin_id     |   x   |   y   |   to  net    |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+  IN_N0        pins ADDED TO this existing net (pins not previously on any net)
+                                 J47.87                         
+                                 J48.87                         
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  IN_N1        pins ADDED TO this existing net (pins not previously on any net)
+                                 J47.84                         
+                                 J48.84                         
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  IN_N2        pins ADDED TO this existing net (pins not previously on any net)
+                                 J47.79                         
+                                 J48.79                         
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  IN_N3        pins ADDED TO this existing net (pins not previously on any net)
+                                 J47.76                         
+                                 J48.76                         
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  IN_N4        pins ADDED TO this existing net (pins not previously on any net)
+                                 J47.70                         
+                                 J48.70                         
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  IN_N5        pins ADDED TO this existing net (pins not previously on any net)
+                                 J47.67                         
+                                 J48.67                         
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  IN_N6        pins ADDED TO this existing net (pins not previously on any net)
+                                 J47.64                         
+                                 J48.64                         
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  IN_N7        pins ADDED TO this existing net (pins not previously on any net)
+                                 J47.56                         
+                                 J48.56                         
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  MIRCH0       pins MOVED FROM this net (to net name listed on right)
+                                 Q1.6            6726.54 4445.00
+                                                                     AMPBIAS1_H
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  MIRCH1       pins MOVED FROM this net (to net name listed on right)
+                                 Q1.15           6513.46 4245.00
+                                                                     AMPBIAS0_H
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  MIRCH2       pins MOVED FROM this net (to net name listed on right)
+                                 Q1.11           6513.46 4445.00
+                                                                        P5MACS1
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  MIRCH3       pins MOVED FROM this net (to net name listed on right)
+|------------------------------------------------------------------------------|
+|                                 ECO   REPORT                                 |
+|                                                                    Page  11  |
+|------------------------------------------------------------------------------|
+|  D:.../College/UTC/Master/Skywater/RTSeval/RTSmoboV2/MoboRTS.brd             |
+|                                                    Sun Jan 15 19:50:14 2023  |
+|------------------------------------------------------------------------------|
+| NET CHANGES                                                                  |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+|   net  name |  type of change |    pin_id     |   x   |   y   |   to  net    |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+                                 Q2.2            7116.54 4245.00
+                                                                     AMPBIAS6_H
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  MIRCH4       pins MOVED FROM this net (to net name listed on right)
+                                 Q2.6            7116.54 4445.00
+                                                                     AMPBIAS2_H
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  MIRCH5       pins MOVED FROM this net (to net name listed on right)
+                                 Q2.15           6903.46 4245.00
+                                                                     AMPBIAS7_H
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  MIRCH6       pins MOVED FROM this net (to net name listed on right)
+                                 Q2.11           6903.46 4445.00
+                                                                     AMPBIAS3_H
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  N17578       net RENAMED (to net name listed on right)           N363503      
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  N33186       net RENAMED (to net name listed on right)           N349769      
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  N46440       net RENAMED (to net name listed on right)           N349619      
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  N55742       pins ADDED TO this new net
+                                 K5.2                           
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  N107897      net RENAMED (to net name listed on right)           N349907      
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  N108029      net RENAMED (to net name listed on right)           N350037      
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  N112927      pins MOVED FROM this net (to net name listed on right)
+                                 R21.2           4750.00 2907.40
+                                                                            GND
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  N113023      pins MOVED FROM this net (to net name listed on right)
+                                 R17.2           4530.00 3087.40
+                                                                            GND
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  N113634      pins MOVED FROM this net (to net name listed on right)
+                                 R13.1           4140.00 3097.40
+                                                                            GND
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  N113739      pins MOVED FROM this net (to net name listed on right)
+                                 R10.1           4150.00 3232.60
+                                                                            GND
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  N114951      net RENAMED (to net name listed on right)           N352774      
+|------------------------------------------------------------------------------|
+|                                 ECO   REPORT                                 |
+|                                                                    Page  12  |
+|------------------------------------------------------------------------------|
+|  D:.../College/UTC/Master/Skywater/RTSeval/RTSmoboV2/MoboRTS.brd             |
+|                                                    Sun Jan 15 19:50:14 2023  |
+|------------------------------------------------------------------------------|
+| NET CHANGES                                                                  |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+|   net  name |  type of change |    pin_id     |   x   |   y   |   to  net    |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+  N115559      net RENAMED (to net name listed on right)           N352518      
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  N115571      net RENAMED (to net name listed on right)           N352442      
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  N182574      pins MOVED FROM this net (to net name listed on right)
+                                 Q1.2            6726.54 4245.00
+                                                                        P5MACS0
+                                 Q1.3            6726.54 4295.00
+                                                                        P5MACS0
+                                 Q1.7            6726.54 4495.00
+                                                                        P5MACS0
+                                 Q1.10           6513.46 4495.00
+                                                                        P5MACS1
+                                 Q1.14           6513.46 4295.00
+                                                                        P5MACS0
+                                 Q2.3            7116.54 4295.00
+                                                                        P5MACS3
+                                 Q2.7            7116.54 4495.00
+                                                                        P5MACS1
+                                 Q2.10           6903.46 4495.00
+                                                                        P5MACS1
+                                 Q2.14           6903.46 4295.00
+                                                                        P5MACS3
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  N194685      net RENAMED (to net name listed on right)           N352722      
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  N365849      pins ADDED TO this new net
+                                 Q24.7                          
+                                 Q24.10                         
+                                 Q25.3                          
+                                 Q25.10                         
+                                 Q25.14                         
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  N374620      pins ADDED TO this new net
+                                 K4.2                           
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  N374627      pins ADDED TO this new net
+                                 K3.2                           
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  N375818      pins ADDED TO this new net
+                                 K7.2                           
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  N375917      pins ADDED TO this new net
+                                 K2.2                           
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+|------------------------------------------------------------------------------|
+|                                 ECO   REPORT                                 |
+|                                                                    Page  13  |
+|------------------------------------------------------------------------------|
+|  D:.../College/UTC/Master/Skywater/RTSeval/RTSmoboV2/MoboRTS.brd             |
+|                                                    Sun Jan 15 19:50:14 2023  |
+|------------------------------------------------------------------------------|
+| NET CHANGES                                                                  |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+|   net  name |  type of change |    pin_id     |   x   |   y   |   to  net    |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+  N1827601     pins MOVED FROM this net (to net name listed on right)
+                                 R6.2            6400.00 3717.40
+                                                                       N3633996
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  N1827603     pins MOVED FROM this net (to net name listed on right)
+                                 R4.1            7042.60 3840.00
+                                                                       N3633997
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  N1831301     pins MOVED FROM this net (to net name listed on right)
+                                 R2.2            6277.40 4010.00
+                                                                       N3633994
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  N1831303     pins MOVED FROM this net (to net name listed on right)
+                                 R9.1            6450.00 3357.40
+                                                                       N3633995
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  N1832481     pins MOVED FROM this net (to net name listed on right)
+                                 R8.2            7490.00 3517.40
+                                                                       N3633992
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  N1832483     pins MOVED FROM this net (to net name listed on right)
+                                 R5.1            7540.00 3727.40
+                                                                       N3633993
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  N1833701     pins MOVED FROM this net (to net name listed on right)
+                                 R3.2            6362.60 3860.00
+                                                                       N3633990
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  N1833703     pins MOVED FROM this net (to net name listed on right)
+                                 R7.1            7370.00 3687.40
+                                                                       N3633991
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  N3633990     pins ADDED TO this new net
+                                 J52.1                          
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  N3633991     pins ADDED TO this new net
+                                 J52.3                          
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  N3633992     pins ADDED TO this new net
+                                 J52.5                          
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  N3633993     pins ADDED TO this new net
+                                 J52.7                          
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  N3633994     pins ADDED TO this new net
+|------------------------------------------------------------------------------|
+|                                 ECO   REPORT                                 |
+|                                                                    Page  14  |
+|------------------------------------------------------------------------------|
+|  D:.../College/UTC/Master/Skywater/RTSeval/RTSmoboV2/MoboRTS.brd             |
+|                                                    Sun Jan 15 19:50:14 2023  |
+|------------------------------------------------------------------------------|
+| NET CHANGES                                                                  |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+|   net  name |  type of change |    pin_id     |   x   |   y   |   to  net    |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+                                 J52.9                          
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  N3633995     pins ADDED TO this new net
+                                 J52.11                         
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  N3633996     pins ADDED TO this new net
+                                 J52.13                         
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  N3633997     pins ADDED TO this new net
+                                 J52.15                         
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  N3721761     pins ADDED TO this new net
+                                 J54.1                          
+                                 R38.2                          
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  N3722241     pins ADDED TO this new net
+                                 J54.3                          
+                                 R39.1                          
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  N3722242     pins ADDED TO this new net
+                                 J54.5                          
+                                 R40.2                          
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  N3722243     pins ADDED TO this new net
+                                 J54.7                          
+                                 R41.1                          
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  N3722244     pins ADDED TO this new net
+                                 J54.9                          
+                                 R42.2                          
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  N3722245     pins ADDED TO this new net
+                                 J54.11                         
+                                 R43.1                          
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  N3722246     pins ADDED TO this new net
+                                 J54.13                         
+                                 R44.2                          
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  N3722247     pins ADDED TO this new net
+                                 J54.15                         
+                                 R45.1                          
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  NANOAMP_OUTS pins MOVED FROM this net (to net name listed on right)
+                                 C13.2            632.00 1500.00
+|------------------------------------------------------------------------------|
+|                                 ECO   REPORT                                 |
+|                                                                    Page  15  |
+|------------------------------------------------------------------------------|
+|  D:.../College/UTC/Master/Skywater/RTSeval/RTSmoboV2/MoboRTS.brd             |
+|                                                    Sun Jan 15 19:50:14 2023  |
+|------------------------------------------------------------------------------|
+| NET CHANGES                                                                  |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+|   net  name |  type of change |    pin_id     |   x   |   y   |   to  net    |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+                                                                  PRECCR_OUTPUT
+                                 L1.2            1318.50 1700.00
+                                                                  PRECCR_OUTPUT
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  NASELECT     pins MOVED FROM this net (to net name listed on right)
+                                 RE7.26          1470.00 3211.50
+                                                                         N65632
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  P5MACS0_ADJ  pins ADDED TO this new net
+                                 J53.1                          
+                                 RE9.1           2706.25 2157.40
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  P5MACS0_VIN  pins ADDED TO this new net
+                                 J53.2                          
+                                 RE9.3           2706.25 2082.60
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  P5MACS1_ADJ  pins ADDED TO this new net
+                                 J53.3                          
+                                 RE8.1           2706.25 2457.40
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  P5MACS1_VIN  pins ADDED TO this new net
+                                 J53.4                          
+                                 RE8.3           2706.25 2382.60
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  P5MACS2_ADJ  pins ADDED TO this new net
+                                 J53.5                          
+                                 RE3.1           4263.75 2832.60
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  P5MACS2_VIN  pins ADDED TO this new net
+                                 J53.6                          
+                                 RE3.3           4263.75 2907.40
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  P5MACS3_ADJ  pins ADDED TO this new net
+                                 J53.7                          
+                                 RE1.1           4983.75 2842.60
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  P5MACS3_VIN  pins ADDED TO this new net
+                                 J53.8                          
+                                 RE1.3           4983.75 2917.40
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  P5MACS2      pins ADDED TO this existing net (pins not previously on any net)
+                                 Q22.2                          
+                                 Q22.3                          
+                                 Q22.7                          
+                                 Q22.14                         
+|------------------------------------------------------------------------------|
+|                                 ECO   REPORT                                 |
+|                                                                    Page  16  |
+|------------------------------------------------------------------------------|
+|  D:.../College/UTC/Master/Skywater/RTSeval/RTSmoboV2/MoboRTS.brd             |
+|                                                    Sun Jan 15 19:50:14 2023  |
+|------------------------------------------------------------------------------|
+| NET CHANGES                                                                  |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+|   net  name |  type of change |    pin_id     |   x   |   y   |   to  net    |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+  P5MACS3      pins ADDED TO this existing net (pins not previously on any net)
+                                 Q22.10                         
+                                 Q22.11                         
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  POWERSUP     pins ADDED TO this existing net (pins not previously on any net)
+                                 C24.1                          
+                                 CR2.3                          
+                                 J51.1                          
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  PRECCR_OUTPUT pins ADDED TO this existing net (pins not previously on any net)
+                                 Q23.2                          
+                                 Q23.3                          
+                                 Q23.7                          
+                                 Q23.10                         
+                                 Q23.14                         
+                                 Q24.3                          
+                                 Q24.14                         
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  PRECCR_PWR   pins MOVED FROM this net (to net name listed on right)
+                                 IC13.8           806.77 1075.00
+                                                                            +5V
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  PRECCR_VDD   pins MOVED FROM this net (to net name listed on right)
+                                 RE17.1          1263.50  600.00
+                                                                     NANOAMPVDD
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  QHOUT        pins ADDED TO this existing net (pins not previously on any net)
+                                 J47.57                         
+                                 J48.57                         
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  QNOUT        pins ADDED TO this existing net (pins not previously on any net)
+                                 J47.96                         
+                                 J48.96                         
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  QPOUT        pins ADDED TO this existing net (pins not previously on any net)
+                                 J47.72                         
+                                 J48.72                         
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  RESET        pins MOVED FROM this net (to net name listed on right)
+                                 RE7.7            670.00 2448.50
+                                                                       RESETBIN
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  RESETBIN     pins ADDED TO this new net
+                                 J47.5                          
+                                 J48.5                          
+|------------------------------------------------------------------------------|
+|                                 ECO   REPORT                                 |
+|                                                                    Page  17  |
+|------------------------------------------------------------------------------|
+|  D:.../College/UTC/Master/Skywater/RTSeval/RTSmoboV2/MoboRTS.brd             |
+|                                                    Sun Jan 15 19:50:14 2023  |
+|------------------------------------------------------------------------------|
+| NET CHANGES                                                                  |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+|   net  name |  type of change |    pin_id     |   x   |   y   |   to  net    |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+  SCL          pins MOVED FROM this net (to net name listed on right)
+                                 RE7.4            370.00 2448.50
+                                                                         HCLKIN
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  SDA_A        pins MOVED FROM this net (to net name listed on right)
+                                 RE7.5            470.00 2448.50
+                                                                            DIN
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  SDA_B        pins MOVED FROM this net (to net name listed on right)
+                                 RE7.6            570.00 2448.50
+                                                                           DHIN
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  SMUOUTPUT    pins MOVED FROM this net (to net name listed on right)
+                                 J22.1            270.00 3460.00
+                                                                     NANOAMPVDD
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  SMUSELECT    pins DELETED FROM this net (all pins deleted)
+                                 RE7.25          1570.00 3211.50
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  VCLKOUT      pins ADDED TO this new net
+                                 J47.73                         
+                                 J48.73                         
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  VDDHV0       pins ADDED TO this new net
+                                 J47.3                          
+                                 J48.3                          
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  VDDHV1       pins ADDED TO this new net
+                                 J47.47                         
+                                 J48.47                         
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  VDDHVN       pins MOVED FROM this net (to net name listed on right)
+                                 Q16.4           2511.18 1562.60
+                                                                          VGHVN
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  VDDLV0       pins ADDED TO this new net
+                                 J47.99                         
+                                 J48.99                         
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  VDDLV1       pins ADDED TO this new net
+                                 J47.14                         
+                                 J48.14                         
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  VDDLV2       pins ADDED TO this new net
+                                 J47.74                         
+|------------------------------------------------------------------------------|
+|                                 ECO   REPORT                                 |
+|                                                                    Page  18  |
+|------------------------------------------------------------------------------|
+|  D:.../College/UTC/Master/Skywater/RTSeval/RTSmoboV2/MoboRTS.brd             |
+|                                                    Sun Jan 15 19:50:14 2023  |
+|------------------------------------------------------------------------------|
+| NET CHANGES                                                                  |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+|   net  name |  type of change |    pin_id     |   x   |   y   |   to  net    |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+                                 J48.74                         
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  VGHVP        pins ADDED TO this existing net (pins not previously on any net)
+                                 J47.48                         
+                                 J48.48                         
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  VGLVN        pins ADDED TO this existing net (pins not previously on any net)
+                                 J47.100                        
+                                 J48.100                        
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  VGLVP        pins ADDED TO this existing net (pins not previously on any net)
+                                 J47.28                         
+                                 J48.28                         
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  VGVHN        pins ADDED TO this new net
+                                 J47.4                          
+                                 J48.4                          
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  VOUT1_OFF    pins ADDED TO this new net
+                                 K1.1                           
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  VOUT2_CH1    pins ADDED TO this new net
+                                 K2.1                           
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  VOUT3_CH1    pins ADDED TO this new net
+                                 K3.1                           
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  VOUT4_CH1    pins ADDED TO this new net
+                                 K4.1                           
+                                 K5.1                           
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  VOUT5_CH1    pins ADDED TO this new net
+                                 K6.1                           
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  VOUT6_CH1    pins ADDED TO this new net
+                                 K7.1                           
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  VOUT7_CH1    pins ADDED TO this new net
+                                 K8.1                           
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  VOUT0        pins MOVED FROM this net (to net name listed on right)
+                                 Q4.3            1778.82 3432.60
+                                                                      +3V_RELAY
+                - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+               pins ADDED TO this existing net (pins not previously on any net)
+|------------------------------------------------------------------------------|
+|                                 ECO   REPORT                                 |
+|                                                                    Page  19  |
+|------------------------------------------------------------------------------|
+|  D:.../College/UTC/Master/Skywater/RTSeval/RTSmoboV2/MoboRTS.brd             |
+|                                                    Sun Jan 15 19:50:14 2023  |
+|------------------------------------------------------------------------------|
+| NET CHANGES                                                                  |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+|   net  name |  type of change |    pin_id     |   x   |   y   |   to  net    |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+                                 J47.18                         
+                                 J48.18                         
+                                 K1.4                           
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  VOUT1        pins MOVED FROM this net (to net name listed on right)
+                                 Q5.3            2398.82 3112.60
+                                                                      +3V_RELAY
+                - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+               pins ADDED TO this existing net (pins not previously on any net)
+                                 J47.20                         
+                                 J48.20                         
+                                 K2.4                           
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  VOUT2        pins MOVED FROM this net (to net name listed on right)
+                                 Q11.3           2398.82 2512.60
+                                                                      +3V_RELAY
+                - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+               pins ADDED TO this existing net (pins not previously on any net)
+                                 J47.22                         
+                                 J48.22                         
+                                 K3.4                           
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  VOUT3        pins MOVED FROM this net (to net name listed on right)
+                                 Q14.3           2398.82 1912.60
+                                                                      +3V_RELAY
+                - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+               pins ADDED TO this existing net (pins not previously on any net)
+                                 J47.24                         
+                                 J48.24                         
+                                 K4.4                           
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  VOUT4        pins MOVED FROM this net (to net name listed on right)
+                                 Q4.6            1881.18 3507.40
+                                                                      +3V_RELAY
+                - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+               pins ADDED TO this existing net (pins not previously on any net)
+                                 J47.30                         
+                                 J48.30                         
+                                 K5.4                           
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  VOUT5        pins MOVED FROM this net (to net name listed on right)
+                                 Q5.6            2501.18 3187.40
+                                                                      +3V_RELAY
+                - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+               pins ADDED TO this existing net (pins not previously on any net)
+|------------------------------------------------------------------------------|
+|                                 ECO   REPORT                                 |
+|                                                                    Page  20  |
+|------------------------------------------------------------------------------|
+|  D:.../College/UTC/Master/Skywater/RTSeval/RTSmoboV2/MoboRTS.brd             |
+|                                                    Sun Jan 15 19:50:14 2023  |
+|------------------------------------------------------------------------------|
+| NET CHANGES                                                                  |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+|   net  name |  type of change |    pin_id     |   x   |   y   |   to  net    |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+                                 J47.32                         
+                                 J48.32                         
+                                 K6.4                           
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  VOUT6        pins MOVED FROM this net (to net name listed on right)
+                                 Q11.6           2501.18 2587.40
+                                                                      +3V_RELAY
+                - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+               pins ADDED TO this existing net (pins not previously on any net)
+                                 J47.34                         
+                                 J48.34                         
+                                 K7.4                           
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  VOUT7        pins MOVED FROM this net (to net name listed on right)
+                                 Q14.6           2501.18 1987.40
+                                                                      +3V_RELAY
+                - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+               pins ADDED TO this existing net (pins not previously on any net)
+                                 J47.36                         
+                                 J48.36                         
+                                 K8.4                           
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  VOUTBYP0     pins ADDED TO this new net
+                                 J47.88                         
+                                 J48.88                         
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  VOUTBYP1     pins ADDED TO this new net
+                                 J47.85                         
+                                 J48.85                         
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  VOUTBYP2     pins ADDED TO this new net
+                                 J47.80                         
+                                 J48.80                         
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  VOUTBYP3     pins ADDED TO this new net
+                                 J47.77                         
+                                 J48.77                         
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  VOUTBYP4     pins ADDED TO this new net
+                                 J47.71                         
+                                 J48.71                         
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  VOUTBYP5     pins ADDED TO this new net
+                                 J47.68                         
+                                 J48.68                         
+|------------------------------------------------------------------------------|
+|                                 ECO   REPORT                                 |
+|                                                                    Page  21  |
+|------------------------------------------------------------------------------|
+|  D:.../College/UTC/Master/Skywater/RTSeval/RTSmoboV2/MoboRTS.brd             |
+|                                                    Sun Jan 15 19:50:14 2023  |
+|------------------------------------------------------------------------------|
+| NET CHANGES                                                                  |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+|   net  name |  type of change |    pin_id     |   x   |   y   |   to  net    |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+  VOUTBYP6     pins ADDED TO this new net
+                                 J47.65                         
+                                 J48.65                         
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  VOUTBYP7     pins ADDED TO this new net
+                                 J47.54                         
+                                 J48.54                         
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  VPRHV2       pins ADDED TO this new net
+                                 J47.2                          
+                                 J48.2                          
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  VPWRHV0      pins ADDED TO this new net
+                                 J47.82                         
+                                 J48.82                         
+                                 J49.1                          
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  VPWRHV1      pins ADDED TO this new net
+                                 J47.27                         
+                                 J48.27                         
+                                 J49.3                          
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  VPWRHV2      pins ADDED TO this new net
+                                 J49.5                          
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  VPWRHV3      pins ADDED TO this new net
+                                 J47.51                         
+                                 J48.51                         
+                                 J49.7                          
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  VPWRHV       pins ADDED TO this new net
+                                 J49.2                          
+                                 J49.4                          
+                                 J49.6                          
+                                 J49.8                          
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  VPWRLV0      pins ADDED TO this new net
+                                 J47.98                         
+                                 J48.98                         
+                                 J50.1                          
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  VPWRLV1      pins ADDED TO this new net
+                                 J47.50                         
+                                 J48.50                         
+                                 J50.3                          
+|------------------------------------------------------------------------------|
+|                                 ECO   REPORT                                 |
+|                                                                    Page  22  |
+|------------------------------------------------------------------------------|
+|  D:.../College/UTC/Master/Skywater/RTSeval/RTSmoboV2/MoboRTS.brd             |
+|                                                    Sun Jan 15 19:50:14 2023  |
+|------------------------------------------------------------------------------|
+| NET CHANGES                                                                  |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+|   net  name |  type of change |    pin_id     |   x   |   y   |   to  net    |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+  VPWRLV2      pins ADDED TO this new net
+                                 J47.15                         
+                                 J48.15                         
+                                 J50.5                          
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  VPWRLV3      pins ADDED TO this new net
+                                 J47.38                         
+                                 J48.38                         
+                                 J50.7                          
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  VPWRLV       pins ADDED TO this new net
+                                 J50.2                          
+                                 J50.4                          
+                                 J50.6                          
+                                 J50.8                          
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  VPWR_HV      pins MOVED FROM this net (to net name listed on right)
+                                 C4.1             720.00 3464.57
+                                                                         VPWRHV
+                                 CR1.2           2000.00 3664.00
+                                                                         VPWRHV
+                                 RE1.5           4876.25 2842.60
+                                                                         VPWRHV
+                                 RE3.5           4156.25 2832.60
+                                                                         VPWRHV
+                                 RE7.36           470.00 3211.50
+                                                                         N27990
+                                 RE8.5           2813.75 2457.40
+                                                                         VPWRHV
+                                 RE9.5           2813.75 2157.40
+                                                                         VPWRHV
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  VPWR_LV      pins MOVED FROM this net (to net name listed on right)
+                                 C6.1            3110.00 1985.43
+                                                                         VPWRLV
+                                 IC10.5          2809.21 1947.40
+                                                                         VPWRLV
+|------------------------------------------------------------------------------|
+|                                 ECO   REPORT                                 |
+|                                                                    Page  23  |
+|------------------------------------------------------------------------------|
+|  D:.../College/UTC/Master/Skywater/RTSeval/RTSmoboV2/MoboRTS.brd             |
+|                                                    Sun Jan 15 19:50:14 2023  |
+|------------------------------------------------------------------------------|
+| COMPONENT DEFINITION added to design                                         |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+|    device type                                                               |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+ 1-1337445-0_1-1337445-0_CSINPUT
+ 68602-116HLF_HDRV16W67P254X254_2X8_2032X483X858P_68602-116HLF
+ 10129381-908001BLF_10129381908001BLF_10129381-908001BLF
+ ALQ105_ALQ105_ALQ105
+ DMN2004DMK-7_SOT95P285X145-6N_P5MACS0,1
+ DMN2004DMK-7_SOT95P285X145-6N_P5MACS2,3
+ IC51-1004-405-1_6_CONN_5749070-9_TYC_IC51-1004-405-1
+ IC51-1004-405-1_IC5110044051_IC51-1004-405-1
+ M22-2020205_HDRV4W67P254_2X2_508X483X858P_P5MACS0,1
+ M22-2020205_HDRV4W67P254_2X2_508X483X858P_P5MACS2,3
+ SDR10EZPF2001_RESC2012X65N_1K
+|------------------------------------------------------------------------------|
+|                                 ECO   REPORT                                 |
+|                                                                    Page  24  |
+|------------------------------------------------------------------------------|
+|  D:.../College/UTC/Master/Skywater/RTSeval/RTSmoboV2/MoboRTS.brd             |
+|                                                    Sun Jan 15 19:50:14 2023  |
+|------------------------------------------------------------------------------|
+| COMPONENTS DELETED from design                                               |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+|    ref des        |    device type      |   x   |   y                        |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+ C16                 0805ZC105JAT2A_C0805_1 UF 2850.00 1260.00
+ IC4                 OPA202IDGKR_SOP65P490X110-8N_OPA202IDGKR 5120.00 3260.00
+ IC5                 OPA202IDGKR_SOP65P490X110-8N_OPA202IDGKR 5440.00 3250.00
+ IC6                 OPA202IDGKR_SOP65P490X110-8N_OPA202IDGKR 5740.00 3250.00
+ IC7                 OPA202IDGKR_SOP65P490X110-8N_OPA202IDGKR 6070.00 3250.00
+ J10                 M22-2020205_HDRV4W67P254_2X2_508X483X858P_MIRBYP 6380.00 4060.00
+ J11                 M22-2020205_HDRV4W67P254_2X2_508X483X858P_MIRBYP 6590.00 4060.00
+ J12                 M22-2020205_HDRV4W67P254_2X2_508X483X858P_MIRBYP 6800.00 4060.00
+ J13                 M22-2020205_HDRV4W67P254_2X2_508X483X858P_MIRBYP 7010.00 4060.00
+ J14                 1-1337445-0_1-1337445-0_VGHVN 4650.00 3680.00
+ J17                 1-1337445-0_1-1337445-0_VDDLV 3250.00 3670.00
+ J18                 1-1337445-0_1-1337445-0_VGHVP 3950.00 3670.00
+ J20                 1-1337445-0_1-1337445-0_VGLVN 2530.00 3660.00
+ J27                 M22-2020205_HDRV4W67P254_2X2_508X483X858P_DUALVG_PS 5120.00 3010.00
+ J28                 M22-2020205_HDRV4W67P254_2X2_508X483X858P_DUALVG_PS 5520.00 3010.00
+ J33                 5749070-9_57490709_5749070-9 6800.00  920.00
+ J36                 M22-2020205_HDRV4W67P254_2X2_508X483X858P_NACSBYP  200.00 1700.00
+ J40                 IC51-1004-405-1_DOE1_IC5110044051_DOC1_IC51-1004-405-1 4600.00  750.00
+ J43                 M22-2020205_HDRV4W67P254_2X2_508X483X858P_DUALVDD_PS 3550.00  740.00
+ J44                 M22-2020205_HDRV4W67P254_2X2_508X483X858P_DUALVG_PS 3770.00  740.00
+ J45                 M22-2020205_HDRV4W67P254_2X2_508X483X858P_QUADVG_PS 3990.00  740.00
+ J46                 PJ-202AH_PJ202AH_12VPS 2420.00  560.00
+ Q3                  ALD210800ASCL_SOIC127P600X175-16N_ALD210800ASCL 7400.00 3950.00
+ Q7                  DMN2004DMK-7_SOT95P285X145-6N_CHAN5&6 6090.00 3060.00
+ Q9                  DMN2004DMK-7_SOT95P285X145-6N_CHAN5&6 5410.00 2870.00
+ Q10                 DMN2004DMK-7_SOT95P285X145-6N_CHAN5&6 2450.00 2850.00
+ Q12                 DMN2004DMK-7_SOT95P285X145-6N_CHAN7&8 2450.00 2260.00
+ Q13                 DMN2004DMK-7_SOT95P285X145-6N_CHAN1&3 3750.00 1990.00
+ Q15                 DMN2004DMK-7_SOT95P285X145-6N_CHAN1&3(2) 3750.00 1710.00
+ Q17                 DMN2004DMK-7_SOT95P285X145-6N_CHAN2&4 3760.00 1480.00
+ Q19                 DMN2004DMK-7_SOT95P285X145-6N_CHAN2&4(2) 3770.00 1230.00
+ Q21                 DMN2004DMK-7_SOT95P285X145-6N_NA/SMUSELECT  220.00  910.00
+ R1                  SDR10EZPF2001_RESC2012X65N_300 6390.00 4280.00
+ R11                 3361S-1-102GLF_3361S_3361S-1-102GLF 3450.00 3190.00
+ R12                 3361S-1-102GLF_3361S_3361S-1-102GLF 3880.00 3190.00
+ R14                 SDR10EZPF2001_RESC2012X65N_2K 4930.00 3060.00
+ R15                 SDR10EZPF2001_RESC2012X65N_2K 5360.00 3060.00
+ R16                 SDR10EZPF2001_RESC2012X65N_2K 5800.00 3060.00
+ R18                 3361S-1-102GLF_3361S_3361S-1-102GLF 3450.00 2880.00
+ R19                 3361S-1-102GLF_3361S_3361S-1-102GLF 3880.00 2880.00
+ R20                 SDR10EZPF2001_RESC2012X65N_2K 4400.00 2880.00
+ R22                 3361S-1-102GLF_3361S_3361S-1-102GLF 3450.00 2560.00
+ R23                 3361S-1-102GLF_3361S_3361S-1-102GLF 3880.00 2560.00
+ R24                 3361S-1-102GLF_3361S_3361S-1-102GLF 3450.00 2240.00
+ R25                 3361S-1-102GLF_3361S_3361S-1-102GLF 3880.00 2240.00
+|------------------------------------------------------------------------------|
+|                                 ECO   REPORT                                 |
+|                                                                    Page  25  |
+|------------------------------------------------------------------------------|
+|  D:.../College/UTC/Master/Skywater/RTSeval/RTSmoboV2/MoboRTS.brd             |
+|                                                    Sun Jan 15 19:50:14 2023  |
+|------------------------------------------------------------------------------|
+| COMPONENTS DELETED from design                                               |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+|    ref des        |    device type      |   x   |   y                        |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+ R26                 SDR10EZPF2001_RESC2012X65N_300 3990.00 2030.00
+ R27                 SDR10EZPF2001_RESC2012X65N_300 3920.00 1860.00
+ R28                 SDR10EZPF2001_RESC2012X65N_300 3550.00 1770.00
+ R29                 SDR10EZPF2001_RESC2012X65N_300 3920.00 1670.00
+ R30                 SDR10EZPF2001_RESC2012X65N_300 3550.00 1590.00
+ R32                 SDR10EZPF2001_RESC2012X65N_300 3930.00 1380.00
+ R33                 SDR10EZPF2001_RESC2012X65N_300 3540.00 1350.00
+ R35                 SDR10EZPF2001_RESC2012X65N_300 3930.00 1110.00
+ RE2                 DS4303RTR_21-0057F_MXM_P5MACS0 5180.00 2880.00
+ RE4                 DS4303RTR_21-0057F_MXM_P5MACS1 5660.00 2870.00
+ RE5                 DS4303RTR_21-0057F_MXM_P5MACS2 5970.00 2870.00
+ RE6                 DS4303RTR_21-0057F_MXM_P5MACS3 6270.00 2870.00
+|------------------------------------------------------------------------------|
+|                                 ECO   REPORT                                 |
+|                                                                    Page  26  |
+|------------------------------------------------------------------------------|
+|  D:.../College/UTC/Master/Skywater/RTSeval/RTSmoboV2/MoboRTS.brd             |
+|                                                    Sun Jan 15 19:50:14 2023  |
+|------------------------------------------------------------------------------|
+| COMPONENTS ADDED to design                                                   |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+|    ref des        |    device type                                           |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+ C24                 0805ZC105JAT2A_C0805_1 UF 
+ C26                 0805ZC105JAT2A_C0805_1 UF 
+ CR2                 LD1117S33TR_SOT-223_STM_LD1117S33TR 
+ J47                 IC51-1004-405-1_IC5110044051_IC51-1004-405-1 
+ J48                 IC51-1004-405-1_6_CONN_5749070-9_TYC_IC51-1004-405-1 
+ J49                 10129381-908001BLF_10129381908001BLF_10129381-908001BLF 
+ J50                 10129381-908001BLF_10129381908001BLF_10129381-908001BLF 
+ J51                 PJ-202AH_PJ202AH_12VPS 
+ J52                 68602-116HLF_HDRV16W67P254X254_2X8_2032X483X858P_68602-116HLF 
+ J53                 10129381-908001BLF_10129381908001BLF_10129381-908001BLF 
+ J54                 68602-116HLF_HDRV16W67P254X254_2X8_2032X483X858P_68602-116HLF 
+ K1                  ALQ105_ALQ105_ALQ105  
+ K2                  ALQ105_ALQ105_ALQ105  
+ K3                  ALQ105_ALQ105_ALQ105  
+ K4                  ALQ105_ALQ105_ALQ105  
+ K5                  ALQ105_ALQ105_ALQ105  
+ K6                  ALQ105_ALQ105_ALQ105  
+ K7                  ALQ105_ALQ105_ALQ105  
+ K8                  ALQ105_ALQ105_ALQ105  
+ Q22                 ALD210800ASCL_SOIC127P600X175-16N_ALD210800ASCL 
+ Q23                 ALD210800ASCL_SOIC127P600X175-16N_ALD210800ASCL 
+ Q24                 ALD210800ASCL_SOIC127P600X175-16N_ALD210800ASCL 
+ Q25                 ALD210800ASCL_SOIC127P600X175-16N_ALD210800ASCL 
+ R38                 SDR10EZPF2001_RESC2012X65N_300 
+ R39                 SDR10EZPF2001_RESC2012X65N_300 
+ R40                 SDR10EZPF2001_RESC2012X65N_300 
+ R41                 SDR10EZPF2001_RESC2012X65N_300 
+ R42                 SDR10EZPF2001_RESC2012X65N_300 
+ R43                 SDR10EZPF2001_RESC2012X65N_300 
+ R44                 SDR10EZPF2001_RESC2012X65N_300 
+ R45                 SDR10EZPF2001_RESC2012X65N_300 
+|------------------------------------------------------------------------------|
+|                                 ECO   REPORT                                 |
+|                                                                    Page  27  |
+|------------------------------------------------------------------------------|
+|  D:.../College/UTC/Master/Skywater/RTSeval/RTSmoboV2/MoboRTS.brd             |
+|                                                    Sun Jan 15 19:50:14 2023  |
+|------------------------------------------------------------------------------|
+| COMPONENTS CHANGED from one device type to another in design                 |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+|    ref des        | new device type     |   x   |   y   |  old  device type  |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+ J1                  1-1337445-0_1-1337445-0_CSINPUT  450.00 4350.00 1-1337445-0_1-1337445-0_NANOAMPINPUT
+ J25                 M22-2020205_HDRV4W67P254_2X2_508X483X858P_P5MACS0,1 4290.00 3020.00 M22-2020205_HDRV4W67P254_2X2_508X483X858P_DUALVG_PS
+ J26                 M22-2020205_HDRV4W67P254_2X2_508X483X858P_P5MACS2,3 4670.00 3020.00 M22-2020205_HDRV4W67P254_2X2_508X483X858P_DUALVG_PS
+ Q6                  DMN2004DMK-7_SOT95P285X145-6N_P5MACS0,1 2820.00 3070.00 DMN2004DMK-7_SOT95P285X145-6N_CHAN5&6
+ Q8                  DMN2004DMK-7_SOT95P285X145-6N_P5MACS2,3 4570.00 2870.00 DMN2004DMK-7_SOT95P285X145-6N_CHAN5&6
+ R10                 SDR10EZPF2001_RESC2012X65N_1K 4150.00 3270.00 SDR10EZPF2001_RESC2012X65N_2K
+ R13                 SDR10EZPF2001_RESC2012X65N_1K 4140.00 3060.00 SDR10EZPF2001_RESC2012X65N_2K
+ R17                 SDR10EZPF2001_RESC2012X65N_1K 4530.00 3050.00 SDR10EZPF2001_RESC2012X65N_2K
+ R21                 SDR10EZPF2001_RESC2012X65N_1K 4750.00 2870.00 SDR10EZPF2001_RESC2012X65N_2K
+|------------------------------------------------------------------------------|
+|                                 ECO   REPORT                                 |
+|                                                                    Page  28  |
+|------------------------------------------------------------------------------|
+|  D:.../College/UTC/Master/Skywater/RTSeval/RTSmoboV2/MoboRTS.brd             |
+|                                                    Sun Jan 15 19:50:14 2023  |
+|------------------------------------------------------------------------------|
+| SLOT PROPERTIES added to design                                              |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+|   slot_id    |   x   |   y   |   property   |             value              |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+ C24.2                          PRIM_FILE      .\pstchip.dat
+ C26.2                          PRIM_FILE      .\pstchip.dat
+ CR2.2                          PRIM_FILE      .\pstchip.dat
+ J1.5            450.00 4350.00 PRIM_FILE      .\pstchip.dat
+ J25.4          4290.00 3020.00 PRIM_FILE      .\pstchip.dat
+ J26.4          4670.00 3020.00 PRIM_FILE      .\pstchip.dat
+ J47.MH4                        PRIM_FILE      .\pstchip.dat
+ J48.99                         PRIM_FILE      .\pstchip.dat
+ J49.8                          PRIM_FILE      .\pstchip.dat
+ J50.8                          PRIM_FILE      .\pstchip.dat
+ J51.2                          PRIM_FILE      .\pstchip.dat
+ J52.9                          PRIM_FILE      .\pstchip.dat
+ J53.8                          PRIM_FILE      .\pstchip.dat
+ J54.9                          PRIM_FILE      .\pstchip.dat
+ K1.3                           PRIM_FILE      .\pstchip.dat
+ K2.3                           PRIM_FILE      .\pstchip.dat
+ K3.3                           PRIM_FILE      .\pstchip.dat
+ K4.3                           PRIM_FILE      .\pstchip.dat
+ K5.3                           PRIM_FILE      .\pstchip.dat
+ K6.3                           PRIM_FILE      .\pstchip.dat
+ K7.3                           PRIM_FILE      .\pstchip.dat
+ K8.3                           PRIM_FILE      .\pstchip.dat
+ Q6.1           2820.00 3070.00 PRIM_FILE      .\pstchip.dat
+ Q8.1           4570.00 2870.00 PRIM_FILE      .\pstchip.dat
+ Q22.5                          PRIM_FILE      .\pstchip.dat
+ Q23.5                          PRIM_FILE      .\pstchip.dat
+ Q24.5                          PRIM_FILE      .\pstchip.dat
+ Q25.5                          PRIM_FILE      .\pstchip.dat
+ R10.2          4150.00 3270.00 PRIM_FILE      .\pstchip.dat
+ R13.2          4140.00 3060.00 PRIM_FILE      .\pstchip.dat
+ R17.2          4530.00 3050.00 PRIM_FILE      .\pstchip.dat
+ R21.2          4750.00 2870.00 PRIM_FILE      .\pstchip.dat
+ R38.2                          PRIM_FILE      .\pstchip.dat
+ R39.2                          PRIM_FILE      .\pstchip.dat
+ R40.2                          PRIM_FILE      .\pstchip.dat
+ R41.2                          PRIM_FILE      .\pstchip.dat
+ R42.2                          PRIM_FILE      .\pstchip.dat
+ R43.2                          PRIM_FILE      .\pstchip.dat
+ R44.2                          PRIM_FILE      .\pstchip.dat
+ R45.2                          PRIM_FILE      .\pstchip.dat
+|------------------------------------------------------------------------------|
+|                                 ECO   REPORT                                 |
+|                                                                    Page  29  |
+|------------------------------------------------------------------------------|
+|  D:.../College/UTC/Master/Skywater/RTSeval/RTSmoboV2/MoboRTS.brd             |
+|                                                    Sun Jan 15 19:50:14 2023  |
+|------------------------------------------------------------------------------|
+| SLOT PROPERTIES added to design                                              |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+|   slot_id    |   x   |   y   |   property   |             value              |
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - |
+|------------------------------------------------------------------------------|
+|       Nets changed          :     459                                        |
+|       Comp definitions added:      11                                        |
+|       Components added      :      31                                        |
+|       Components deleted    :      57                                        |
+|       Components changed    :       9                                        |
+|       Slot property added   :      40                                        |
+|                                                                              |
+|   Total ECO changes reported:     607                                        |
+|------------------------------------------------------------------------------|
