@@ -53,7 +53,7 @@ currOut = 0
 NMOS = 1
 PMOS = 2
 pwrInc = 8  #int(input('How many steps for current?'))
-voltInc = 99      #int(input('How many steps for Voltage?'))
+voltInc = 100      #int(input('How many steps for Voltage?'))
 
 smu.apply_current(smu.smua, 0)
 cOut = "CurrOut001"                                            #variable to store column names
