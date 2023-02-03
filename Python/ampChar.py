@@ -20,8 +20,11 @@ dt_string = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p")
 
 pico = serial.Serial('COM4', baudrate=115200)
 smu = Keithley2600('TCPIP0::192.168.4.11::INSTR')               #set ip addr for smu
-smu._write(value='smua.source.autorangei = smua.AUTORANGE_ON')  #set auto range for smua
-smu._write(value='smub.source.autorangev = smub.AUTORANGE_ON')  #set auto range for smua 
+smu._write(value='smua.source.rangei = 3.3')
+smu._write(value='smub.source.rangev = 3.3')
+
+#smu._write(value='smua.source.autorangei = smua.AUTORANGE_ON')  #set auto range for smua
+#smu._write(value='smub.source.autorangev = smub.AUTORANGE_ON')  #set auto range for smua 
 
 smu.set_integration_time(smu.smua, 0.001)                       # sets integration time in sec
 smu._write(value= 'smua.source.limitv = 3.3')                   #set v liimit smua
