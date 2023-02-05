@@ -9,7 +9,8 @@ import sys
 import time
 import re
 import numpy as np
-
+dt_string = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p")
+csData = pd.DataFrame(data=[], index=[], columns=[])
 def frange(start: int, end: int, step: float):
     """
     Generate a list of floating numbers within a specified range.
@@ -26,8 +27,10 @@ def frange(start: int, end: int, step: float):
 dt_string = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p")
 smu = Keithley2600('TCPIP0::192.168.4.11::INSTR')               #set ip addr for smu
 
-smuaV = frange(0, 10, 1)
+smuaV = frange(8, 10, 1)
 
-output = smu.output_measurment(smu.smua, smu.smub, 0, 10, .01, smuaV, 0.001, -1, False)
+output = smu.output_measurement(smu.smua, smu.smub, 0, 10, .1, smuaV, 0.001, -1, False)
 #output = smu.voltage_sweep_dual_smu(smu.smua, smu.smub, smuaV,smuaV,0.001, 0.1, False)
-print(smuaV)
+csData[all,all,all,all] = output
+csData.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/ampCharacterization/ampcharData' + dt_string + '.csv')
+print(csData)
