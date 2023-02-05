@@ -28,10 +28,10 @@ dt_string = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p")
 smu = Keithley2600('TCPIP0::192.168.4.11::INSTR')               #set ip addr for smu
 smu.smua.sense = smu.smua.SENSE_LOCAL
 smu.smub.sense = smu.smub.SENSE_REMOTE
-smu._write(value='smua.source.rangei = ' + '3.3')
-smu._write(value='smub.source.rangev = 3.3')
-smu._write(value= 'smua.source.limitv = 3.3')                   #set v liimit smua
-smu._write(value= "smub.source.limitv = 3.3")                   #set v liimit smub
+smu._write(value='smua.source.rangev = ' + '10')
+smu._write(value='smub.source.rangev = 10')
+smu._write(value= 'smua.source.limitv = 10')                   #set v limit smua
+smu._write(value= "smub.source.limitv = 10")                   #set v limit smub
 
 smuaV = frange(4, 10, 1)
 
