@@ -26,11 +26,16 @@ def frange(start: int, end: int, step: float):
 
 dt_string = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p")
 smu = Keithley2600('TCPIP0::192.168.4.11::INSTR')               #set ip addr for smu
+smu.smua.sense = smu.smua.SENSE_LOCAL
+smu.smub.sense = smu.smub.SENSE_REMOTE
+smu._write(value='smua.source.rangei = ' + '3.3')
+smu._write(value='smub.source.rangev = 3.3')
+smu._write(value= 'smua.source.limitv = 3.3')                   #set v liimit smua
+smu._write(value= "smub.source.limitv = 3.3")                   #set v liimit smub
 
-smuaV = frange(8, 10, 1)
+smuaV = frange(4, 10, 1)
 
 output = smu.output_measurement(smu.smua, smu.smub, 0, 10, .1, smuaV, 0.001, -1, False)
 #output = smu.voltage_sweep_dual_smu(smu.smua, smu.smub, smuaV,smuaV,0.001, 0.1, False)
-csData[all,all,all,all] = output
-csData.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/ampCharacterization/ampcharData' + dt_string + '.csv')
+output.save_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/ampCharacterization/ampcharData' + dt_string + '.csv')
 print(csData)
