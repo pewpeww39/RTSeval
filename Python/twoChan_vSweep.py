@@ -27,15 +27,16 @@ def frange(start: int, end: int, step: float):
 dt_string = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p")
 smu = Keithley2600('TCPIP0::192.168.4.11::INSTR')               #set ip addr for smu
 smu.smua.sense = smu.smua.SENSE_LOCAL
-smu.smub.sense = smu.smub.SENSE_REMOTE
+smu.smub.sense = smu.smub.SENSE_LOCAL
 smu._write(value='smua.source.rangev = ' + '10')
 smu._write(value='smub.source.rangev = 10')
 smu._write(value= 'smua.source.limitv = 10')                   #set v limit smua
 smu._write(value= "smub.source.limitv = 10")                   #set v limit smub
 
-smuaV = frange(4, 10, 1)
+smubV = frange(4, 10, 1)
 
-output = smu.output_measurement(smu.smua, smu.smub, 0, 10, .1, smuaV, 0.001, -1, False)
+output = smu.voltage_sweep_meas_curr(smu.smub, smu.smua, smubV, 0.0001, -1, False)
+#output = smu.output_measurement(smu.smua, smu.smub, 0, 10, .1, smuaV, 0.001, -1, False)
 #output = smu.voltage_sweep_dual_smu(smu.smua, smu.smub, smuaV,smuaV,0.001, 0.1, False)
-output.save_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/ampCharacterization/ampcharData' + dt_string + '.csv')
-print(csData)
+output.save_csv('C:\\Users\\jacob\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\obcmCharacterization\\obcmCharData' + dt_string + '.csv')
+print(output)
