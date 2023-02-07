@@ -33,10 +33,17 @@ smu._write(value='smub.source.rangev = 10')
 smu._write(value= 'smua.source.limitv = 10')                   #set v limit smua
 smu._write(value= "smub.source.limitv = 10")                   #set v limit smub
 
-smubV = frange(4, 10, 1)
+plc = .001
+intTime = plc / 60
+#smuaV = frange(1, 5, 1)
+smuaV = range(4,6)
+smubV = frange(0, 5, .1)
 
-output = smu.voltage_sweep_meas_curr(smu.smub, smu.smua, smubV, 0.0001, -1, False)
-#output = smu.output_measurement(smu.smua, smu.smub, 0, 10, .1, smuaV, 0.001, -1, False)
-#output = smu.voltage_sweep_dual_smu(smu.smua, smu.smub, smuaV,smuaV,0.001, 0.1, False)
-output.save_csv('C:\\Users\\jacob\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\obcmCharacterization\\obcmCharData' + dt_string + '.csv')
-print(output)
+#output = smu.voltage_sweep_meas_curr(smu.smub, smu.smua, smubV, 0.0001, -1, False)
+csData = smu.output_measurement(smu.smua, smu.smub, 0, 10, .1, smuaV, intTime, 0.0001 , False)
+#output = smu.voltage_sweep_dual_smu(smu.smua, smu.smub, smuaV, smubV, intTime, 0.1, False)
+csData.save_csv('C:\\Users\\jacob\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\obcmCharacterization\\obcmCharData' + dt_string + '.csv')
+fig = csData.plot(0, [2,5])
+plt.savefig("C:\\Users\\jacob\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\obcmCharacterization\\obcmCharData" + dt_string + ".png")
+plt.pause(5)
+# plt.plot(csData.VoltIn, csData.CurrOut001, label = "vgs=3")

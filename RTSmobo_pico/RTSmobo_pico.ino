@@ -23,8 +23,8 @@
 #define LED             25  // Pico LED
 
 int command = 0;
-int colSelect = 32;
-int rowSelect = 0;
+int colSelect = 2;
+int rowSelect = 1;
 int horSR = 0;
 int verSR = 0;
 int holdRow = 0;
@@ -147,7 +147,7 @@ void loop()
 
         
         for (int j = 257; j >= 1; j--) {     // for loop for the number of columns
-          if ( colSelect == j) {             // check if j = desired column i.e. 0000...0100
+          if (colSelect == j) {             // check if j = desired column i.e. 0000...0100
             horSR = HIGH;                      // if it does set SDA_ to high
             colSelect = colSelect - 1;
           } else {
