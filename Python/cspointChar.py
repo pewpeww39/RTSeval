@@ -74,14 +74,14 @@ for c in range(colNum):
     currIns = pow(10, -power)                                               # the current applied to currentSource
     
     if commandRX == 1:
-        for a in range(5000):
+        for a in range(100):
             #pltData.at[row, str(colS+pltY)] = smu.apply_current(smu.smua, pow(10, -power))
             currIn = np.append(currIn, currIns)
             smu.apply_current(smu.smua, currIns)
             #time.sleep(.1000)
             bkdmm.write(b'fetch?\n')                                                # requests the measurement from the bkdmm
             #pltData.at[row, str(colS+pltX)] = bkdmm.readline()                       # reads the measurement from the bkdmm
-            measArr = np.append(measArr, bkdmm.readline().strip().decode())
+            measArr = np.append(measArr, float(bkdmm.readline().strip().decode()))
             #pltData.at[row, pltX] = smu.smub.measurev()
             row = row + 1
             # if a < 4:
@@ -96,10 +96,10 @@ for c in range(colNum):
             
             currIns = currIns + pow(10, -10)
             #csData[str(colS+pltY)] = pltData[str(pltY)]
-        pltData["curr"] = currIn
         pltData["volt"] = measArr
-        csData[colS+'curr'] = currIn
+        pltData["curr"] = currIn
         csData[colS+'volt'] = measArr
+        csData[colS+'curr'] = currIn
         currIn = []
         measArr = []
         row = 0
@@ -111,8 +111,8 @@ for c in range(colNum):
             print(currIn)
             print(csData)
             #plt.plot(pltData.Col001curr, pltData.Col001volt, label = "column1 row 1")
-        pltData.plot(x="volt", xlabel="Voltage [V]", ylabel="Current [A]", sharey=True, title=(colS + "Current In vs. Voltage Out"), legend=True,
-                    subplots=False)
+        pltData.plot(x="curr", xlabel="Current [A]", ylabel="Voltage [V]", sharey=True, title=(colS + "Current In vs. Voltage Out"), legend=True,
+                    subplots=False, logx= False)
         # pltData.plot(x= 'Time', xlabel="Time", ylabel="Current Out", sharey=True, title="Current In vs. Current Out", legend=True,
         #             subplots=[(' ampsIn E-9',' ampsOut E-9'),(' ampsIn E-8',' ampsOut E-8'),(' ampsIn E-7',' ampsOut E-7'), 
         #             (' ampsIn E-6',' ampsOut E-6'),(' ampsIn E-5',' ampsOut E-5')])
@@ -126,7 +126,7 @@ for c in range(colNum):
         commandRX=0
         colSelect = colSelect + 1
 #print(csData)
-#pltData.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/csCharacterization/cscharData' + dt_string + '.csv')
+csData.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/csCharacterization/cscharData' + dt_string + '.csv')
 smu._write(value='smua.source.output = smua.OUTPUT_OFF')
 smu._write(value='smub.source.output = smub.OUTPUT_OFF')
 #bk.outputOn(False, bkPS)     #turn the powersupply off
