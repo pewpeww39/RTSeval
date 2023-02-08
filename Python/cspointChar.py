@@ -47,7 +47,7 @@ currOut = 0
 commandTX = 0
 colSelect = 1
 power = 9
-colNum = 1      #int(input('How many colums do you want to test?'))
+colNum = 32      #int(input('How many colums do you want to test?'))
 currentInc = 11   #int(input('How many steps for current?'))
 voltInc = 34      #int(input('How many steps for Voltage?'))
 
@@ -112,8 +112,6 @@ for c in range(colNum):
             colS)
         commandRX=0
         colSelect = colSelect + 1
-        if colSelect == 32:
-            break
 print(csData)
 csData.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/csCharacterization/cscharData' + dt_string + '.csv')
 smu._write(value='smua.source.output = smua.OUTPUT_OFF')
