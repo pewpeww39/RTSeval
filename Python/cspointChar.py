@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 from keithley2600 import Keithley2600
 from BKPrecision import lib1785b as bk
 from datetime import datetime
+import numpy as np
 
 dt_string = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p")
 
@@ -70,23 +71,27 @@ for c in range(colNum):
     commandRX = int(pico.read_until().strip().decode())                             # confirms shift registers are loaded
     if commandRX == 1:
         for a in range(5):
-            currIn = pow(10, -power)                                                # the current applied to currentSource
-            csData.at[row, str(colS+pltY)] = smu.apply_current(smu.smua, currIn)
+            #currIn = pow(10, -power)                                               # the current applied to currentSource
+            csData.at[row, str(colS+pltY)] = smu.apply_current(smu.smua, pow(10, -power))
+            #currIn = smu.apply_current(smu.smua, pow(10, -power))
             time.sleep(.1000)
             bkdmm.write(b'fetch?\n')                                                # requests the measurement from the bkdmm
-            csData.at[row, str(colS+pltX)] = bkdmm.readline()                                # reads the measurement from the bkdmm
+            csData.at[row, str(colS+pltX)] = bkdmm.readline()                       # reads the measurement from the bkdmm
             #pltData.at[row, pltX] = smu.smub.measurev()
             row = row + 1
             # if a < 4:
+            # if a == 4:
+            #     csData[str(colS+pltX)] = np.fill_like(str(colS+pltY), currIn)
             pltY = re.sub(r'[0-9]+$',
                 lambda x: f"{str(int(x.group())-1).zfill(len(x.group()))}",    # increments the number in the column name
                 pltY)
             pltX = re.sub(r'[0-9]+$',
-                lambda x: f"{str(int(x.group())-1).zfill(len(x.group()))}",    # increments the number in the column name
+                lambda x: f"{str(int(x.group())+1).zfill(len(x.group()))}",    # increments the number in the column name
                 pltX)
+            
             power = power - 1
-            csData[str(colS+pltY)] = pltData[str(pltY)]
-            csData[str(colS+pltX)] = pltData[str(pltX)]
+            #csData[str(colS+pltY)] = pltData[str(pltY)]
+             
         row = 0
         power = 9
         pltX = 'voltOut'
