@@ -1,2 +1,4 @@
-RTS Evaluation Test Code 
-data is stored in python > data
+RTS Evaluation Test Code.
+
+Data is stored in python -> data -> (component folder)
+
