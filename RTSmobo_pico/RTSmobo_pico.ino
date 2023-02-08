@@ -85,17 +85,17 @@ void loop()
         break;
       }
     case 3: {                               // Current Source Characterization
-        digitalWrite(Csin, HIGH);             // close NMOS amp bypass
+        digitalWrite(Csin, LOW);             // close NMOS amp bypass
         Serial.println(colSelect);          // tell CPU what column was selected
         digitalWrite(LED, LOW);
         if (debug == true) {
           Serial.println("H V");
         }          
         digitalWrite(resetBIN, LOW);        // Flush the SR
-        waitFor(10);
+        waitFor(1);
         digitalWrite(resetBIN, HIGH);
-        waitFor(10);
-        for (int j = 257; j > 0; j--) {     // for loop for the number of columns
+        waitFor(1);
+        for (int j = 257; j >= 1; j--) {      // for loop for the number of columns
           if (colSelect == j) {             // check if j = desired column i.e. 0000...0100
             horSR = 1;                      // if it does set SDA_ to high
           } else {
@@ -108,15 +108,18 @@ void loop()
           }
 
 
-          digitalWrite(HCLKin, HIGH);          // set the SR clock high
-          digitalWrite(LED, HIGH);
-          waitFor(10);
+          waitFor(1);
           digitalWrite(DHin, horSR);       // set SDA_A pin to horSR value
           digitalWrite(Din, verSR);       // set SDA_B pin to verSR value
-          waitFor(10);
+          waitFor(1);
+          digitalWrite(HCLKin, HIGH);           // set the SR clock Low
+          digitalWrite(LED, HIGH);
+          waitFor(1);
           digitalWrite(HCLKin, LOW);           // set the SR clock Low
           digitalWrite(LED, LOW);
-          waitFor(10);
+          waitFor(1);
+          digitalWrite(DHin, LOW);       // set SDA_A pin to horSR value
+          digitalWrite(Din, LOW);          
 
           if (debug == true) {
             Serial.print(horSR );

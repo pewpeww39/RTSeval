@@ -14,6 +14,7 @@ dt_string = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p")
 pico = serial.Serial('COM4', baudrate=115200)
 smu = Keithley2600('TCPIP0::192.168.4.11::INSTR')               #set ip addr for smu
 smu._write(value='smua.source.autorangei = smua.AUTORANGE_ON')  #set auto range for smua 
+smu._write(value='smub.source.autorangev = smub.AUTORANGE_ON')
 smu.set_integration_time(smu.smua, 0.001)                       # sets integration time in sec
 smu._write(value= 'smua.source.limitv = 3.3')                   #set v liimit smua
 smu._write(value= "smub.source.limitv = 3.3")                   #set v liimit smub
@@ -100,8 +101,8 @@ for c in range(colNum):
         ampVal = 'ampsOut E-9'
         if debug is True:
             print(pltData)
-        pltData.plot(x= 'Time', xlabel="Time", ylabel="Current Out", sharey=True, title="Current In vs. Current Out", legend=True,
-                    subplots=True)
+        pltData.plot(xlabel="Volt Out", ylabel="Current In", sharey=True, title="Volt In vs. Current Out", legend=True,
+                    subplots=False)
         # pltData.plot(x= 'Time', xlabel="Time", ylabel="Current Out", sharey=True, title="Current In vs. Current Out", legend=True,
         #             subplots=[(' ampsIn E-9',' ampsOut E-9'),(' ampsIn E-8',' ampsOut E-8'),(' ampsIn E-7',' ampsOut E-7'), 
         #             (' ampsIn E-6',' ampsOut E-6'),(' ampsIn E-5',' ampsOut E-5')])
