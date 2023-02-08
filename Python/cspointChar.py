@@ -53,7 +53,7 @@ voltInc = 34      #int(input('How many steps for Voltage?'))
 smu.apply_current(smu.smua, 0)
 colS = "Col001"   
 pltY = " ampsIn E-9"
-pltX = " voltIn"
+pltX = " voltOut0"
 picLoc = "C:\\Users\\jacob\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\csCharacterization\\"
 # picLoc = "~/miniconda3/envs/testequ/RTSeval/Python/Data/csCharacterization/"
 
@@ -71,25 +71,25 @@ for c in range(colNum):
     if commandRX == 1:
         for a in range(5):
             currIn = pow(10, -power)                                                # the current applied to currentSource
-            smu.apply_current(smu.smua, currIn)
+            csData.at[row, str(colS+pltY)] = smu.apply_current(smu.smua, currIn)
             time.sleep(.1000)
             bkdmm.write(b'fetch?\n')                                                # requests the measurement from the bkdmm
-            pltData.at[row, pltX] = bkdmm.readline()                                # reads the measurement from the bkdmm
+            csData.at[row, str(colS+pltX)] = bkdmm.readline()                                # reads the measurement from the bkdmm
             #pltData.at[row, pltX] = smu.smub.measurev()
             row = row + 1
-            csData['Time'] = pltData['Time']
-            csData[str(colS+pltY)] = pltData[str(pltY)]
             # if a < 4:
             pltY = re.sub(r'[0-9]+$',
                 lambda x: f"{str(int(x.group())-1).zfill(len(x.group()))}",    # increments the number in the column name
                 pltY)
-                # pltX = re.sub(r'[0-9]+$',
-                # lambda x: f"{str(int(x.group())-1).zfill(len(x.group()))}",    # increments the number in the column name
-                # pltX)
+            pltX = re.sub(r'[0-9]+$',
+                lambda x: f"{str(int(x.group())-1).zfill(len(x.group()))}",    # increments the number in the column name
+                pltX)
             power = power - 1
+            csData[str(colS+pltY)] = pltData[str(pltY)]
+            csData[str(colS+pltX)] = pltData[str(pltX)]
         row = 0
         power = 9
-        pltX = 'voltIn'
+        pltX = 'voltOut'
         pltY = 'ampsIn E-9'
         if debug is True:
             print(pltData)
