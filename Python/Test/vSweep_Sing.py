@@ -32,7 +32,8 @@ def logScale():
     length = len(decadeList)
     for a in range(length):
         # print(decadeList[a]*.0000000001)
-        smu.apply_current(smu.smua, decadeList[a]*.0000000001)
+        print(a)
+        #smu.apply_current(smu.smua, decadeList[a]*.0000000001)
         time.sleep(.1)
     
     print(length)

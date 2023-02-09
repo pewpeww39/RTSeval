@@ -32,7 +32,9 @@ def logScale():
     decadeList = np.append(decadeList, decade3)
     decadeList = np.append(decadeList, decade4)
     decadeList = np.append(decadeList, decade5)
-    length = len(decadeList)
+    #length = len(decadeList)
+    return decadeList
+    
 def clear ():
     if name == 'nt':
         _ = system('cls')
@@ -60,7 +62,7 @@ currOut = 0
 commandTX = 0
 colSelect = 2
 power = 9
-colNum = 2      #int(input('How many colums do you want to test?'))
+colNum = 10      #int(input('How many colums do you want to test?'))
 currentInc = 11   #int(input('How many steps for current?'))
 voltInc = 34      #int(input('How many steps for Voltage?'))
 
@@ -73,7 +75,8 @@ picLoc = "C:\\Users\\jacob\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\cs
 
 opampI = smu.apply_current(smu.smub, -0.0005)
 time.sleep(1)
-logScale()
+decadeList = logScale()
+print(decadeList)
 for c in range(colNum):
     commandTX = write_cmd(str(3))                                                   # selects the switch case on the pico
     commandRX = pico.read_until().strip().decode()                                  # confirms mode selected
@@ -83,10 +86,11 @@ for c in range(colNum):
     columnRX = pico.read_until().strip().decode()                                   # confirms column selected
     print('pico selected column: ' + str(columnRX))
     commandRX = int(pico.read_until().strip().decode())                             # confirms shift registers are loaded
-    currIns = decadeList[0] * .0000000001                                              # the current applied to currentSource
+                                                # the current applied to currentSource
     
     if commandRX == 1:
         for a in range(46):
+            currIns = decadeList[a] * .0000000001  
             #pltData.at[row, str(colS+pltY)] = smu.apply_current(smu.smua, pow(10, -power))
             currIn = np.append(currIn, currIns)
             smu.apply_current(smu.smua, currIns)
@@ -106,8 +110,8 @@ for c in range(colNum):
                 lambda x: f"{str(int(x.group())+1).zfill(len(x.group()))}",    # increments the number in the column name
                 pltX)
             
-            currIns = deecadeList[a+1]*.0000000001
-            #csData[str(colS+pltY)] = pltData[str(pltY)]
+            # currIns = decadeList[a+1]*.0000000001
+            # csData[str(colS+pltY)] = pltData[str(pltY)]
         #csData.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/csCharacterization/cscharData' + dt_string + '.csv')
         pltData["volt"] = measArr
         pltData["curr"] = currIn
