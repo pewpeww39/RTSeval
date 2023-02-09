@@ -96,6 +96,7 @@ for c in range(colNum):
             
             currIns = currIns + pow(10, -10)
             #csData[str(colS+pltY)] = pltData[str(pltY)]
+        #csData.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/csCharacterization/cscharData' + dt_string + '.csv')
         pltData["volt"] = measArr
         pltData["curr"] = currIn
         csData[colS+'volt'] = measArr
