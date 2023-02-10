@@ -65,7 +65,7 @@ currOut = 0
 commandTX = 0
 colSelect = 2
 power = 9
-colNum = 4      #int(input('How many colums do you want to test?'))
+colNum = 32      #int(input('How many colums do you want to test?'))
 currentInc = 11   #int(input('How many steps for current?'))
 voltInc = 34      #int(input('How many steps for Voltage?'))
 
@@ -108,14 +108,14 @@ for c in range(colNum):
         plt.xlabel("Vgs [V]")
         plt.ylabel("Id [A]")
         plt.legend()
-        plt.savefig(picLoc + colS + "idvg.png")
+        plt.savefig(picLoc + colS + str(spec) + "idvg.png")
         fig = plt.show(block = False)
         plt.pause(3)
         plt.close(fig)
         pltData.plot(x="Id", xlabel="Current [A]", ylabel="Voltage [V]", sharey=True, title=(colS + '' + 
                         str(spec) + " Current In [Id] vs. Voltage Out [Vs]"), legend=True,
                     subplots=False, logx= True)
-        plt.savefig(picLoc + colS + "idvs.png")
+        plt.savefig(picLoc + colS + str(spec) + "idvs.png")
         fig = plt.show(block = False)
         plt.pause(3)
         plt.close(fig)
