@@ -26,11 +26,17 @@ def logScale():
     decade2 = range(10,100,10)
     decade3 = range(100,1000, 100)
     decade4 = range(1000,10000, 1000)
-    decade5 = range(10000,110000, 10000)
+    decade5 = range(10000,100000, 10000)    
+    decade6 = range(100000,1000000, 100000)
+    decade7 = range(1000000,11000000, 1000000)
+    # decade8 = range(10000000,110000000, 100000000)
     decadeList = np.append(decade1, decade2)
     decadeList = np.append(decadeList, decade3)
     decadeList = np.append(decadeList, decade4)
     decadeList = np.append(decadeList, decade5)
+    decadeList = np.append(decadeList, decade6)
+    decadeList = np.append(decadeList, decade7)
+    # decadeList = np.append(decadeList, decade8)
     return decadeList
     
 def clear ():
@@ -75,10 +81,10 @@ for c in range(colNum):
     print('pico selected column: ' + str(columnRX))
     commandRX = int(pico.read_until().strip().decode())                             # confirms shift registers are loaded
     if commandRX == 1:
-        for a in range(46):
-            currIns = decadeList[a] * .0000000001  
-            currIn = np.append(currIn, currIns)
-            smu.apply_current(smu.smua, currIns)
+        for a in range(64):
+            # currIns = decadeList[a] * .0000000001  
+            currIn = np.append(currIn, decadeList[a] * .000000000001)
+            smu.apply_current(smu.smua, decadeList[a] * .000000000001)
             measVs = np.append(measVs, float(smu.smub.measure.v()))
             vGS = 1.2 - measVs
             row = row + 1
