@@ -90,6 +90,7 @@ for c in range(colNum):
             print(measVs)
             print(vGS)
         plt.plot(vGS, pltData.curr, label = "Vs")
+        plt.yscale('log')
         plt.title(colS + "Id vs Vgs")
         plt.xlabel("Vgs [V]")
         plt.ylabel("Id [A]")
