@@ -29,7 +29,7 @@ def logScale():
     decade5 = range(10000,100000, 10000)    
     decade6 = range(100000,1000000, 100000)
     decade7 = range(1000000,10000000, 1000000)
-    decade8 = range(10000000,110000000, 10000000)
+    decade8 = range(10000000,60000000, 10000000)
     decadeList = np.append(decade1, decade2)
     decadeList = np.append(decadeList, decade3)
     decadeList = np.append(decadeList, decade4)
@@ -52,8 +52,11 @@ currIn = []
 measVs = []
 measVI = []
 vGS = []
+spec=[]
 csData = pd.DataFrame(data=[], index=[], columns=[])  
 pltData = pd.DataFrame(data=[], index=[], columns=[])         #create dataframe
+specData = pd.DataFrame(pd.read_csv('~\miniconda3\envs\\testequ\RTSeval\Files\RTS_Array_Cells.csv',
+                     index_col=[0] , header=0), columns = ['W', 'L', 'Type'])
 debug = False
 row = 0
 counter = 0
@@ -62,7 +65,7 @@ currOut = 0
 commandTX = 0
 colSelect = 2
 power = 9
-colNum = 2      #int(input('How many colums do you want to test?'))
+colNum = 4      #int(input('How many colums do you want to test?'))
 currentInc = 11   #int(input('How many steps for current?'))
 voltInc = 34      #int(input('How many steps for Voltage?'))
 
@@ -82,9 +85,9 @@ for c in range(colNum):
     columnRX = pico.read_until().strip().decode()                                   # confirms column selected
     print('pico selected column: ' + str(columnRX))
     commandRX = int(pico.read_until().strip().decode())                             # confirms shift registers are loaded
+    spec = list(specData.iloc[c+1])
     if commandRX == 1:
         for a in range(len(decadeList)):
-            # currIns = decadeList[a] * .0000000001  
             currIn = np.append(currIn, decadeList[a] * .000000000001)
             smu.apply_current(smu.smua, decadeList[a] * .000000000001)
             measVI = np.append(measVI, smu.smua.measure.v())
@@ -101,7 +104,7 @@ for c in range(colNum):
             print(vGS)
         plt.plot(vGS, pltData.Id, label = "Vs")
         plt.yscale('log')
-        plt.title(colS + "Id vs Vgs")
+        plt.title(colS + '' + str(spec) +" Id vs Vgs")
         plt.xlabel("Vgs [V]")
         plt.ylabel("Id [A]")
         plt.legend()
@@ -109,7 +112,8 @@ for c in range(colNum):
         fig = plt.show(block = False)
         plt.pause(3)
         plt.close(fig)
-        pltData.plot(x="Id", xlabel="Current [A]", ylabel="Voltage [V]", sharey=True, title=(colS + " Current In [Id] vs. Voltage Out [Vs]"), legend=True,
+        pltData.plot(x="Id", xlabel="Current [A]", ylabel="Voltage [V]", sharey=True, title=(colS + '' + 
+                        str(spec) + " Current In [Id] vs. Voltage Out [Vs]"), legend=True,
                     subplots=False, logx= True)
         plt.savefig(picLoc + colS + "idvs.png")
         fig = plt.show(block = False)
