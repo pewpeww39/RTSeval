@@ -28,15 +28,16 @@ def logScale():
     decade4 = range(1000,10000, 1000)
     decade5 = range(10000,100000, 10000)    
     decade6 = range(100000,1000000, 100000)
-    decade7 = range(1000000,11000000, 1000000)
-    # decade8 = range(10000000,110000000, 100000000)
+    decade7 = range(1000000,10000000, 1000000)
+    decade8 = range(10000000,110000000, 10000000)
     decadeList = np.append(decade1, decade2)
     decadeList = np.append(decadeList, decade3)
     decadeList = np.append(decadeList, decade4)
     decadeList = np.append(decadeList, decade5)
     decadeList = np.append(decadeList, decade6)
     decadeList = np.append(decadeList, decade7)
-    # decadeList = np.append(decadeList, decade8)
+    decadeList = np.append(decadeList, decade8)
+    print(len(decadeList))
     return decadeList
     
 def clear ():
@@ -49,10 +50,11 @@ def write_cmd(x):
     time.sleep(0.05)
 currIn = []
 measVs = []
+measVI = []
 vGS = []
 csData = pd.DataFrame(data=[], index=[], columns=[])  
 pltData = pd.DataFrame(data=[], index=[], columns=[])         #create dataframe
-debug = True
+debug = False
 row = 0
 counter = 0
 voltIn = 0
@@ -81,21 +83,23 @@ for c in range(colNum):
     print('pico selected column: ' + str(columnRX))
     commandRX = int(pico.read_until().strip().decode())                             # confirms shift registers are loaded
     if commandRX == 1:
-        for a in range(64):
+        for a in range(len(decadeList)):
             # currIns = decadeList[a] * .0000000001  
             currIn = np.append(currIn, decadeList[a] * .000000000001)
             smu.apply_current(smu.smua, decadeList[a] * .000000000001)
+            measVI = np.append(measVI, smu.smua.measure.v())
             measVs = np.append(measVs, float(smu.smub.measure.v()))
             vGS = 1.2 - measVs
             row = row + 1
         pltData["Vgs"] = measVs
-        pltData["curr"] = currIn
-        csData[colS+'volt'] = measVs
-        csData[colS+'curr'] = currIn
+        pltData["Id"] = currIn
+        csData[colS+'Vs'] = measVs
+        csData[colS+'Id'] = currIn
+        csData[colS+'Vi'] = measVI
         if debug is True:
             print(measVs)
             print(vGS)
-        plt.plot(vGS, pltData.curr, label = "Vs")
+        plt.plot(vGS, pltData.Id, label = "Vs")
         plt.yscale('log')
         plt.title(colS + "Id vs Vgs")
         plt.xlabel("Vgs [V]")
@@ -105,8 +109,7 @@ for c in range(colNum):
         fig = plt.show(block = False)
         plt.pause(3)
         plt.close(fig)
-        
-        pltData.plot(x="curr", xlabel="Current [A]", ylabel="Voltage [V]", sharey=True, title=(colS + " Current In [Id] vs. Voltage Out [Vs]"), legend=True,
+        pltData.plot(x="Id", xlabel="Current [A]", ylabel="Voltage [V]", sharey=True, title=(colS + " Current In [Id] vs. Voltage Out [Vs]"), legend=True,
                     subplots=False, logx= True)
         plt.savefig(picLoc + colS + "idvs.png")
         fig = plt.show(block = False)
@@ -117,11 +120,13 @@ for c in range(colNum):
             colS)
         currIn = []
         measVs = []
+        measVI = []
         vGS = []
         row = 0
         power = 9
         commandRX=0
         colSelect = colSelect + 1
 csData.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/csCharacterization/cscharData' + dt_string + '.csv')
+print(csData)
 smu._write(value='smua.source.output = smua.OUTPUT_OFF')
 smu._write(value='smub.source.output = smub.OUTPUT_OFF')
