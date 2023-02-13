@@ -1067,9 +1067,9 @@ class Keithley2600(Keithley2600Base):
                 #     smu.trigger.source.listv(self.python_driver_list)
                 #     self.delete_lua_attr("python_driver_list")
                 # else:
-                #     smu.trigger.source.listv(smu_sweeplist)
+                # smu.trigger.source.listi(smu_sweeplist)
 
-                smu.trigger.source.logv(smu_sweeplist)
+                smu.trigger.source.logi(.000001, .000010, 73, 0)
 
                 smu.trigger.source.action = smu.ENABLE
 
@@ -1085,7 +1085,7 @@ class Keithley2600(Keithley2600Base):
 
                 # smu.trigger.source.limiti = 0.1
 
-                smu.source.func = smu.OUTPUT_DCVOLTS
+                smu.source.func = smu.OUTPUT_DCAMPS
 
                 # 2-wire measurement (use SENSE_REMOTE for 4-wire)
                 # smu.sense = smu.SENSE_LOCAL
@@ -1099,7 +1099,7 @@ class Keithley2600(Keithley2600Base):
 
                 # display current values during measurement
                 smu_name = self._get_smu_name(smu)
-                getattr(self.display, smu_name).measure.func = self.display.MEASURE_DCAMPS
+                getattr(self.display, smu_name).measure.func = self.display.MEASURE_DCVOLTS
 
                 # SETUP TRIGGER ARM AND COUNTS
                 # trigger count = number of data points in measurement
