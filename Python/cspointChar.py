@@ -23,18 +23,18 @@ bkPS = serial.Serial('com6',9600)                               #set com port fo
 bkdmm = serial.Serial('com7', 9600)                             #set com port for BK power supply
 # def logScale(start, stop, power):
 def logScale(start, stop, power):
-    powers = power
-    for dec in range(abs(powers)):
-        start = 10**(power-1)
-        stop = 10** power
-        inc = 10**dec
-        decade = []
-        stop = 10**power
-        for i in range(10):
-            start = start+inc
-            decade = np.append(decade, range(start, stop))
-        power = power - 1
-    return decade
+    # powers = power
+    # for dec in range(abs(powers)):
+    #     start = 10**(power-1)
+    #     stop = 10** power
+    #     inc = 10**dec
+    #     decade = []
+    #     stop = 10**power
+    #     for i in range(10):
+    #         start = start+inc
+    #         decade = np.append(decade, range(start, stop))
+    #     power = power - 1
+    # return decade
 
     decade1 = range(1,10, 1)
     decade2 = range(10,100, 10)
