@@ -21,9 +21,23 @@ smu._write(value= 'smua.source.limitv = 3.3')                   #set v liimit sm
 smu._write(value= "smub.source.limitv = 3.3")                   #set v liimit smub
 bkPS = serial.Serial('com6',9600)                               #set com port for BK power supply
 bkdmm = serial.Serial('com7', 9600)                             #set com port for BK power supply
-def logScale():
-    decade1 = range(1,10)
-    decade2 = range(10,100,10)
+# def logScale(start, stop, power):
+def logScale(start, stop, power):
+    powers = power
+    for dec in range(abs(powers)):
+        start = 10**(power-1)
+        stop = 10** power
+        inc = 10**dec
+        decade = []
+        stop = 10**power
+        for i in range(10):
+            start = start+inc
+            decade = np.append(decade, range(start, stop))
+        power = power - 1
+    return decade
+
+    decade1 = range(1,10, 1)
+    decade2 = range(10,100, 10)
     decade3 = range(100,1000, 100)
     decade4 = range(1000,10000, 1000)
     decade5 = range(10000,100000, 10000)    
