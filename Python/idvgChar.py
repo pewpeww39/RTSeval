@@ -57,7 +57,7 @@ csData = pd.DataFrame(data=[], index=[], columns=[])
 pltData = pd.DataFrame(data=[], index=[], columns=[])         #create dataframe
 specData = pd.DataFrame(pd.read_csv('~\miniconda3\envs\\testequ\RTSeval\Files\RTS_Array_Cells.csv',
                      index_col=[0] , header=0), columns = ['W', 'L', 'Type'])
-debug = False
+debug = True
 row = 0
 counter = 0
 voltIn = 0
