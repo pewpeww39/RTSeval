@@ -4,8 +4,8 @@ import numpy as np
 import math
 import time
 
-smu = Keithley2600('TCPIP0::192.168.4.11::INSTR')               #set ip addr for smu
-smu._write(value='smua.source.autorangev = smua.AUTORANGE_ON')  #set auto range for smua 
+# smu = Keithley2600('TCPIP0::192.168.4.11::INSTR')               #set ip addr for smu
+# smu._write(value='smua.source.autorangev = smua.AUTORANGE_ON')  #set auto range for smua 
 
 def frange(start: int, end: int, step: float):
     """
@@ -44,7 +44,8 @@ def logScale():
     #     time.sleep(.1)
     
 
-vlist = frange(1, 5, .5)
+# vlist = frange(1, 5, .5)
+vlist = (1, 10, 11, 0)
 # vlist = [.0001, 0.0002, 0.0003, 0.0004, .0005, 0.0006, 0.0007, 0.0008, 0.0009]
 # logV = math.log10(20)
 # vlist = [0, 1.2, 1001, 0]
@@ -53,7 +54,7 @@ vlist = frange(1, 5, .5)
 # vlist = logScale()
 print(vlist)
 # smu.voltage_sweep_single_smu(smu.smua, vlist, 0.001, 1, False)
-smu.vLog_sing(smu.smua, vlist, 0.001, 1, False)
+# smu.vLog_sing(smu.smua, vlist, 0.001, 1, False)
 # smu._write(value = "smua.trigger.source.logv(1, 10, 11, 0)")
 # smu._write(value = "smua.trigger.source.action = smua.ENABLE")
-smu._write(value='smua.source.output = smua.OUTPUT_OFF')
+# smu._write(value='smua.source.output = smua.OUTPUT_OFF')
