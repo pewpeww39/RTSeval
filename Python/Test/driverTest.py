@@ -917,26 +917,13 @@ class Keithley2600(Keithley2600Base):
                 npts = len(smu_sweeplist)
                 smu.trigger.count = npts
 
-                # SET THE MEASUREMENT TRIGGER ON BOTH SMU'S
-                # Set measurement to trigger once a change in the gate value on
-                # sweep smu is complete, i.e., a measurement will occur
-                # after the voltage is stepped.
-                # Both channels should be set to trigger on the sweep smu event
-                # so the measurements occur at the same time.
-
                 # enable smu
                 smu.trigger.measure.action = smu.ENABLE
 
-                # measure current and voltage on trigger, store in buffer of smu
-                smu.trigger.measure.iv(smu.nvbuffer1, smu.nvbuffer2)
+                smu.trigger.measure.iv(smu.nvbuffer1, smu.nvbuffer2)                # measure current and voltage on trigger, store in buffer of smu
 
-                # initiate measure trigger when source is complete
-                smu.trigger.measure.stimulus = smu.trigger.SOURCE_COMPLETE_EVENT_ID
+                smu.trigger.measure.stimulus = smu.trigger.SOURCE_COMPLETE_EVENT_ID              # initiate measure trigger when source is complete
 
-                # SET THE ENDPULSE ACTION TO HOLD
-                # Options are SOURCE_HOLD AND SOURCE_IDLE, hold maintains same voltage
-                # throughout step in sweep (typical IV sweep behavior). idle will allow
-                # pulsed IV sweeps.
 
                 if pulsed:
                     end_pulse_action = 0  # SOURCE_IDLE
@@ -947,39 +934,17 @@ class Keithley2600(Keithley2600Base):
 
                 smu.trigger.endpulse.action = end_pulse_action
 
-                # SET THE ENDSWEEP ACTION TO HOLD IF NOT PULSED
-                # Output voltage will be held after sweep is done!
-
                 smu.trigger.endsweep.action = end_pulse_action
-
-                # SET THE EVENT TO TRIGGER THE SMU'S TO THE ARM LAYER
-                # A typical measurement goes from idle -> arm -> trigger.
-                # The 'trigger.event_id' option sets the transition arm -> trigger
-                # to occur after sending *trg to the instrument.
 
                 smu.trigger.arm.stimulus = self.trigger.EVENT_ID
 
-                # Prepare an event blender (blender #1) that triggers when
-                # the smua enters the trigger layer or reaches the end of a
-                # single trigger layer cycle.
-
                 # triggers when either of the stimuli are true ('or enable')
                 self.trigger.blender[1].orenable = True
-                self.trigger.blender[1].stimulus[1] = smu.trigger.ARMED_EVENT_ID
-                self.trigger.blender[1].stimulus[2] = smu.trigger.PULSE_COMPLETE_EVENT_ID
+                self.trigger.blender[1].stimulus[1] = smu.trigger.ARMED_EVENT_ID            #when moved from arm to trigger layer
+                self.trigger.blender[1].stimulus[2] = smu.trigger.PULSE_COMPLETE_EVENT_ID   # when pulse is complete
 
-                # SET THE smu SOURCE STIMULUS TO BE EVENT BLENDER #1
-                # A source measure cycle within the trigger layer will occur when
-                # either the trigger layer is entered (termed 'armed event') for the
-                # first time or a single cycle of the trigger layer is complete (termed
-                # 'pulse complete event').
 
                 smu.trigger.source.stimulus = self.trigger.blender[1].EVENT_ID
-
-                # PREPARE AN EVENT BLENDER (blender #2) THAT TRIGGERS WHEN BOTH SMU'S
-                # HAVE COMPLETED A MEASUREMENT.
-                # This is needed to prevent the next source measure cycle from occurring
-                # before the measurement on both channels is complete.
 
                 self.trigger.blender[2].orenable = True  # triggers when both stimuli are true
                 self.trigger.blender[2].stimulus[1] = smu.trigger.MEASURE_COMPLETE_EVENT_ID
@@ -1264,12 +1229,12 @@ class Keithley2600(Keithley2600Base):
             # Setup smu1/smu2 for time series measurement.
 
             self.trigger.timer[1].delay = .1
-            self.trigger.timer[2].delay = 3
             self.trigger.timer[1].count = 0
-            self.trigger.timer[2].count = 1
             self.trigger.timer[1].passthrough = True
-            self.trigger.timer[2].passthrough = True
             self.trigger.timer[1].stimulus = self.display.trigger.EVENT_ID
+            self.trigger.timer[2].delay = 3
+            self.trigger.timer[2].count = 1
+            self.trigger.timer[2].passthrough = True
             self.trigger.timer[2].stimulus = smu1.trigger.ARMED_EVENT_ID
 
             # CONFIGURE INTEGRATION TIME FOR EACH MEASUREMENT
@@ -1364,24 +1329,61 @@ class Keithley2600(Keithley2600Base):
         smu: KeithleyClass):
         smu.source.limitv = 11
         smu.source.autorangev = smu.AUTORANGE_ON
-        smu.trigger.source.linearv(1, 10, 10)
+        input = smu.trigger.source.linearv(1, 10, 10)
         smu.trigger.source.action = smu.ENABLE
         smu.trigger.source.stimulus = self.display.trigger.EVENT_ID
-        smu.trigger.count = 10
+        smu.trigger.count = len(input)
+        smu.trigger.arm.stimulus = smu.trigger.ARMED_EVENT_ID
         smu.trigger.arm.count = 1
-        # smu.trigger.endsweep.action = smu.SOURCE_IDLE
+        smu.trigger.endpulse.action = smu.SOURCE_HOLD
+        smu.trigger.endpulse.stimulus = smu.SOURCE_COMPLETE_EVENT_ID
+        smu.trigger.endsweep.action = smu.SOURCE_IDLE
+        smu.trigger.endsweep.stimulus = smu.SWEEP_COMPLETE_EVENT_ID
         # smu.trigger.source.set()
-        smu.trigger_autoclear = smu.ENABLE
+        # smu.trigger_autoclear = smu.ENABLE
         smu.source.output = smu.OUTPUT_ON
         smu.trigger.initiate()
-        smu.trigger.source.set()
+        self.send_trigger()
+        # smu.trigger.source.set()
         while self.status.operation.sweeping.condition == 0:
             print('waiting')
-            time.sleep(0.1)
+            self.trigger.wait(.1)
+    
+    def Time10_Vsweep(self,
+        smu: KeithleyClass):
+        smu.source.limitv = 11
+        smu.source.autorangev = smu.AUTORANGE_ON
+        input = smu.trigger.source.linearv(1, 10, 10)
+
+        smu.trigger.source.action = smu.ENABLE
+        smu.trigger.source.stimulus = self.trigger.AMRED_EVENT_ID
+        smu.trigger.measure.action = smu.ENABLE
+        smu.trigger.measure.stimulus = self.trigger.timer[1].EVENT_ID
+        self.trigger.timer[1].delay = .1
+        self.trigger.timer[1].count = 0
+        self.trigger.timer[1].passthrough = True
+        self.trigger.timer[1].stimulus = smu.SOURCE_COMPLETE_EVENT_ID
+
+        smu.trigger.count = len(input)
+        smu.trigger.arm.stimulus = self.trigger.EVENT_ID
+        smu.trigger.arm.count = 1
+        smu.trigger.endpulse.action = smu.SOURCE_HOLD
+        smu.trigger.endpulse.stimulus = smu.MEASURE_COMPLETE_EVENT_ID
+        smu.trigger.endsweep.action = smu.SOURCE_IDLE
+        # smu.trigger.source.set()
+        # smu.trigger_autoclear = smu.
+        smu.source.output = smu.OUTPUT_ON
+        smu.trigger.initiate()
+        self.send_trigger()
+        # smu.trigger.source.set()
+        while self.status.operation.sweeping.condition == 0:
+            print('waiting')
+            self.trigger.wait(.1)
+
 
             # # while loop that runs until the sweep ends
         while self.status.operation.sweeping.condition > 0:
             # print('running')
             # self.waitcomplete()
-            print(self.display.trigger.wait(1))
-            self.display.trigger.clear()
+            print(self.trigger.wait(.1))
+            # self.display.trigger.clear()
