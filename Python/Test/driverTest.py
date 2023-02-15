@@ -1334,13 +1334,13 @@ class Keithley2600(Keithley2600Base):
             input = smu.trigger.source.linearv(1, 10, 10)
             smu.trigger.source.action = smu.ENABLE
             smu.trigger.source.stimulus = self.display.trigger.EVENT_ID
-            smu.trigger.count = len(input)
-            smu.trigger.arm.stimulus = smu.trigger.ARMED_EVENT_ID
+            smu.trigger.count = 10
+            smu.trigger.arm.stimulus = self.trigger.EVENT_ID
             smu.trigger.arm.count = 1
             smu.trigger.endpulse.action = smu.SOURCE_HOLD
-            smu.trigger.endpulse.stimulus = smu.SOURCE_COMPLETE_EVENT_ID
+            smu.trigger.endpulse.stimulus = smu.trigger.SOURCE_COMPLETE_EVENT_ID
             smu.trigger.endsweep.action = smu.SOURCE_IDLE
-            smu.trigger.endsweep.stimulus = smu.SWEEP_COMPLETE_EVENT_ID
+            smu.trigger.endsweep.stimulus = smu.trigger.SWEEP_COMPLETE_EVENT_ID
             # smu.trigger.source.set()
             # smu.trigger_autoclear = smu.ENABLE
             smu.source.output = smu.OUTPUT_ON
@@ -1350,29 +1350,49 @@ class Keithley2600(Keithley2600Base):
             while self.status.operation.sweeping.condition == 0:
                 print('waiting')
                 self.trigger.wait(.1)
+
+            while self.status.operation.sweeping.condition > 0:
+                # print('running')
+                # self.waitcomplete()
+                print(self.trigger.wait(.1))
     
     def Time10_Vsweep(self,
-        smu: KeithleyClass):
+        smu: KeithleyClass,
+        steps: int,
+        delay: float,
+        t_int: float):
         
         with self._measurement_lock:
             smu.source.limitv = 11
             smu.source.autorangev = smu.AUTORANGE_ON
-            input = smu.trigger.source.linearv(1, 10, 10)
+            input = smu.trigger.source.linearv(1, 10, steps)
+            self.set_integration_time(smu, t_int)
+            smu.measure.delay = smu.DELAY_OFF
+
+            smu.nvbuffer1.clear()
+            smu.nvbuffer2.clear()
+            smu.nvbuffer1.clearcache()
+            smu.nvbuffer2.clearcache()
+
+            self.trigger.blender[1].orenable = True
+            self.trigger.blender[1].stimulus[1] = smu.trigger.ARMED_EVENT_ID            #when moved from arm to trigger layer
+            self.trigger.blender[1].stimulus[2] = smu.trigger.PULSE_COMPLETE_EVENT_ID   # when pulse is complete
 
             smu.trigger.source.action = smu.ENABLE
-            smu.trigger.source.stimulus = self.trigger.AMRED_EVENT_ID
+            smu.trigger.source.stimulus = self.trigger.blender[1].EVENT_ID
             smu.trigger.measure.action = smu.ENABLE
             smu.trigger.measure.stimulus = self.trigger.timer[1].EVENT_ID
-            self.trigger.timer[1].delay = .1
+            smu.trigger.measure.iv(smu.nvbuffer1, smu.nvbuffer2)
+            self.trigger.timer[1].delay = delay
             self.trigger.timer[1].count = 0
             self.trigger.timer[1].passthrough = True
-            self.trigger.timer[1].stimulus = smu.SOURCE_COMPLETE_EVENT_ID
+            self.trigger.timer[1].stimulus = smu.trigger.SOURCE_COMPLETE_EVENT_ID
 
-            smu.trigger.count = len(input)
+            smu.trigger.count = steps
             smu.trigger.arm.stimulus = self.trigger.EVENT_ID
             smu.trigger.arm.count = 1
             smu.trigger.endpulse.action = smu.SOURCE_HOLD
-            smu.trigger.endpulse.stimulus = smu.MEASURE_COMPLETE_EVENT_ID
+            smu.trigger.endpulse.stimulus = smu.trigger.MEASURE_COMPLETE_EVENT_ID
             smu.trigger.endsweep.action = smu.SOURCE_IDLE
             # smu.trigger.source.set()
             # smu.trigger_autoclear = smu.
@@ -1381,17 +1401,123 @@ class Keithley2600(Keithley2600Base):
             self.send_trigger()
             # smu.trigger.source.set()
             while self.status.operation.sweeping.condition == 0:
-                print('waiting')
+                # print('waiting')
                 self.trigger.wait(.1)
-
-
                 # # while loop that runs until the sweep ends
             while self.status.operation.sweeping.condition > 0:
                 # print('running')
                 # self.waitcomplete()
-                print(self.trigger.wait(.1))
+                self.trigger.wait(delay)
                 # self.display.trigger.clear()
-    
+
+            i_smu1 = self.read_buffer(smu.nvbuffer1)
+            v_smu1 = self.read_buffer(smu.nvbuffer2)
+            # i_smu2 = self.read_buffer(smu2.nvbuffer1)
+            # v_smu2 = self.read_buffer(smu2.nvbuffer2)
+
+            # CLEAR BUFFERS:
+            smu.nvbuffer1.clear()
+            smu.nvbuffer2.clear()
+            smu.nvbuffer1.clearcache()
+            smu.nvbuffer2.clearcache()
+
+            return v_smu1, i_smu1
+
+            
+    def idvgsChar(self,
+        smu1: KeithleyClass,
+        smu2: KeithleyClass,
+        ilist: Sequence(float),
+        steps: int,
+        delay: float,
+        t_int: float):
+        
+        with self._measurement_lock:
+            v_smu, i_smu = [], []
+            if self.abort_event.is_set():
+                return v_smu, i_smu
+            if len(ilist) > self.CHUNK_SIZE:
+                self.create_lua_attr("python_driver_list", [])
+                for num in ilist:
+                    self.table.insert(self.python_driver_list, num)
+                smu.trigger.source.listv(self.python_driver_list)
+                self.delete_lua_attr("python_driver_list")
+            else:
+                smu.trigger.source.listv(ilist)
+
+
+            smu1.source.limitv = 3.3
+            smu1.source.autorangev = smu1.AUTORANGE_OFF
+            smu2.source.autorangev = smu2.AUTORANGE_OFF
+
+            input = smu1.trigger.source.lineari(1, 10, steps)
+            self.set_integration_time(smu1, t_int)
+            self.set_integration_time(smu2, t_int)
+            smu1.measure.delay = smu1.DELAY_OFF
+
+            for smu in [smu1, smu2]:
+                smu.nvbuffer1.clear()
+                smu.nvbuffer2.clear()
+                smu.nvbuffer1.clearcache()
+                smu.nvbuffer2.clearcache()
+
+            self.trigger.blender[1].orenable = True
+            self.trigger.blender[1].stimulus[1] = smu1.trigger.ARMED_EVENT_ID            #when moved from arm to trigger layer
+            self.trigger.blender[1].stimulus[2] = smu1.trigger.PULSE_COMPLETE_EVENT_ID   # when pulse is complete
+
+            smu1.trigger.source.action = smu1.ENABLE
+            smu.source.func = smu.OUTPUT_DCAMPS
+            smu1.trigger.source.stimulus = self.trigger.blender[1].EVENT_ID
+            smu1.trigger.measure.action = smu1.ENABLE
+            smu1.trigger.measure.stimulus = self.trigger.timer[1].EVENT_ID
+            smu1.trigger.measure.iv(smu1.nvbuffer1, smu1.nvbuffer2)
+
+            smu2.trigger.measure.action = smu2.ENABLE
+            smu2.trigger.measure.stimulus = self.trigger.timer[1].EVENT_ID
+            smu2.trigger.measure.v(smu2.nvbuffer1)
+
+            self.trigger.timer[1].delay = delay
+            self.trigger.timer[1].count = 0
+            self.trigger.timer[1].passthrough = True
+            self.trigger.timer[1].stimulus = smu1.trigger.SOURCE_COMPLETE_EVENT_ID
+
+            smu1.trigger.count = len(ilist)
+            smu1.trigger.arm.stimulus = self.trigger.EVENT_ID
+            smu1.trigger.arm.count = 1
+            smu1.trigger.endpulse.action = smu1.SOURCE_HOLD
+            smu1.trigger.endpulse.stimulus = smu1.trigger.MEASURE_COMPLETE_EVENT_ID
+            smu1.trigger.endsweep.action = smu1.SOURCE_IDLE
+            # smu.trigger.source.set()
+            # smu.trigger_autoclear = smu.
+            smu1.source.output = smu1.OUTPUT_ON
+            smu1.trigger.initiate()
+            self.send_trigger()
+            # smu.trigger.source.set()
+            while self.status.operation.sweeping.condition == 0:
+                # print('waiting')
+                self.trigger.wait(.1)
+                # # while loop that runs until the sweep ends
+            while self.status.operation.sweeping.condition > 0:
+                # print('running')
+                # self.waitcomplete()
+                self.trigger.wait(delay)
+                # self.display.trigger.clear()
+
+            i_smu1 = self.read_buffer(smu1.nvbuffer1)
+            v_smu1 = self.read_buffer(smu1.nvbuffer2)
+            i_smu2 = self.read_buffer(smu2.nvbuffer1)
+            # v_smu2 = self.read_buffer(smu2.nvbuffer2)
+
+            # CLEAR BUFFERS:
+            for smu in [smu1, smu2]:
+                smu.nvbuffer1.clear()
+                smu.nvbuffer2.clear()
+                smu.nvbuffer1.clearcache()
+                smu.nvbuffer2.clearcache()
+
+            return v_smu1, i_smu1, i_smu2
+
+
     def holdA_measAB(self, 
                     smu1: KeithleyClass,
                     smu2: KeithleyClass,
@@ -1405,8 +1531,16 @@ class Keithley2600(Keithley2600Base):
             smu1.source.leveli = input
             smu1.source.func = smu1.OUTPUT_DCAMPS
             self.set_integration_time(smu1, t_int)
-            smu1.source.limitv = 11
-            smu1.source.autorangev = smu1.AUTORANGE_ON
+            smu1.measure.delay = smu1.DELAY_OFF
+
+            smu1.source.limiti = .001
+            smu2.source.limitv = 5
+            for smu in [smu1, smu2]:
+                smu.source.rangev = 5
+                smu.source.rangei = .001
+                smu.measure.rangev = 5
+                smu.measure.rangei = 0.001
+                smu.measure.autozero = smu.AUTOZERO_OFF
 
             smu1.nvbuffer1.clear()
             smu1.nvbuffer2.clear()
@@ -1415,56 +1549,69 @@ class Keithley2600(Keithley2600Base):
 
             self.trigger.blender[1].orenable = True  # triggers when either stimuli are true (True = or statement)
             self.trigger.blender[1].stimulus[1] = smu1.trigger.MEASURE_COMPLETE_EVENT_ID
-            self.trigger.blender[1].stimulus[2] = smu1.trigger.trigger_EVENT_ID
+            self.trigger.blender[1].stimulus[2] = self.trigger.EVENT_ID
 
             # input = smu.trigger.source.linearv(1, 10, 10)
-            # smu.trigger.source.action = smu.ENABLE
+            smu1.trigger.source.action = smu1.DISABLE
             # smu.trigger.source.stimulus = self.trigger.AMRED_EVENT_ID
             smu1.trigger.measure.action = smu1.ASYNC                                 # enable smu
-            smu2.trigger.measure.action = smu2.ASYNC
-            smu1.trigger.measure.iv(smu1.nvbuffer1, smu1.nvbuffer2)                    # measure current and voltage on trigger, store in buffer of smu
-            smu2.trigger.measure.iv(smu2.nvbuffer1, smu2.nvbuffer2)
+            # smu2.trigger.measure.action = smu2.ASYNC
+            smu1.trigger.measure.v(smu1.nvbuffer1)                    # measure current and voltage on trigger, store in buffer of smu
+            smu1.nvbuffer1.collectsourcevalues = smu1.DISABLE
+            # smu2.trigger.measure.iv(smu2.nvbuffer1, smu2.nvbuffer2)
             smu1.trigger.measure.stimulus = self.trigger.timer[1].EVENT_ID     # initiate measure trigger when source is complete
-            smu2.trigger.measure.stimulus = self.trigger.timer[1].EVENT_ID
+            # smu2.trigger.measure.stimulus = self.trigger.timer[1].EVENT_ID
             self.trigger.timer[1].delay = delay
             self.trigger.timer[1].count = 0
             self.trigger.timer[1].passthrough = True
-            self.trigger.timer[1].stimulus = smu1.trigger.blender[1].EVENT_ID
+            self.trigger.timer[1].stimulus = self.trigger.blender[1].EVENT_ID
 
             self.trigger.timer[2].delay = runT
             self.trigger.timer[2].count = 1
             self.trigger.timer[2].passthrough = True
-            self.trigger.timer[2].stimulus = smu1.trigger_EVENT_ID
+            self.trigger.timer[2].stimulus = self.trigger.EVENT_ID
 
-            smu1.trigger.count = runT / delay
-            smu2.trigger.coout = runT / delay
+            smu1.trigger.count = 1 #  runT / delay
+            # smu2.trigger.coout = runT / delay
             smu1.trigger.arm.stimulus = self.trigger.EVENT_ID
-            smu2.trigger.arm.stimulus = self.trigger.EVENT_ID
+            # smu2.trigger.arm.stimulus = self.trigger.EVENT_ID
             smu1.trigger.arm.count = 1
-            smu2.trigger.arm.count = 1
+            # smu2.trigger.arm.count = 1
 
             smu1.trigger.endpulse.action = smu1.SOURCE_HOLD
-            smu2.trigger.endpulse.action = smu2.SOURCE_HOLD
+            # smu2.trigger.endpulse.action = smu2.SOURCE_HOLD
             smu1.trigger.endpulse.stimulus = self.trigger.timer[2].EVENT_ID
-            smu2.trigger.endpulse.stimulus = self.trigger.timer[2].EVENT_ID
+            # smu2.trigger.endpulse.stimulus = self.trigger.timer[2].EVENT_ID
             smu1.trigger.endsweep.action = smu1.SOURCE_IDLE
-            smu2.trigger.endsweep.action = smu2.SOURCE_IDLE
+            # smu2.trigger.endsweep.action = smu2.SOURCE_IDLE
             # smu.trigger.source.set()
             # smu.trigger_autoclear = smu.
+
             smu1.source.output = smu1.OUTPUT_ON
-            smu2.source.output = smu2.OUTPUT_ON
+            # smu2.source.output = smu2.OUTPUT_ON
             smu1.trigger.initiate()
-            smu2.trigger.initiate()
+            # smu2.trigger.initiate()
             self.send_trigger()
             # smu.trigger.source.set()
             while self.status.operation.sweeping.condition == 0:
                 print('waiting')
                 self.trigger.wait(.1)
-
-
                 # # while loop that runs until the sweep ends
             while self.status.operation.sweeping.condition > 0:
                 # print('running')
                 # self.waitcomplete()
-                print(self.trigger.wait(.1))
+                self.trigger.wait(delay)
                 # self.display.trigger.clear()
+
+            i_smu1 = self.read_buffer(smu1.nvbuffer1)
+            v_smu1 = self.read_buffer(smu1.nvbuffer2)
+            # i_smu2 = self.read_buffer(smu2.nvbuffer1)
+            # v_smu2 = self.read_buffer(smu2.nvbuffer2)
+
+            # CLEAR BUFFERS:
+            smu.nvbuffer1.clear()
+            smu.nvbuffer2.clear()
+            smu.nvbuffer1.clearcache()
+            smu.nvbuffer2.clearcache()
+
+            return v_smu1, i_smu1
