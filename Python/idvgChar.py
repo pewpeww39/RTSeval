@@ -19,8 +19,8 @@ smu._write(value='smub.source.autorangev = smub.AUTORANGE_ON')  #set auto range 
 smu.set_integration_time(smu.smua, 0.001)                       # sets integration time in sec
 smu._write(value= 'smua.source.limitv = 3.3')                   #set v liimit smua
 smu._write(value= "smub.source.limitv = 3.3")                   #set v liimit smub
-bkPS = serial.Serial('com6',9600)                               #set com port for BK power supply
-bkdmm = serial.Serial('com7', 9600)                             #set com port for BK power supply
+# bkPS = serial.Serial('com6',9600)                               #set com port for BK power supply
+# bkdmm = serial.Serial('com7', 9600)                             #set com port for BK power supply
 def logScale():
     decade1 = range(1,10)
     decade2 = range(10,100,10)

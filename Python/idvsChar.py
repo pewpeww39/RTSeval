@@ -67,7 +67,7 @@ currIn = []
 measVs = []
 measVI = []
 vGS = []
-spec=[]
+spec = []
 csData = pd.DataFrame(data=[], index=[], columns=[])  
 pltData = pd.DataFrame(data=[], index=[], columns=[])         #create dataframe
 specData = pd.DataFrame(pd.read_csv('~\miniconda3\envs\\testequ\RTSeval\Files\RTS_Array_Cells.csv',
@@ -87,10 +87,10 @@ voltInc = 34      #int(input('How many steps for Voltage?'))
 smu.apply_current(smu.smua, 0.0)
 smu.apply_current(smu.smub, 0.0)
 colS = "Col001"   
-picLoc = "C:\\Users\\jacob\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\csCharacterization\\"
+picLoc = "C:\\Users\\jacob\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\idvsCharacterization\\idvscharData"
 time.sleep(1)
 decadeList = logScale()
-print(decadeList)
+# print(decadeList)
 for c in range(colNum):
     commandTX = write_cmd(str(3))                                                   # selects the switch case on the pico
     commandRX = pico.read_until().strip().decode()                                  # confirms mode selected
@@ -109,15 +109,18 @@ for c in range(colNum):
         #     measVs = np.append(measVs, float(smu.smub.measure.v()))
         #     vGS = 1.2 - measVs
         #     row = row + 1
-        currIn, measVi, measVs = smu.idvgsChar(smu.smua, smu.smub, decadeList, 0.001, .001)
-        pltData["Vgs"] = measVs
+        currIn, measVI, measVs = smu.idvgsChar(smu.smua, smu.smub, decadeList, 0.1, .01)
+        vGS = measVs 
+        for i in range(len(measVs)):
+            vGS[i] = 1.2 - vGS[i]
+        pltData["Vgs"] = vGS # [1.2 - measVs for i in range(len(measVs))]
         pltData["Id"] = currIn
         csData[colS+'Vs'] = measVs
         csData[colS+'Id'] = currIn
         csData[colS+'Vi'] = measVI
         if debug is True:
-            print(measVs)
-            # print(vGS)
+            print(len(measVs))
+            print(vGS)
         plt.plot(vGS, pltData.Id, label = "Vs")
         plt.yscale('log')
         plt.title(colS + '' + str(spec) +" Id vs Vgs")
@@ -125,16 +128,16 @@ for c in range(colNum):
         plt.ylabel("Id [A]")
         plt.legend()
         plt.savefig(picLoc + colS + str(spec) + "idvg.png")
-        fig = plt.show(block = False)
+        fig1 = plt.show(block = False)
         plt.pause(3)
-        plt.close(fig)
+        plt.close(fig1)
         pltData.plot(x="Id", xlabel="Current [A]", ylabel="Voltage [V]", sharey=True, title=(colS + '' + 
                         str(spec) + " Current In [Id] vs. Voltage Out [Vs]"), legend=True,
                     subplots=False, logx= True)
         plt.savefig(picLoc + colS + str(spec) + "idvs.png")
-        fig = plt.show(block = False)
+        fig2 = plt.show(block = False)
         plt.pause(3)
-        plt.close(fig)
+        plt.close(fig2)
         colS = re.sub(r'[0-9]+$',
             lambda x: f"{str(int(x.group())+1).zfill(len(x.group()))}",    # increments the number in the column name
             colS)
@@ -146,7 +149,7 @@ for c in range(colNum):
         power = 9
         commandRX=0
         colSelect = colSelect + 1
-csData.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/csCharacterization/cscharData' + dt_string + '.csv')
+csData.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/idvsCharacterization/idvscharData' + dt_string + '.csv')
 print(csData)
 smu._write(value='smua.source.output = smua.OUTPUT_OFF')
 smu._write(value='smub.source.output = smub.OUTPUT_OFF')

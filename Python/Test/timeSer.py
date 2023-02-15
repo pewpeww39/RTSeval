@@ -20,7 +20,7 @@ def logScale():
     decadeList = np.append(decadeList, decade6)
     decadeList = np.append(decadeList, decade7)
     decadeList = np.append(decadeList, decade8) * pow(10, -12)
-    print(len(decadeList))
+    # print(len(decadeList))
     return decadeList
 
 smu = Keithley2600('TCPIP0::192.168.4.11::INSTR')               #set ip addr for smu
@@ -30,11 +30,13 @@ smu = Keithley2600('TCPIP0::192.168.4.11::INSTR')               #set ip addr for
 # vlist = np.logspace(np.log10(pow(10,-12)), np.log10(pow(10,-5)), 200)
 vlist = logScale() 
 print(pow(10, -12))
-print(vlist)
+# print(vlist)
 # smu.ten_Vsweep(smu.smua)
 # v, i = smu.Time10_Vsweep(smu.smua, 100, 0.0002, .0002)
-v1, i1, v2 = smu.idvgsChar(smu.smua, smu.smub, vlist, 0.001, .001)
+v1, i1, v2 = smu.idvgsChar(smu.smua, smu.smub, vlist, 0.01, .001)
 # v1, i1, v2, i2 = smu.holdA_measAB(smu.smua, smu.smub, 10, .01, .001)
+for i in range(len(v2)):
+    v2[i] = 1.2 - v2[i]
 time.sleep(1)
 print(v2)
 print(v1)

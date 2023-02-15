@@ -1490,6 +1490,8 @@ class Keithley2600(Keithley2600Base):
                 smu.nvbuffer1.clearcache()
                 smu.nvbuffer2.clearcache()
 
+            # smu1.nvbuffer1.collectsourcevalues = 1
+
             self.trigger.blender[1].orenable = True
             self.trigger.blender[1].stimulus[1] = smu1.trigger.ARMED_EVENT_ID            #when moved from arm to trigger layer
             self.trigger.blender[1].stimulus[2] = smu1.trigger.PULSE_COMPLETE_EVENT_ID   # when pulse is complete
@@ -1546,6 +1548,7 @@ class Keithley2600(Keithley2600Base):
                 self.trigger.wait(delay)
                 # self.display.trigger.clear()
 
+            # i_smu1 = self.read_buffer(smu1.nvbuffer1)
             i_smu1 = self.read_buffer(smu1.nvbuffer1)
             v_smu1 = self.read_buffer(smu1.nvbuffer2)
             i_smu2 = self.read_buffer(smu2.nvbuffer1)
@@ -1558,7 +1561,7 @@ class Keithley2600(Keithley2600Base):
                 smu.nvbuffer1.clearcache()
                 smu.nvbuffer2.clearcache()
 
-            return v_smu1, i_smu1, v_smu2
+            return i_smu1, v_smu1, v_smu2
 
 
     def holdA_measAB(self, 
