@@ -18,7 +18,7 @@ from datetime import datetime
 dt_string = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p")
 #print("date and time =", dt_string)
 
-pico = serial.Serial('COM4', baudrate=115200)
+pico = serial.Serial('COM9', baudrate=115200)
 smu = Keithley2600('TCPIP0::192.168.4.11::INSTR')               #set ip addr for smu
 smu._write(value='smua.source.rangei = 3.3')
 smu._write(value='smub.source.rangev = 3.3')
@@ -29,7 +29,7 @@ smu._write(value='smub.source.rangev = 3.3')
 smu.set_integration_time(smu.smua, 0.001)                       # sets integration time in sec
 smu._write(value= 'smua.source.limitv = 3.3')                   #set v liimit smua
 smu._write(value= "smub.source.limitv = 3.3")                   #set v liimit smub
-bkPS = serial.Serial('com6',9600)                               #set com port for BK power supply
+bkPS = serial.Serial('com8', 9600)                               #set com port for BK power supply
 bkdmm = serial.Serial('com7', 9600)  
                            #set com port for BK power supply
 def clear ():
@@ -84,7 +84,7 @@ for c in range(currentInc):
     time.sleep(.2)
     for v in range(voltInc):
         voltIn = v/10                                   #the voltage applied to vout_byp
-        smu.apply_voltage(smu.smub, voltIn)             # turns on and applies 10V to SMUA
+        smu.apply_voltage(smu.smub, voltIn)             # turns on and applies 10V to SMUB
         time.sleep(.2)
         bkdmm.write(b'fetch?\n')                        #requests the measurement from the bkdmm
         dmmVolt = bkdmm.readline()                      #reads the measurement from the bkdmm

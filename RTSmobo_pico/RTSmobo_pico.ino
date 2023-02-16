@@ -23,7 +23,7 @@
 #define LED             25  // Pico LED
 
 int command = 0;
-int colSelect = 3;
+int colSelect = 2;
 int rowSelect = 1;
 int horSR = 0;
 int verSR = 0;
