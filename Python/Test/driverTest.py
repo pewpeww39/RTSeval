@@ -1576,22 +1576,17 @@ class Keithley2600(Keithley2600Base):
             input = pow(10, -7)
             smu1.source.leveli = input
             smu1.source.func = smu1.OUTPUT_DCAMPS
-            self.set_integration_time(smu1, t_int)
-            smu1.measure.delay = smu1.DELAY_OFF
-
-            smu1.source.limiti = .001
-            smu2.source.limitv = 5
+            smu1.source.rangev = 0.001
             for smu in [smu1, smu2]:
-                smu.source.rangev = 5
-                smu.source.rangei = .001
-                smu.measure.rangev = 5
-                smu.measure.rangei = 0.001
+                self.set_integration_time(smu, t_int)
+                smu.measure.delay = smu.DELAY_OFF
+                smu.source.limitv = 3.3
+                smu.measure.rangev = 4
                 smu.measure.autozero = smu.AUTOZERO_OFF
-
-            smu1.nvbuffer1.clear()
-            smu1.nvbuffer2.clear()
-            smu1.nvbuffer1.clearcache()
-            smu1.nvbuffer2.clearcache()
+                smu.nvbuffer1.clear()
+                smu.nvbuffer2.clear()
+                smu.nvbuffer1.clearcache()
+                smu.nvbuffer2.clearcache()
 
             self.trigger.blender[1].orenable = True  # triggers when either stimuli are true (True = or statement)
             self.trigger.blender[1].stimulus[1] = smu1.trigger.MEASURE_COMPLETE_EVENT_ID
