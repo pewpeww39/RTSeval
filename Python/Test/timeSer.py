@@ -28,19 +28,21 @@ smu = Keithley2600('TCPIP0::192.168.4.11::INSTR')               #set ip addr for
 # smu.setA_dMeasIV(smu.smua, smu.smub, 0.0000001, 10, .1, 1)
 # vlist = range(1,10,1)
 # vlist = np.logspace(np.log10(pow(10,-12)), np.log10(pow(10,-5)), 200)
+smu.smua.reset()
 vlist = logScale() 
-print(pow(10, -12))
+# print(pow(10, -12))
 # print(vlist)
-# smu.ten_Vsweep(smu.smua)
+# v2 = smu.ten_Vsweep(smu.smua)
 # v, i = smu.Time10_Vsweep(smu.smua, 100, 0.0002, .0002)
-v1, i1, v2 = smu.idvgsChar(smu.smua, smu.smub, vlist, 0.01, .001)
+# v1, i1, v2 = smu.idvgsChar(smu.smua, smu.smub, vlist, 0.01, .001)
+v1, v2 = smu.asnyc_measA(smu.smua, smu.smub, 4, .1, .01)
 # v1, i1, v2, i2 = smu.holdA_measAB(smu.smua, smu.smub, 10, .01, .001)
-for i in range(len(v2)):
-    v2[i] = 1.2 - v2[i]
-time.sleep(1)
+# for i in range(len(v2)):
+#     v2[i] = 1.2 - v2[i]
+# time.sleep(1)
 print(v2)
 print(v1)
-print(i1)
+# print(i1)
 # smu._write(value='smua.source.output = smua.OUTPUT_OFF')
 # smu._write(value='smub.source.output = smub.OUTPUT_OFF')
 # smu.eventlog.clear()
