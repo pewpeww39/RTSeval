@@ -50,7 +50,7 @@ commandTX = write_cmd(str(4))                                                   
 commandRX = pico.read_until().strip().decode()                                  # confirms mode selected
 time.sleep(.5)
 print('pico confirmed: ' + str(commandRX))
-v1, i1, timestamp, v2 = smu.asnyc_measAB(smu.smua, smu.smub, pow(10, -9), 10, .001, .001)
+v1, i1, timestamp, v2 = smu.asnyc_measAB(smu.smua, smu.smub, pow(10, -9), 60, .001, .0001)
 # v1, i1, v2, i2 = smu.holdA_measAB(smu.smua, smu.smub, 10, .01, .001)
 # for i in range(len(v2)):
 #     v2[i] = 1.2 - v2[i]
