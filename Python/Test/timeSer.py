@@ -16,41 +16,23 @@ def write_cmd(x):
     pico.write(bytes(x, 'utf-8'))
     time.sleep(0.05)
 
-def logScale():
-    decade1 = range(1,10, 1)
-    decade2 = range(10,100, 10)
-    decade3 = range(100,1000, 100)
-    decade4 = range(1000,10000, 1000)
-    decade5 = range(10000,100000, 10000)    
-    decade6 = range(100000,1000000, 100000)
-    decade7 = range(1000000,10000000, 1000000)
-    decade8 = range(10000000,60000000, 10000000)
-    decadeList = np.append(decade1, decade2)
-    decadeList = np.append(decadeList, decade3)
-    decadeList = np.append(decadeList, decade4)
-    decadeList = np.append(decadeList, decade5)
-    decadeList = np.append(decadeList, decade6)
-    decadeList = np.append(decadeList, decade7)
-    decadeList = np.append(decadeList, decade8) * pow(10, -12)
-    # print(len(decadeList))
-    return decadeList
+def clearSMU():
+    smu.errorqueue.clear()
+    smu.eventlog.clear()
+    smu.smua.reset()
+    smu.smub.reset()
+
 aData = pd.DataFrame(data=[], index=[], columns=[]) 
 bData = pd.DataFrame(data=[], index=[], columns=[])
 rtsData = pd.DataFrame(data=[], index=[], columns=[])  
 smu = Keithley2600('TCPIP0::192.168.4.11::INSTR')               #set ip addr for smu
 pico = serial.Serial('COM9', baudrate=115200)
-smu.errorqueue.clear()
-smu.eventlog.clear()
-smu.smua.reset()
-vlist = logScale() 
+
 commandTX = write_cmd(str(4))                                                   # selects the switch case on the pico
 commandRX = pico.read_until().strip().decode()                                  # confirms mode selected
 time.sleep(.5)
 print('pico confirmed: ' + str(commandRX))
-v1 = [1,2,3]
-v2 = [3,4,5,4]
-i1 = [2,3,4,5,6]
-# v1, i1, v2 = smu.sourceA_measAB(smu.smua, smu.smub, pow(10, -9), 60, .001, .0001)
+v1, i1, v2 = smu.sourceA_measAB(smu.smua, smu.smub, pow(10, -9), 60, .001, .0001)
 aData['V1'] = v1
 aData['currIn'] = i1
 bData['v2'] = v2
