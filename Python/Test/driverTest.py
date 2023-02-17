@@ -1759,7 +1759,6 @@ class Keithley2600(Keithley2600Base):
                 smu.source.func = smu1.OUTPUT_DCAMPS
                 smu.source.rangei = current * 10
                 self.set_integration_time(smu, t_int)
-            for smu in [smu1, smu2]:
                 self.set_integration_time(smu, t_int)
                 smu.measure.delay = smu.DELAY_OFF
                 smu.source.limitv = 3.3
@@ -1771,6 +1770,8 @@ class Keithley2600(Keithley2600Base):
                 smu.nvbuffer2.clearcache()
                 smu.nvbuffer2.appendmode = 1
             smu1.nvbuffer2.collecttimestamps = 0
+            smu1.sense = smu1.SENSE_REMOTE
+            smu2.sense = smu2.SENSE_LOCAL
 
             self.trigger.blender[1].orenable = True  # triggers when either stimuli are true (True = or statement)
             self.trigger.blender[1].stimulus[1] = smu1.trigger.MEASURE_COMPLETE_EVENT_ID
@@ -1823,7 +1824,7 @@ class Keithley2600(Keithley2600Base):
                 # self.waitcomplete()
                 self.trigger.wait(.001)
                 # self.display.trigger.clear()
-            print('done')
+            print('reading buffers')
             i_smu1 = self.read_buffer(smu1.nvbuffer1)
             v_smu1 = self.read_buffer(smu1.nvbuffer2)
             v_smu2 = self.read_buffer(smu2.nvbuffer2)
@@ -1837,5 +1838,5 @@ class Keithley2600(Keithley2600Base):
                 smu.nvbuffer2.clear()
                 smu.nvbuffer1.clearcache()
                 smu.nvbuffer2.clearcache()
-
+            print('returning data')
             return v_smu1, i_smu1, v_smu2
