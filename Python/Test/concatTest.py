@@ -32,15 +32,18 @@ commandTX = write_cmd(str(4))                                                   
 commandRX = pico.read_until().strip().decode()                                  # confirms mode selected
 time.sleep(.5)
 print('pico confirmed: ' + str(commandRX))
-v1, i1, v2 = smu.sourceA_measAB(smu.smua, smu.smub, pow(10, -9), 1, .0001, .0001)
-aData['V1'] = v1
-aData['currIn'] = i1
+v2 = smu.sourceA_measAB(smu.smua, smu.smub, pow(10, -9), 1, .01, .0001)
+# aData['V1'] = v1
+# aData['currIn'] = i1
 bData['v2'] = v2
-rtsData = pd.concat([aData, bData], axis = 1)
+rtsData = pd.concat([rtsData, bData], axis = 1)
 rtsData.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/idvsCharacterization/testcharData' + dt_string + '.csv')
 plt.plot(v2, label = "Vs")
-plt.yscale('log')
-plt.title("RTS: Vg = 1.2 V, Vdd = 1.2 V, Ibias = 1 nA, AmpBias = .5 mA, column = 2, row = 1")
+# plt.yscale('log')
+plt.title("RTS Data")
+plt.figtext(.2, .15, "Vg = 1.2 V, Vdd = 1.2 V", fontsize = 10)
+plt.figtext(.2, .2, "Ibias = 1 nA, AmpBias = .5 mA", fontsize = 10)
+plt.figtext(.2, .25, "column = 2, row = 1", fontsize = 10)
 plt.xlabel("Time [mSec]")
 plt.ylabel("Voltage [V]")
 plt.legend()

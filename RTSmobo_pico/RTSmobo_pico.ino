@@ -48,12 +48,21 @@ void loop()
   if (Serial.available()) {
     command = Serial.readString().toInt();
     Serial.println(command);
-
-    while (command == 3) {                  // hold amp characterization command for column select
-      colSelect = Serial.readString().toInt();
-      if (colSelect > 0) {
+  if (command ==4) {
+    while (command == 4) {                  // hold amp characterization command for column select
+      rowSelect = Serial.readString().toInt();
+      if (rowSelect > 0) {
         break;
       }
+    }
+    }
+      if (command ==3) {
+    while (command == 3) {                  // hold amp characterization command for column select
+      colSelect = Serial.readString().toInt();
+      if (rowSelect > 0) {
+        break;
+      }
+    }
     }
   }
 
@@ -135,7 +144,60 @@ void loop()
         colSelect = 0; // colSelect + 1;
         break;
       }
-      case 4: {                               // Clock, Shift Register Characterization
+
+      case 4: {                               // Current Source Characterization
+        digitalWrite(Csin, LOW);             // close NMOS amp bypass
+        Serial.println(rowSelect);          // tell CPU what row was selected
+        digitalWrite(LED, LOW);
+        if (debug == true) {
+          Serial.println("H V");
+        }          
+        digitalWrite(resetBIN, LOW);        // Flush the SR
+        waitFor(1);
+        digitalWrite(resetBIN, HIGH);
+        waitFor(1);
+        for (int j = 257; j >= 1; j--) {      // for loop for the number of columns
+          if (colSelect == j) {             // check if j = desired column i.e. 0000...0100
+            horSR = 1;                      // if it does set SDA_ to high
+          } else {
+            horSR = 0;                      // if not set it to low (most cases)
+          }
+          if (rowSelect == j) {
+            verSR = 1;                      // same as above for vertical SR
+          } else {
+            verSR = 0;
+          }
+
+
+          waitFor(1);
+          digitalWrite(DHin, horSR);       // set SDA_A pin to horSR value
+          digitalWrite(Din, verSR);       // set SDA_B pin to verSR value
+          waitFor(1);
+          digitalWrite(HCLKin, HIGH);           // set the SR clock Low
+          digitalWrite(LED, HIGH);
+          waitFor(1);
+          digitalWrite(HCLKin, LOW);           // set the SR clock Low
+          digitalWrite(LED, LOW);
+          waitFor(1);
+          digitalWrite(DHin, LOW);       // set SDA_A pin to horSR value
+          digitalWrite(Din, LOW);          
+
+          if (debug == true) {
+            Serial.print(horSR );
+            Serial.print(' ');
+            Serial.println(verSR);
+          }
+        }
+        flashLED();
+        command = 0;
+        int commandTX = 1;
+        Serial.println(commandTX);
+        commandTX = 0; 
+        // colSelect = 2; // colSelect + 1;
+        break;
+      }
+      
+      case 5: {                               // Clock, Shift Register Characterization
         digitalWrite(Csin, LOW);             // close NMOS amp bypass
         digitalWrite(LED, LOW);
         Serial.println(colSelect);            // tell CPU what column was selected
@@ -191,7 +253,7 @@ void loop()
         break;
       }
 
-      case 5: {
+      case 6: {
         digitalWrite(Csin, HIGH);
         digitalWrite(resetBIN, LOW);
         break;

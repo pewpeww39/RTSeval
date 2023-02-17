@@ -1770,8 +1770,8 @@ class Keithley2600(Keithley2600Base):
                 smu.nvbuffer2.clearcache()
                 smu.nvbuffer2.appendmode = 1
             smu1.nvbuffer2.collecttimestamps = 0
-            smu1.sense = smu1.SENSE_REMOTE
-            smu2.sense = smu2.SENSE_LOCAL
+            # smu1.sense = smu1.SENSE_LOCAL
+            # smu2.sense = smu2.SENSE_LOCAL
 
             self.trigger.blender[1].orenable = True  # triggers when either stimuli are true (True = or statement)
             self.trigger.blender[1].stimulus[1] = smu1.trigger.MEASURE_COMPLETE_EVENT_ID
@@ -1781,7 +1781,7 @@ class Keithley2600(Keithley2600Base):
             smu1.trigger.source.action = smu1.ENABLE
             smu1.trigger.source.stimulus = self.trigger.EVENT_ID
             smu1.trigger.measure.action = smu1.ASYNC                                # enable Asynchronous measurements
-            smu1.trigger.measure.iv(smu1.nvbuffer1, smu1.nvbuffer2)                 # measure current and voltage on trigger, store in buffer of smu
+            smu1.trigger.measure.i(smu1.nvbuffer1)                                  # measure current and voltage on trigger, store in buffer of smu
             smu2.trigger.source.action = smu2.DISABLE                               # disable channel b source
             smu2.trigger.measure.action = smu2.ASYNC                                # enable smu
             smu2.trigger.measure.v(smu2.nvbuffer2)                                  # measure current and voltage on trigger, store in buffer of smu
@@ -1825,8 +1825,8 @@ class Keithley2600(Keithley2600Base):
                 self.trigger.wait(.001)
                 # self.display.trigger.clear()
             print('reading buffers')
-            i_smu1 = self.read_buffer(smu1.nvbuffer1)
-            v_smu1 = self.read_buffer(smu1.nvbuffer2)
+            # i_smu1 = self.read_buffer(smu1.nvbuffer1)
+            # v_smu1 = self.read_buffer(smu1.nvbuffer2)
             v_smu2 = self.read_buffer(smu2.nvbuffer2)
             # sVal = []
             # for i in range(len(v_smu1)):
@@ -1839,4 +1839,4 @@ class Keithley2600(Keithley2600Base):
                 smu.nvbuffer1.clearcache()
                 smu.nvbuffer2.clearcache()
             print('returning data')
-            return v_smu1, i_smu1, v_smu2
+            return v_smu2

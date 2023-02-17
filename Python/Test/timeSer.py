@@ -8,6 +8,7 @@ from datetime import datetime
 from os import system, name
 import serial
 import matplotlib.pyplot as plt
+import re
 
 dt_string = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p")
 picLoc = "C:\\Users\\jacob\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\rtsData\\rtsData"
@@ -22,32 +23,64 @@ def clearSMU():
     smu.smua.reset()
     smu.smub.reset()
 
+
 aData = pd.DataFrame(data=[], index=[], columns=[]) 
 bData = pd.DataFrame(data=[], index=[], columns=[])
-rtsData = pd.DataFrame(data=[], index=[], columns=[])  
+rtsData = pd.DataFrame(data=[], index=[], columns=[]) 
+specData = pd.DataFrame(pd.read_csv('~\miniconda3\envs\\testequ\RTSeval\Files\RTS_Array_Cells.csv',
+                     index_col=[0] , header=0), columns = ['W', 'L', 'Type']) 
 smu = Keithley2600('TCPIP0::192.168.4.11::INSTR')               #set ip addr for smu
 pico = serial.Serial('COM9', baudrate=115200)
+clearSMU()
+rowSelect = 1
+rowNum = 10
+rowS = "Row 1"
+for c in range(rowNum):
+    commandTX = write_cmd(str(4))                                                   # increments the column to test
+    commandRX1 = pico.read_until().strip().decode()
+    time.sleep(.5)
+    print('pico confirmed: ' + str(commandRX1))
+    column = write_cmd(str(rowSelect))
+    rowRX = pico.read_until().strip().decode()
+    print('pico selected row: ' + str(rowRX))
+    commandRX = int(pico.read_until().strip().decode())
+    if commandRX == 1:
+        vOut = smu.sourceA_measAB(smu.smua, smu.smub, pow(10, -9), 60, .001, .0001)
+# aData['V1'] = v1
+# aData['currIn'] = i1
+    bData["Row 1"] = vOut
+    rtsData = pd.concat([rtsData, bData], axis = 1)
+    plt.plot(vOut, label = "Vs")
+    plt.title("RTS Data: Column 1")
+    plt.figtext(.2, .15, "Vg = 1.2 V, Vdd = 1.2 V", fontsize = 10)
+    plt.figtext(.2, .2, "Ibias = 1 nA, AmpBias = .5 mA", fontsize = 10)
+    plt.figtext(.2, .25, "column = 1, row = " + str(rowNum), fontsize = 10)
+    plt.xlabel("Time [mSec]")
+    plt.ylabel("Voltage [V]")
+    plt.legend()
+    plt.savefig(picLoc + " " + str(rowS) + "TS.png")
+    fig1 = plt.show(block = False)
+    plt.pause(3)
+    plt.close(fig1)
+    plt.hist(vOut, label = "Vs")
+    plt.title("RTS Data: Column 1")
+    plt.figtext(.2, .15, "Vg = 1.2 V, Vdd = 1.2 V", fontsize = 10)
+    plt.figtext(.2, .2, "Ibias = 1 nA, AmpBias = .5 mA", fontsize = 10)
+    plt.figtext(.2, .25, "column = 1, row = " + str(rowNum), fontsize = 10)
+    plt.xlabel("Time [mSec]")
+    plt.ylabel("Voltage [V]")
+    plt.legend()
+    plt.savefig(picLoc + " " + str(rowS) + "Hist.png")
+    fig1 = plt.show(block = False)
+    plt.pause(3)
+    plt.close(fig1)
 
-commandTX = write_cmd(str(4))                                                   # selects the switch case on the pico
-commandRX = pico.read_until().strip().decode()                                  # confirms mode selected
-time.sleep(.5)
-print('pico confirmed: ' + str(commandRX))
-v1, i1, v2 = smu.sourceA_measAB(smu.smua, smu.smub, pow(10, -9), 60, .001, .0001)
-aData['V1'] = v1
-aData['currIn'] = i1
-bData['v2'] = v2
-rtsData = pd.concat(aData, bData)
-rtsData.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/idvsCharacterization/testcharData' + dt_string + '.csv')
-plt.plot(v2, label = "Vs")
-plt.yscale('log')
-plt.title("RTS: Vg = 1.2 V, Vdd = 1.2 V, Ibias = 1 nA, AmpBias = .5 mA, column = 2, row = 1")
-plt.xlabel("Time [mSec]")
-plt.ylabel("Voltage [V]")
-plt.legend()
-plt.savefig(picLoc + "col2_row1.png")
-fig1 = plt.show(block = False)
-plt.pause(3)
-plt.close(fig1)
+    rowSelect = rowSelect + 1
+    rowS = re.sub(r'[0-9]+$',
+             lambda x: f"{str(int(x.group())+1).zfill(len(x.group()))}",    # increments the number in the column name
+             rowS)
+
+rtsData.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/rtsData/rtsData' + dt_string + '.csv')
 # smu._write(value='smua.source.output = smua.OUTPUT_OFF')
 # smu._write(value='smub.source.output = smub.OUTPUT_OFF')
 # smu.eventlog.clear()
