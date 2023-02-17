@@ -33,7 +33,7 @@ smu = Keithley2600('TCPIP0::192.168.4.11::INSTR')               #set ip addr for
 pico = serial.Serial('COM9', baudrate=115200)
 clearSMU()
 rowSelect = 1
-rowNum = 10
+rowNum = 3
 rowS = "Row 1"
 for c in range(rowNum):
     commandTX = write_cmd(str(4))                                                   # increments the column to test
@@ -45,7 +45,7 @@ for c in range(rowNum):
     print('pico selected row: ' + str(rowRX))
     commandRX = int(pico.read_until().strip().decode())
     if commandRX == 1:
-        vOut = smu.sourceA_measAB(smu.smua, smu.smub, pow(10, -9), 60, .001, .0001)
+        vOut = smu.sourceA_measAB(smu.smua, smu.smub, pow(10, -9), 600, .01, .001)
 # aData['V1'] = v1
 # aData['currIn'] = i1
     bData["Row 1"] = vOut
@@ -58,7 +58,7 @@ for c in range(rowNum):
     plt.xlabel("Time [mSec]")
     plt.ylabel("Voltage [V]")
     plt.legend()
-    plt.savefig(picLoc + " " + str(rowS) + "TS.png")
+    plt.savefig(picLoc + " " + str(rowS) + dt_string + "TS.png")
     fig1 = plt.show(block = False)
     plt.pause(3)
     plt.close(fig1)
@@ -70,7 +70,7 @@ for c in range(rowNum):
     plt.xlabel("Time [mSec]")
     plt.ylabel("Voltage [V]")
     plt.legend()
-    plt.savefig(picLoc + " " + str(rowS) + "Hist.png")
+    plt.savefig(picLoc + " " + str(rowS) + dt_string + "Hist.png")
     fig1 = plt.show(block = False)
     plt.pause(3)
     plt.close(fig1)
