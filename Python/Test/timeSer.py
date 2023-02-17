@@ -45,7 +45,7 @@ for c in range(rowNum):
     print('pico selected row: ' + str(rowRX))
     commandRX = int(pico.read_until().strip().decode())
     if commandRX == 1:
-        vOut = smu.sourceA_measAB(smu.smua, smu.smub, pow(10, -9), 600, .01, .001)
+        vOut = smu.sourceA_measAB(smu.smua, smu.smub, pow(10, -9), 60, .0005, .001)
 # aData['V1'] = v1
 # aData['currIn'] = i1
     bData["Row 1"] = vOut
