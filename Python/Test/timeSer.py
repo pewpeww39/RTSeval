@@ -34,38 +34,28 @@ def logScale():
     decadeList = np.append(decadeList, decade8) * pow(10, -12)
     # print(len(decadeList))
     return decadeList
-csData = pd.DataFrame(data=[], index=[], columns=[]) 
+aData = pd.DataFrame(data=[], index=[], columns=[]) 
+bData = pd.DataFrame(data=[], index=[], columns=[])
+rtsData = pd.DataFrame(data=[], index=[], columns=[])  
 smu = Keithley2600('TCPIP0::192.168.4.11::INSTR')               #set ip addr for smu
 pico = serial.Serial('COM9', baudrate=115200)
 smu.errorqueue.clear()
 smu.eventlog.clear()
 smu.smua.reset()
 vlist = logScale() 
-# print(pow(10, -12))
-# print(vlist)
-# v2 = smu.ten_Vsweep(smu.smua)
-# v, i = smu.Time10_Vsweep(smu.smua, 100, 0.0002, .0002)
-# v1, i1, v2 = smu.idvgsChar(smu.smua, smu.smub, vlist, 0.01, .001)
 commandTX = write_cmd(str(4))                                                   # selects the switch case on the pico
 commandRX = pico.read_until().strip().decode()                                  # confirms mode selected
 time.sleep(.5)
 print('pico confirmed: ' + str(commandRX))
-v1, i1, timestamp, v2 = smu.asnyc_measAB(smu.smua, smu.smub, pow(10, -9), 60, .001, .0001)
-# v1, i1, v2, i2 = smu.holdA_measAB(smu.smua, smu.smub, 10, .01, .001)
-# for i in range(len(v2)):
-#     v2[i] = 1.2 - v2[i]
-# time.sleep(1)
-print(v2)
-# print(v1)
-# print(timestamp)
-# smu.errorqueue.count()
-
-# csData['Time'] = timestamp
-csData['V1'] = v1
-csData['currIn'] = i1
-# csData['v2'] = v2
-print(csData)
-csData.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/idvsCharacterization/testcharData' + dt_string + '.csv')
+v1 = [1,2,3]
+v2 = [3,4,5,4]
+i1 = [2,3,4,5,6]
+# v1, i1, v2 = smu.sourceA_measAB(smu.smua, smu.smub, pow(10, -9), 60, .001, .0001)
+aData['V1'] = v1
+aData['currIn'] = i1
+bData['v2'] = v2
+rtsData = pd.concat(aData, bData)
+rtsData.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/idvsCharacterization/testcharData' + dt_string + '.csv')
 plt.plot(v2, label = "Vs")
 plt.yscale('log')
 plt.title("RTS: Vg = 1.2 V, Vdd = 1.2 V, Ibias = 1 nA, AmpBias = .5 mA, column = 2, row = 1")
