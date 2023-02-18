@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 import re
 
 dt_string = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p")
-picLoc = "C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\rtsData\\rtsData"
+picLoc = "C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\rtsData\\loopData\\rtsData"
 
 def write_cmd(x):
     pico.write(bytes(x, 'utf-8'))
@@ -37,7 +37,7 @@ def plotrts(fileLoc, row, rtsData):
     plt.xlabel("Time [mSec]")
     plt.ylabel("Voltage [V]")
     plt.legend()
-    plt.savefig(fileLoc + " " + str(rowS) + " "+ dt_string + " TS.png")
+    plt.savefig(fileLoc + " " + str(rowS) + " " + dt_string + " TS.png")
     fig1 = plt.show(block = False)
     # plt.pause(5)
     plt.close(fig1)
@@ -49,7 +49,7 @@ def plotrts(fileLoc, row, rtsData):
     plt.xlabel("Time [mSec]")
     plt.ylabel("Voltage [V]")
     plt.legend()
-    plt.savefig(fileLoc + " " + str(rowS) + dt_string + " " + " Hist.png")
+    plt.savefig(fileLoc + " " + str(rowS) + dt_string + " Hist.png")
     fig2 = plt.show(block = False)
     # plt.pause(5)
     plt.close(fig2)
@@ -78,7 +78,7 @@ for c in range(rowNum):
     print('pico selected row: ' + str(rowRX))
     commandRX = int(pico.read_until().strip().decode())
     if commandRX == 1:
-        for i in range(2):
+        for i in range(5000):
             vOut[rowS] = smu.sourceA_measAB(smu.smua, smu.smub, pow(10, -9), 60, .0005, .00005)
 # aData['V1'] = v1
 # aData['currIn'] = i1
