@@ -25,7 +25,8 @@ def vGS(vg, vs):
 #                      index_col=[0] , header=0), columns = ['Col001Vs', 'Col001Id', 'Col002Vs', 'Col002Id'])
 # print(specData)
 # C:\Users\jpew\miniconda3\envs\testequ\RTSeval\Python\Data\csCharacterization\cscharData2023_02_10-01_39_20_PM.csv
-fileLoc ="~\miniconda3\envs\\testequ\RTSeval\Python\Data\csCharacterization\cscharData2023_02_10-01_39_20_PM.csv"
+# fileLoc ="~\miniconda3\envs\\testequ\RTSeval\Python\Data\csCharacterization\cscharData2023_02_10-01_39_20_PM.csv"
+fileLoc ="~\miniconda3\envs\\testequ\RTSeval\Python\Data\\rtsData\\rtsLoopData.csv"
 #specData = inport(fileLoc, 0, 0, ['Col001Vs','Col001Id'])
 # spec = vGS(1.2, specData.columns[0])
 def plotgm(file, colI, colV):
@@ -50,6 +51,34 @@ def plotgm(file, colI, colV):
     plt.title('1/gm')
     plt.show(block = False)
     plt.pause(5)
+
+def plotrts(file, row):
+    rtsData = inport(fileLoc, 0, 0, ['Row 1'])
+    print(rtsData)
+    plt.plot(rtsData['Row 1'], label='Vs')
+    plt.title("RTS Data: Column 1")
+    plt.figtext(.2, .15, "Vg = 1.2 V, Vdd = 1.2 V", fontsize = 10)
+    plt.figtext(.2, .2, "Ibias = 1 nA, AmpBias = .5 mA", fontsize = 10)
+    plt.figtext(.2, .25, "column = 1, row = " , fontsize = 10)
+    plt.xlabel("Time [mSec]")
+    plt.ylabel("Voltage [V]")
+    plt.legend()
+    # plt.savefig(picLoc + " " + str(rowS) + " "+ dt_string + " TS.png")
+    fig1 = plt.show(block = False)
+    plt.pause(5)
+    plt.close(fig1)
+    plt.hist(rtsData['Row 1'], label = "Vs")
+    plt.title("RTS Data: Column 1")
+    plt.figtext(.2, .15, "Vg = 1.2 V, Vdd = 1.2 V", fontsize = 10)
+    plt.figtext(.2, .2, "Ibias = 1 nA, AmpBias = .5 mA", fontsize = 10)
+    plt.figtext(.2, .25, "column = 1, row = " , fontsize = 10)
+    plt.xlabel("Time [mSec]")
+    plt.ylabel("Voltage [V]")
+    plt.legend()
+    # plt.savefig(picLoc + " " + str(rowS) + dt_string + " " + " Hist.png")
+    fig1 = plt.show(block = False)
+    plt.pause(5)
+    plt.close(fig1)
     # plt.close('all')
 # plotgm(fileLoc, 1, 0)
 
@@ -83,7 +112,8 @@ def logScale(start, stop, power):
 #         "Col003": 50,
 #     },
 # )
-plotgm(fileLoc,0, 1)
+# plotgm(fileLoc,0, 1)
+plotrts(fileLoc, 0)
 # df_3d = xarray_3d.to_dataframe()
 
 # df_3d.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Test/Data/tesData.csv')
