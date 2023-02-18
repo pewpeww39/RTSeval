@@ -29,8 +29,8 @@ def vGS(vg, vs):
 # print(specData)
 # C:\Users\jpew\miniconda3\envs\testequ\RTSeval\Python\Data\csCharacterization\cscharData2023_02_10-01_39_20_PM.csv
 # fileLoc ="~\miniconda3\envs\\testequ\RTSeval\Python\Data\csCharacterization\cscharData2023_02_10-01_39_20_PM.csv"
-fileLoc ="~\miniconda3\envs\\testequ\RTSeval\Python\Data\\rtsData\\rtsLoopData.csv"
-picLoc ="C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\rtsData\\rtsTS "
+fileLoc ="~\miniconda3\envs\\testequ\RTSeval\Python\Data\\rtsData\\rtsLoopData - Copy2-18 clip.csv"
+picLoc ="C:\\Users\\jpew\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\rtsData\\rtsTS "
 #specData = inport(fileLoc, 0, 0, ['Col001Vs','Col001Id'])
 # spec = vGS(1.2, specData.columns[0])
 def plotgm(file, colI, colV):
@@ -57,14 +57,14 @@ def plotgm(file, colI, colV):
     plt.pause(5)
 
 def plotrts(file, row):
-    rtsData = inport(fileLoc, 0, 0, ['Row 1'])
+    rtsData = inport(fileLoc, 0, 0, ['Row 1', 'Time'])
     print(rtsData)
-    plt.plot(rtsData['Row 1'], label='Vs')
+    plt.plot(rtsData["Time"], rtsData['Row 1'], label='Vs')
     plt.title("RTS Data: Column 1")
     plt.figtext(.2, .15, "Vg = 1.2 V, Vdd = 1.2 V", fontsize = 10)
     plt.figtext(.2, .2, "Ibias = 1 nA, AmpBias = .5 mA", fontsize = 10)
     plt.figtext(.2, .25, "column = 1, row = " , fontsize = 10)
-    plt.xlabel("Time [mSec]")
+    plt.xlabel("Time [Sec]")
     plt.ylabel("Voltage [V]")
     plt.legend()
     plt.savefig(picLoc + dt_string + ".png")
@@ -76,8 +76,8 @@ def plotrts(file, row):
     plt.figtext(.2, .15, "Vg = 1.2 V, Vdd = 1.2 V", fontsize = 10)
     plt.figtext(.2, .2, "Ibias = 1 nA, AmpBias = .5 mA", fontsize = 10)
     plt.figtext(.2, .25, "column = 1, row = " , fontsize = 10)
-    plt.xlabel("Time [mSec]")
-    plt.ylabel("Voltage [V]")
+    plt.ylabel("Time [Sec]")
+    plt.xlabel("Voltage [V]")
     plt.legend()
     # plt.savefig(picLoc + " " + str(rowS) + dt_string + " " + " Hist.png")
     fig1 = plt.show(block = False)
