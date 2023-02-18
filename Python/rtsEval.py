@@ -82,7 +82,7 @@ for c in range(rowNum):
             vOut[rowS] = smu.sourceA_measAB(smu.smua, smu.smub, pow(10, -9), 60, .0005, .00005)
 # aData['V1'] = v1
 # aData['currIn'] = i1
-            bData = bData.reindex(vOut.index)
+            bData = bData.resize(len(vOut.index), 2)
             bData[rowS] = vOut
             rtsData = pd.concat([rtsData, bData], axis = 0, ignore_index=True)
             rtsData.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/rtsData/rtsLoopData ' + dt_string + '.csv')
