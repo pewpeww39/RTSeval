@@ -28,9 +28,7 @@ def inport(file, idex, head, col):
                             columns = col)
     return df
 
-def plotrts(fileLoc, row):
-    rtsData = inport(fileLoc, 0, 0, ['Row 1'])
-    print(rtsData)
+def plotrts(fileLoc, row, rtsData):
     plt.plot(rtsData['Row 1'], label='Vs')
     plt.title("RTS Data: Column 1")
     plt.figtext(.2, .15, "Vg = 1.2 V, Vdd = 1.2 V", fontsize = 10)
@@ -39,9 +37,9 @@ def plotrts(fileLoc, row):
     plt.xlabel("Time [mSec]")
     plt.ylabel("Voltage [V]")
     plt.legend()
-    plt.savefig(picLoc + " " + str(rowS) + " "+ dt_string + " TS.png")
+    plt.savefig(fileLoc + " " + str(rowS) + " "+ dt_string + " TS.png")
     fig1 = plt.show(block = False)
-    plt.pause(5)
+    # plt.pause(5)
     plt.close(fig1)
     plt.hist(rtsData['Row 1'], label = "Vs")
     plt.title("RTS Data: Column 1")
@@ -51,13 +49,13 @@ def plotrts(fileLoc, row):
     plt.xlabel("Time [mSec]")
     plt.ylabel("Voltage [V]")
     plt.legend()
-    plt.savefig(picLoc + " " + str(rowS) + dt_string + " " + " Hist.png")
-    fig1 = plt.show(block = False)
-    plt.pause(5)
-    plt.close(fig1)
+    plt.savefig(fileLoc + " " + str(rowS) + dt_string + " " + " Hist.png")
+    fig2 = plt.show(block = False)
+    # plt.pause(5)
+    plt.close(fig2)
 
 
-aData = pd.DataFrame(data=[], index=[], columns=[]) 
+vOut = pd.DataFrame(data=[], index=[], columns=[]) 
 bData = pd.DataFrame(data=[], index=[], columns=[])
 rtsData = pd.DataFrame(data=[], index=[], columns=[]) 
 specData = pd.DataFrame(pd.read_csv('~\miniconda3\envs\\testequ\RTSeval\Files\RTS_Array_Cells.csv',
@@ -80,14 +78,16 @@ for c in range(rowNum):
     print('pico selected row: ' + str(rowRX))
     commandRX = int(pico.read_until().strip().decode())
     if commandRX == 1:
-        for i in range(5000):
-            vOut = smu.sourceA_measAB(smu.smua, smu.smub, pow(10, -9), 60, .001, .001)
+        for i in range(2):
+            vOut[rowS] = smu.sourceA_measAB(smu.smua, smu.smub, pow(10, -9), 60, .0005, .00005)
 # aData['V1'] = v1
 # aData['currIn'] = i1
+            bData = bData.reindex(vOut.index)
             bData[rowS] = vOut
             rtsData = pd.concat([rtsData, bData], axis = 0, ignore_index=True)
-            rtsData.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/rtsData/rtsLoopData.csv')
-            bData = bData.drop(rowS, axis=1)
+            rtsData.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/rtsData/rtsLoopData ' + dt_string + '.csv')
+            plotrts(picLoc, 0, bData)
+            
     # rtsData = pd.concat([rtsData, bData], axis = 1)
     plt.plot(rtsData, label = "Vs")
     plt.title("RTS Data: Column 1")

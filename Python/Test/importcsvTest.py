@@ -2,6 +2,9 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import xarray as xr
+from datetime import datetime
+
+dt_string = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p")
 
 ### imports csv file, head = 0 for files with headers in col 0
 def inport(file, idex, head, col):
@@ -27,6 +30,7 @@ def vGS(vg, vs):
 # C:\Users\jpew\miniconda3\envs\testequ\RTSeval\Python\Data\csCharacterization\cscharData2023_02_10-01_39_20_PM.csv
 # fileLoc ="~\miniconda3\envs\\testequ\RTSeval\Python\Data\csCharacterization\cscharData2023_02_10-01_39_20_PM.csv"
 fileLoc ="~\miniconda3\envs\\testequ\RTSeval\Python\Data\\rtsData\\rtsLoopData.csv"
+picLoc ="C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\rtsData\\rtsTS "
 #specData = inport(fileLoc, 0, 0, ['Col001Vs','Col001Id'])
 # spec = vGS(1.2, specData.columns[0])
 def plotgm(file, colI, colV):
@@ -63,7 +67,7 @@ def plotrts(file, row):
     plt.xlabel("Time [mSec]")
     plt.ylabel("Voltage [V]")
     plt.legend()
-    # plt.savefig(picLoc + " " + str(rowS) + " "+ dt_string + " TS.png")
+    plt.savefig(picLoc + dt_string + ".png")
     fig1 = plt.show(block = False)
     plt.pause(5)
     plt.close(fig1)
