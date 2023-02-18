@@ -1807,7 +1807,7 @@ class Keithley2600(Keithley2600Base):
 
                 smu.trigger.endpulse.action = smu.SOURCE_HOLD                      # pulse action
                 smu.trigger.endpulse.stimulus = self.trigger.timer[2].EVENT_ID      # initiate pulse
-                smu.trigger.endsweep.action = smu.SOURCE_IDLE                       # turn off source after sweep 
+                smu.trigger.endsweep.action = smu.SOURCE_HOLD                       # turn off source after sweep 
 
             smu1.source.output = smu1.OUTPUT_ON                                     # turn on smu
             smu2.source.output = smu2.OUTPUT_ON
