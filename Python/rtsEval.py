@@ -1,4 +1,4 @@
-from driverTest import Keithley2600
+from Test.driverTest import Keithley2600
 #from keithley2600 import Keithley2600
 import numpy as np
 import math
@@ -33,7 +33,7 @@ smu = Keithley2600('TCPIP0::192.168.4.11::INSTR')               #set ip addr for
 pico = serial.Serial('COM4', baudrate=115200)
 clearSMU()
 rowSelect = 1
-rowNum = 3
+rowNum = 1
 rowS = "Row 1"
 for c in range(rowNum):
     commandTX = write_cmd(str(4))                                                   # increments the column to test
@@ -45,12 +45,16 @@ for c in range(rowNum):
     print('pico selected row: ' + str(rowRX))
     commandRX = int(pico.read_until().strip().decode())
     if commandRX == 1:
-        vOut = smu.sourceA_measAB(smu.smua, smu.smub, pow(10, -9), 1, .0005, .001)
+        for i in range(5000):
+            vOut = smu.sourceA_measAB(smu.smua, smu.smub, pow(10, -9), 60, .001, .001)
 # aData['V1'] = v1
 # aData['currIn'] = i1
-    bData[rowS] = vOut
-    rtsData = pd.concat([rtsData, bData], axis = 1)
-    plt.plot(vOut, label = "Vs")
+            bData[rowS] = vOut
+            rtsData = pd.concat([rtsData, bData], axis = 0, ignore_index=True)
+            rtsData.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/rtsData/rtsLoopData.csv')
+            bData = bData.drop(rowS, axis=1)
+    # rtsData = pd.concat([rtsData, bData], axis = 1)
+    plt.plot(rtsData, label = "Vs")
     plt.title("RTS Data: Column 1")
     plt.figtext(.2, .15, "Vg = 1.2 V, Vdd = 1.2 V", fontsize = 10)
     plt.figtext(.2, .2, "Ibias = 1 nA, AmpBias = .5 mA", fontsize = 10)
@@ -62,7 +66,7 @@ for c in range(rowNum):
     fig1 = plt.show(block = False)
     plt.pause(3)
     plt.close(fig1)
-    plt.hist(vOut, label = "Vs")
+    plt.hist(rtsData, label = "Vs")
     plt.title("RTS Data: Column 1")
     plt.figtext(.2, .15, "Vg = 1.2 V, Vdd = 1.2 V", fontsize = 10)
     plt.figtext(.2, .2, "Ibias = 1 nA, AmpBias = .5 mA", fontsize = 10)
@@ -74,11 +78,11 @@ for c in range(rowNum):
     fig1 = plt.show(block = False)
     plt.pause(3)
     plt.close(fig1)
-    bData = bData.drop(rowS, axis=1)
-    rowSelect = rowSelect + 1
-    rowS = re.sub(r'[0-9]+$',
-             lambda x: f"{str(int(x.group())+1).zfill(len(x.group()))}",    # increments the number in the column name
-             rowS)
+    # bData = bData.drop(rowS, axis=1)
+    # rowSelect = rowSelect + 1
+    # rowS = re.sub(r'[0-9]+$',
+    #          lambda x: f"{str(int(x.group())+1).zfill(len(x.group()))}",    # increments the number in the column name
+    #          rowS)
 
 rtsData.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/rtsData/rtsData' + dt_string + '.csv')
 # smu._write(value='smua.source.output = smua.OUTPUT_OFF')
