@@ -23,12 +23,47 @@ def clearSMU():
     smu.smua.reset()
     smu.smub.reset()
 
+def inport(file, idex, head, col):
+    df = pd.DataFrame(pd.read_csv(file, index_col=[idex] , header=head), 
+                            columns = col)
+    return df
+
+def plotrts(fileLoc, row):
+    rtsData = inport(fileLoc, 0, 0, ['Row 1'])
+    print(rtsData)
+    plt.plot(rtsData['Row 1'], label='Vs')
+    plt.title("RTS Data: Column 1")
+    plt.figtext(.2, .15, "Vg = 1.2 V, Vdd = 1.2 V", fontsize = 10)
+    plt.figtext(.2, .2, "Ibias = 1 nA, AmpBias = .5 mA", fontsize = 10)
+    plt.figtext(.2, .25, "column = 1, row = " , fontsize = 10)
+    plt.xlabel("Time [mSec]")
+    plt.ylabel("Voltage [V]")
+    plt.legend()
+    plt.savefig(picLoc + " " + str(rowS) + " "+ dt_string + " TS.png")
+    fig1 = plt.show(block = False)
+    plt.pause(5)
+    plt.close(fig1)
+    plt.hist(rtsData['Row 1'], label = "Vs")
+    plt.title("RTS Data: Column 1")
+    plt.figtext(.2, .15, "Vg = 1.2 V, Vdd = 1.2 V", fontsize = 10)
+    plt.figtext(.2, .2, "Ibias = 1 nA, AmpBias = .5 mA", fontsize = 10)
+    plt.figtext(.2, .25, "column = 1, row = " , fontsize = 10)
+    plt.xlabel("Time [mSec]")
+    plt.ylabel("Voltage [V]")
+    plt.legend()
+    plt.savefig(picLoc + " " + str(rowS) + dt_string + " " + " Hist.png")
+    fig1 = plt.show(block = False)
+    plt.pause(5)
+    plt.close(fig1)
+
 
 aData = pd.DataFrame(data=[], index=[], columns=[]) 
 bData = pd.DataFrame(data=[], index=[], columns=[])
 rtsData = pd.DataFrame(data=[], index=[], columns=[]) 
 specData = pd.DataFrame(pd.read_csv('~\miniconda3\envs\\testequ\RTSeval\Files\RTS_Array_Cells.csv',
                      index_col=[0] , header=0), columns = ['W', 'L', 'Type']) 
+fileLoc ="~\miniconda3\envs\\testequ\RTSeval\Python\Data\\rtsData\\rtsLoopData.csv"
+
 smu = Keithley2600('TCPIP0::192.168.4.11::INSTR')               #set ip addr for smu
 pico = serial.Serial('COM4', baudrate=115200)
 clearSMU()
