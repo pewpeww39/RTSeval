@@ -23,8 +23,8 @@
 #define LED             25  // Pico LED
 
 int command = 0;
-int colSelect = 2;
-int rowSelect = 1;
+int colSelect = 1;
+int rowSelect = 2;
 int horSR = 0;
 int verSR = 0;
 int holdRow = 0;
@@ -48,21 +48,29 @@ void loop()
   if (Serial.available()) {
     command = Serial.readString().toInt();
     Serial.println(command);
-  if (command == 4) {
-    while (command == 4) {                  // hold amp characterization command for column select
-      rowSelect = Serial.readString().toInt();
-      if (rowSelect > 0) {
+    if (command == 4) {
+      while (command == 4) {                  // hold amp characterization command for column select
+        rowSelect = Serial.readString().toInt();
+        if (rowSelect > 0) {
+          Serial.println(rowSelect);          // tell CPU what col was selected
+          while (command == 4) {
+            colSelect = Serial.readString().toInt();
+            if (colSelect > 0) {
+              Serial.println(colSelect);          // tell CPU what col was selected
+              break;
+            }
+          }
+        }
         break;
       }
     }
-    }
-      if (command == 3) {
-    while (command == 3) {                  // hold amp characterization command for column select
-      colSelect = Serial.readString().toInt();
-      if (rowSelect > 0) {
-        break;
+    if (command == 3) {
+      while (command == 3) {                  // hold amp characterization command for column select
+        colSelect = Serial.readString().toInt();
+        if (rowSelect > 0) {
+          break;
+        }
       }
-    }
     }
   }
 
@@ -99,7 +107,7 @@ void loop()
         digitalWrite(LED, LOW);
         if (debug == true) {
           Serial.println("H V");
-        }          
+        }
         digitalWrite(resetBIN, LOW);        // Flush the SR
         waitFor(1);
         digitalWrite(resetBIN, HIGH);
@@ -128,7 +136,7 @@ void loop()
           digitalWrite(LED, LOW);
           waitFor(1);
           digitalWrite(DHin, LOW);       // set SDA_A pin to horSR value
-          digitalWrite(Din, LOW);          
+          digitalWrite(Din, LOW);
 
           if (debug == true) {
             Serial.print(horSR );
@@ -140,18 +148,17 @@ void loop()
         command = 0;
         int commandTX = 1;
         Serial.println(commandTX);
-        commandTX = 0; 
+        commandTX = 0;
         colSelect = 0; // colSelect + 1;
         break;
       }
 
-      case 4: {                               // Current Source Characterization
+    case 4: {                               // Current Source Characterization
         digitalWrite(Csin, LOW);             // close NMOS amp bypass
-        Serial.println(rowSelect);          // tell CPU what row was selected
         digitalWrite(LED, LOW);
         if (debug == true) {
           Serial.println("H V");
-        }          
+        }
         digitalWrite(resetBIN, LOW);        // Flush the SR
         waitFor(1);
         digitalWrite(resetBIN, HIGH);
@@ -168,7 +175,6 @@ void loop()
             verSR = 0;
           }
 
-
           waitFor(1);
           digitalWrite(DHin, horSR);       // set SDA_A pin to horSR value
           digitalWrite(Din, verSR);       // set SDA_B pin to verSR value
@@ -180,7 +186,7 @@ void loop()
           digitalWrite(LED, LOW);
           waitFor(1);
           digitalWrite(DHin, LOW);       // set SDA_A pin to horSR value
-          digitalWrite(Din, LOW);          
+          digitalWrite(Din, LOW);
 
           if (debug == true) {
             Serial.print(horSR );
@@ -189,15 +195,16 @@ void loop()
           }
         }
         flashLED();
-        command = 0;
         int commandTX = 1;
         Serial.println(commandTX);
-        commandTX = 0; 
-        // colSelect = 2; // colSelect + 1;
+        commandTX = 0;
+        command = 0;
+        colSelect = 0; // colSelect + 1;
+        rowSelect = 0;
         break;
       }
-      
-      case 5: {                               // Clock, Shift Register Characterization
+
+    case 5: {                               // Clock, Shift Register Characterization
         digitalWrite(Csin, LOW);             // close NMOS amp bypass
         digitalWrite(LED, LOW);
         Serial.println(colSelect);            // tell CPU what column was selected
@@ -207,14 +214,14 @@ void loop()
         digitalWrite(resetBIN, LOW);        // Flush the SR
         waitFor(1);
         digitalWrite(resetBIN, HIGH);
-        
+
         waitFor(1);
 
-        
+
         for (int j = 257; j >= 1; j--) {     // for loop for the number of columns
           if (colSelect == j) {             // check if j = desired column i.e. 0000...0100
             horSR = HIGH;                      // if it does set SDA_ to high
-           // colSelect = colSelect - 1;
+            // colSelect = colSelect - 1;
           } else {
             horSR = LOW;                      // if not set it to low (most cases)
           }
@@ -234,10 +241,10 @@ void loop()
           digitalWrite(LED, LOW);
           waitFor(1);
           digitalWrite(DHin, LOW);       // set SDA_A pin to horSR value
-          digitalWrite(Din, LOW);          
+          digitalWrite(Din, LOW);
 
 
-          
+
           if (debug == true) {
             Serial.print(horSR );
             Serial.print(' ');
@@ -253,7 +260,7 @@ void loop()
         break;
       }
 
-      case 6: {
+    case 6: {
         digitalWrite(Csin, HIGH);
         digitalWrite(resetBIN, LOW);
         break;

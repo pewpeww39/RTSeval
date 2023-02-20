@@ -85,7 +85,7 @@ for c in range(rowNum):
             rtsData = pd.concat([rtsData, bData], axis = 0, ignore_index=True)
             rtsData.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/rtsData/rtsLoopData.csv')
             plotrts(picLoc, 0, rtsData)
-            bData = bData.drop(bData.index) #(len(vOut), 2)
+            bData = bData.drop(bData.index) 
             bData[rowS] = []
             
     # rtsData = pd.concat([rtsData, bData], axis = 1)
