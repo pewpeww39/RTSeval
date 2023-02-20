@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import xarray as xr
 from datetime import datetime
+from scipy.fft import fft, fftfreq
 
 dt_string = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p")
 
@@ -29,7 +30,7 @@ def vGS(vg, vs):
 # print(specData)
 # C:\Users\jpew\miniconda3\envs\testequ\RTSeval\Python\Data\csCharacterization\cscharData2023_02_10-01_39_20_PM.csv
 # fileLoc ="~\miniconda3\envs\\testequ\RTSeval\Python\Data\csCharacterization\cscharData2023_02_10-01_39_20_PM.csv"
-fileLoc ="~\miniconda3\envs\\testequ\RTSeval\Python\Data\\rtsData\\rtsLoopData - Copy2-18 clip.csv"
+fileLoc ="~\miniconda3\envs\\testequ\RTSeval\Python\Data\\rtsData\\rtsLoopData(1).csv"
 picLoc ="C:\\Users\\jpew\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\rtsData\\rtsTS "
 #specData = inport(fileLoc, 0, 0, ['Col001Vs','Col001Id'])
 # spec = vGS(1.2, specData.columns[0])
@@ -57,14 +58,14 @@ def plotgm(file, colI, colV):
     plt.pause(5)
 
 def plotrts(file, row):
-    rtsData = inport(fileLoc, 0, 0, ['Row 1', 'Time'])
+    rtsData = inport(fileLoc, 0, 0, ['Row 1'])
     print(rtsData)
-    plt.plot(rtsData["Time"], rtsData['Row 1'], label='Vs')
+    plt.plot(rtsData['Row 1'], label='Vs')
     plt.title("RTS Data: Column 1")
     plt.figtext(.2, .15, "Vg = 1.2 V, Vdd = 1.2 V", fontsize = 10)
     plt.figtext(.2, .2, "Ibias = 1 nA, AmpBias = .5 mA", fontsize = 10)
     plt.figtext(.2, .25, "column = 1, row = " , fontsize = 10)
-    plt.xlabel("Time [Sec]")
+    plt.xlabel("Time [mSec]")
     plt.ylabel("Voltage [V]")
     plt.legend()
     plt.savefig(picLoc + dt_string + ".png")
@@ -100,6 +101,16 @@ def logScale(start, stop, power):
         power = power - 1
     return decade
 
+def fourT (fileLoc):
+    rtsData = inport(fileLoc, 0, 0, ['Row 1'])
+    print(rtsData)
+    N = 5000 * 3900
+    y = fft(rtsData)
+    x = fftfreq(N, 1/5000)
+
+    return x, y
+
+
 # def xarraytoDF(specData):
 # data = specData/
 # datax= specData['Col001Vs']
@@ -117,7 +128,10 @@ def logScale(start, stop, power):
 #     },
 # )
 # plotgm(fileLoc,0, 1)
-plotrts(fileLoc, 0)
+# plotrts(fileLoc, 0)
+x, y = fourT(fileLoc)
+print(y)
+plt.plot(x, np.abs(y))
 # df_3d = xarray_3d.to_dataframe()
 
 # df_3d.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Test/Data/tesData.csv')
