@@ -48,7 +48,7 @@ void loop()
   if (Serial.available()) {
     command = Serial.readString().toInt();
     Serial.println(command);
-  if (command ==4) {
+  if (command == 4) {
     while (command == 4) {                  // hold amp characterization command for column select
       rowSelect = Serial.readString().toInt();
       if (rowSelect > 0) {
@@ -56,7 +56,7 @@ void loop()
       }
     }
     }
-      if (command ==3) {
+      if (command == 3) {
     while (command == 3) {                  // hold amp characterization command for column select
       colSelect = Serial.readString().toInt();
       if (rowSelect > 0) {
