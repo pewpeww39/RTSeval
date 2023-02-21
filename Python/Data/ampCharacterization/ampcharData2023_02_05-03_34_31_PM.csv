@@ -1,11 +1,3 @@
-,"(<built-in function all>, <built-in function all>)"
-Drain voltage,Drain voltage
-Source current (Vg = 8.0),Source current (Vg = 8.0)
-Drain current (Vg = 8.0),Drain current (Vg = 8.0)
-Gate current (Vg = 8.0),Gate current (Vg = 8.0)
-Source current (Vg = 9.0),Source current (Vg = 9.0)
-Drain current (Vg = 9.0),Drain current (Vg = 9.0)
-Gate current (Vg = 9.0),Gate current (Vg = 9.0)
-Source current (Vg = 10.0),Source current (Vg = 10.0)
-Drain current (Vg = 10.0),Drain current (Vg = 10.0)
-Gate current (Vg = 10.0),Gate current (Vg = 10.0)
+version https://git-lfs.github.com/spec/v1
+oid sha256:b9716ce51a02ed25dbe56c437cb8b6b406fa3e4862cff8bfd4deb0fda629d777
+size 549

@@ -5,8 +5,9 @@ import time
 import re
 import pandas as pd
 import matplotlib.pyplot as plt
-from keithley2600 import Keithley2600
-from BKPrecision import lib1785b as bk
+# from keithley2600 import Keithley2600
+from keithleyDriver import Keithley2600
+# from BKPrecision import lib1785b as bk
 from datetime import datetime
 import numpy as np
 
@@ -36,7 +37,7 @@ def logScale():
     decadeList = np.append(decadeList, decade5)
     decadeList = np.append(decadeList, decade6)
     decadeList = np.append(decadeList, decade7)
-    decadeList = np.append(decadeList, decade8)
+    decadeList = np.append(decadeList, decade8) * pow(10, -12)
     print(len(decadeList))
     return decadeList
     
@@ -88,8 +89,8 @@ for c in range(colNum):
     spec = list(specData.iloc[c+1])
     if commandRX == 1:
         for a in range(len(decadeList)):
-            currIn = np.append(currIn, decadeList[a] * .000000000001)
-            smu.apply_current(smu.smua, decadeList[a] * .000000000001)
+            currIn = np.append(currIn, decadeList[a])
+            smu.apply_current(smu.smua, decadeList[a])
             measVI = np.append(measVI, smu.smua.measure.v())
             measVs = np.append(measVs, float(smu.smub.measure.v()))
             vGS = 1.2 - measVs
