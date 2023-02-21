@@ -127,11 +127,11 @@ for r in range(rowNum):
                 print(len(measVs))
                 print(vGS)
             plt.plot(vGS, pltData[colS+"Id"], label = "Vs")
-            plt.figtext(.6, .15, "Vg = 1.2 V, Vdd = 1.2 V", fontsize = 10)
-            plt.figtext(.6, .2, "Ibias = 1 nA, AmpBias = .5 mA", fontsize = 10)
-            plt.figtext(.6, .25, "column = " + str(colS) + ", row = " + str(rowS), fontsize = 10)
+            plt.figtext(.4, .15, "Vg = 1.2 V, Vdd = 1.2 V", fontsize = 10)
+            plt.figtext(.4, .2, "Ibias = 20 uA to .1 nA, AmpBias = .5 mA", fontsize = 10)
+            plt.figtext(.4, .25, "column = " + str(colS) + ", row = " + str(rowS), fontsize = 10)
             plt.yscale('log')
-            plt.title(colS + '' + str(spec) +" Id vs Vgs")
+            plt.title(rowS + '' + colS + '' + str(spec) +" Id vs Vgs")
             plt.xlabel("Vgs [V]")
             plt.ylabel("Id [A]")
             plt.legend()
@@ -139,7 +139,7 @@ for r in range(rowNum):
             fig1 = plt.show(block = False)
             # plt.pause(3)
             plt.close(fig1)
-            pltData.plot(x=colS+"Id", y=colS+"Vs", xlabel="Current [A]", ylabel="Voltage [V]", sharey=True, title=(colS + '' + 
+            pltData.plot(x=colS+"Id", y=colS+"Vs", xlabel="Current [A]", ylabel="Voltage [V]", sharey=True, title=(rowS + '' + colS + '' + 
                             str(spec) + " Current In [Id] vs. Voltage Out [Vs]"), legend=True,
                         subplots=False, logx= True)
             plt.figtext(.2, .15, "Vg = 1.2 V, Vdd = 1.2 V", fontsize = 10)
