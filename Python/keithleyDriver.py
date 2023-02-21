@@ -1470,6 +1470,8 @@ class Keithley2600(Keithley2600Base):
                 self.delete_lua_attr("python_driver_list")
             else:
                 smu1.trigger.source.listi(ilist)
+            
+            smu2.trigger.source.listi({0})
 
 
             
@@ -1481,33 +1483,39 @@ class Keithley2600(Keithley2600Base):
                 smu.nvbuffer1.clearcache()
                 smu.nvbuffer2.clearcache()
                 smu.source.limitv = 3.3
-                smu.measure.rangev = 4
+                smu.measure.rangev = 3.3
                 smu.source.func = smu.OUTPUT_DCAMPS
-                smu.measure.autozero = smu.AUTOZERO_OFF
                 self.set_integration_time(smu, t_int)
                 smu.measure.delay = smu.DELAY_OFF
                 smu.nvbuffer1.appendmode = 1
                 smu.nvbuffer2.appendmode = 1
-            smu1.source.autorangev = smu1.AUTORANGE_ON
+            smu1.source.autorangev = smu1.AUTORANGE_OFF
             smu2.source.autorangev = smu2.AUTORANGE_OFF
+            smu1.measure.autozero = smu1.AUTOZERO_AUTO
+            smu2.measure.autozero = smu2.AUTOZERO_AUTO
             # smu1.nvbuffer1.collectsourcevalues = 1
 
             self.trigger.blender[1].orenable = True
             self.trigger.blender[1].stimulus[1] = self.trigger.EVENT_ID            #when moved from arm to trigger layer
             self.trigger.blender[1].stimulus[2] = smu1.trigger.PULSE_COMPLETE_EVENT_ID   # when pulse is complete
 
+            self.trigger.blender[3].orenable = True
+            self.trigger.blender[3].stimulus[1] = self.trigger.EVENT_ID            #when moved from arm to trigger layer
+            self.trigger.blender[3].stimulus[2] = smu2.trigger.PULSE_COMPLETE_EVENT_ID   # when pulse is complete
+
             self.trigger.blender[2].orenable = False
             self.trigger.blender[2].stimulus[1] = smu1.trigger.MEASURE_COMPLETE_EVENT_ID            #when moved from arm to trigger layer
             self.trigger.blender[2].stimulus[2] = smu2.trigger.MEASURE_COMPLETE_EVENT_ID   # when pulse is complete
 
             smu1.trigger.source.action = smu1.ENABLE
-            smu2.trigger.source.action = smu2.DISABLE
+            smu2.trigger.source.action = smu2.ENABLE
             smu1.trigger.source.stimulus = self.trigger.blender[1].EVENT_ID
+            smu2.trigger.source.stimulus = self.trigger.blender[3].EVENT_ID
             smu1.trigger.measure.action = smu1.ENABLE
             smu1.trigger.measure.stimulus = smu1.trigger.SOURCE_COMPLETE_EVENT_ID
             smu1.trigger.measure.iv(smu1.nvbuffer1, smu1.nvbuffer2)
 
-            smu2.trigger.measure.action = smu2.ASYNC
+            smu2.trigger.measure.action = smu2.ENABLE
             smu2.trigger.measure.stimulus = smu1.trigger.SOURCE_COMPLETE_EVENT_ID
             smu2.trigger.measure.v(smu2.nvbuffer2)
 

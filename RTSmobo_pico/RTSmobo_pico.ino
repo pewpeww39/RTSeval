@@ -23,8 +23,8 @@
 #define LED             25  // Pico LED
 
 int command = 0;
-int colSelect = 1;
-int rowSelect = 2;
+int colSelect = 0;
+int rowSelect = 0;
 int horSR = 0;
 int verSR = 0;
 int holdRow = 0;
@@ -61,13 +61,15 @@ void loop()
             }
           }
         }
+       if (colSelect > 0 & rowSelect > 0){
         break;
+       }
       }
     }
     if (command == 3) {
       while (command == 3) {                  // hold amp characterization command for column select
         colSelect = Serial.readString().toInt();
-        if (rowSelect > 0) {
+        if (colSelect > 0) {
           break;
         }
       }

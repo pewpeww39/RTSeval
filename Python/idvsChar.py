@@ -16,7 +16,7 @@ dt_string = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p")
 pico = serial.Serial('COM4', baudrate=115200)
 smu = Keithley2600('TCPIP0::192.168.4.11::INSTR')               #set ip addr for smu
 smu._write(value='smua.source.autorangei = smua.AUTORANGE_ON')  #set auto range for smua 
-smu._write(value='smub.source.autorangev = smub.AUTORANGE_ON')  #set auto range for smua 
+smu._write(value='smub.source.autorangev = smub.AUTORANGE_OFF')  #set auto range for smua 
 smu.set_integration_time(smu.smua, 0.001)                       # sets integration time in sec
 smu._write(value= 'smua.source.limitv = 3.3')                   #set v liimit smua
 smu._write(value= "smub.source.limitv = 3.3")                   #set v liimit smub
@@ -37,22 +37,22 @@ def logScale():
     #     power = power - 1
     # return decade
 
+    # decade1 = range(1,10, 1)
+    # decade2 = range(10,100, 10)
     decade1 = range(1,10, 1)
     decade2 = range(10,100, 10)
-    decade3 = range(100,1000, 100)
+    decade3 = range(100,1000, 100)    
     decade4 = range(1000,10000, 1000)
-    decade5 = range(10000,100000, 10000)    
-    decade6 = range(100000,1000000, 100000)
-    decade7 = range(1000000,11000000, 1000000)
-    # decade8 = range(10000000,60000000, 10000000)
+    decade5 = range(10000,100000, 10000)
+    decade6 = range(100000,300000, 100000)
     decadeList = np.append(decade1, decade2)
     decadeList = np.append(decadeList, decade3)
     decadeList = np.append(decadeList, decade4)
-    decadeList = np.append(decadeList, decade5)
-    decadeList = np.append(decadeList, decade6)
-    decadeList = np.append(decadeList, decade7) * pow(10, -12)
+    decadeList = np.append(decadeList, decade5) 
+    decadeList = np.append(decadeList, decade6) * pow(10, -10)
+    # decadeList = np.append(decadeList, decade7) * pow(10, -11)
     # decadeList = np.append(decadeList, decade8) * pow(10, -12)
-    # print(len(decadeList))
+    # print((decadeList))
     return decadeList
     
 def clear ():
@@ -111,26 +111,25 @@ for r in range(rowNum):
         print('pico loaded shift register')
         spec = list(specData.iloc[c+1])
         if commandRX == 1:
-            smu.smb.measure.autozero = smub.AUTOZERO_ONCE
+            # smu._write(value = "smub.measure.autozero = smub.AUTOZERO_AUTO")
+            # smu.smub.measure.v()
             currIn, measVI, measVs = smu.idvgsChar(smu.smua, smu.smub, decadeList, .1, .1)
+            # print(measVs)
+            pltData["Row"] = rowSelect
+            pltData[colS+"Vs"] = measVs
             vGS = measVs 
             for i in range(len(measVs)):
                 vGS[i] = 1.2 - vGS[i]
-            pltData["Row"] = rowSelect
+            # print(vGS)
             pltData[colS+"Vgs"] = vGS # [1.2 - measVs for i in range(len(measVs))]
             pltData[colS+"Id"] = currIn
-            pltData[colS+"Vs"] = measVs
-            # csData[colS+'Vs'] = pd.concat([csData[colS+'Vs'], measVs], axis = 0, ignore_index=True)
-            # csData[colS+'Id'] =  pd.concat([csData[colS+'Id'], currIn], axis = 0, ignore_index=True)
-            # csData[colS+'Vi'] =  pd.concat([csData[colS+'Vi'], measVI], axis = 0, ignore_index=True)
-            # csData[colS+'Row'] =  pd.concat([csData[colS+'Row'], rowSelect], axis = 0, ignore_index=True)
             if debug is True:
                 print(len(measVs))
                 print(vGS)
             plt.plot(vGS, pltData[colS+"Id"], label = "Vs")
-            plt.figtext(.8, .15, "Vg = 1.2 V, Vdd = 1.2 V", fontsize = 10)
-            plt.figtext(.8, .2, "Ibias = 1 nA, AmpBias = .5 mA", fontsize = 10)
-            plt.figtext(.8, .25, "column = " + str(colS) + ", row = " + str(rowS), fontsize = 10)
+            plt.figtext(.6, .15, "Vg = 1.2 V, Vdd = 1.2 V", fontsize = 10)
+            plt.figtext(.6, .2, "Ibias = 1 nA, AmpBias = .5 mA", fontsize = 10)
+            plt.figtext(.6, .25, "column = " + str(colS) + ", row = " + str(rowS), fontsize = 10)
             plt.yscale('log')
             plt.title(colS + '' + str(spec) +" Id vs Vgs")
             plt.xlabel("Vgs [V]")
@@ -161,10 +160,14 @@ for r in range(rowNum):
             power = 9
             commandRX=0
             colSelect = colSelect + 1
-    colS = "Col000"   
+    colS = "Col000"
+    rowS = re.sub(r'[0-9]+$',
+                lambda x: f"{str(int(x.group())+1).zfill(len(x.group()))}",    # increments the number in the column name
+                rowS)   
     colSelect = 1
     rowSelect = rowSelect + 1    
     csData = pd.concat([csData, pltData], axis = 0, ignore_index=False)
+    csData.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/idvsCharacterization/idvscharDataBAK.csv')
     
 csData.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/idvsCharacterization/idvscharData' + dt_string + '.csv')
 print(csData)
