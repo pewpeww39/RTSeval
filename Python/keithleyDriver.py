@@ -1669,7 +1669,7 @@ class Keithley2600(Keithley2600Base):
             timestamp = []
             for smu in [smu1, smu2]:
                 smu.source.func = smu1.OUTPUT_DCAMPS
-                smu.source.rangei = pow(10, -9)
+                smu.source.rangei = pow(10, -6)
                 self.set_integration_time(smu, t_int)
                 self.set_integration_time(smu, t_int)
                 smu.measure.delay = smu.DELAY_OFF
