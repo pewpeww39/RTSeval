@@ -94,7 +94,7 @@ for c in range(rowNum):
                 smu._write(value = "smub.measure.autozero = smub.AUTOZERO_AUTO")
                 smu.smub.measure.v()
                 time.sleep(.5)
-                vOut = smu.sourceA_measAB(smu.smua, smu.smub, 0.000000005, 30, .001, .001)
+                vOut = smu.sourceA_measAB(smu.smua, smu.smub, 0.000000005, 20, .001, .0005)
                 bData[rowS] = vOut
                 rtsData = pd.concat([rtsData, bData], axis = 0, ignore_index=True)
                 rtsData.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/rtsData/rtsLoopData.csv')

@@ -59,8 +59,8 @@ def plotgm(file, colI, colV):
 
 def plotrts(file, row):
     rtsData = inport(fileLoc, 0, 0, ['Row 1'])
-    rtsData = rtsData.drop(range(0,5000))
-    rtsData = rtsData.drop(range(5100,29077))
+    rtsData = rtsData.drop(range(0,4000))
+    rtsData = rtsData.drop(range(5100,20001))
     # print(rtsData)
     plt.plot(rtsData['Row 1'], label='Vs')
     plt.title("RTS Data: Column 1")
