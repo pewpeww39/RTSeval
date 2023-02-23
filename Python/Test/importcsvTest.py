@@ -30,7 +30,7 @@ def vGS(vg, vs):
 # print(specData)
 # C:\Users\jpew\miniconda3\envs\testequ\RTSeval\Python\Data\csCharacterization\cscharData2023_02_10-01_39_20_PM.csv
 # fileLoc ="~\miniconda3\envs\\testequ\RTSeval\Python\Data\csCharacterization\cscharData2023_02_10-01_39_20_PM.csv"
-fileLoc ="~\miniconda3\envs\\testequ\RTSeval\Python\Data\\rtsData\\rtsLoopData(500nA.2).csv"
+fileLoc ="~\miniconda3\envs\\testequ\RTSeval\Python\Data\\rtsData\\rtsLoopData.csv"
 picLoc ="C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\rtsData\\rtsTS "
 #specData = inport(fileLoc, 0, 0, ['Col001Vs','Col001Id'])
 # spec = vGS(1.2, specData.columns[0])
@@ -60,8 +60,8 @@ def plotgm(file, colI, colV):
 def plotrts(file, row):
     rtsData = inport(fileLoc, 0, 0, ['Row 1'])
     rtsData = rtsData.drop(range(0,5000))
-    rtsData = rtsData.drop(range(12500,60001))
-    print(rtsData)
+    rtsData = rtsData.drop(range(5100,29077))
+    # print(rtsData)
     plt.plot(rtsData['Row 1'], label='Vs')
     plt.title("RTS Data: Column 1")
     plt.figtext(.2, .15, "Vg = 1.2 V, Vdd = 1.2 V", fontsize = 10)
