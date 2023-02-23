@@ -18,16 +18,11 @@ def delta(yVal, xVal):
     delt = np.gradient(yVal, xVal)
     return delt, dy, dx
 
-def vGS(vg, vs):
-    vgs = (vg) - (vs)
-    return vgs
-
-
 def plotgm(file, colI, colV):
     specData = inport(fileLoc, 0, 0, ['Col000Vgs','Col000Id'])
     
     current = specData.iloc[0:46, 1]
-    voltage = specData.iloc[0:46, 0] #vGS(1.2, specData.iloc[:,0])
+    voltage = specData.iloc[0:46, 0] 
     print(current)
     delt, dy, dx = delta(current, voltage)
     gm = dy/dx
@@ -39,11 +34,12 @@ def plotgm(file, colI, colV):
     fig = plt.show(block = False)
     plt.pause(5)
     plt.close(fig)
-    plt.plot(delt, voltage)
+    plt.plot(voltage, delt, label="gm")
     # plt.plot(gm)
+    # plt.yscale('log')
     plt.title('transconductance')
-    plt.show(block = False)
-    plt.pause(5)
+    plt.show()
+    # plt.pause(5)
     # plt.close('all')
     # plt.plot(1/gm)
     # plt.title('1/gm')
