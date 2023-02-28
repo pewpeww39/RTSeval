@@ -57,6 +57,7 @@ def plotrts(fileLoc, row, rtsData):
 
 vOut = pd.DataFrame(data=[], index=[], columns=[]) 
 bData = pd.DataFrame(data=[], index=[], columns=[])
+RTSData = pd.DataFrame(data=[], index=[], columns=[])
 rtsData = pd.DataFrame(data=[], index=[], columns=[]) 
 specData = pd.DataFrame(pd.read_csv('~\miniconda3\envs\\testequ\RTSeval\Files\RTS_Array_Cells.csv',
                      index_col=[0] , header=0), columns = ['W', 'L', 'Type']) 
@@ -69,7 +70,7 @@ clearSMU()
 rowSelect = 1
 colSelect = 1
 rowNum = 1
-colNum = 1
+colNum = 32
 rowS = "Row 1"
 colS = "Col 1"
 for c in range(rowNum):
@@ -96,7 +97,7 @@ for c in range(rowNum):
                 time.sleep(.5)
                 vOut = smu.sourceA_measAB(smu.smua, smu.smub, 0.000000005, 20, .001, .0005)
                 bData[rowS] = vOut
-                rtsData = pd.concat([rtsData, bData], axis = 0, ignore_index=True)
+                rtsData = pd.concat([rtsData, bData], axis = 1, ignore_index=True)
                 rtsData.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/rtsData/rtsLoopData.csv')
                 # plotrts(picLoc, 0, rtsData)
                 bData = bData.drop(bData.index) 
@@ -129,6 +130,10 @@ for c in range(rowNum):
         fig1 = plt.show(block = False)
         plt.pause(3)
         plt.close(fig1)
+        colS = re.sub(r'[0-9]+$',
+                 lambda x: f"{str(int(x.group())+1).zfill(len(x.group()))}",    # increments the number in the column name
+                 colS)
+        
     # bData = bData.drop(rowS, axis=1)
     # rowSelect = rowSelect + 1
     # rowS = re.sub(r'[0-9]+$',

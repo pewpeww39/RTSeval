@@ -69,32 +69,34 @@ measVs = []
 measVI = []
 vGS = []
 spec = []
-csData = pd.DataFrame(data=[], index=[], columns=[])  
-pltData = pd.DataFrame(data=[], index=[], columns=[])         #create dataframe
+idvgsData = pd.DataFrame(data=[], index=[], columns=[])  
+pltData = pd.DataFrame(data=[], index=[], columns=['Site', 'Type'])         #create dataframe
 specData = pd.DataFrame(pd.read_csv('~\miniconda3\envs\\testequ\RTSeval\Files\RTS_Array_Cells.csv',
-                     index_col=[0] , header=0), columns = ['W', 'L', 'Type'])
+                     index_col=[0] , header=0), columns = ['W/L', 'Type'])
 debug = False
 row = 0
 counter = 0
 voltIn = 0
 currOut = 0
 commandTX = 0
-colSelect = 1
+colSelect = 32
 rowSelect = 1
 power = 9
 rowNum = 96
-colNum = 32      #int(input('How many colums do you want to test?'))
+colNum = 65      #int(input('How many colums do you want to test?'))
+dieX = '4D'
+dieY = '6'
 
 smu.apply_current(smu.smua, 0.0)
 smu.apply_current(smu.smub, 0.0)
-colS = "Col000"   
+colS = "Col032"   
 rowS = "Row00"
-picLoc = "C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\idvsCharacterization\\idvscharData"
+picLoc = "C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\idvgsCharacterization\\Bank 2\\idvscharData"
 time.sleep(1)
 decadeList = logScale()
 # print(decadeList)
 for r in range(rowNum):
-    for c in range(colNum):
+    for c in range(32, colNum):
         commandTX = write_cmd(str(4))                                                   # selects the switch case on the pico
         commandRX = pico.read_until().strip().decode()                                  # confirms mode selected
         time.sleep(.5)
@@ -113,20 +115,27 @@ for r in range(rowNum):
         if commandRX == 1:
             # smu._write(value = "smub.measure.autozero = smub.AUTOZERO_AUTO")
             # smu.smub.measure.v()
-            currIn, measVI, measVs = smu.idvgsChar(smu.smua, smu.smub, decadeList, .1, .1)
+            currIn, measVI, measVs = smu.idvgsChar(smu.smua, smu.smub, decadeList, .1, .01)
             # print(measVs)
-            pltData["Row"] = rowSelect
-            pltData[colS+"Vs"] = measVs
+            # pltData.iloc[0:len(currIn), 2] = spec[1]
+            pltData["Vs"] = measVs
+            pltData['Site'] = 'UTC'
+            pltData['Type'] = spec[1]
             vGS = measVs 
             for i in range(len(measVs)):
                 vGS[i] = 1.2 - vGS[i]
             # print(vGS)
-            pltData[colS+"Vgs"] = vGS # [1.2 - measVs for i in range(len(measVs))]
-            pltData[colS+"Id"] = currIn
+            pltData["Vgs"] = vGS # [1.2 - measVs for i in range(len(measVs))]
+            pltData["Id"] = currIn
+            pltData["W/L"] = spec[0]
+            pltData["Gm"] = np.gradient(currIn, vGS)
+            pltData["Row"] = rowSelect
+            pltData['Column'] = colSelect
+            print(pltData)
             if debug is True:
                 print(len(measVs))
                 print(vGS)
-            plt.plot(vGS, pltData[colS+"Id"], label = "Vs")
+            plt.plot(vGS, pltData["Id"], label = "Vs")
             plt.figtext(.4, .15, "Vg = 1.2 V, Vdd = 1.2 V", fontsize = 10)
             plt.figtext(.4, .2, "Ibias = 20 uA to .1 nA, AmpBias = .5 mA", fontsize = 10)
             plt.figtext(.4, .25, "column = " + str(colS) + ", row = " + str(rowS), fontsize = 10)
@@ -135,20 +144,30 @@ for r in range(rowNum):
             plt.xlabel("Vgs [V]")
             plt.ylabel("Id [A]")
             plt.legend()
-            plt.savefig(picLoc + rowS + colS + str(spec) + "idvg.png")
+            plt.savefig(picLoc + rowS + colS + "idvgs1.png")
             fig1 = plt.show(block = False)
             # plt.pause(3)
             plt.close(fig1)
-            pltData.plot(x=colS+"Id", y=colS+"Vs", xlabel="Current [A]", ylabel="Voltage [V]", sharey=True, title=(rowS + '' + colS + '' + 
+            pltData.plot(x="Id", y="Vs", xlabel="Ids [A]", ylabel="Vs [V]", sharey=True, title=(rowS + '' + colS + '' + 
                             str(spec) + " Current In [Id] vs. Voltage Out [Vs]"), legend=True,
                         subplots=False, logx= True)
             plt.figtext(.2, .15, "Vg = 1.2 V, Vdd = 1.2 V", fontsize = 10)
             plt.figtext(.2, .2, "Ibias = 1 nA, AmpBias = .5 mA", fontsize = 10)
             plt.figtext(.2, .25, "column = " + str(colS) + ", row = " + str(rowS), fontsize = 10)
-            plt.savefig(picLoc + rowS + colS + str(spec) + "idvs.png")
+            plt.savefig(picLoc + rowS + colS + "idvs1.png")
             fig2 = plt.show(block = False)
             # plt.pause(3)
             plt.close(fig2)
+            pltData.plot(x="Vgs", y="Gm", xlabel="Vgs [V]", ylabel="Gm ", sharey=True, title=(rowS + '' + colS + '' + 
+                            str(spec) + " Transconductance vs. Vgs [V]"), legend=True,
+                        subplots=False, logx= True)
+            plt.figtext(.2, .15, "Vg = 1.2 V, Vdd = 1.2 V", fontsize = 10)
+            # plt.figtext(.2, .2, "Ibias = 1 nA, AmpBias = .5 mA", fontsize = 10)
+            plt.figtext(.2, .2, "column = " + str(colS) + ", row = " + str(rowS), fontsize = 10)
+            plt.savefig(picLoc + rowS + colS + "gm1.png")
+            fig3 = plt.show(block = False)
+            # plt.pause(3)
+            plt.close(fig3)
             colS = re.sub(r'[0-9]+$',
                 lambda x: f"{str(int(x.group())+1).zfill(len(x.group()))}",    # increments the number in the column name
                 colS)
@@ -160,16 +179,17 @@ for r in range(rowNum):
             power = 9
             commandRX=0
             colSelect = colSelect + 1
+        idvgsData = pd.concat([idvgsData, pltData], axis = 0, ignore_index=True)
     colS = "Col000"
     rowS = re.sub(r'[0-9]+$',
                 lambda x: f"{str(int(x.group())+1).zfill(len(x.group()))}",    # increments the number in the column name
                 rowS)   
     colSelect = 1
     rowSelect = rowSelect + 1    
-    csData = pd.concat([csData, pltData], axis = 0, ignore_index=False)
-    csData.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/idvsCharacterization/idvscharDataBAK.csv')
+    # csData = pd.concat([csData, pltData], axis = 0, ignore_index=False)
+    idvgsData.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/idvgsCharacterization/Bank 2/idvgscharDataBAK.csv')
     
-csData.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/idvsCharacterization/idvscharData' + dt_string + '.csv')
-print(csData)
+idvgsData.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/idvgsCharacterization/Bank 2/idvscharData' + dt_string + '.csv')
+print(idvgsData)
 smu._write(value='smua.source.output = smua.OUTPUT_OFF')
 smu._write(value='smub.source.output = smub.OUTPUT_OFF')
