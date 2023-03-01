@@ -111,7 +111,7 @@ for r in range(rowNum):
         time.sleep(.5)
         commandRX = int(pico.read_until().strip().decode())                             # confirms shift registers are loaded
         print('pico loaded shift register')
-        spec = list(specData.iloc[c+1])
+        spec = list(specData.iloc[c])
         if commandRX == 1:
             # smu._write(value = "smub.measure.autozero = smub.AUTOZERO_AUTO")
             # smu.smub.measure.v()

@@ -901,10 +901,10 @@ class Keithley2600(Keithley2600Base):
                     self.create_lua_attr("python_driver_list", [])
                     for num in smu_sweeplist:
                         self.table.insert(self.python_driver_list, num)
-                    smu.trigger.source.listi(self.python_driver_list)
+                    smu.trigger.source.listv(self.python_driver_list)
                     self.delete_lua_attr("python_driver_list")
                 else:
-                    smu.trigger.source.listi(smu_sweeplist)
+                    smu.trigger.source.listv(smu_sweeplist)
 
                 smu.trigger.source.action = smu.ENABLE
 
@@ -920,7 +920,7 @@ class Keithley2600(Keithley2600Base):
 
                 # smu.trigger.source.limiti = 0.1
 
-                smu.source.func = smu.OUTPUT_DCAMPS
+                smu.source.func = smu.OUTPUT_DCVOLTS
 
                 # 2-wire measurement (use SENSE_REMOTE for 4-wire)
                 # smu.sense = smu.SENSE_LOCAL
