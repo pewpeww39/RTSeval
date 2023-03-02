@@ -17,7 +17,7 @@ pico = serial.Serial('COM5', baudrate=115200)
 smu = Keithley2600('TCPIP0::192.168.4.11::INSTR')               #set ip addr for smu
 smu._write(value='smua.source.autorangei = smua.AUTORANGE_ON')  #set auto range for smua 
 smu._write(value='smub.source.autorangev = smub.AUTORANGE_OFF')  #set auto range for smua 
-smu.set_integration_time(smu.smua, 0.001)                       # sets integration time in sec
+# smu.set_integration_time(smu.smua, 0.001)                       # sets integration time in sec
 smu._write(value= 'smua.source.limitv = 3.3')                   #set v liimit smua
 smu._write(value= "smub.source.limitv = 3.3")                   #set v liimit smub
 # bkPS = serial.Serial('com6',9600)                               #set com port for BK power supply
@@ -182,7 +182,7 @@ for r in range(rowNum):
         idvgsData = pd.concat([idvgsData, pltData], axis = 0, ignore_index=True)
     colS = "Col000"
     rowS = re.sub(r'[0-9]+$',
-                lambda x: f"{str(int(x.group())+1).zfill(len(x.group()))}",    # increments the number in the column name
+                lambda x: f"{str(int(x.group())+1).zfill(len(x.group()))}",    # increments the number in the row name
                 rowS)   
     colSelect = 1
     rowSelect = rowSelect + 1    
