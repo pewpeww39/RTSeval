@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import xarray as xr
 from datetime import datetime
 from scipy.fft import fft, fftfreq
+import time
 
 dt_string = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p")
 
@@ -31,7 +32,7 @@ def vGS(vg, vs):
 # C:\Users\jpew\miniconda3\envs\testequ\RTSeval\Python\Data\csCharacterization\cscharData2023_02_10-01_39_20_PM.csv
 # fileLoc ="~\miniconda3\envs\\testequ\RTSeval\Python\Data\csCharacterization\cscharData2023_02_10-01_39_20_PM.csv"
 fileLoc ="~\miniconda3\envs\\testequ\RTSeval\Python\Data\\rtsData\\rtsLoopData.csv"
-picLoc ="C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\rtsData\\rtsTS "
+# picLoc ="C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\rtsData\\rtsTS "
 #specData = inport(fileLoc, 0, 0, ['Col001Vs','Col001Id'])
 # spec = vGS(1.2, specData.columns[0])
 def plotgm(file, colI, colV):
@@ -130,7 +131,7 @@ def fourT (fileLoc):
 #     },
 # )
 # plotgm(fileLoc,0, 1)
-plotrts(fileLoc, 0)
+# plotrts(fileLoc, 0)
 # x, y = fourT(fileLoc)
 # print(y)
 # plt.plot(x, np.abs(y))
@@ -141,3 +142,40 @@ plotrts(fileLoc, 0)
 # for v in range(len(specData)):
 #     spec = list(specData.iloc[v])
 #     print(str(spec))
+start = 0
+stop = 0
+incsv = "C:\\Users\\jacob\\Downloads\\idvgscharDataBAK1.csv"
+specData = pd.DataFrame(pd.read_csv('~\miniconda3\envs\\testequ\RTSeval\Files\RTS_Array_Cells.csv',
+                     index_col=[0] , header=0), columns = ['W/L', 'Type']) 
+data = pd.DataFrame(pd.read_csv(incsv, header=0))
+# print(data)
+typecounter = 0
+counter = 0
+counterb = 0
+print(specData.iloc[typecounter, 0])
+print(specData.iloc[1, 0])
+print(specData)
+for r in range(0,len(data)):
+# for r in range(2000):
+    # for i in range(0+start, 32+stop):
+    data.iat[r,6] = specData.iat[typecounter, 0]
+    data.iat[r,2] = specData.iat[typecounter, 1]
+    counterb = counterb + 1
+    counter = counter + 1
+    # print(data.iat[typecounter, 5])
+    if counterb >= 50:
+        # print(typecounter)
+        # print(specData.iat[typecounter, 0])
+        print(data.iat[r,2] + ' ' + data.iat[r, 6] + " " + str(typecounter))
+        typecounter = typecounter + 1
+        counterb = 1
+    if counter > 1599:
+        typecounter = 0
+        counter = 0
+        counterb = 1
+
+
+    # print(r)
+
+# print(data)
+data.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/rtsData/rtsDataidvgsMod.csv')

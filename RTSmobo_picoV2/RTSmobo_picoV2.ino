@@ -220,32 +220,27 @@ void loop()
       }
 
     case 5: {                               // Clock, Shift Register Characterization
-        digitalWrite(Csin, LOW);             // close NMOS amp bypass
+        digitalWrite(Csin, HIGH);             // close NMOS amp bypass
         digitalWrite(LED, LOW);
-        Serial.println(colSelect);            // tell CPU what column was selected
-        Serial.println(rowSelect);
         if (debug == true) {
           Serial.println("H V");
         }
         digitalWrite(resetBIN, LOW);        // Flush the SR
         waitFor(10);
         digitalWrite(resetBIN, HIGH);
-
         waitFor(10);
-
-
-        for (int j = 257; j >= 1; j--) {     // for loop for the number of columns
+        for (int j = 257; j >= 1; j--) {      // for loop for the number of columns
           if (colSelect == j) {             // check if j = desired column i.e. 0000...0100
-            horSR = HIGH;                      // if it does set SDA_ to high
-            // colSelect = colSelect - 1;
+            horSR = 1;                      // if it does set SDA_ to high
           } else {
-            horSR = LOW;                      // if not set it to low (most cases)
+            horSR = 0;                      // if not set it to low (most cases)
           }
           if (rowSelect == j) {
-            verSR = HIGH;                      // same as above for vertical SR
+            verSR = 1;                      // same as above for vertical SR
           } else {
-            verSR = LOW;
+            verSR = 0;
           }
+
           waitFor(1);
           digitalWrite(DHin, horSR);       // set SDA_A pin to horSR value
           digitalWrite(Din, verSR);       // set SDA_B pin to verSR value
@@ -259,8 +254,6 @@ void loop()
           digitalWrite(DHin, LOW);       // set SDA_A pin to horSR value
           digitalWrite(Din, LOW);
 
-
-
           if (debug == true) {
             Serial.print(horSR );
             Serial.print(' ');
@@ -268,14 +261,15 @@ void loop()
           }
         }
         flashLED();
-        command = 0;
         int commandTX = 1;
         Serial.println(commandTX);
         commandTX = 0;
-        //colSelect = 1; // colSelect + 1;
+        command = 0;
+        colSelect = 0; // colSelect + 1;
+        rowSelect = 0;
         break;
       }
-
+      
     case 6: {
         digitalWrite(Csin, HIGH);
         digitalWrite(resetBIN, LOW);

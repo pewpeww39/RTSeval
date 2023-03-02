@@ -17,7 +17,7 @@ pico = serial.Serial('COM5', baudrate=115200)
 smu = Keithley2600('TCPIP0::192.168.4.11::INSTR')               #set ip addr for smu
 smu._write(value='smua.source.autorangei = smua.AUTORANGE_ON')  #set auto range for smua 
 smu._write(value='smub.source.autorangev = smub.AUTORANGE_OFF')  #set auto range for smua 
-smu.set_integration_time(smu.smua, 0.001)                       # sets integration time in sec
+# smu.set_integration_time(smu.smua, 0.001)                       # sets integration time in sec
 smu._write(value= 'smua.source.limitv = 3.3')                   #set v liimit smua
 smu._write(value= "smub.source.limitv = 3.3")                   #set v liimit smub
 # bkPS = serial.Serial('com6',9600)                               #set com port for BK power supply
@@ -82,8 +82,8 @@ commandTX = 0
 colSelect = 1
 rowSelect = 1
 power = 9
-rowNum = 96
-colNum = 32      #int(input('How many colums do you want to test?'))
+rowNum = 1
+colNum = 3      #int(input('How many colums do you want to test?'))
 dieX = '4D'
 dieY = '6'
 
@@ -95,23 +95,24 @@ picLoc = "C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Dat
 time.sleep(1)
 decadeList = logScale()
 # print(decadeList)
-for r in range(rowNum):
-    for c in range(0, colNum):
-        commandTX = write_cmd(str(4))                                                   # selects the switch case on the pico
-        commandRX = pico.read_until().strip().decode()                                  # confirms mode selected
-        time.sleep(.5)
+for r in range(1, rowNum+1):
+    for c in range(1, colNum+1):
+        # start_total_time = time.time()
+        commandTX = write_cmd(f"4,{r},{c}")                                                   # selects the switch case on the pico
+        commandRX = tuple(pico.read_until().strip().decode().split(','))
+        if debug is True:
+            print(commandRX)
+        commandRX, rowRX, columnRX = commandRX
+        # end_command_time = time.time()
         print('pico confirmed: ' + str(commandRX))
-        write_cmd(str(rowSelect))                                              # increments the column to test
-        rowRX = pico.read_until().strip().decode()                                   # confirms column selected
         print('pico selected row: ' + str(rowRX))
-        time.sleep(.5)
-        write_cmd(str(colSelect))                                              # increments the column to test
-        columnRX = pico.read_until().strip().decode()                                   # confirms column selected
         print('pico selected column: ' + str(columnRX))
-        time.sleep(.5)
+        # start_response_time = time.time()
         commandRX = int(pico.read_until().strip().decode())                             # confirms shift registers are loaded
-        print('pico loaded shift register')
-        spec = list(specData.iloc[c])
+        print(f'pico loaded shift register - response {commandRX}')                           # confirms shift registers are loaded
+        # end_response_time = time.time()
+        # start_voltage_sweep = time.time()
+        spec = list(specData.iloc[c-1])
         if commandRX == 1:
             # smu._write(value = "smub.measure.autozero = smub.AUTOZERO_AUTO")
             # smu.smub.measure.v()
@@ -182,13 +183,15 @@ for r in range(rowNum):
         idvgsData = pd.concat([idvgsData, pltData], axis = 0, ignore_index=True)
     colS = "Col000"
     rowS = re.sub(r'[0-9]+$',
-                lambda x: f"{str(int(x.group())+1).zfill(len(x.group()))}",    # increments the number in the column name
+                lambda x: f"{str(int(x.group())+1).zfill(len(x.group()))}",    # increments the number in the row name
                 rowS)   
     colSelect = 1
     rowSelect = rowSelect + 1    
     # csData = pd.concat([csData, pltData], axis = 0, ignore_index=False)
     idvgsData.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/idvgsCharacterization/Bank 1/idvgscharDataBAK.csv')
-    
+commandTX = write_cmd(str(9))                                                   # selects the switch case on the pico
+commandRX = pico.read_until().strip().decode()                                  # confirms mode selected
+print('pico confirmed: ' + str(commandRX) + ' and reset the shift registers')   
 idvgsData.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/idvgsCharacterization/Bank 1/idvscharData' + dt_string + '.csv')
 print(idvgsData)
 smu._write(value='smua.source.output = smua.OUTPUT_OFF')
