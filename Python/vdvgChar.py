@@ -42,8 +42,8 @@ counter = 0
 voltIn = 0
 currOut = 0
 commandTX = 0
-colSelect = 1
-rowSelect = 1
+# colSelect = 1
+# rowSelect = 1
 rowNum = 2
 colNum = 32      #int(input('How many colums do you want to test?'))
 dieX = '6p'
@@ -77,9 +77,9 @@ for row in range(1, rowNum+1):
         # end_response_time = time.time()
         # start_voltage_sweep = time.time()
         spec = list(specData.iloc[col-1])
-        smu._write(value = "smub.measure.autozero = smub.AUTOZERO_AUTO")
+        smu._write(value = "smua.measure.autozero = smua.AUTOZERO_AUTO")
         smu.smub.measure.v()
-        currOut, measVd, measVg= smu.vdvgChar(smu.smua, smu.smub, sweepList, vdList, .01, .005)
+        currOut, measVd, measVg= smu.vdvgChar(smu.smua, smu.smub, sweepList, vdList, .001, .01)
         # vGS = measVs 
         # for i in range(len(measVs)):
         #     vGS[i] = 1.2 - vGS[i]
@@ -88,53 +88,68 @@ for row in range(1, rowNum+1):
         pltData["Vd"] = measVd
         pltData["Vg"] = measVg
         pltData["Id"] = currOut
+        pltData1Id = pltData.loc[:49, 'Id']
+        pltData2Id = pltData.loc[50:99, 'Id']
+        pltData1Vg = pltData.loc[:49, 'Vg']
+        pltData2Vg = pltData.loc[50:99, 'Vg']
+        pltGm1 = np.gradient(pltData.loc[:49, 'Id'], pltData.loc[:49, 'Vg'])
+        pltGm2 = np.gradient(pltData.loc[50:99, 'Id'], pltData.loc[50:99, 'Vg'])
+        pltVth1 = np.full_like(pltData1Id, max(np.gradient(pltData.loc[2:49, 'Id'], pltData.loc[2:49, 'Vg'], edge_order=2)))
+        pltVth2 = np.full_like(pltData2Id, max(np.gradient(pltData.loc[52:99, 'Id'], pltData.loc[52:99, 'Vg'], edge_order=2)))
         pltData['Site'] = 'UTC'
         pltData['Type'] = spec[1]
         pltData["W/L"] = spec[0]
         pltData["Temp(K)"] = 295
         pltData["Die X"] = dieX
         pltData["Die Y"] = dieY
-        pltData["Vth"] = max(np.gradient(np.gradient(currOut, measVg)))
-        pltData["Gm"] = np.gradient(currOut, measVg)
+        pltData["Vth"] = np.append(pltVth1, pltVth2)
+        pltData["Gm"] = np.append(pltGm1, pltGm2)
         pltData["Row"] = row
         pltData['Column'] = col
         # print(pltData)
         if debug is True:
             print(len(measVg))
             # print(vGS)
-        plt.plot(pltData["Vg"], pltData["Id"], label = "Vs")
-        # plt.figtext(.4, .15, "Vg = 1.2 V, Vdd = 1.2 V", fontsize = 10)
-        # plt.figtext(.4, .2, "Ibias = 20 uA to .1 nA, AmpBias = .5 mA", fontsize = 10)
-        # plt.figtext(.4, .25, "column = " + str(colS) + ", row = " + str(rowS), fontsize = 10)
-        plt.yscale('log')
-        plt.title(rowS + '' + colS + '' + str(spec) +" Id vs Vgs")
-        plt.xlabel("Vg [V]")
-        plt.ylabel("Id [A]")
-        plt.legend()
-        plt.savefig(picLoc + rowS + colS + "idvg.png")
-        fig1 = plt.show(block = False)
-        # plt.pause(3)
-        plt.close(fig1)
-        pltData.plot(x="Id", y="Vg", xlabel="Ids [A]", ylabel="Vg [V]", sharey=True, title=(rowS + '' + colS + '' + 
-                        str(spec) + " Drain Current [Id] vs. Gate Voltage [Vs]"), legend=True,
-                    subplots=False, logx= True)
-        # plt.figtext(.2, .15, "Vg = 1.2 V, Vdd = 1.2 V", fontsize = 10)
-        # plt.figtext(.2, .2, "Ibias = 1 nA, AmpBias = .5 mA", fontsize = 10)
-        # plt.figtext(.2, .25, "column = " + str(colS) + ", row = " + str(rowS), fontsize = 10)
-        plt.savefig(picLoc + rowS + colS + "vdvg.png")
-        fig2 = plt.show(block = False)
-        # plt.pause(3)
-        plt.close(fig2)
-        pltData.plot(x="Vg", y="Gm", xlabel="Vg [V]", ylabel="Gm ", sharey=True, title=(rowS + '' + colS + '' + 
-                        str(spec) + " Transconductance vs. Vg [V]"), legend=True,
-                    subplots=False, logx= True)
-        # plt.figtext(.2, .15, "Vg = 1.2 V, Vdd = 1.2 V", fontsize = 10)
-        # plt.figtext(.2, .2, "Ibias = 1 nA, AmpBias = .5 mA", fontsize = 10)
-        plt.figtext(.2, .2, "column = " + str(colS) + ", row = " + str(rowS), fontsize = 10)
-        plt.savefig(picLoc + rowS + colS + "gm.png")
-        fig3 = plt.show(block = False)
-        # plt.pause(3)
-        plt.close(fig3)
+        if col % 2 == 0:
+            vth1 = pltData.at[1, "Vth"]
+            vth2 = pltData.at[51, "Vth"]
+            grouped = pltData.groupby(pltData.Vth) 
+            pltData1 = grouped.get_group(vth1)
+            pltData2 = grouped.get_group(vth2)
+            plt.plot(pltData1["Vg"], pltData1["Id"], label = "vD = 0.1")
+            plt.plot(pltData2["Vg"], pltData2["Id"], label = "Vd = 0.8")
+            # plt.figtext(.4, .15, "Vg = 1.2 V, Vdd = 1.2 V", fontsize = 10)
+            # plt.figtext(.4, .2, "Ibias = 20 uA to .1 nA, AmpBias = .5 mA", fontsize = 10)
+            # plt.figtext(.4, .25, "column = " + str(colS) + ", row = " + str(rowS), fontsize = 10)
+            plt.yscale('log')
+            plt.title(rowS + '' + colS + '' + str(spec) +" Id vs Vgs")
+            plt.xlabel("Vg [V]")
+            plt.ylabel("Id [A]")
+            plt.legend()
+            plt.savefig(picLoc + rowS + colS + "idvg.png")
+            fig1 = plt.show(block = False)
+            # plt.pause(3)
+            plt.close(fig1)
+            # pltData1.plot(x="Vg", y="Id", xlabel="Ids [A]", ylabel="Vg [V]", sharey=True, title=(rowS + '' + colS + '' + 
+            #                 str(spec) + " Drain Current [Id] vs. Gate Voltage [Vs]"), legend=True,
+            #             subplots=False, logx= True)
+            # # plt.figtext(.2, .15, "Vg = 1.2 V, Vdd = 1.2 V", fontsize = 10)
+            # # plt.figtext(.2, .2, "Ibias = 1 nA, AmpBias = .5 mA", fontsize = 10)
+            # # plt.figtext(.2, .25, "column = " + str(colS) + ", row = " + str(rowS), fontsize = 10)
+            # plt.savefig(picLoc + rowS + colS + "vdvg.png")
+            # fig2 = plt.show(block = False)
+            # # plt.pause(3)
+            # plt.close(fig2)
+            # pltData1.plot(x="Vg", y="Gm", xlabel="Vg [V]", ylabel="Gm ", sharey=True, title=(rowS + '' + colS + '' + 
+            #                 str(spec) + " Transconductance vs. Vg [V]"), legend=True,
+            #             subplots=False, logx= True)
+            # # plt.figtext(.2, .15, "Vg = 1.2 V, Vdd = 1.2 V", fontsize = 10)
+            # # plt.figtext(.2, .2, "Ibias = 1 nA, AmpBias = .5 mA", fontsize = 10)
+            # plt.figtext(.2, .2, "column = " + str(colS) + ", row = " + str(rowS), fontsize = 10)
+            # plt.savefig(picLoc + rowS + colS + "gm.png")
+            # fig3 = plt.show(block = False)
+            # # plt.pause(3)
+            # plt.close(fig3)
         colS = re.sub(r'[0-9]+$',
             lambda x: f"{str(int(x.group())+1).zfill(len(x.group()))}",    # increments the number in the column name
             colS)
@@ -148,7 +163,7 @@ for row in range(1, rowNum+1):
     rowS = re.sub(r'[0-9]+$',
                 lambda x: f"{str(int(x.group())+1).zfill(len(x.group()))}",    # increments the number in the row name
                 rowS)   
-    colSelect = 1
+    # colSelect = 1
     # rowSelect = rowSelect + 1    
     # csData = pd.concat([csData, pltData], axis = 0, ignore_index=False)
     vdvgData.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/vdvgCharacterization/Bank 1/vdvgcharDataBAK.csv')

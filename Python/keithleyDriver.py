@@ -1441,7 +1441,7 @@ class Keithley2600(Keithley2600Base):
                 smu.source.func = smu.OUTPUT_DCVOLTS
                 smu.source.rangev = 4
                 self.set_integration_time(smu, t_int)
-                smu.measure.delay = delay
+                smu.measure.delay = -1
                 smu.source.limitv = 3.3
                 smu.nvbuffer1.clear()
                 smu.nvbuffer2.clear()
@@ -1450,10 +1450,10 @@ class Keithley2600(Keithley2600Base):
                 smu.nvbuffer1.appendmode = 1
             smu1.nvbuffer2.collecttimestamps = 0
             smu2.measure.rangev = 4
-            smu1.measure.rangei = pow(10, -4)
+            smu1.measure.rangei = pow(10, -3)
             smu1.measure.autozero = smu.AUTOZERO_OFF
             smu2.measure.autozero = smu.AUTOZERO_AUTO
-            smu1.source.limiti = 0.00005
+            smu1.source.limiti = 0.001
 
             self.trigger.blender[1].orenable = True
             self.trigger.blender[1].stimulus[1] = smu1.trigger.ARMED_EVENT_ID            #when moved from arm to trigger layer
@@ -1464,7 +1464,7 @@ class Keithley2600(Keithley2600Base):
             self.trigger.blender[2].stimulus[2] = smu2.trigger.MEASURE_COMPLETE_EVENT_ID   # when pulse is complete
 
             self.trigger.blender[3].orenable = True
-            self.trigger.blender[3].stimulus[1] = smu2.trigger.ARMED_EVENT_ID            #when moved from arm to trigger layer
+            self.trigger.blender[3].stimulus[1] = smu1.trigger.ARMED_EVENT_ID            #when moved from arm to trigger layer
             self.trigger.blender[3].stimulus[2] = smu2.trigger.PULSE_COMPLETE_EVENT_ID   # when pulse is complete
 
             self.trigger.blender[4].orenable = True
@@ -1508,7 +1508,7 @@ class Keithley2600(Keithley2600Base):
             smu2.trigger.arm.count = len(vdList)                                            # number of triggers for sweep
 
             smu2.trigger.endpulse.action = smu2.SOURCE_HOLD                                  # pulse action
-            smu2.trigger.endpulse.stimulus = smu1.trigger.MEASURE_COMPLETE_EVENT_ID          # initiate pulse
+            smu2.trigger.endpulse.stimulus = self.trigger.blender[2].EVENT_ID          # initiate pulse
             smu2.trigger.endsweep.action = smu2.SOURCE_IDLE          
 
             smu1.source.output = smu1.OUTPUT_ON                                             # turn on smu
