@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import xarray as xr
 from datetime import datetime
 from scipy.fft import fft, fftfreq
+import time
 
 dt_string = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p")
 
@@ -30,8 +31,8 @@ def vGS(vg, vs):
 # print(specData)
 # C:\Users\jpew\miniconda3\envs\testequ\RTSeval\Python\Data\csCharacterization\cscharData2023_02_10-01_39_20_PM.csv
 # fileLoc ="~\miniconda3\envs\\testequ\RTSeval\Python\Data\csCharacterization\cscharData2023_02_10-01_39_20_PM.csv"
-fileLoc ="~\miniconda3\envs\\testequ\RTSeval\Python\Data\\rtsData\\rtsLoopData(1).csv"
-picLoc ="C:\\Users\\jpew\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\rtsData\\rtsTS "
+fileLoc ="~\miniconda3\envs\\testequ\RTSeval\Python\Data\\rtsData\\rtsLoopData.csv"
+# picLoc ="C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\rtsData\\rtsTS "
 #specData = inport(fileLoc, 0, 0, ['Col001Vs','Col001Id'])
 # spec = vGS(1.2, specData.columns[0])
 def plotgm(file, colI, colV):
@@ -59,7 +60,9 @@ def plotgm(file, colI, colV):
 
 def plotrts(file, row):
     rtsData = inport(fileLoc, 0, 0, ['Row 1'])
-    print(rtsData)
+    rtsData = rtsData.drop(range(0,4000))
+    rtsData = rtsData.drop(range(5100,20001))
+    # print(rtsData)
     plt.plot(rtsData['Row 1'], label='Vs')
     plt.title("RTS Data: Column 1")
     plt.figtext(.2, .15, "Vg = 1.2 V, Vdd = 1.2 V", fontsize = 10)
@@ -72,11 +75,11 @@ def plotrts(file, row):
     fig1 = plt.show(block = False)
     plt.pause(5)
     plt.close(fig1)
-    plt.hist(rtsData['Row 1'], label = "Vs")
+    plt.hist(rtsData['Row 1'], label = "Vs", bins=100)
     plt.title("RTS Data: Column 1")
-    plt.figtext(.2, .15, "Vg = 1.2 V, Vdd = 1.2 V", fontsize = 10)
-    plt.figtext(.2, .2, "Ibias = 1 nA, AmpBias = .5 mA", fontsize = 10)
-    plt.figtext(.2, .25, "column = 1, row = " , fontsize = 10)
+    # plt.figtext(.2, .15, "Vg = 1.2 V, Vdd = 1.2 V", fontsize = 10)
+    # plt.figtext(.2, .2, "Ibias = 1 nA, AmpBias = .5 mA", fontsize = 10)
+    # plt.figtext(.2, .25, "column = 1, row = " , fontsize = 10)
     plt.ylabel("Time [Sec]")
     plt.xlabel("Voltage [V]")
     plt.legend()
@@ -133,22 +136,46 @@ def fourT (fileLoc):
 # print(y)
 # plt.plot(x, np.abs(y))
 # df_3d = xarray_3d.to_dataframe()
-decade1 = range(1,10, 1)
-decade2 = range(10,100, 10)
-decade3 = range(100,1000, 100)    
-decade4 = range(1000,10000, 1000)
-decade5 = range(10000,100000, 10000)
-decade6 = range(100000,600000, 100000)
-decadeList = np.append(decade1, decade2)
-decadeList = np.append(decadeList, decade3)
-decadeList = np.append(decadeList, decade4)
-decadeList = np.append(decadeList, decade5) 
-decadeList = np.append(decadeList, decade6) * pow(10, -10)
-# decadeList = np.append(decadeList, decade7) * pow(10, -11)
-# decadeList = np.append(decadeList, decade8) * pow(10, -12)
-print((decadeList))
+
 # df_3d.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Test/Data/tesData.csv')
 # print(df_3d)
 # for v in range(len(specData)):
 #     spec = list(specData.iloc[v])
 #     print(str(spec))
+start = 0
+stop = 0
+incsv = "C:\\Users\\jacob\\Downloads\\idvgscharDataBAK1.csv"
+specData = pd.DataFrame(pd.read_csv('~\miniconda3\envs\\testequ\RTSeval\Files\RTS_Array_Cells.csv',
+                     index_col=[0] , header=0), columns = ['W/L', 'Type']) 
+data = pd.DataFrame(pd.read_csv(incsv, header=0))
+# print(data)
+typecounter = 0
+counter = 0
+counterb = 0
+print(specData.iloc[typecounter, 0])
+print(specData.iloc[1, 0])
+print(specData)
+for r in range(0,len(data)):
+# for r in range(2000):
+    # for i in range(0+start, 32+stop):
+    data.iat[r,6] = specData.iat[typecounter, 0]
+    data.iat[r,2] = specData.iat[typecounter, 1]
+    counterb = counterb + 1
+    counter = counter + 1
+    # print(data.iat[typecounter, 5])
+    if counterb >= 50:
+        # print(typecounter)
+        # print(specData.iat[typecounter, 0])
+        print(data.iat[r,2] + ' ' + data.iat[r, 6] + " " + str(typecounter))
+        typecounter = typecounter + 1
+        counterb = 1
+    if counter > 1599:
+        typecounter = 0
+        counter = 0
+        counterb = 1
+
+
+    # print(r)
+
+# print(data)
+data.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/rtsData/rtsDataidvgsMod.csv')

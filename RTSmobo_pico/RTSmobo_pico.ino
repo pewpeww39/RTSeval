@@ -23,8 +23,8 @@
 #define LED             25  // Pico LED
 
 int command = 0;
-int colSelect = 0;
-int rowSelect = 0;
+int colSelect = 1;
+int rowSelect = 1;
 int horSR = 0;
 int verSR = 0;
 int holdRow = 0;
@@ -87,6 +87,9 @@ void loop()
         digitalWrite(Csin, HIGH);           // close NMOS amp bypass
         flashLED();
         command = 0;
+        int commandTX = 1;
+        Serial.println(commandTX);
+        commandTX = 0;
         if (debug == true) {
           Serial.println("Ready for NMOS OpAmp characterization");
         }
@@ -111,9 +114,9 @@ void loop()
           Serial.println("H V");
         }
         digitalWrite(resetBIN, LOW);        // Flush the SR
-        waitFor(1);
+        waitFor(10);
         digitalWrite(resetBIN, HIGH);
-        waitFor(1);
+        waitFor(10);
         for (int j = 257; j >= 1; j--) {      // for loop for the number of columns
           if (colSelect == j) {             // check if j = desired column i.e. 0000...0100
             horSR = 1;                      // if it does set SDA_ to high
@@ -162,9 +165,9 @@ void loop()
           Serial.println("H V");
         }
         digitalWrite(resetBIN, LOW);        // Flush the SR
-        waitFor(1);
+        waitFor(10);
         digitalWrite(resetBIN, HIGH);
-        waitFor(1);
+        waitFor(10);
         for (int j = 257; j >= 1; j--) {      // for loop for the number of columns
           if (colSelect == j) {             // check if j = desired column i.e. 0000...0100
             horSR = 1;                      // if it does set SDA_ to high
@@ -210,14 +213,15 @@ void loop()
         digitalWrite(Csin, LOW);             // close NMOS amp bypass
         digitalWrite(LED, LOW);
         Serial.println(colSelect);            // tell CPU what column was selected
+        Serial.println(rowSelect);
         if (debug == true) {
           Serial.println("H V");
         }
         digitalWrite(resetBIN, LOW);        // Flush the SR
-        waitFor(1);
+        waitFor(10);
         digitalWrite(resetBIN, HIGH);
 
-        waitFor(1);
+        waitFor(10);
 
 
         for (int j = 257; j >= 1; j--) {     // for loop for the number of columns
@@ -372,6 +376,8 @@ void loop()
       turnOff();
       flashLED();
       command = 0;
+      digitalWrite(resetBIN, LOW); 
+      
       break;
   }
 }
