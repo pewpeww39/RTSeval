@@ -13,7 +13,7 @@ import numpy as np
 
 dt_string = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p")
 
-pico = serial.Serial('COM5', baudrate=115200)
+pico = serial.Serial('COM4', baudrate=115200)
 smu = Keithley2600('TCPIP0::192.168.4.11::INSTR')               #set ip addr for smu
 smu._write(value='smua.source.autorangei = smua.AUTORANGE_ON')  #set auto range for smua 
 smu._write(value='smub.source.autorangev = smub.AUTORANGE_OFF')  #set auto range for smua 
@@ -40,6 +40,8 @@ def bankNum(bank):
         sweepList = np.linspace(0, 1.2)
         vdList = [0.1, 0.8] 
         csIn = 5
+        picLoc = "C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\idvgCharacterization\\Bank 1\\idvgcharData"
+        fileLoc = '~/miniconda3/envs/testequ/RTSeval/Python/Data/idvgCharacterization/Bank 1/idvgcharData'
     elif bank == 2:
         colStart = 33
         colEnd = colStart + 32
@@ -48,6 +50,8 @@ def bankNum(bank):
         sweepList = np.linspace(0, 1.2)
         vdList = [0.1, 0.8]
         csIn = 5
+        picLoc = "C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\idvgCharacterization\\Bank 2\\idvgcharData"
+        fileLoc = '~/miniconda3/envs/testequ/RTSeval/Python/Data/idvgCharacterization/Bank 2/idvgcharData'
     elif bank == 3:
         colStart = 65
         colEnd = colStart + 32
@@ -56,6 +60,8 @@ def bankNum(bank):
         sweepList = np.linspace(0, 3.3)
         vdList = [0.1, 1.5] 
         csIn = 5
+        picLoc = "C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\idvgCharacterization\\Bank 3\idvgcharData"
+        fileLoc = '~/miniconda3/envs/testequ/RTSeval/Python/Data/idvgCharacterization/Bank 3/idvgcharData'
     elif bank == 4:
         colStart = 97
         colEnd = colStart + 32
@@ -64,6 +70,8 @@ def bankNum(bank):
         sweepList = np.linspace(0, 3.3)
         vdList = [0.1, 1.5] 
         csIn = 5
+        picLoc = "C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\idvgCharacterization\\Bank 4\\idvgcharData"
+        fileLoc = '~/miniconda3/envs/testequ/RTSeval/Python/Data/idvgCharacterization/Bank 4/idvgcharData'
     elif bank == 5:
         colStart = 129
         colEnd = colStart + 32
@@ -72,7 +80,15 @@ def bankNum(bank):
         sweepList = np.linspace(0, 1.2)
         vdList = [0.1, 0.8] 
         csIn = 6
-    return rowStart, rowEnd, colStart, colEnd, colS, rowS, sweepList, vdList, csIn
+        picLoc = "C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\idvgCharacterization\\Bank 5\\idvgcharData"
+        fileLoc = '~/miniconda3/envs/testequ/RTSeval/Python/Data/idvgCharacterization/Bank 5/idvgcharData'
+    return rowStart, rowEnd, colStart, colEnd, colS, rowS, sweepList, vdList, csIn, picLoc, fileLoc
+
+def powerPico():                                                                    # Turns on the vPwr pins for pi pico
+    write_cmd(str(7))                                                               # selects the switch case on the pico
+    pico.read_until().strip().decode()                                              # confirms mode selected
+    print('pico turned on the power') 
+    time.sleep(2)
 
 currOut = []
 measVd = []
@@ -84,36 +100,26 @@ pltData = pd.DataFrame(data=[], index=[],
                                  'Vth', 'Gm', 'Swing Factor', 'Row', 'Column'])                         #create dataframe
 specData = pd.DataFrame(pd.read_csv('~\miniconda3\envs\\testequ\RTSeval\Files\RTS_Array_Cells.csv',
                      index_col=[0] , header=0), columns = ['W/L', 'Type'])
-debug = False
-counter = 0
-voltIn = 0
-currOut = 0
-commandTX = 0
+
 dieX = '6p'
 dieY = '3'
 
-picLoc = "C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\idvgCharacterization\\Bank 2\\idvgcharData"
-
-rowStart, rowEnd, colStart, colEnd, colS, rowS, sweepList, vdList, csIn = bankNum(2)        # selects the bank to test
+rowStart, rowEnd, colStart, colEnd, colS, rowS, sweepList, vdList, csIn, picLoc, fileLoc = bankNum(1)        # selects the bank to test
+colBegin = colS
 smu.apply_voltage(smu.smua, 0.0)
 smu.apply_voltage(smu.smub, 0.0)
-commandTX = write_cmd(str(7))                                                               # selects the switch case on the pico
-commandRX = pico.read_until().strip().decode()                                              # confirms mode selected
-print('pico turned on the power') 
-time.sleep(2)
+powerPico()
 
 for row in range(rowStart, rowEnd):
     for col in range(colStart, colEnd):
         # start_total_time = time.time()
         commandTX = write_cmd(f"{csIn},{row},{col}")                                                   # selects the switch case on the pico
         commandRX = tuple(pico.read_until().strip().decode().split(','))
-        if debug is True:
-            print(commandRX)
         commandRX, rowRX, columnRX = commandRX
         # end_command_time = time.time()
         print('pico confirmed: ' + str(commandRX))
-        print('pico selected row: ' + str(rowRX))
-        print('pico selected column: ' + str(columnRX))
+        print('pico selected row: ' + str(rowRX - 1))
+        print('pico selected column: ' + str(columnRX - 1))
         # start_response_time = time.time()
         commandRX = int(pico.read_until().strip().decode())                             # confirms shift registers are loaded
         print(f'pico loaded the shift registers')                           # confirms shift registers are loaded
@@ -159,10 +165,8 @@ for row in range(rowStart, rowEnd):
         # pltData['Swing Factor'] = np.append(swingF1, swingF2)
         pltData["Row"] = row
         pltData['Column'] = col
-        if debug is True:
-            print(len(measVg))
-            # print(vGS)
-        if col - 1 % 2 == 0 & row <= 2:
+
+        if ((col  % 2 == 0) and (row <= 2)):
             vth1 = pltData.at[1, "Vth"]
             vth2 = pltData.at[51, "Vth"]
             grouped = pltData.groupby(pltData.Vth) 
@@ -182,26 +186,7 @@ for row in range(rowStart, rowEnd):
             fig1 = plt.show(block = False)
             # plt.pause(3)
             plt.close(fig1)
-            # pltData1.plot(x="Vg", y="Id", xlabel="Ids [A]", ylabel="Vg [V]", sharey=True, title=(rowS + '' + colS + '' + 
-            #                 str(spec) + " Drain Current [Id] vs. Gate Voltage [Vs]"), legend=True,
-            #             subplots=False, logx= True)
-            # # plt.figtext(.2, .15, "Vg = 1.2 V, Vdd = 1.2 V", fontsize = 10)
-            # # plt.figtext(.2, .2, "Ibias = 1 nA, AmpBias = .5 mA", fontsize = 10)
-            # # plt.figtext(.2, .25, "column = " + str(colS) + ", row = " + str(rowS), fontsize = 10)
-            # plt.savefig(picLoc + rowS + colS + "vdvg.png")
-            # fig2 = plt.show(block = False)
-            # # plt.pause(3)
-            # plt.close(fig2)
-            # pltData1.plot(x="Vg", y="Gm", xlabel="Vg [V]", ylabel="Gm ", sharey=True, title=(rowS + '' + colS + '' + 
-            #                 str(spec) + " Transconductance vs. Vg [V]"), legend=True,
-            #             subplots=False, logx= True)
-            # # plt.figtext(.2, .15, "Vg = 1.2 V, Vdd = 1.2 V", fontsize = 10)
-            # # plt.figtext(.2, .2, "Ibias = 1 nA, AmpBias = .5 mA", fontsize = 10)
-            # plt.figtext(.2, .2, "column = " + str(colS) + ", row = " + str(rowS), fontsize = 10)
-            # plt.savefig(picLoc + rowS + colS + "gm.png")
-            # fig3 = plt.show(block = False)
-            # # plt.pause(3)
-            # plt.close(fig3)
+           
         colS = re.sub(r'[0-9]+$',
             lambda x: f"{str(int(x.group())+1).zfill(len(x.group()))}",    # increments the number in the column name
             colS)
@@ -209,22 +194,18 @@ for row in range(rowStart, rowEnd):
         measVg = []
         measVd = []
         commandRX=0
-        # colSelect = colSelect + 1
         vdvgData = pd.concat([vdvgData, pltData], axis = 0, ignore_index=True)
-    colS = "Col032"
+    colS = colBegin
     rowS = re.sub(r'[0-9]+$',
                 lambda x: f"{str(int(x.group())+1).zfill(len(x.group()))}",    # increments the number in the row name
                 rowS)   
-    # colSelect = 1
-    # rowSelect = rowSelect + 1    
-    # csData = pd.concat([csData, pltData], axis = 0, ignore_index=False)
 
-    vdvgData.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/idvgCharacterization/Bank 2/idvgcharDataBAK.csv')
+    vdvgData.to_csv(fileLoc + 'BAK.csv')
 commandTX = write_cmd(str(9))                                                   # selects the switch case on the pico
 commandRX = pico.read_until().strip().decode()                                  # confirms mode selected
-print('pico confirmed: ' + str(commandRX) + ' and reset the shift registers')   
+print('pico confirmed: ' + str(commandRX) + ' and turned off.')   
 dt_string = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p")    
-vdvgData.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/idvgCharacterization/Bank 2/idvgcharData' + dt_string + '.csv')
+vdvgData.to_csv(fileLoc + dt_string + '.csv')
 print(vdvgData)
 smu._write(value='smua.source.output = smua.OUTPUT_OFF')
 smu._write(value='smub.source.output = smub.OUTPUT_OFF')

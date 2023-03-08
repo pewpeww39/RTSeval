@@ -7,8 +7,8 @@
 #define Din             3   // Vertical Shift Register data pin
 #define DHin            4   // Horizontal Shift Register data pin
 #define resetBIN        5   // Reset shift registers
-#define vPower           6   // set Vdd input voltage to High Voltage transistors
-#define vgLVN           7   // set VG input voltage to Low Voltage Nmos transistors
+#define vpwrHV          6   // set Vdd input voltage to High Voltage transistors
+#define vpwrLV          7   // set VG input voltage to Low Voltage Nmos transistors
 #define vgHVN           8   // set VG input voltaget to High Voltage Nmos Transistors
 #define vddLV           9   // set VDD input voltage to Low Voltage Tansistors
 #define ch1_vooff       10  // Select which amplifier output is on channel 1  vout0
@@ -323,8 +323,10 @@ void loop()
       }
            
     case 7: {
-        turnOff();
-        digitalWrite(vPower, HIGH);
+//        turnOff();
+        digitalWrite(vpwrHV, HIGH);
+        digitalWrite(vpwrLV, LOW);
+        command = 0;
         break;
       }
 
@@ -375,8 +377,8 @@ void turnOff()
   digitalWrite(Din, LOW);
   digitalWrite(DHin, LOW);
   digitalWrite(resetBIN, LOW);
-  digitalWrite(vPower, LOW);
-  digitalWrite(vgLVN, LOW);
+  digitalWrite(vpwrHV, LOW);
+  digitalWrite(vpwrLV, HIGH);
   digitalWrite(vgHVN, LOW);
   digitalWrite(vddLV, LOW);
   digitalWrite(ch1_vooff, LOW);
@@ -399,8 +401,8 @@ void definePins()
   pinMode(Din, OUTPUT);
   pinMode(DHin, OUTPUT);
   pinMode(resetBIN, OUTPUT);
-  pinMode(vPower, OUTPUT);
-  pinMode(vgLVN, OUTPUT);
+  pinMode(vpwrHV, OUTPUT);
+  pinMode(vpwrLV, OUTPUT);
   pinMode(vgHVN, OUTPUT);
   pinMode(vddLV, OUTPUT);
   pinMode(ch1_vooff, OUTPUT);
