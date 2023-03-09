@@ -1433,7 +1433,9 @@ class Keithley2600(Keithley2600Base):
                         vgList: Sequence[float],
                         vdList: Sequence[float],
                         delay: float,
-                        t_int: float):
+                        t_int: float,
+                        limiti: float,
+                        rangei: float):
             
         with self._measurement_lock:
             timestamp = []
@@ -1450,10 +1452,10 @@ class Keithley2600(Keithley2600Base):
                 smu.nvbuffer1.appendmode = 1
             smu1.nvbuffer2.collecttimestamps = 0
             smu2.measure.rangev = 4
-            smu1.measure.rangei = pow(10, -3)
             smu1.measure.autozero = smu.AUTOZERO_OFF
             smu2.measure.autozero = smu.AUTOZERO_AUTO
-            smu1.source.limiti = 0.001
+            smu1.source.limiti = limiti
+            smu1.measure.rangei = rangei
 
             self.trigger.blender[1].orenable = True
             self.trigger.blender[1].stimulus[1] = smu1.trigger.ARMED_EVENT_ID            #when moved from arm to trigger layer

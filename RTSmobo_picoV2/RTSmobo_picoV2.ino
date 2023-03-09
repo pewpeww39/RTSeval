@@ -277,10 +277,10 @@ void loop()
         if (debug == true) {
           Serial.println("H V");
         }
-        digitalWrite(resetBIN, LOW);        // Flush the SR
-        waitFor(15);
-        digitalWrite(resetBIN, HIGH);
-        waitFor(15);
+        digitalWrite(resetBIN, HIGH);        // Flush the SR
+        waitFor(50);
+        digitalWrite(resetBIN, LOW);
+        waitFor(50);
         for (int j = 257; j >= 1; j--) {      // for loop for the number of columns
           if (colSelect == j) {             // check if j = desired column i.e. 0000...0100
             horSR = 1;                      // if it does set SDA_ to high

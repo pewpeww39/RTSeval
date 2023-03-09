@@ -42,6 +42,8 @@ def bankNum(bank):
         csIn = 5
         picLoc = "C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\idvgCharacterization\\Bank 1\\idvgcharData"
         fileLoc = '~/miniconda3/envs/testequ/RTSeval/Python/Data/idvgCharacterization/Bank 1/idvgcharData'
+        limiti = 0.001
+        rangei = pow(10, -3)
     elif bank == 2:
         colStart = 33
         colEnd = colStart + 32
@@ -52,6 +54,8 @@ def bankNum(bank):
         csIn = 5
         picLoc = "C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\idvgCharacterization\\Bank 2\\idvgcharData"
         fileLoc = '~/miniconda3/envs/testequ/RTSeval/Python/Data/idvgCharacterization/Bank 2/idvgcharData'
+        limiti = 0.001
+        rangei = pow(10, -3)
     elif bank == 3:
         colStart = 65
         colEnd = colStart + 32
@@ -62,6 +66,8 @@ def bankNum(bank):
         csIn = 5
         picLoc = "C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\idvgCharacterization\\Bank 3\idvgcharData"
         fileLoc = '~/miniconda3/envs/testequ/RTSeval/Python/Data/idvgCharacterization/Bank 3/idvgcharData'
+        limiti = 0.01
+        rangei = pow(10, -2)
     elif bank == 4:
         colStart = 97
         colEnd = colStart + 32
@@ -72,6 +78,8 @@ def bankNum(bank):
         csIn = 5
         picLoc = "C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\idvgCharacterization\\Bank 4\\idvgcharData"
         fileLoc = '~/miniconda3/envs/testequ/RTSeval/Python/Data/idvgCharacterization/Bank 4/idvgcharData'
+        limiti = 0.001
+        rangei = pow(10, -3)
     elif bank == 5:
         colStart = 129
         colEnd = colStart + 32
@@ -82,7 +90,9 @@ def bankNum(bank):
         csIn = 6
         picLoc = "C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\idvgCharacterization\\Bank 5\\idvgcharData"
         fileLoc = '~/miniconda3/envs/testequ/RTSeval/Python/Data/idvgCharacterization/Bank 5/idvgcharData'
-    return rowStart, rowEnd, colStart, colEnd, colS, rowS, sweepList, vdList, csIn, picLoc, fileLoc
+        limiti = 0.001
+        rangei = pow(10, -3)
+    return rowStart, rowEnd, colStart, colEnd, colS, rowS, sweepList, vdList, csIn, picLoc, fileLoc, limiti, rangei
 
 def powerPico():                                                                    # Turns on the vPwr pins for pi pico
     write_cmd(str(7))                                                               # selects the switch case on the pico
@@ -104,7 +114,7 @@ specData = pd.DataFrame(pd.read_csv('~\miniconda3\envs\\testequ\RTSeval\Files\RT
 dieX = '6p'
 dieY = '3'
 
-rowStart, rowEnd, colStart, colEnd, colS, rowS, sweepList, vdList, csIn, picLoc, fileLoc = bankNum(1)        # selects the bank to test
+rowStart, rowEnd, colStart, colEnd, colS, rowS, sweepList, vdList, csIn, picLoc, fileLoc, limiti, rangei = bankNum(4)        # selects the bank to test
 colBegin = colS
 smu.apply_voltage(smu.smua, 0.0)
 smu.apply_voltage(smu.smub, 0.0)
@@ -117,9 +127,15 @@ for row in range(rowStart, rowEnd):
         commandRX = tuple(pico.read_until().strip().decode().split(','))
         commandRX, rowRX, columnRX = commandRX
         # end_command_time = time.time()
+        rowRX = re.sub(r'[0-9]+$',
+                lambda x: f"{str(int(x.group())-1).zfill(len(x.group()))}",    # decrements the number in the row number
+                rowRX)  
+        columnRX = re.sub(r'[0-9]+$',
+                lambda x: f"{str(int(x.group())-1).zfill(len(x.group()))}",    # decrements the number in the colimn number
+                columnRX)    
         print('pico confirmed: ' + str(commandRX))
-        print('pico selected row: ' + str(rowRX - 1))
-        print('pico selected column: ' + str(columnRX - 1))
+        print('pico selected row: ' + str(rowRX))
+        print('pico selected column: ' + str(columnRX))
         # start_response_time = time.time()
         commandRX = int(pico.read_until().strip().decode())                             # confirms shift registers are loaded
         print(f'pico loaded the shift registers')                           # confirms shift registers are loaded
@@ -128,7 +144,7 @@ for row in range(rowStart, rowEnd):
         spec = list(specData.iloc[col-1])
         smu._write(value = "smua.measure.autozero = smua.AUTOZERO_AUTO")
         smu.smub.measure.v()
-        currOut, measVd, measVg= smu.vdvgChar(smu.smua, smu.smub, sweepList, vdList, .001, .01)
+        currOut, measVd, measVg= smu.vdvgChar(smu.smua, smu.smub, sweepList, vdList, .001, .01, limiti, rangei)
         # vGS = measVs 
         # for i in range(len(measVs)):
         #     vGS[i] = 1.2 - vGS[i]
@@ -137,6 +153,7 @@ for row in range(rowStart, rowEnd):
         pltData["Vd"] = measVd
         pltData["Vg"] = measVg
         pltData["Id"] = currOut
+        # print(pltData['Id'])
         pltData1Id = pltData.loc[:49, 'Id']
         pltData2Id = np.sqrt(abs(pltData.loc[50:99, 'Id']))
         pltData1Vg = pltData.loc[:49, 'Vg']
@@ -166,14 +183,14 @@ for row in range(rowStart, rowEnd):
         pltData["Row"] = row
         pltData['Column'] = col
 
-        if ((col  % 2 == 0) and (row <= 2)):
+        if ((col % 2 == 1) and (row <= 2)):
             vth1 = pltData.at[1, "Vth"]
             vth2 = pltData.at[51, "Vth"]
             grouped = pltData.groupby(pltData.Vth) 
             pltData1 = grouped.get_group(vth1)
             pltData2 = grouped.get_group(vth2)
-            plt.plot(pltData1["Vg"], pltData1["Id"], label = "Vd = 0.1")
-            plt.plot(pltData2["Vg"], pltData2["Id"], label = "Vd = 0.8")
+            plt.plot(pltData1["Vg"], pltData1["Id"], label = "Vd = " + str(vdList[0]))
+            plt.plot(pltData2["Vg"], pltData2["Id"], label = "Vd = " + str(vdList[1]))
             # plt.figtext(.4, .15, "Vg = 1.2 V, Vdd = 1.2 V", fontsize = 10)
             # plt.figtext(.4, .2, "Ibias = 20 uA to .1 nA, AmpBias = .5 mA", fontsize = 10)
             # plt.figtext(.4, .25, "column = " + str(colS) + ", row = " + str(rowS), fontsize = 10)

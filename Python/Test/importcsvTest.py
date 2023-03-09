@@ -183,8 +183,11 @@ def fourT (fileLoc):
 # # print(data)
 # data.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/rtsData/rtsDataidvgsMod.csv')
 
-data = inport(fileLoc, 0 , 0, ['Site', 'Type', 'Vd', 'Vg', 'Id', 'W/L', 'Vth', 'Gm'])
-grouped = data.groupby(data.Gm) 
-vthData1 = grouped.get_group(max(data.Gm))
-vthEx = vthData1.Vd - 1
-print(vthEx)
+# data = inport(fileLoc, 0 , 0, ['Site', 'Type', 'Vd', 'Vg', 'Id', 'W/L', 'Vth', 'Gm'])
+# grouped = data.groupby(data.Gm) 
+# vthData1 = grouped.get_group(max(data.Gm))
+# vthEx = vthData1.Vd - 1
+# print(vthEx)
+list = np.linspace(0, 3.3)
+vdList = [0.1, 0.8] 
+print(str(vdList[1]))
