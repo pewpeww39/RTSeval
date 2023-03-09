@@ -85,8 +85,8 @@ def bankNum(bank):
         colEnd = colStart + 32
         colS = "Col128"   
         rowS = "Row00"
-        sweepList = np.linspace(0, 1.2)
-        vdList = [0.1, 0.8] 
+        sweepList = np.linspace(1.2, 0)
+        vdList = [1.1, 0.4] 
         csIn = 6
         picLoc = "C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\idvgCharacterization\\Bank 5\\idvgcharData"
         fileLoc = '~/miniconda3/envs/testequ/RTSeval/Python/Data/idvgCharacterization/Bank 5/idvgcharData'
@@ -114,7 +114,7 @@ specData = pd.DataFrame(pd.read_csv('~\miniconda3\envs\\testequ\RTSeval\Files\RT
 dieX = '6p'
 dieY = '3'
 
-rowStart, rowEnd, colStart, colEnd, colS, rowS, sweepList, vdList, csIn, picLoc, fileLoc, limiti, rangei = bankNum(4)        # selects the bank to test
+rowStart, rowEnd, colStart, colEnd, colS, rowS, sweepList, vdList, csIn, picLoc, fileLoc, limiti, rangei = bankNum(5)        # selects the bank to test
 colBegin = colS
 smu.apply_voltage(smu.smua, 0.0)
 smu.apply_voltage(smu.smub, 0.0)
@@ -144,7 +144,7 @@ for row in range(rowStart, rowEnd):
         spec = list(specData.iloc[col-1])
         smu._write(value = "smua.measure.autozero = smua.AUTOZERO_AUTO")
         smu.smub.measure.v()
-        currOut, measVd, measVg= smu.vdvgChar(smu.smua, smu.smub, sweepList, vdList, .001, .01, limiti, rangei)
+        currOut, measVd, measVg= smu.idvgChar(smu.smua, smu.smub, sweepList, vdList, .001, .01, limiti, rangei)
         # vGS = measVs 
         # for i in range(len(measVs)):
         #     vGS[i] = 1.2 - vGS[i]

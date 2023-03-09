@@ -1427,7 +1427,7 @@ class Keithley2600(Keithley2600Base):
             print('returning data')
             return 
 
-    def vdvgChar(self, 
+    def idvgChar(self, 
                         smu1: KeithleyClass,
                         smu2: KeithleyClass,
                         vgList: Sequence[float],

@@ -188,6 +188,6 @@ def fourT (fileLoc):
 # vthData1 = grouped.get_group(max(data.Gm))
 # vthEx = vthData1.Vd - 1
 # print(vthEx)
-list = np.linspace(0, 3.3)
+list = np.linspace(3.3, 0)
 vdList = [0.1, 0.8] 
-print(str(vdList[1]))
+print(list)
