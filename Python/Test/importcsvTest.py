@@ -31,7 +31,8 @@ def vGS(vg, vs):
 # print(specData)
 # C:\Users\jpew\miniconda3\envs\testequ\RTSeval\Python\Data\csCharacterization\cscharData2023_02_10-01_39_20_PM.csv
 # fileLoc ="~\miniconda3\envs\\testequ\RTSeval\Python\Data\csCharacterization\cscharData2023_02_10-01_39_20_PM.csv"
-fileLoc ="~\miniconda3\envs\\testequ\RTSeval\Python\Data\\rtsData\\rtsLoopData.csv"
+# fileLoc ="~\miniconda3\envs\\testequ\RTSeval\Python\Data\\rtsData\\rtsLoopData.csv"
+fileLoc = "~\miniconda3\envs\\testequ\RTSeval\Python\Data\\vdvgCharacterization\Bank 2\\vdvgcharDataBAK.csv"
 # picLoc ="C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\rtsData\\rtsTS "
 #specData = inport(fileLoc, 0, 0, ['Col001Vs','Col001Id'])
 # spec = vGS(1.2, specData.columns[0])
@@ -142,40 +143,51 @@ def fourT (fileLoc):
 # for v in range(len(specData)):
 #     spec = list(specData.iloc[v])
 #     print(str(spec))
-start = 0
-stop = 0
-incsv = "C:\\Users\\jacob\\Downloads\\idvgscharDataBAK1.csv"
-specData = pd.DataFrame(pd.read_csv('~\miniconda3\envs\\testequ\RTSeval\Files\RTS_Array_Cells.csv',
-                     index_col=[0] , header=0), columns = ['W/L', 'Type']) 
-data = pd.DataFrame(pd.read_csv(incsv, header=0))
-# print(data)
-typecounter = 0
-counter = 0
-counterb = 0
-print(specData.iloc[typecounter, 0])
-print(specData.iloc[1, 0])
-print(specData)
-for r in range(0,len(data)):
-# for r in range(2000):
-    # for i in range(0+start, 32+stop):
-    data.iat[r,6] = specData.iat[typecounter, 0]
-    data.iat[r,2] = specData.iat[typecounter, 1]
-    counterb = counterb + 1
-    counter = counter + 1
-    # print(data.iat[typecounter, 5])
-    if counterb >= 50:
-        # print(typecounter)
-        # print(specData.iat[typecounter, 0])
-        print(data.iat[r,2] + ' ' + data.iat[r, 6] + " " + str(typecounter))
-        typecounter = typecounter + 1
-        counterb = 1
-    if counter > 1599:
-        typecounter = 0
-        counter = 0
-        counterb = 1
+
+# ###### relist col types and w/L
+# start = 0
+# stop = 0
+# incsv = "C:\\Users\\jacob\\Downloads\\idvgscharDataBAK1.csv"
+# specData = pd.DataFrame(pd.read_csv('~\miniconda3\envs\\testequ\RTSeval\Files\RTS_Array_Cells.csv',
+#                      index_col=[0] , header=0), columns = ['W/L', 'Type']) 
+# data = pd.DataFrame(pd.read_csv(incsv, header=0))
+# # print(data)
+# typecounter = 0
+# counter = 0
+# counterb = 0
+# print(specData.iloc[typecounter, 0])
+# print(specData.iloc[1, 0])
+# print(specData)
+# for r in range(0,len(data)):
+# # for r in range(2000):
+#     # for i in range(0+start, 32+stop):
+#     data.iat[r,6] = specData.iat[typecounter, 0]
+#     data.iat[r,2] = specData.iat[typecounter, 1]
+#     counterb = counterb + 1
+#     counter = counter + 1
+#     # print(data.iat[typecounter, 5])
+#     if counterb >= 50:
+#         # print(typecounter)
+#         # print(specData.iat[typecounter, 0])
+#         print(data.iat[r,2] + ' ' + data.iat[r, 6] + " " + str(typecounter))
+#         typecounter = typecounter + 1
+#         counterb = 1
+#     if counter > 1599:
+#         typecounter = 0
+#         counter = 0
+#         counterb = 1
 
 
-    # print(r)
+#     # print(r)
 
-# print(data)
-data.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/rtsData/rtsDataidvgsMod.csv')
+# # print(data)
+# data.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/rtsData/rtsDataidvgsMod.csv')
+
+# data = inport(fileLoc, 0 , 0, ['Site', 'Type', 'Vd', 'Vg', 'Id', 'W/L', 'Vth', 'Gm'])
+# grouped = data.groupby(data.Gm) 
+# vthData1 = grouped.get_group(max(data.Gm))
+# vthEx = vthData1.Vd - 1
+# print(vthEx)
+list = np.linspace(3.3, 0)
+vdList = [0.1, 0.8] 
+print(list)
