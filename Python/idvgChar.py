@@ -61,8 +61,10 @@ def bankNum(bank):
         colEnd = colStart + 32
         colS = "Col064"   
         rowS = "Row00"
-        sweepList = np.linspace(0, 3.3)
-        vdList = [0.1, 1.5] 
+        sweepList = np.append(np.linspace(0, 3.3), np.linspace(0, 3.3)) 
+        vdListA = np.full(50, 0.1)
+        vdListB = np.full(50, 1.5)
+        vdList = np.append(vdListA, vdListB)
         csIn = 5
         picLoc = "C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\idvgCharacterization\\Bank 3\idvgcharData"
         fileLoc = '~/miniconda3/envs/testequ/RTSeval/Python/Data/idvgCharacterization/Bank 3/idvgcharData'
