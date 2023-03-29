@@ -1551,3 +1551,126 @@ class Keithley2600(Keithley2600Base):
                 smu.nvbuffer2.clearcache()
             print('returning data')
             return i_smu1, v_smu1, v_smu2
+        
+    def idvgChar2(self, 
+                        smu1: KeithleyClass,
+                        smu2: KeithleyClass,
+                        vgList: Sequence[float],
+                        vdList: Sequence[float],
+                        delay: float,
+                        t_int: float,
+                        limiti: float,
+                        rangei: float):
+            
+        with self._measurement_lock:
+            timestamp = []
+            for smu in [smu1, smu2]:
+                smu.source.func = smu.OUTPUT_DCVOLTS
+                smu.source.rangev = 4
+                self.set_integration_time(smu, t_int)
+                smu.measure.delay = -1
+                smu.source.limitv = 3.3
+                smu.nvbuffer1.clear()
+                smu.nvbuffer2.clear()
+                smu.nvbuffer1.clearcache()
+                smu.nvbuffer2.clearcache()
+                smu.nvbuffer1.appendmode = 1
+                smu.measure.autozero = smu.AUTOZERO_AUTO
+                smu.measure.autorangei = smu.AUTORANGE_ON
+            smu1.nvbuffer2.collecttimestamps = 0
+            smu1.source.limiti = limiti
+
+            self.trigger.blender[1].orenable = True
+            self.trigger.blender[1].stimulus[1] = smu1.trigger.ARMED_EVENT_ID                   # when moved from arm to trigger layer
+            self.trigger.blender[1].stimulus[2] = smu1.trigger.PULSE_COMPLETE_EVENT_ID          # when pulse is complete
+
+            self.trigger.blender[2].orenable = False
+            self.trigger.blender[2].stimulus[1] = smu1.trigger.MEASURE_COMPLETE_EVENT_ID        # when moved from arm to trigger layer
+            self.trigger.blender[2].stimulus[2] = smu2.trigger.MEASURE_COMPLETE_EVENT_ID        # when pulse is complete
+
+            self.trigger.blender[3].orenable = True
+            self.trigger.blender[3].stimulus[1] = smu1.trigger.ARMED_EVENT_ID                   #when moved from arm to trigger layer
+            self.trigger.blender[3].stimulus[2] = smu2.trigger.PULSE_COMPLETE_EVENT_ID          # when pulse is complete
+
+            self.trigger.blender[4].orenable = True
+            self.trigger.blender[4].stimulus[1] = self.trigger.EVENT_ID                         # when trigger is detected
+            self.trigger.blender[4].stimulus[2] = smu1.trigger.PULSE_COMPLETE_EVENT_ID          # when pulse is complete
+
+
+            if len(vdList) > self.CHUNK_SIZE:
+                self.create_lua_attr("python_driver_list", [])
+                for num in vdList:
+                    self.table.insert(self.python_driver_list, num)
+                smu1.trigger.source.listv(self.python_driver_list)
+                self.delete_lua_attr("python_driver_list")
+            else:
+                smu1.trigger.source.listv(vdList)
+                
+            if len(vgList) > self.CHUNK_SIZE:
+                self.create_lua_attr("python_driver_list", [])
+                for num in vgList:
+                    self.table.insert(self.python_driver_list, num)
+                smu2.trigger.source.listv(self.python_driver_list)
+                self.delete_lua_attr("python_driver_list")
+            else:
+                smu2.trigger.source.listv(vgList)
+
+            smu1.trigger.source.listv(vdList)
+            smu1.trigger.source.action = smu1.ENABLE
+            smu1.trigger.source.stimulus = self.trigger.blender[1].EVENT_ID
+            smu1.trigger.measure.action = smu1.ENABLE                                # enable Asynchronous measurements
+            smu1.trigger.measure.iv(smu1.nvbuffer1, smu1.nvbuffer2)                         # measure current and voltage on trigger, store in buffer of smu
+            smu2.trigger.source.action = smu2.ENABLE                               # disable channel b source
+            smu2.trigger.source.stimulus = self.trigger.blender[3].EVENT_ID
+            smu2.trigger.measure.action = smu2.ENABLE                                # enable smu
+            smu2.trigger.measure.v(smu2.nvbuffer1)                                  # measure current and voltage on trigger, store in buffer of smu
+            smu2.nvbuffer1.collectsourcevalues = 0
+
+            smu1.nvbuffer1.collectsourcevalues = 0                                  # must be zero for async measurements
+            smu1.trigger.measure.stimulus = smu2.trigger.SOURCE_COMPLETE_EVENT_ID          # initiate measure trigger when timer is complete
+            smu2.trigger.measure.stimulus = smu2.trigger.SOURCE_COMPLETE_EVENT_ID
+
+            smu1.trigger.count = len(vdList)                                               # number of triggers for pulse
+            smu1.trigger.arm.stimulus = self.trigger.EVENT_ID                               # sweep start trigger
+            smu1.trigger.arm.count = 1                                                      # number of triggers for sweep
+
+            smu1.trigger.endpulse.action = smu1.SOURCE_HOLD                                  # pulse action
+            smu1.trigger.endpulse.stimulus = smu2.trigger.SWEEP_COMPLETE_EVENT_ID           # initiate pulse
+            smu1.trigger.endsweep.action = smu1.SOURCE_IDLE                                  # turn off source after sweep 
+
+            smu2.trigger.count = len(vgList)                                                # number of triggers for pulse
+            smu2.trigger.arm.stimulus = self.trigger.blender[4].EVENT_ID                              # sweep start trigger
+            smu2.trigger.arm.count = len(vdList)                                            # number of triggers for sweep
+
+            smu2.trigger.endpulse.action = smu2.SOURCE_HOLD                                  # pulse action
+            smu2.trigger.endpulse.stimulus = self.trigger.blender[2].EVENT_ID          # initiate pulse
+            smu2.trigger.endsweep.action = smu2.SOURCE_IDLE          
+
+            smu1.source.output = smu1.OUTPUT_ON                                             # turn on smu
+            smu2.source.output = smu2.OUTPUT_ON
+            smu1.trigger.initiate()                                                         # move into the armed layer
+            smu2.trigger.initiate()
+            self.send_trigger()                                                             # start the sweep
+
+            while self.status.operation.sweeping.condition == 0:                            # check if sweep has started 
+                # print('waiting')
+                self.trigger.wait(.001)
+                # # while loop that runs until the sweep ends
+            while self.status.operation.sweeping.condition > 0:                             # check if sweep has ended
+                # print('running')
+                # self.waitcomplete()
+                self.trigger.wait(.001)
+                # self.display.trigger.clear()
+            print('reading buffers')
+            i_smu1 = self.read_buffer(smu1.nvbuffer1)
+            v_smu1 = self.read_buffer(smu1.nvbuffer2)
+            v_smu2 = self.read_buffer(smu2.nvbuffer1)
+
+            # CLEAR BUFFERS:
+            for smu in [smu1, smu2]:
+                smu.nvbuffer1.clear()
+                smu.nvbuffer2.clear()
+                smu.nvbuffer1.clearcache()
+                smu.nvbuffer2.clearcache()
+            print('returning data')
+            return i_smu1, v_smu1, v_smu2
