@@ -61,8 +61,10 @@ def bankNum(bank):
         colEnd = colStart + 32
         colS = "Col064"   
         rowS = "Row00"
-        sweepList = np.linspace(0, 3.3)
-        vdList = [0.1, 1.5] 
+        sweepList = np.append(np.linspace(0, 3.3), np.linspace(0, 3.3)) 
+        vdListA = np.full(50, 0.1)
+        vdListB = np.full(50, 1.5)
+        vdList = np.append(vdListA, vdListB)
         csIn = 5
         picLoc = "C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\idvgCharacterization\\Bank 3\idvgcharData"
         fileLoc = '~/miniconda3/envs/testequ/RTSeval/Python/Data/idvgCharacterization/Bank 3/idvgcharData'
@@ -92,6 +94,42 @@ def bankNum(bank):
         fileLoc = '~/miniconda3/envs/testequ/RTSeval/Python/Data/idvgCharacterization/Bank 5/idvgcharData'
         limiti = 0.001
         rangei = pow(10, -3)
+    elif bank == 6:
+        colStart = 161
+        colEnd = colStart + 32
+        colS = "Col160"   
+        rowS = "Row00"
+        sweepList = np.linspace(0, 3.3)
+        vdList = [3.2, 1.8] 
+        csIn = 6
+        picLoc = "C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\idvgCharacterization\\Bank 6\\idvgcharData"
+        fileLoc = '~/miniconda3/envs/testequ/RTSeval/Python/Data/idvgCharacterization/Bank 6/idvgcharData'
+        limiti = 0.001
+        rangei = pow(10, -3)
+    elif bank == 7:
+        colStart = 193
+        colEnd = colStart + 32
+        colS = "Col192"   
+        rowS = "Row00"
+        sweepList = np.linspace(3.3, 0)
+        vdList = [3.2, 1.8] 
+        csIn = 6
+        picLoc = "C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\idvgCharacterization\\Bank 7\\idvgcharData"
+        fileLoc = '~/miniconda3/envs/testequ/RTSeval/Python/Data/idvgCharacterization/Bank 7/idvgcharData'
+        limiti = 0.001
+        rangei = pow(10, -3)
+    elif bank == 8:
+        colStart = 225
+        colEnd = colStart + 32
+        colS = "Col224"   
+        rowS = "Row00"
+        sweepList = np.linspace(3.3, 0)
+        vdList = [3.2, 1.8] 
+        csIn = 6
+        picLoc = "C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\idvgCharacterization\\Bank 8\\idvgcharData"
+        fileLoc = '~/miniconda3/envs/testequ/RTSeval/Python/Data/idvgCharacterization/Bank 8/idvgcharData'
+        limiti = 0.001
+        rangei = pow(10, -3)
     return rowStart, rowEnd, colStart, colEnd, colS, rowS, sweepList, vdList, csIn, picLoc, fileLoc, limiti, rangei
 
 def powerPico():                                                                    # Turns on the vPwr pins for pi pico
@@ -114,7 +152,7 @@ specData = pd.DataFrame(pd.read_csv('~\miniconda3\envs\\testequ\RTSeval\Files\RT
 dieX = '6p'
 dieY = '3'
 
-rowStart, rowEnd, colStart, colEnd, colS, rowS, sweepList, vdList, csIn, picLoc, fileLoc, limiti, rangei = bankNum(5)        # selects the bank to test
+rowStart, rowEnd, colStart, colEnd, colS, rowS, sweepList, vdList, csIn, picLoc, fileLoc, limiti, rangei = bankNum(6)        # selects the bank to test
 colBegin = colS
 smu.apply_voltage(smu.smua, 0.0)
 smu.apply_voltage(smu.smub, 0.0)

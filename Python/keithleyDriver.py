@@ -1031,7 +1031,7 @@ class Keithley2600(Keithley2600Base):
     def idvgsChar(self,
         smu1: KeithleyClass,
         smu2: KeithleyClass,
-        ilist: Sequence[float],
+        iList: Sequence[float],
         delay: float,
         t_int: float):
         
@@ -1040,16 +1040,15 @@ class Keithley2600(Keithley2600Base):
             if self.abort_event.is_set():
                 return v1_smu, i1_smu, v2_smu
 
-            if len(ilist) > self.CHUNK_SIZE:
-                self.create_lua_attr("python_driver_list", [])
-                for num in ilist:
-                    self.table.insert(self.python_driver_list, num)
-                smu1.trigger.source.listi(self.python_driver_list)
-                self.delete_lua_attr("python_driver_list")
-            else:
-                smu1.trigger.source.listi(ilist)
+            # if len(iList) > self.CHUNK_SIZE:
+            #     self.create_lua_attr("python_driver_list", [])
+            #     for num in iList:
+            #         self.table.insert(self.python_driver_list, num)
+            #     smu1.trigger.source.listi(self.python_driver_list)
+            #     self.delete_lua_attr("python_driver_list")
+            # else:
+            #     smu1.trigger.source.listi(iList)
             
-            smu2.trigger.source.listi({0})
 
 
             
@@ -1061,29 +1060,40 @@ class Keithley2600(Keithley2600Base):
                 smu.nvbuffer1.clearcache()
                 smu.nvbuffer2.clearcache()
                 smu.source.limitv = 3.3
-                smu.measure.rangev = 3.3
+                # smu.measure.rangev = 3.3
                 smu.source.func = smu.OUTPUT_DCAMPS
                 self.set_integration_time(smu, t_int)
-                smu.measure.delay = smu.DELAY_OFF
+                smu.measure.delay = delay # smu.DELAY_OFF
                 smu.nvbuffer1.appendmode = 1
                 smu.nvbuffer2.appendmode = 1
-            smu1.source.autorangev = smu1.AUTORANGE_OFF
-            smu2.source.autorangev = smu2.AUTORANGE_OFF
+            smu1.source.rangei = pow(10, -4) # smu1.AUTORANGE_ON
+            smu2.source.rangei = pow(10, -4) # smu2.AUTORANGE_ON
             smu1.measure.autozero = smu1.AUTOZERO_AUTO
             smu2.measure.autozero = smu2.AUTOZERO_AUTO
             # smu1.nvbuffer1.collectsourcevalues = 1
 
             self.trigger.blender[1].orenable = True
-            self.trigger.blender[1].stimulus[1] = self.trigger.EVENT_ID            #when moved from arm to trigger layer
+            self.trigger.blender[1].stimulus[1] = smu1.trigger.ARMED_EVENT_ID            #when moved from arm to trigger layer
             self.trigger.blender[1].stimulus[2] = smu1.trigger.PULSE_COMPLETE_EVENT_ID   # when pulse is complete
 
             self.trigger.blender[3].orenable = True
-            self.trigger.blender[3].stimulus[1] = self.trigger.EVENT_ID            #when moved from arm to trigger layer
+            self.trigger.blender[3].stimulus[1] = smu2.trigger.ARMED_EVENT_ID            #when moved from arm to trigger layer
             self.trigger.blender[3].stimulus[2] = smu2.trigger.PULSE_COMPLETE_EVENT_ID   # when pulse is complete
 
             self.trigger.blender[2].orenable = False
             self.trigger.blender[2].stimulus[1] = smu1.trigger.MEASURE_COMPLETE_EVENT_ID            #when moved from arm to trigger layer
             self.trigger.blender[2].stimulus[2] = smu2.trigger.MEASURE_COMPLETE_EVENT_ID   # when pulse is complete
+
+            # if len(iList) > self.CHUNK_SIZE:
+            #     self.create_lua_attr("python_driver_list", [])
+            #     for num in iList:
+            #         self.table.insert(self.python_driver_list, num)
+            #     smu2.trigger.source.listv(self.python_driver_list)
+            #     self.delete_lua_attr("python_driver_list")
+            # else:
+            
+            smu1.trigger.source.logi(0.0000000001, (0.00005), 50, 0)
+            smu2.trigger.source.listi({0})
 
             smu1.trigger.source.action = smu1.ENABLE
             smu2.trigger.source.action = smu2.ENABLE
@@ -1102,8 +1112,8 @@ class Keithley2600(Keithley2600Base):
             # self.trigger.timer[1].passthrough = True
             # self.trigger.timer[1].stimulus = smu2.trigger.SOURCE_COMPLETE_EVENT_ID
 
-            smu1.trigger.count = len(ilist)
-            smu2.trigger.count = len(ilist)
+            smu1.trigger.count = 50 #len(iList)
+            smu2.trigger.count = 50 #len(iList)
             smu1.trigger.arm.stimulus = self.trigger.EVENT_ID
             smu2.trigger.arm.stimulus = self.trigger.EVENT_ID
             smu2.trigger.arm.count = 1
@@ -1124,12 +1134,12 @@ class Keithley2600(Keithley2600Base):
             # smu.trigger.source.set()
             while self.status.operation.sweeping.condition == 0:
                 # print('waiting')
-                self.trigger.wait(.1)
+                self.trigger.wait(.001)
                 # # while loop that runs until the sweep ends
             while self.status.operation.sweeping.condition > 0:
                 # print('running')
                 # self.waitcomplete()
-                self.trigger.wait(delay)
+                self.trigger.wait(.001)
                 # self.display.trigger.clear()
             print('reading buffers')
             # i_smu1 = self.read_buffer(smu1.nvbuffer1)
