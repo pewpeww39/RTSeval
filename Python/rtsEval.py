@@ -54,6 +54,126 @@ def plotrts(fileLoc, row, rtsData):
     # plt.pause(5)
     plt.close(fig2)
 
+def bankNum(bank):
+    rowStart = 1
+    rowEnd = 96 + 1 
+    if bank == 1:
+        colStart = 1
+        colEnd = colStart + 32
+        colS = "Col000"   
+        rowS = "Row00"
+        sweepList = np.append(np.linspace(0, 1.2), np.linspace(0, 1.2)) 
+        vdListA = np.full(50, 0.1)
+        vdListB = np.full(50, 0.8)
+        vdList = np.append(vdListA, vdListB)
+        csIn = 5
+        picLoc = "C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\rtsData\\Bank 1\\rtsData"
+        fileLoc = '~/miniconda3/envs/testequ/RTSeval/Python/Data/rtsData/Bank 1/rtsData'
+        limiti = 0.001
+        rangei = pow(10, -3)
+    elif bank == 2:
+        colStart = 33
+        colEnd = colStart + 32
+        colS = "Col032"   
+        rowS = "Row00"
+        sweepList = np.append(np.linspace(0, 1.2), np.linspace(0, 1.2)) 
+        vdListA = np.full(50, 0.1)
+        vdListB = np.full(50, 0.8)
+        vdList = np.append(vdListA, vdListB)
+        csIn = 5
+        picLoc = "C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\rtsData\\Bank 2\\rtsData"
+        fileLoc = '~/miniconda3/envs/testequ/RTSeval/Python/Data/rtsData/Bank 2/rtsData'
+        limiti = 0.001
+        rangei = pow(10, -3)
+    elif bank == 3:
+        colStart = 65
+        colEnd = colStart + 32
+        colS = "Col064"   
+        rowS = "Row00"
+        sweepList = np.append(np.linspace(0, 3.3), np.linspace(0, 3.3)) 
+        vdListA = np.full(50, 0.1)
+        vdListB = np.full(50, 1.5)
+        vdList = np.append(vdListA, vdListB)
+        csIn = 5
+        picLoc = "C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\rtsData\\Bank 3\rtsData"
+        fileLoc = '~/miniconda3/envs/testequ/RTSeval/Python/Data/rtsData/Bank 3/rtsData'
+        limiti = 0.01
+        rangei = pow(10, -2)
+    elif bank == 4:
+        colStart = 97
+        colEnd = colStart + 32
+        colS = "Col096"   
+        rowS = "Row00"
+        sweepList = np.append(np.linspace(0, 3.3), np.linspace(0, 3.3)) 
+        vdListA = np.full(50, 0.1)
+        vdListB = np.full(50, 1.5)
+        vdList = np.append(vdListA, vdListB)
+        csIn = 5
+        picLoc = "C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\rtsData\\Bank 4\\rtsData"
+        fileLoc = '~/miniconda3/envs/testequ/RTSeval/Python/Data/rtsData/Bank 4/rtsData'
+        limiti = 0.001
+        rangei = pow(10, -3)
+    elif bank == 5:
+        colStart = 129
+        colEnd = colStart + 32
+        colS = "Col128"   
+        rowS = "Row00"
+        # sweepList = np.linspace(1.2, 0)
+        # vdList = [1.1, 0.4] 
+        sweepList = np.append(np.linspace(1.2, 0), np.linspace(1.2, 0)) 
+        vdListA = np.full(50, 1.1)
+        vdListB = np.full(50, 0.4)
+        vdList = np.append(vdListA, vdListB)
+        csIn = 6
+        picLoc = "C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\rtsData\\Bank 5\\rtsData"
+        fileLoc = '~/miniconda3/envs/testequ/RTSeval/Python/Data/rtsData/Bank 5/rtsData'
+        limiti = 0.001
+        rangei = pow(10, -3)
+    elif bank == 6:
+        colStart = 161
+        colEnd = colStart + 32
+        colS = "Col160"   
+        rowS = "Row00"
+        sweepList = np.append(np.linspace(3.3, 0), np.linspace(3.3, 0)) 
+        vdListA = np.full(50, 3.2)
+        vdListB = np.full(50, 1.8)
+        vdList = np.append(vdListA, vdListB)
+        csIn = 6
+        picLoc = "C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\rtsData\\Bank 6\\rtsData"
+        fileLoc = '~/miniconda3/envs/testequ/RTSeval/Python/Data/rtsData/Bank 6/rtsData'
+        limiti = 0.001
+        rangei = pow(10, -3)
+    elif bank == 7:
+        colStart = 193
+        colEnd = colStart + 32
+        colS = "Col192"   
+        rowS = "Row00"
+        sweepList = np.append(np.linspace(3.3, 0), np.linspace(3.3, 0)) 
+        vdListA = np.full(50, 3.2)
+        vdListB = np.full(50, 1.8)
+        vdList = np.append(vdListA, vdListB)
+        csIn = 6
+        picLoc = "C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\rtsData\\Bank 7\\rtsData"
+        fileLoc = '~/miniconda3/envs/testequ/RTSeval/Python/Data/rtsData/Bank 7/rtsData'
+        limiti = 0.001
+        rangei = pow(10, -3)
+    elif bank == 8:
+        colStart = 225
+        colEnd = colStart + 32
+        colS = "Col224"   
+        rowS = "Row00"
+        sweepList = np.append(np.linspace(3.3, 0), np.linspace(3.3, 0)) 
+        vdListA = np.full(50, 3.2)
+        vdListB = np.full(50, 1.8)
+        vdList = np.append(vdListA, vdListB)
+        csIn = 6
+        picLoc = "C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\rtsData\\Bank 8\\rtsData"
+        fileLoc = '~/miniconda3/envs/testequ/RTSeval/Python/Data/rtsData/Bank 8/rtsData'
+        limiti = 0.001
+        rangei = pow(10, -3)
+    return rowStart, rowEnd, colStart, colEnd, colS, rowS, sweepList, vdList, csIn, picLoc, fileLoc, limiti, rangei
+
+
 
 vOut = pd.DataFrame(data=[], index=[], columns=[]) 
 bData = pd.DataFrame(data=[], index=[], columns=[])
@@ -73,35 +193,42 @@ rowNum = 1
 colNum = 32
 rowS = "Row 1"
 colS = "Col 1"
-for c in range(rowNum):
-    for c in range(colNum):
-        commandTX = write_cmd(str(4))                                                   # selects the switch case on the pico
-        commandRX = pico.read_until().strip().decode()                                  # confirms mode selected
-        time.sleep(.5)
+
+rowStart, rowEnd, colStart, colEnd, colS, rowS, sweepList, vdList, csIn, picLoc, fileLoc, limiti, rangei = bankNum(1)        # selects the bank to test
+
+for row in range(rowStart, rowEnd):
+    for col in range(colStart, colEnd):
+        # start_total_time = time.time()
+        commandTX = write_cmd(f"{csIn},{row},{col}")                                                   # selects the switch case on the pico
+        commandRX = tuple(pico.read_until().strip().decode().split(','))
+        commandRX, rowRX, columnRX = commandRX
+        # end_command_time = time.time()
+        rowRX = re.sub(r'[0-9]+$',
+                lambda x: f"{str(int(x.group())-1).zfill(len(x.group()))}",    # decrements the number in the row number
+                rowRX)  
+        columnRX = re.sub(r'[0-9]+$',
+                lambda x: f"{str(int(x.group())-1).zfill(len(x.group()))}",    # decrements the number in the colimn number
+                columnRX)    
         print('pico confirmed: ' + str(commandRX))
-        write_cmd(str(rowSelect))                                              # increments the column to test
-        rowRX = pico.read_until().strip().decode()                                   # confirms column selected
         print('pico selected row: ' + str(rowRX))
-        time.sleep(.5)
-        write_cmd(str(colSelect))                                              # increments the column to test
-        columnRX = pico.read_until().strip().decode()                                   # confirms column selected
         print('pico selected column: ' + str(columnRX))
-        time.sleep(.5)
+        # start_response_time = time.time()
         commandRX = int(pico.read_until().strip().decode())                             # confirms shift registers are loaded
-        print('pico loaded shift register')
-        spec = list(specData.iloc[c+1])
-        if commandRX == 1:
-            for i in range(1):
-                smu._write(value = "smub.measure.autozero = smub.AUTOZERO_AUTO")
-                smu.smub.measure.v()
-                time.sleep(.5)
-                vOut = smu.sourceA_measAB(smu.smua, smu.smub, 0.000000005, 20, .001, .0005)
-                bData[rowS] = vOut
-                rtsData = pd.concat([rtsData, bData], axis = 1, ignore_index=True)
-                rtsData.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/rtsData/rtsLoopData.csv')
-                # plotrts(picLoc, 0, rtsData)
-                bData = bData.drop(bData.index) 
-                bData[rowS] = []
+        print(f'pico loaded the shift registers')                           # confirms shift registers are loaded
+        # end_response_time = time.time()
+        # start_voltage_sweep = time.time()
+        spec = list(specData.iloc[col - 1])
+        for i in range(1):
+            smu._write(value = "smub.measure.autozero = smub.AUTOZERO_AUTO")
+            smu.smub.measure.v()
+            time.sleep(.5)
+            vOut = smu.sourceA_measAB(smu.smua, smu.smub, 0.000000005, 20, .001, .0005)
+            bData[rowS] = vOut
+            rtsData = pd.concat([rtsData, bData], axis = 1, ignore_index=True)
+            rtsData.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/rtsData/rtsLoopData.csv')
+            # plotrts(picLoc, 0, rtsData)
+            bData = bData.drop(bData.index) 
+            bData[rowS] = []
                 
         # rtsData = pd.concat([rtsData, bData], axis = 1)
         plt.plot(rtsData, label = "Vs")

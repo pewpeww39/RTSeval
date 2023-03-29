@@ -37,8 +37,10 @@ def bankNum(bank):
         colEnd = colStart + 32
         colS = "Col000"   
         rowS = "Row00"
-        sweepList = np.linspace(0, 1.2)
-        vdList = [0.1, 0.8] 
+        sweepList = np.append(np.linspace(0, 1.2), np.linspace(0, 1.2)) 
+        vdListA = np.full(50, 0.1)
+        vdListB = np.full(50, 0.8)
+        vdList = np.append(vdListA, vdListB)
         csIn = 5
         picLoc = "C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\idvgCharacterization\\Bank 1\\idvgcharData"
         fileLoc = '~/miniconda3/envs/testequ/RTSeval/Python/Data/idvgCharacterization/Bank 1/idvgcharData'
@@ -49,8 +51,10 @@ def bankNum(bank):
         colEnd = colStart + 32
         colS = "Col032"   
         rowS = "Row00"
-        sweepList = np.linspace(0, 1.2)
-        vdList = [0.1, 0.8]
+        sweepList = np.append(np.linspace(0, 1.2), np.linspace(0, 1.2)) 
+        vdListA = np.full(50, 0.1)
+        vdListB = np.full(50, 0.8)
+        vdList = np.append(vdListA, vdListB)
         csIn = 5
         picLoc = "C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\idvgCharacterization\\Bank 2\\idvgcharData"
         fileLoc = '~/miniconda3/envs/testequ/RTSeval/Python/Data/idvgCharacterization/Bank 2/idvgcharData'
@@ -61,8 +65,10 @@ def bankNum(bank):
         colEnd = colStart + 32
         colS = "Col064"   
         rowS = "Row00"
-        sweepList = np.linspace(0, 3.3)
-        vdList = [0.1, 1.5] 
+        sweepList = np.append(np.linspace(0, 3.3), np.linspace(0, 3.3)) 
+        vdListA = np.full(50, 0.1)
+        vdListB = np.full(50, 1.5)
+        vdList = np.append(vdListA, vdListB)
         csIn = 5
         picLoc = "C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\idvgCharacterization\\Bank 3\idvgcharData"
         fileLoc = '~/miniconda3/envs/testequ/RTSeval/Python/Data/idvgCharacterization/Bank 3/idvgcharData'
@@ -73,8 +79,10 @@ def bankNum(bank):
         colEnd = colStart + 32
         colS = "Col096"   
         rowS = "Row00"
-        sweepList = np.linspace(0, 3.3)
-        vdList = [0.1, 1.5] 
+        sweepList = np.append(np.linspace(0, 3.3), np.linspace(0, 3.3)) 
+        vdListA = np.full(50, 0.1)
+        vdListB = np.full(50, 1.5)
+        vdList = np.append(vdListA, vdListB)
         csIn = 5
         picLoc = "C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\idvgCharacterization\\Bank 4\\idvgcharData"
         fileLoc = '~/miniconda3/envs/testequ/RTSeval/Python/Data/idvgCharacterization/Bank 4/idvgcharData'
@@ -85,11 +93,57 @@ def bankNum(bank):
         colEnd = colStart + 32
         colS = "Col128"   
         rowS = "Row00"
-        sweepList = np.linspace(1.2, 0)
-        vdList = [1.1, 0.4] 
+        # sweepList = np.linspace(1.2, 0)
+        # vdList = [1.1, 0.4] 
+        sweepList = np.append(np.linspace(1.2, 0), np.linspace(1.2, 0)) 
+        vdListA = np.full(50, 1.1)
+        vdListB = np.full(50, 0.4)
+        vdList = np.append(vdListA, vdListB)
         csIn = 6
         picLoc = "C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\idvgCharacterization\\Bank 5\\idvgcharData"
         fileLoc = '~/miniconda3/envs/testequ/RTSeval/Python/Data/idvgCharacterization/Bank 5/idvgcharData'
+        limiti = 0.001
+        rangei = pow(10, -3)
+    elif bank == 6:
+        colStart = 161
+        colEnd = colStart + 32
+        colS = "Col160"   
+        rowS = "Row00"
+        sweepList = np.append(np.linspace(3.3, 0), np.linspace(3.3, 0)) 
+        vdListA = np.full(50, 3.2)
+        vdListB = np.full(50, 1.8)
+        vdList = np.append(vdListA, vdListB)
+        csIn = 6
+        picLoc = "C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\idvgCharacterization\\Bank 6\\idvgcharData"
+        fileLoc = '~/miniconda3/envs/testequ/RTSeval/Python/Data/idvgCharacterization/Bank 6/idvgcharData'
+        limiti = 0.001
+        rangei = pow(10, -3)
+    elif bank == 7:
+        colStart = 193
+        colEnd = colStart + 32
+        colS = "Col192"   
+        rowS = "Row00"
+        sweepList = np.append(np.linspace(3.3, 0), np.linspace(3.3, 0)) 
+        vdListA = np.full(50, 3.2)
+        vdListB = np.full(50, 1.8)
+        vdList = np.append(vdListA, vdListB)
+        csIn = 6
+        picLoc = "C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\idvgCharacterization\\Bank 7\\idvgcharData"
+        fileLoc = '~/miniconda3/envs/testequ/RTSeval/Python/Data/idvgCharacterization/Bank 7/idvgcharData'
+        limiti = 0.001
+        rangei = pow(10, -3)
+    elif bank == 8:
+        colStart = 225
+        colEnd = colStart + 32
+        colS = "Col224"   
+        rowS = "Row00"
+        sweepList = np.append(np.linspace(3.3, 0), np.linspace(3.3, 0)) 
+        vdListA = np.full(50, 3.2)
+        vdListB = np.full(50, 1.8)
+        vdList = np.append(vdListA, vdListB)
+        csIn = 6
+        picLoc = "C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\idvgCharacterization\\Bank 8\\idvgcharData"
+        fileLoc = '~/miniconda3/envs/testequ/RTSeval/Python/Data/idvgCharacterization/Bank 8/idvgcharData'
         limiti = 0.001
         rangei = pow(10, -3)
     return rowStart, rowEnd, colStart, colEnd, colS, rowS, sweepList, vdList, csIn, picLoc, fileLoc, limiti, rangei
@@ -114,7 +168,7 @@ specData = pd.DataFrame(pd.read_csv('~\miniconda3\envs\\testequ\RTSeval\Files\RT
 dieX = '6p'
 dieY = '3'
 
-rowStart, rowEnd, colStart, colEnd, colS, rowS, sweepList, vdList, csIn, picLoc, fileLoc, limiti, rangei = bankNum(5)        # selects the bank to test
+rowStart, rowEnd, colStart, colEnd, colS, rowS, sweepList, vdList, csIn, picLoc, fileLoc, limiti, rangei = bankNum(1)        # selects the bank to test
 colBegin = colS
 smu.apply_voltage(smu.smua, 0.0)
 smu.apply_voltage(smu.smub, 0.0)
@@ -141,10 +195,10 @@ for row in range(rowStart, rowEnd):
         print(f'pico loaded the shift registers')                           # confirms shift registers are loaded
         # end_response_time = time.time()
         # start_voltage_sweep = time.time()
-        spec = list(specData.iloc[col-1])
-        smu._write(value = "smua.measure.autozero = smua.AUTOZERO_AUTO")
-        smu.smub.measure.v()
-        currOut, measVd, measVg= smu.idvgChar(smu.smua, smu.smub, sweepList, vdList, .001, .01, limiti, rangei)
+        spec = list(specData.iloc[col - 1])
+        # smu._write(value = "smua.measure.autozero = smua.AUTOZERO_AUTO")
+        # smu.smub.measure.v()
+        currOut, measVd, measVg= smu.idvgChar2(smu.smua, smu.smub, sweepList, vdList, -1, .001, limiti, rangei)
         # vGS = measVs 
         # for i in range(len(measVs)):
         #     vGS[i] = 1.2 - vGS[i]
@@ -190,7 +244,7 @@ for row in range(rowStart, rowEnd):
             pltData1 = grouped.get_group(vth1)
             pltData2 = grouped.get_group(vth2)
             plt.plot(pltData1["Vg"], pltData1["Id"], label = "Vd = " + str(vdList[0]))
-            plt.plot(pltData2["Vg"], pltData2["Id"], label = "Vd = " + str(vdList[1]))
+            plt.plot(pltData2["Vg"], pltData2["Id"], label = "Vd = " + str(vdList[50]))
             # plt.figtext(.4, .15, "Vg = 1.2 V, Vdd = 1.2 V", fontsize = 10)
             # plt.figtext(.4, .2, "Ibias = 20 uA to .1 nA, AmpBias = .5 mA", fontsize = 10)
             # plt.figtext(.4, .25, "column = " + str(colS) + ", row = " + str(rowS), fontsize = 10)
