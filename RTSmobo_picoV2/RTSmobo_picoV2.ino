@@ -220,7 +220,7 @@ void loop()
         break;
       }
 
-    case 5: {                               // Clock, Shift Register Characterization
+    case 5: {                               // idvg, idvgs, rts NMOS Characterization
         digitalWrite(Csin, HIGH);             // close NMOS amp bypass
         digitalWrite(LED, LOW);
         if (debug == true) {
@@ -271,7 +271,7 @@ void loop()
         break;
       }
      
-     case 6: {                               // Clock, Shift Register Characterization
+     case 6: {                               // idvg, idvgs, rts PMOS Characterization
         digitalWrite(Csin, LOW);             // close NMOS amp bypass
         digitalWrite(LED, LOW);
         if (debug == true) {

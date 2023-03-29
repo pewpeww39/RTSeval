@@ -1551,7 +1551,7 @@ class Keithley2600(Keithley2600Base):
                 smu.nvbuffer2.clearcache()
             print('returning data')
             return i_smu1, v_smu1, v_smu2
-        
+
     def idvgChar2(self, 
                         smu1: KeithleyClass,
                         smu2: KeithleyClass,
@@ -1563,18 +1563,20 @@ class Keithley2600(Keithley2600Base):
                         rangei: float):
             
         with self._measurement_lock:
+            # self.delete_lua_attr("python_driver_list")
             timestamp = []
             for smu in [smu1, smu2]:
                 smu.source.func = smu.OUTPUT_DCVOLTS
                 smu.source.rangev = 4
                 self.set_integration_time(smu, t_int)
-                smu.measure.delay = -1
+                smu.measure.delay = delay
                 smu.source.limitv = 3.3
                 smu.nvbuffer1.clear()
                 smu.nvbuffer2.clear()
                 smu.nvbuffer1.clearcache()
                 smu.nvbuffer2.clearcache()
                 smu.nvbuffer1.appendmode = 1
+                smu.nvbuffer2.appendmode = 1
                 smu.measure.autozero = smu.AUTOZERO_AUTO
                 smu.measure.autorangei = smu.AUTORANGE_ON
             smu1.nvbuffer2.collecttimestamps = 0
@@ -1591,11 +1593,6 @@ class Keithley2600(Keithley2600Base):
             self.trigger.blender[3].orenable = True
             self.trigger.blender[3].stimulus[1] = smu1.trigger.ARMED_EVENT_ID                   #when moved from arm to trigger layer
             self.trigger.blender[3].stimulus[2] = smu2.trigger.PULSE_COMPLETE_EVENT_ID          # when pulse is complete
-
-            self.trigger.blender[4].orenable = True
-            self.trigger.blender[4].stimulus[1] = self.trigger.EVENT_ID                         # when trigger is detected
-            self.trigger.blender[4].stimulus[2] = smu1.trigger.PULSE_COMPLETE_EVENT_ID          # when pulse is complete
-
 
             if len(vdList) > self.CHUNK_SIZE:
                 self.create_lua_attr("python_driver_list", [])
@@ -1615,7 +1612,6 @@ class Keithley2600(Keithley2600Base):
             else:
                 smu2.trigger.source.listv(vgList)
 
-            smu1.trigger.source.listv(vdList)
             smu1.trigger.source.action = smu1.ENABLE
             smu1.trigger.source.stimulus = self.trigger.blender[1].EVENT_ID
             smu1.trigger.measure.action = smu1.ENABLE                                # enable Asynchronous measurements
@@ -1627,7 +1623,7 @@ class Keithley2600(Keithley2600Base):
             smu2.nvbuffer1.collectsourcevalues = 0
 
             smu1.nvbuffer1.collectsourcevalues = 0                                  # must be zero for async measurements
-            smu1.trigger.measure.stimulus = smu2.trigger.SOURCE_COMPLETE_EVENT_ID          # initiate measure trigger when timer is complete
+            smu1.trigger.measure.stimulus = smu1.trigger.SOURCE_COMPLETE_EVENT_ID          # initiate measure trigger when timer is complete
             smu2.trigger.measure.stimulus = smu2.trigger.SOURCE_COMPLETE_EVENT_ID
 
             smu1.trigger.count = len(vdList)                                               # number of triggers for pulse
@@ -1635,12 +1631,12 @@ class Keithley2600(Keithley2600Base):
             smu1.trigger.arm.count = 1                                                      # number of triggers for sweep
 
             smu1.trigger.endpulse.action = smu1.SOURCE_HOLD                                  # pulse action
-            smu1.trigger.endpulse.stimulus = smu2.trigger.SWEEP_COMPLETE_EVENT_ID           # initiate pulse
+            smu1.trigger.endpulse.stimulus = self.trigger.blender[2].EVENT_ID                # initiate pulse
             smu1.trigger.endsweep.action = smu1.SOURCE_IDLE                                  # turn off source after sweep 
 
             smu2.trigger.count = len(vgList)                                                # number of triggers for pulse
-            smu2.trigger.arm.stimulus = self.trigger.blender[4].EVENT_ID                              # sweep start trigger
-            smu2.trigger.arm.count = len(vdList)                                            # number of triggers for sweep
+            smu2.trigger.arm.stimulus = self.trigger.EVENT_ID                               # sweep start trigger
+            smu2.trigger.arm.count = 1                                                      # number of triggers for sweep
 
             smu2.trigger.endpulse.action = smu2.SOURCE_HOLD                                  # pulse action
             smu2.trigger.endpulse.stimulus = self.trigger.blender[2].EVENT_ID          # initiate pulse
@@ -1674,3 +1670,5 @@ class Keithley2600(Keithley2600Base):
                 smu.nvbuffer2.clearcache()
             print('returning data')
             return i_smu1, v_smu1, v_smu2
+
+
