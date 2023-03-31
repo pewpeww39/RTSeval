@@ -173,6 +173,13 @@ def bankNum(bank):
         rangei = pow(10, -3)
     return rowStart, rowEnd, colStart, colEnd, colS, rowS, sweepList, vdList, csIn, picLoc, fileLoc, limiti, rangei
 
+def powerPico():                                                                    # Turns on the vPwr pins for pi pico
+    write_cmd(str(7))                                                               # selects the switch case on the pico
+    pico.read_until().strip().decode()                                              # confirms mode selected
+    print('pico turned on the power') 
+    time.sleep(2)
+
+
 
 
 vOut = pd.DataFrame(data=[], index=[], columns=[]) 
@@ -187,14 +194,16 @@ specData = pd.DataFrame(pd.read_csv('~\miniconda3\envs\\testequ\RTSeval\Files\RT
 smu = Keithley2600('TCPIP0::192.168.4.11::INSTR')               #set ip addr for smu
 pico = serial.Serial('COM4', baudrate=115200)
 clearSMU()
-rowSelect = 1
-colSelect = 1
-rowNum = 1
-colNum = 32
-rowS = "Row 1"
-colS = "Col 1"
+
 
 rowStart, rowEnd, colStart, colEnd, colS, rowS, sweepList, vdList, csIn, picLoc, fileLoc, limiti, rangei = bankNum(1)        # selects the bank to test
+colBegin = colS
+smu.apply_voltage(smu.smua, 0.0)
+smu.apply_voltage(smu.smub, 0.0)
+powerPico()
+
+dieX = '6p'
+dieY = '3'
 
 for row in range(rowStart, rowEnd):
     for col in range(colStart, colEnd):
@@ -221,7 +230,6 @@ for row in range(rowStart, rowEnd):
         for i in range(1):
             smu._write(value = "smub.measure.autozero = smub.AUTOZERO_AUTO")
             smu.smub.measure.v()
-            time.sleep(.5)
             vOut = smu.sourceA_measAB(smu.smua, smu.smub, 0.000000005, 20, .001, .0005)
             bData[rowS] = vOut
             rtsData = pd.concat([rtsData, bData], axis = 1, ignore_index=True)
@@ -235,13 +243,13 @@ for row in range(rowStart, rowEnd):
         plt.title("RTS Data: Column 1")
         plt.figtext(.2, .15, "Vgs = 0.17, Vg = 1.2 V, Vdd = 1.2 V", fontsize = 10)
         plt.figtext(.2, .2, "Ibias = 5 nA, AmpBias = .5 mA", fontsize = 10)
-        plt.figtext(.2, .25, "column = " + str(colNum) + ", row = " + str(rowNum), fontsize = 10)
+        plt.figtext(.2, .25, "column = " + str(col) + ", row = " + str(row), fontsize = 10)
         plt.figtext(.2, .3, spec, fontsize = 10)
         plt.xlabel("Time [mSec]")
         plt.ylabel("Voltage [V]")
         plt.legend()
         plt.ylim(1.08, 1.12)
-        plt.savefig(picLoc + " " + str(colS) + " " + str(rowS) + " "+ dt_string + " TS.png", dpi = 1000)
+        plt.savefig(picLoc + " " + str(col) + " " + str(row) + " "+ dt_string + " TS.png", dpi = 1000)
         fig1 = plt.show(block = False)
         plt.pause(3)
         plt.close(fig1)
@@ -249,11 +257,11 @@ for row in range(rowStart, rowEnd):
         plt.title("RTS Data: Column 1")
         plt.figtext(.2, .15, "Vgs = 0.17, Vg = 1.2 V, Vdd = 1.2 V", fontsize = 10)
         plt.figtext(.2, .2, "Ibias = 5 nA, AmpBias = .5 mA", fontsize = 10)
-        plt.figtext(.2, .25, "column = " + str(colNum) + ", row = " + str(rowNum), fontsize = 10)
+        plt.figtext(.2, .25, "column = " + str(col) + ", row = " + str(row), fontsize = 10)
         # plt.xlabel("Time [mSec]")
         plt.xlabel("Voltage [V]")
         plt.legend()
-        plt.savefig(picLoc + " " + str(colS) + " " + str(rowS) + " " + dt_string + " " + " Hist.png")
+        plt.savefig(picLoc + " " + str(col) + " " + str(row) + " " + dt_string + " " + " Hist.png")
         fig1 = plt.show(block = False)
         plt.pause(3)
         plt.close(fig1)

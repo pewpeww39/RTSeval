@@ -1066,10 +1066,8 @@ class Keithley2600(Keithley2600Base):
                 smu.measure.delay = delay # smu.DELAY_OFF
                 smu.nvbuffer1.appendmode = 1
                 smu.nvbuffer2.appendmode = 1
-            smu1.source.rangei = pow(10, -4) # smu1.AUTORANGE_ON
-            smu2.source.rangei = pow(10, -4) # smu2.AUTORANGE_ON
-            smu1.measure.autozero = smu1.AUTOZERO_AUTO
-            smu2.measure.autozero = smu2.AUTOZERO_AUTO
+                smu.source.autorangei = smu.AUTORANGE_ON
+                smu.measure.autozero = smu.AUTOZERO_AUTO
             # smu1.nvbuffer1.collectsourcevalues = 1
 
             self.trigger.blender[1].orenable = True
@@ -1091,8 +1089,8 @@ class Keithley2600(Keithley2600Base):
             #     smu2.trigger.source.listv(self.python_driver_list)
             #     self.delete_lua_attr("python_driver_list")
             # else:
-            
-            smu1.trigger.source.logi(0.0000000001, (0.00005), 50, 0)
+            start, stop, step, asymp = iList
+            smu1.trigger.source.logi(start, stop, step, asymp)
             smu2.trigger.source.listi({0})
 
             smu1.trigger.source.action = smu1.ENABLE

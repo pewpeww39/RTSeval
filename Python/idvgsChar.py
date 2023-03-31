@@ -24,35 +24,6 @@ smu._write(value= "smub.source.limitv = 3.3")                   #set v liimit sm
 # bkdmm = serial.Serial('com7', 9600)                             #set com port for BK power supply
 # def logScale(start, stop, power):
 def logScale():
-    # powers = power
-    # for dec in range(abs(powers)):
-    #     start = 10**(power-1)
-    #     stop = 10** power
-    #     inc = 10**dec
-    #     decade = []
-    #     stop = 10**power
-    #     for i in range(10):
-    #         start = start+inc
-    #         decade = np.append(decade, range(start, stop))
-    #     power = power - 1
-    # return decade
-
-    # decade1 = range(1,10, 1)
-    # decade2 = range(10,100, 10)
-    # decade1 = range(1,10, 1)
-    # decade2 = range(10,100, 10)
-    # decade3 = range(100,1000, 100)    
-    # decade4 = range(1000,10000, 1000)
-    # decade5 = range(10000,100000, 10000)
-    # decade6 = range(100000,600000, 100000)
-    # decadeList = np.append(decade1, decade2)
-    # decadeList = np.append(decadeList, decade3)
-    # decadeList = np.append(decadeList, decade4)
-    # decadeList = np.append(decadeList, decade5) 
-    # decadeList = np.append(decadeList, decade6) * pow(10, -10)
-    # decadeList = np.append(decadeList, decade7) * pow(10, -11)
-    # decadeList = np.append(decadeList, decade8) * pow(10, -12)
-    # print((decadeList))
     decadeList = np.logspace(np.log10(0.0000000001), np.log10(0.00005), 50)
     return decadeList
     
@@ -68,27 +39,29 @@ def write_cmd(x):
 
 def bankNum(bank):
     rowStart = 1
-    rowEnd = 96 + 1 
+    rowEnd = 2 + 1 
     if bank == 1:
         colStart = 1
         colEnd = colStart + 32
         colS = "Col000"   
         rowS = "Row00"
         sweepList = (0.0000000001, (0.00005), 50, 0)
-        csIn = 4
+        csIn = 3
         picLoc = "C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\idvgsCharacterization\\Bank 1\\idvscharData"
         fileLoc = '~/miniconda3/envs/testequ/RTSeval/Python/Data/idvgsCharacterization/Bank 1/idvscharData'
         limiti = 0.001
         rangei = pow(10, -3)
     elif bank == 2:
-        colStart = 33
-        colEnd = colStart + 32
-        colS = "Col032"   
+        # colStart = 33
+        # colEnd = colStart + 32
+        colStart = 53
+        colEnd = colStart + 1
+        colS = "Col53" # "Col032"   
         rowS = "Row00"
-        sweepList = (0.0000000001, (0.00005), 50, 0)
-        csIn = 5
-        picLoc = "C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\idvgsCharacterization\\Bank 2\\idvscharData"
-        fileLoc = '~/miniconda3/envs/testequ/RTSeval/Python/Data/idvgsCharacterization/Bank 2/idvscharData'
+        sweepList = (0.00000000001, 0.005, 50, 0)
+        csIn = 3
+        picLoc = "C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\idvgsCharacterization\\Bank 2\\idvgscharData"
+        fileLoc = '~/miniconda3/envs/testequ/RTSeval/Python/Data/idvgsCharacterization/Bank 2/idvgscharData'
         limiti = 0.001
         rangei = pow(10, -3)
     elif bank == 3:
@@ -97,7 +70,7 @@ def bankNum(bank):
         colS = "Col064"   
         rowS = "Row00"
         sweepList = (0.0000000001, (0.00005), 50, 0)
-        csIn = 5
+        csIn = 3
         picLoc = "C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\idvgsCharacterization\\Bank 3\\idvscharData"
         fileLoc = '~/miniconda3/envs/testequ/RTSeval/Python/Data/idvgsCharacterization/Bank 3/idvscharData'
         limiti = 0.01
@@ -108,7 +81,7 @@ def bankNum(bank):
         colS = "Col096"   
         rowS = "Row00"
         sweepList = (0.0000000001, (0.00005), 50, 0)
-        csIn = 5
+        csIn = 3
         picLoc = "C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\idvgsCharacterization\\Bank 4\\idvscharData"
         fileLoc = '~/miniconda3/envs/testequ/RTSeval/Python/Data/idvgsCharacterization/Bank 4/idvscharData'
         limiti = 0.001
@@ -173,14 +146,14 @@ spec = []
 idvgsData = pd.DataFrame(data=[], index=[], columns=[])  
 pltData = pd.DataFrame(data=[], index=[], 
                        columns=['Site', 'Type', 'Vs', 'Vgs', 'Id', 'W/L', 'Temp(K)', 'Die X', 'Die Y',
-                                 'Vth', 'Gm', 'Swing Factor', 'Row', 'Column'])                         #create dataframe
+                                 'Vth', 'Gm', 'Swing Factor', 'Row', 'Column', 'Test Time'])                         #create dataframe
 specData = pd.DataFrame(pd.read_csv('~\miniconda3\envs\\testequ\RTSeval\Files\RTS_Array_Cells.csv',
                      index_col=[0] , header=0), columns = ['W/L', 'Type'])
 debug = False
 row = 0
 counter = 0
 voltIn = 0
-currOut = 0
+currOut = []
 commandTX = 0
 colSelect = 1
 rowSelect = 1
@@ -189,22 +162,21 @@ colNum = 3      #int(input('How many colums do you want to test?'))
 dieX = '6P'
 dieY = '3'
 
-rowStart, rowEnd, colStart, colEnd, colS, rowS, sweepList, csIn, picLoc, fileLoc, limiti, rangei = bankNum(5)
+rowStart, rowEnd, colStart, colEnd, colS, rowS, sweepList, csIn, picLoc, fileLoc, limiti, rangei = bankNum(2)
 colBegin = colS
 smu.apply_current(smu.smua, 0.0)
 smu.apply_current(smu.smub, 0.0)
 powerPico()
 # decadeList = logScale()
 # print(decadeList)
+start_total_time = time.time()
 for row in range(rowStart, rowEnd):
     for col in range(colStart, colEnd):
-        # start_total_time = time.time()
         commandTX = write_cmd(f"{csIn},{row},{col}")                                                   # selects the switch case on the pico
         commandRX = tuple(pico.read_until().strip().decode().split(','))
         if debug is True:
             print(commandRX)
         commandRX, rowRX, columnRX = commandRX
-        # end_command_time = time.time()
         rowRX = re.sub(r'[0-9]+$',
                 lambda x: f"{str(int(x.group())-1).zfill(len(x.group()))}",    # decrements the number in the row number
                 rowRX)  
@@ -214,24 +186,14 @@ for row in range(rowStart, rowEnd):
         print('pico confirmed: ' + str(commandRX))
         print('pico selected row: ' + str(rowRX))
         print('pico selected column: ' + str(columnRX))
-        # start_response_time = time.time()
         commandRX = int(pico.read_until().strip().decode())                             # confirms shift registers are loaded
         print(f'pico loaded shift register.')                           # confirms shift registers are loaded
-        # end_response_time = time.time()
-        # start_voltage_sweep = time.time()
         spec = list(specData.iloc[col-1])
-        # smu._write(value = "smub.measure.autozero = smub.AUTOZERO_AUTO")
-        # smu.smub.measure.v()
-        currIn, measVI, measVs = smu.idvgsChar(smu.smua, smu.smub, sweepList, .01, .005)
-        # print(measVs)
-        # pltData.iloc[0:len(currIn), 2] = spec[1]
+        currIn, measVI, measVs = smu.idvgsChar(smu.smua, smu.smub, sweepList, -1, .166)
         pltData["Vs"] = measVs
         pltData['Site'] = 'UTC'
         pltData['Type'] = spec[1]
         vGS = np.full_like(measVs, 1.2) - measVs 
-        # for i in range(len(measVs)):
-        #     vGS[i] = 1.2 - vGS[i]
-        # print(vGS)
         pltData["Vgs"] = vGS # [1.2 - measVs for i in range(len(measVs))]
         pltData["Id"] = currIn
         pltData["W/L"] = spec[0]
@@ -297,11 +259,15 @@ for row in range(rowStart, rowEnd):
                 lambda x: f"{str(int(x.group())+1).zfill(len(x.group()))}",    # increments the number in the row name
                 rowS)   
     # csData = pd.concat([csData, pltData], axis = 0, ignore_index=False)
-    idvgsData.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/idvgsCharacterization/Bank 1/idvgscharDataBAK.csv')
+    idvgsData.to_csv(fileLoc + 'BAK.csv')
 commandTX = write_cmd(str(9))                                                   # selects the switch case on the pico
 commandRX = pico.read_until().strip().decode()                                  # confirms mode selected
 print('pico confirmed: ' + str(commandRX) + ' and reset the shift registers')   
-idvgsData.to_csv('~/miniconda3/envs/testequ/RTSeval/Python/Data/idvgsCharacterization/Bank 1/idvscharData' + dt_string + '.csv')
+
+end_total_time = time.time()
+test_time = end_total_time - start_total_time
+idvgsData.at[0, 'Time'] = test_time
+idvgsData.to_csv(fileLoc + dt_string + '.csv')
 print(idvgsData)
 smu._write(value='smua.source.output = smua.OUTPUT_OFF')
 smu._write(value='smub.source.output = smub.OUTPUT_OFF')
