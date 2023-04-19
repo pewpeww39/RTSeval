@@ -1,0 +1,10 @@
+4/12:
+tested for RTS at 10 kHz by setting nplc (line 74) to 0.001/60 and timeDelay (line 73) to 0.0001
+tested for RTS at 5 kHz by setting nplc (line 74) to 0.01/60 and timeDelay (line 73) to 0.0002
+tested for RTS at 1 kHz by setting nplc (line 74) to 0.05/60 and timeDelay (line 73) to 0.001
+tested for RTS at 1 kHz by setting nplc (line 74) to 0.1/60 and timeDelay (line 73) to 0.002
+Dropped the range for the RTS voltage measuerments to 1 V and saw a double gaussian 
+
+To do:
+fix Vgs label in graph
+
