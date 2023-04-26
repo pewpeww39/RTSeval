@@ -1271,7 +1271,7 @@ class Keithley2600(Keithley2600Base):
             smu1.measure.autozero = smu1.AUTOZERO_AUTO
             smu2.measure.autozero = smu2.AUTOZERO_OFF
             smu2.nvbuffer2.collecttimestamps = 0
-            smu2.measure.rangev = 1
+            smu2.measure.rangev = rangev
             # smu1.sense = smu1.SENSE_LOCAL
             # smu2.sense = smu2.SENSE_LOCAL
 
