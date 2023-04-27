@@ -82,6 +82,7 @@ def bankNum(bank):
         fileLoc = '~/Documents/SkywaterData/rtsData/Bank 1/rtsData'
         limitv = 3.3
         rangev = 2
+        vg = 1.2
     elif bank == 2:
         # colStart = desired column + 1
         colStart = 32+1
@@ -97,10 +98,11 @@ def bankNum(bank):
         fileLoc = '~/Documents/SkywaterData/rtsData/Bank 2/rtsData'
         limitv = 3.3
         rangev = 2
+        vg = 1.2
     elif bank == 3:
         colStart = 65
         colEnd = colStart + 32
-        Ibias = 1e-6
+        Ibias = 10e-6
         timeTest = 20
         holdTime = 20
         timeDelay = 0.0005          # 2 kHz
@@ -110,21 +112,23 @@ def bankNum(bank):
         picLoc = "C:\\Users\\UTChattsat\\Documents\\SkywaterData\\rtsData\\Bank 3\\rtsData_Ibias_" + str(Ibias)
         fileLoc = '~/Documents/SkywaterData/rtsData/Bank 3/rtsData'
         limitv = 3.3
-        rangev = 1
+        rangev = 2
+        vg = 3.3
     elif bank == 4:
         colStart = 97
         colEnd = colStart + 32
-        Ibias = 1e-6
+        Ibias = 22e-6
         timeTest = 20
         holdTime = 20
         timeDelay = 0.0005          # 2 kHz
         nplc = 0.027 / 60
-        csIn = 3
+        csIn = 5
         sampRate = 1 / (timeDelay * 1000)
         picLoc = "C:\\Users\\UTChattsat\\Documents\\SkywaterData\\rtsData\\Bank 4\\rtsData_Ibias_" + str(Ibias)
         fileLoc = '~/Documents/SkywaterData/rtsData/Bank 4/rtsData'
         limitv = 3.3
-        rangev = 1
+        rangev = 4
+        vg = 3.3
     elif bank == 5:
         colStart = 129
         colEnd = colStart + 32
@@ -139,6 +143,7 @@ def bankNum(bank):
         fileLoc = '~/Documents/SkywaterData/rtsData/Bank 5/rtsData'
         limitv = 3.3
         rangev = 1
+        vg = 1.2
     elif bank == 6:
         colStart = 161
         colEnd = colStart + 32
@@ -153,6 +158,7 @@ def bankNum(bank):
         fileLoc = '~/Documents/SkywaterData/rtsData/Bank 6/rtsData'
         limitv = 3.3
         rangev = 1
+        vg = 3.3
     elif bank == 7:
         colStart = 193
         colEnd = colStart + 32
@@ -167,6 +173,7 @@ def bankNum(bank):
         fileLoc = '~/Documents/SkywaterData/rtsData/Bank 7/rtsData'
         limitv = 3.3
         rangev = 1
+        vg = 3.3
     elif bank == 8:
         colStart = 225
         colEnd = colStart + 32
@@ -181,7 +188,8 @@ def bankNum(bank):
         fileLoc = '~/Documents/SkywaterData/rtsData/Bank 8/rtsData'
         limitv = 3.3
         rangev = 1
-    return rowStart, rowEnd, colStart, colEnd, Ibias, timeDelay, nplc, timeTest, holdTime, csIn, picLoc, fileLoc, limitv, rangev, sampRate
+        vg = 3.3
+    return rowStart, rowEnd, colStart, colEnd, Ibias, timeDelay, nplc, timeTest, holdTime, csIn, picLoc, fileLoc, limitv, rangev, sampRate, vg
 
 def rtsMeasurement (bank, dieX, dieY):
     clearSMU()
@@ -189,7 +197,7 @@ def rtsMeasurement (bank, dieX, dieY):
     rtsData = pd.DataFrame(data=[], index=[], columns=[]) 
     specData = pd.DataFrame(pd.read_csv('~\miniconda3\envs\\testequ\RTSeval\Files\RTS_Array_Cells.csv',
                      index_col=[0] , header=0), columns = ['W/L', 'Type'])
-    rowStart, rowEnd, colStart, colEnd, Ibias, timeDelay, nplc, timeTest, holdTime, csIn, picLoc, fileLoc, limitv, rangev, sampRate = bankNum(bank)
+    rowStart, rowEnd, colStart, colEnd, Ibias, timeDelay, nplc, timeTest, holdTime, csIn, picLoc, fileLoc, limitv, rangev, sampRate, vg = bankNum(bank)
 
     powerPico()  
     saveCounter = 0
@@ -220,7 +228,7 @@ def rtsMeasurement (bank, dieX, dieY):
             smu.apply_current(smu.smua, Ibias)
             time.sleep(holdTime)
             vOut['Vs'] = smu.sourceA_measAB(smu.smua, smu.smub, Ibias, timeTest, holdTime, timeDelay, nplc, rangev, limitv)
-            vOut['Vgs'] = np.full_like(vOut['Vs'], 1.2) - vOut['Vs']
+            vOut['Vgs'] = np.full_like(vOut['Vs'], vg) - vOut['Vs']
             vOut['Ids'] = Ibias
             vOut['Sample_Rate(kHz)'] = sampRate
             vOut['Ticks'] = np.linspace(0, timeTest, len(vOut['Vs'])) 
@@ -246,24 +254,24 @@ def rtsMeasurement (bank, dieX, dieY):
             plt.subplot(2,1,2)
             y,x,_ = plt.hist(vOut['Vgs'], label = "Vgs", histtype="stepfilled", bins=50)
             peaks = argrelmax(y, order = 5)
-            print((peaks[0]))
+            # print((peaks[0]))
             # peaks, _ = find_peaks(y, distance=25)
             # # i_maxPeaks = peaks[np.argmax(y[peaks])]
             
-            if len(peaks[0]) >= 2:
-                peak = []
-                yMax = y[peaks]
-                # for p in range(len(yMax)):
-                    # if yMax[p]> 100:
-                        # peak[p] = peaks[0][p]
-                        # print(peak)
-                # yMax = y[peak]
-                xMax = x[peaks]
-                print(xMax, ' ', yMax)
-                rtsAmplitude = np.round(xMax[1]-xMax[0], 6)
-                plt.plot(xMax, yMax, 'x')
-            else:
-                rtsAmplitude = None
+            # if len(peaks[0]) >= 2:
+            #     peak = []
+            #     yMax = y[peaks]
+            #     # for p in range(len(yMax)):
+            #         # if yMax[p]> 100:
+            #             # peak[p] = peaks[0][p]
+            #             # print(peak)
+            #     # yMax = y[peak]
+            #     xMax = x[peaks]
+            #     print(xMax, ' ', yMax)
+            #     rtsAmplitude = np.round(xMax[1]-xMax[0], 6)
+            #     plt.plot(xMax, yMax, 'x')
+            # else:
+            rtsAmplitude = "???"
             # print(y)
             # rtsAmplitude = .000305 #np.round(xMax[1]-xMax[0], 6)
             plt.ylabel("Count")
@@ -278,6 +286,7 @@ def rtsMeasurement (bank, dieX, dieY):
             vOut = vOut.reset_index(drop = True, inplace=True)
             smu._write(value='smua.source.output = smua.OUTPUT_OFF')
             smu._write(value='smub.source.output = smub.OUTPUT_OFF')
+        rtsData.to_csv(fileLoc + '_Loop.csv')
     write_cmd(str(9))                                                   # selects the switch case on the pico
     commandRX = pico.read_until().strip().decode()                                  # confirms mode selected
     print('pico reset the shift registers')
@@ -287,4 +296,4 @@ def rtsMeasurement (bank, dieX, dieY):
 
 # for i in range(2):
 dt_string = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p")
-rtsMeasurement(2, '5L', '3')
+rtsMeasurement(4, '5L', '3')

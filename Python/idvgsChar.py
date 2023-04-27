@@ -53,6 +53,7 @@ def bankNum(bank):
         nplc = 16/60
         limiti = 0.001
         rangei = pow(10, -3)
+        vg = 1.2
     elif bank == 2:
         # colStart = 33
         # colEnd = colStart + 32
@@ -66,26 +67,31 @@ def bankNum(bank):
         nplc = 16/60
         limiti = 0.001
         rangei = pow(10, -3)
+        vg = 1.2
     elif bank == 3:
         colStart = 65
         colEnd = colStart + 32
         sweepList = (1e-12, 0.00006, 50, 0)
-        csIn = 3
+        csIn = 5
         picLoc = "C:\\Users\\UTChattsat\\Documents\\SkywaterData\\idvgsCharacterization\\Bank 3\\idvscharData"
         fileLoc = '~\\Documents\\SkywaterData\\idvgsCharacterization\\Bank 3\\idvscharData'
         measDelay = -1
         nplc = 16/60
         limiti = 0.01
         rangei = pow(10, -2)
+        vg = 1.2
     elif bank == 4:
         colStart = 97
         colEnd = colStart + 32
         sweepList = (0.0000000001, (0.00005), 50, 0)
-        csIn = 3
-        picLoc = "C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\idvgsCharacterization\\Bank 4\\idvscharData"
-        fileLoc = '~/miniconda3/envs/testequ/RTSeval/Python/Data/idvgsCharacterization/Bank 4/idvscharData'
+        csIn = 5
+        picLoc = "C:\\Users\\UTChattsat\\Documents\\SkywaterData\\idvgsCharacterization\\Bank 4\\idvscharData"
+        fileLoc = '~\\Documents\\SkywaterData\\idvgsCharacterization\\Bank 4\\idvscharData'
+        measDelay = -1
+        nplc = 16/60
         limiti = 0.001
         rangei = pow(10, -3)
+        vg = 3.3
     elif bank == 5:
         colStart = 129
         colEnd = colStart + 32
@@ -122,7 +128,7 @@ def bankNum(bank):
         fileLoc = '~/miniconda3/envs/testequ/RTSeval/Python/Data/idvgsCharacterization/Bank 8/idvgscharData'
         limiti = 0.001
         rangei = pow(10, -3)
-    return rowStart, rowEnd, colStart, colEnd, sweepList, csIn, picLoc, fileLoc, measDelay, nplc, limiti, rangei
+    return rowStart, rowEnd, colStart, colEnd, sweepList, csIn, picLoc, fileLoc, measDelay, nplc, limiti, rangei, vg
 
 def powerPico():                                                                    # Turns on the vPwr pins for pi pico
     write_cmd(str(7))                                                               # selects the switch case on the pico
@@ -147,7 +153,7 @@ def idvgsCharacterization(bank, dieX, dieY):
     # dieX = '5L'
     # dieY = '3'
 
-    rowStart, rowEnd, colStart, colEnd, sweepList, csIn, picLoc, fileLoc, measDelay, nplc, limiti, rangei = bankNum(bank)
+    rowStart, rowEnd, colStart, colEnd, sweepList, csIn, picLoc, fileLoc, measDelay, nplc, limiti, rangei, vg = bankNum(bank)
     # colBegin = colS
     smu.apply_current(smu.smua, 0.0)
     smu.apply_current(smu.smub, 0.0)
@@ -178,7 +184,7 @@ def idvgsCharacterization(bank, dieX, dieY):
             pltData["Vs"] = measVs
             pltData['Site'] = 'UTC'
             pltData['Type'] = spec[1]
-            vGS = np.full_like(measVs, 3.3) - measVs 
+            vGS = np.full_like(measVs, vg) - measVs 
             pltData["Vgs"] = vGS # [1.2 - measVs for i in range(len(measVs))]
             pltData["Id"] = currIn
             pltData["W/L"] = spec[0]
@@ -261,4 +267,4 @@ def idvgsCharacterization(bank, dieX, dieY):
     smu._write(value='smub.source.output = smub.OUTPUT_OFF')
     return
 
-idvgsCharacterization(3, '5L', '3')
+idvgsCharacterization(4, '5L', '3')
