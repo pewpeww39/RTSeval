@@ -63,7 +63,7 @@ def powerPico():                                                                
 #     plt.close(fig2)
 
 def bankNum(bank):
-    rowStart = 0 + 1
+    rowStart = 64 + 1
     rowEnd = 96 + 1 
     if bank == 1:
         colStart = 5 + 1
@@ -87,12 +87,12 @@ def bankNum(bank):
         # colStart = desired column + 1
         colStart = 32+1
         colEnd = colStart + 32
-        Ibias = 10e-9
+        Ibias = 10e-6
         timeTest = 20
         holdTime = 20
         timeDelay = 0.0005          # 2 kHz
         nplc = 0.027 / 60
-        csIn = 3
+        csIn = 5
         sampRate = 1 / (timeDelay * 1000)
         picLoc = "C:\\Users\\UTChattsat\\Documents\\SkywaterData\\rtsData\\Bank 2\\rtsData_Ibias_" + str(Ibias)
         fileLoc = '~/Documents/SkywaterData/rtsData/Bank 2/rtsData'
@@ -200,7 +200,7 @@ def rtsMeasurement (bank, dieX, dieY):
     rowStart, rowEnd, colStart, colEnd, Ibias, timeDelay, nplc, timeTest, holdTime, csIn, picLoc, fileLoc, limitv, rangev, sampRate, vg = bankNum(bank)
 
     powerPico()  
-    saveCounter = 0
+    # saveCounter = 0
     for row in range(rowStart, rowEnd):
         for col in range(colStart, colEnd):
             vOut = pd.DataFrame(data=[], index=[], columns=[])
@@ -224,7 +224,7 @@ def rtsMeasurement (bank, dieX, dieY):
             # start_voltage_sweep = time.time()
             spec = list(specData.iloc[col - 1])
             smu._write(value = "smub.measure.autozero = smub.AUTOZERO_AUTO")
-            smu.smub.measure.i()
+            smu.smub.measure.v()
             smu.apply_current(smu.smua, Ibias)
             time.sleep(holdTime)
             vOut['Vs'] = smu.sourceA_measAB(smu.smua, smu.smub, Ibias, timeTest, holdTime, timeDelay, nplc, rangev, limitv)
@@ -240,13 +240,13 @@ def rtsMeasurement (bank, dieX, dieY):
             vOut['DieY'] = dieY
             print(len(vOut))
             rtsData = pd.concat([rtsData, vOut], axis = 0, ignore_index=True)
-            if saveCounter >= 10:
-                rtsData.to_csv(fileLoc + '_Loop.csv')
-                saveCounter = 0
-            saveCounter = saveCounter + 1
+            # if saveCounter >= 10:
+            #     rtsData.to_csv(fileLoc + '_Loop.csv')
+            #     saveCounter = 0
+            # saveCounter = saveCounter + 1
             plt.figure(figsize=(12,8))
             plt.subplot(2,1,1)
-            plt.plot(vOut.loc[900:, ['Ticks']], vOut.loc[900:, ['Vgs']], label = "Vgs")
+            plt.plot(vOut['Ticks'], vOut['Vgs'], label = "Vgs")
             plt.title("RTS Data: " + str(spec[0]) + " " + str(spec[1]))
             plt.xlabel("Time (sec)")
             plt.ylabel("Vgs [V]")
@@ -258,20 +258,20 @@ def rtsMeasurement (bank, dieX, dieY):
             # peaks, _ = find_peaks(y, distance=25)
             # # i_maxPeaks = peaks[np.argmax(y[peaks])]
             
-            # if len(peaks[0]) >= 2:
-            #     peak = []
-            #     yMax = y[peaks]
-            #     # for p in range(len(yMax)):
-            #         # if yMax[p]> 100:
-            #             # peak[p] = peaks[0][p]
-            #             # print(peak)
-            #     # yMax = y[peak]
-            #     xMax = x[peaks]
-            #     print(xMax, ' ', yMax)
-            #     rtsAmplitude = np.round(xMax[1]-xMax[0], 6)
-            #     plt.plot(xMax, yMax, 'x')
-            # else:
-            rtsAmplitude = "???"
+            if len(peaks[0]) >= 2:
+                peak = []
+                yMax = y[peaks]
+                # for p in range(len(yMax)):
+                    # if yMax[p]> 100:
+                        # peak[p] = peaks[0][p]
+                        # print(peak)
+                # yMax = y[peak]
+                xMax = x[peaks]
+                print(xMax, ' ', yMax)
+                rtsAmplitude = np.round(xMax[1]-xMax[0], 6)
+                plt.plot(xMax, yMax, 'x')
+            else:
+                rtsAmplitude = "???"
             # print(y)
             # rtsAmplitude = .000305 #np.round(xMax[1]-xMax[0], 6)
             plt.ylabel("Count")
@@ -296,4 +296,4 @@ def rtsMeasurement (bank, dieX, dieY):
 
 # for i in range(2):
 dt_string = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p")
-rtsMeasurement(4, '5L', '3')
+rtsMeasurement(2, '5L', '3')
