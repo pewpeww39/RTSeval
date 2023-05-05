@@ -172,4 +172,100 @@ def Hw3_2():
     plt.show(block = False)
     plt.pause(1)
 
-Hw3_2() 
+# Hw3_2() 
+def babysitting(M,N,pL, pR):
+    square=np.linspace(4,4,num=N+1)
+    Square = pd.DataFrame(data=[], index=[], columns=[])
+    for m in range(M):
+        for n in range(N):
+            prob = np.random.rand(1)
+            # print(prob)
+            if square[n] == 7:
+                square[n+1]= 4
+            elif square[n] == 1:
+                square[n+1] = 4
+            elif pR > prob and square[n] <=6:
+                square[n+1] = square[n] + 1
+            elif pL < prob and square[n] >=2:
+                square[n+1] = square[n] - 1
+            else:
+                # if square[n-1] - square[n] < 0:
+                #     advance = -1
+                # else: # square[n-1] - square[n] > 0:
+                #     advance = 1
+
+                # print(advance)
+                square[n+1]=square[n]
+        Square[m] = square
+        # print(square)
+    return Square
+def hw5_1():
+    pL = 0.5
+    pR = 0.3
+    pS = 0.2
+    N = 50
+    square = babysitting(4,N,pL,pR)
+    print(square)
+
+    P = np.array([[0, 0, 0, 1, 0, 0, 0],
+                [0.5, 0.2, 0.3, 0, 0, 0, 0],
+                [0, 0.5, 0.2, 0.3, 0, 0, 0],
+                [0, 0, 0.5, 0.2, 0.3, 0, 0],
+                [0, 0, 0, 0.5, 0.2, 0.3, 0],
+                [0, 0, 0, 0, 0.5, 0.2, 0.3,],
+                [0, 0, 0, 1, 0, 0, 0]])
+    eig_vals, eig_vecs = np.linalg.eig(P.T)
+
+    # find the index of the eigenvalue of 1
+    idx = np.where(np.isclose(eig_vals, 1))[0]
+
+    if idx.size > 0:
+        # extract the corresponding eigenvector
+        pi = eig_vecs[:, idx[0]].real
+        # normalize the eigenvector to obtain the steady state PMF
+        pi = pi / np.sum(pi)
+        print("Steady state PMF:", pi)
+    else:
+        print("No steady state exists.")
+
+def hw6():
+    # Parameters
+    lambda_val = 2.0   # arrival rate
+    mu_val = 3.0       # departure rate
+    delta_t = 0.01     # time interval width
+    total_intervals = 1000   # total number of intervals
+    total_time = total_intervals * delta_t   # total simulation time
+    num_runs = 1000    # number of simulation runs
+
+    # Initialization
+    state_avg = np.zeros(total_intervals)   # average state of the queue
+    n_avg = np.zeros(num_runs)   # final number of customers in the queue for each run
+
+    # Simulation
+    for r in range(num_runs):
+        state = np.zeros(total_intervals)   # state of the queue for each run
+        n = 0    # number of customers in the queue at t=0
+
+        for i in range(total_intervals):
+            # Compute probabilities
+            p_arrival = lambda_val * delta_t
+            p_departure = mu_val * delta_t
+            
+            # Update state
+            if n == 0:
+                state[i] = np.random.binomial(1, p_arrival)   # no customers in queue
+            else:
+                state[i] = state[i-1] + np.random.binomial(1, p_arrival) - np.random.binomial(1, p_departure)
+            
+            n = state[i]
+
+        n_avg[r] = state[-1]   # final number of customers in the queue for each run
+        state_avg += state / num_runs   # average state of the queue over all runs
+
+    # Print the average state at each time interval
+    for i in range(total_intervals):
+        print(f"t = {i*delta_t:.2f}s: N(t) = {state_avg[i]}")
+
+    # Print the average final number of customers in the queue over all runs
+    print(f"Average final number of customers in the queue: {np.mean(n_avg)}")
+    print(f"Thoretical final number of customers in the queue: {lambda_val/(mu_val-lambda_val)}")
