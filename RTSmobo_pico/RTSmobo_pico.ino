@@ -7,7 +7,7 @@
 #define Din             3   // Vertical Shift Register data pin
 #define DHin            4   // Horizontal Shift Register data pin
 #define resetBIN        5   // Reset shift registers
-#define vddHV           6   // set Vdd input voltage to High Voltage transistors
+#define vPow           6   // set Vdd input voltage to High Voltage transistors
 #define vgLVN           7   // set VG input voltage to Low Voltage Nmos transistors
 #define vgHVN           8   // set VG input voltaget to High Voltage Nmos Transistors
 #define vddLV           9   // set VDD input voltage to Low Voltage Tansistors
@@ -41,6 +41,7 @@ void setup()
   definePins();   // set Pinmode for pins
   turnOff();      // digital write pins low
   flashLED();
+  digitalWrite(vPow, HIGH);
 }
 
 void loop()
@@ -267,10 +268,17 @@ void loop()
       }
 
     case 6: {
+      for (int j = 257; j >= 1; j--) {  
         digitalWrite(Csin, HIGH);
         digitalWrite(resetBIN, LOW);
-        break;
+        delay(10);
+        digitalWrite(resetBIN, HIGH);        
+        delay(10);
+        Serial.println(j);
       }
+      command = 0;
+      break;
+    }
 
     //    case 3: {
     //        colSelect++;
@@ -417,7 +425,7 @@ void turnOff()
   digitalWrite(Din, LOW);
   digitalWrite(DHin, LOW);
   digitalWrite(resetBIN, LOW);
-  digitalWrite(vddHV, LOW);
+  digitalWrite(vPow, LOW);
   digitalWrite(vgLVN, LOW);
   digitalWrite(vgHVN, LOW);
   digitalWrite(vddLV, LOW);
@@ -441,7 +449,7 @@ void definePins()
   pinMode(Din, OUTPUT);
   pinMode(DHin, OUTPUT);
   pinMode(resetBIN, OUTPUT);
-  pinMode(vddHV, OUTPUT);
+  pinMode(vPow, OUTPUT);
   pinMode(vgLVN, OUTPUT);
   pinMode(vgHVN, OUTPUT);
   pinMode(vddLV, OUTPUT);

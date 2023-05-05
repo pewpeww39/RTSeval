@@ -50,41 +50,11 @@ void loop()
 
     int i1 = recvString.indexOf(',');
     int i2 = recvString.indexOf(',', i1+1);
-//    Serial.println(i1);
-//    Serial.println(i2);
     command = recvString.substring(0, i1).toInt();
     rowSelect = recvString.substring(i1 + 1, i2).toInt();
     colSelect = recvString.substring(i2 + 1).toInt();
   
     Serial.println(String(command) + "," + String(rowSelect) + "," + String(colSelect));
-
-    
-//    if (command == 4) {
-//      while (command == 4) {                  // hold amp characterization command for column select
-//        rowSelect = Serial.readString().toInt();
-//        if (rowSelect > 0) {
-//          Serial.println(rowSelect);          // tell CPU what col was selected
-//          while (command == 4) {
-//            colSelect = Serial.readString().toInt();
-//            if (colSelect > 0) {
-//              Serial.println(colSelect);          // tell CPU what col was selected
-//              break;
-//            }
-//          }
-//        }
-//       if (colSelect > 0 & rowSelect > 0){
-//        break;
-//       }
-//      }
-//    }
-//    if (command == 3) {
-//      while (command == 3) {                  // hold amp characterization command for column select
-//        colSelect = Serial.readString().toInt();
-//        if (colSelect > 0) {
-//          break;
-//        }
-//      }
-//    }
   }
 
   
@@ -119,15 +89,14 @@ void loop()
       }
     case 3: {                               // Current Source Characterization
         digitalWrite(Csin, LOW);             // close NMOS amp bypass
-        Serial.println(colSelect);          // tell CPU what column was selected
         digitalWrite(LED, LOW);
         if (debug == true) {
           Serial.println("H V");
         }
         digitalWrite(resetBIN, LOW);        // Flush the SR
-        waitFor(10);
+        waitFor(50);
         digitalWrite(resetBIN, HIGH);
-        waitFor(10);
+        waitFor(50);
         for (int j = 257; j >= 1; j--) {      // for loop for the number of columns
           if (colSelect == j) {             // check if j = desired column i.e. 0000...0100
             horSR = 1;                      // if it does set SDA_ to high
@@ -160,12 +129,13 @@ void loop()
             Serial.println(verSR);
           }
         }
-//        flashLED();
-        command = 0;
+        flashLED();
         int commandTX = 1;
         Serial.println(commandTX);
         commandTX = 0;
+        command = 0;
         colSelect = 0; // colSelect + 1;
+        rowSelect = 0;
         break;
       }
 
@@ -220,7 +190,7 @@ void loop()
         break;
       }
 
-    case 5: {                               // idvg, idvgs, rts NMOS Characterization
+    case 5: {                               // idvg, rts NMOS Characterization
         digitalWrite(Csin, HIGH);             // close NMOS amp bypass
         digitalWrite(LED, LOW);
         if (debug == true) {
@@ -271,7 +241,7 @@ void loop()
         break;
       }
      
-     case 6: {                               // idvg, idvgs, rts PMOS Characterization
+     case 6: {                               // idvg, rts PMOS Characterization
         digitalWrite(Csin, LOW);             // close NMOS amp bypass
         digitalWrite(LED, LOW);
         if (debug == true) {

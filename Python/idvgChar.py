@@ -158,22 +158,22 @@ currOut = []
 measVd = []
 measVg = []
 spec = []
-vdvgData = pd.DataFrame(data=[], index=[], columns=[])  
+idvgData = pd.DataFrame(data=[], index=[], columns=[])  
 pltData = pd.DataFrame(data=[], index=[], 
                        columns=['Site', 'Type', 'Vd', 'Vg', 'Id', 'W/L', 'Temp(K)', 'Die X', 'Die Y',
-                                 'Vth', 'Gm', 'Swing Factor', 'Row', 'Column'])                         #create dataframe
+                                 'Vth', 'Gm', 'Swing Factor', 'Row', 'Column', 'Time'])                         #create dataframe
 specData = pd.DataFrame(pd.read_csv('~\miniconda3\envs\\testequ\RTSeval\Files\RTS_Array_Cells.csv',
                      index_col=[0] , header=0), columns = ['W/L', 'Type'])
 
 dieX = '6p'
 dieY = '3'
 
-rowStart, rowEnd, colStart, colEnd, colS, rowS, sweepList, vdList, csIn, picLoc, fileLoc, limiti, rangei = bankNum(1)        # selects the bank to test
+rowStart, rowEnd, colStart, colEnd, colS, rowS, sweepList, vdList, csIn, picLoc, fileLoc, limiti, rangei = bankNum(2)        # selects the bank to test
 colBegin = colS
 smu.apply_voltage(smu.smua, 0.0)
 smu.apply_voltage(smu.smub, 0.0)
 powerPico()
-
+start_total_time = time.time()
 for row in range(rowStart, rowEnd):
     for col in range(colStart, colEnd):
         # start_total_time = time.time()
@@ -198,7 +198,7 @@ for row in range(rowStart, rowEnd):
         spec = list(specData.iloc[col - 1])
         # smu._write(value = "smua.measure.autozero = smua.AUTOZERO_AUTO")
         # smu.smub.measure.v()
-        currOut, measVd, measVg= smu.idvgChar2(smu.smua, smu.smub, sweepList, vdList, -1, .001, limiti, rangei)
+        currOut, measVd, measVg= smu.idvgChar2(smu.smua, smu.smub, sweepList, vdList, -1, 0.166, limiti, rangei)
         # vGS = measVs 
         # for i in range(len(measVs)):
         #     vGS[i] = 1.2 - vGS[i]
@@ -265,18 +265,21 @@ for row in range(rowStart, rowEnd):
         measVg = []
         measVd = []
         commandRX=0
-        vdvgData = pd.concat([vdvgData, pltData], axis = 0, ignore_index=True)
+        idvgData = pd.concat([idvgData, pltData], axis = 0, ignore_index=True)
     colS = colBegin
     rowS = re.sub(r'[0-9]+$',
                 lambda x: f"{str(int(x.group())+1).zfill(len(x.group()))}",    # increments the number in the row name
                 rowS)   
 
-    vdvgData.to_csv(fileLoc + 'BAK.csv')
+    idvgData.to_csv(fileLoc + 'BAK.csv')
 commandTX = write_cmd(str(9))                                                   # selects the switch case on the pico
 commandRX = pico.read_until().strip().decode()                                  # confirms mode selected
-print('pico confirmed: ' + str(commandRX) + ' and turned off.')   
+print('pico confirmed: ' + str(commandRX) + ' and turned off.') 
+end_total_time = time.time()  
+test_time = end_total_time - start_total_time
+idvgData.at[0, 'Time'] = test_time
 dt_string = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p")    
-vdvgData.to_csv(fileLoc + dt_string + '.csv')
-print(vdvgData)
+idvgData.to_csv(fileLoc + dt_string + '.csv')
+print(idvgData)
 smu._write(value='smua.source.output = smua.OUTPUT_OFF')
 smu._write(value='smub.source.output = smub.OUTPUT_OFF')
