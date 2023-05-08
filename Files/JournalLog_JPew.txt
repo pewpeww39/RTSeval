@@ -8,3 +8,18 @@ Dropped the range for the RTS voltage measuerments to 1 V and saw a double gauss
 To do:
 fix Vgs label in graph
 
+
+
+5/4:
+changed save function to save csv of every row vs overwritting the save and concatinating new data. (saves time)
+
+5/7:
+change save funtion to .feather format vs .csv
+
+5/8:
+changed script to only plot signals with detected rts. 
+	- Detection needs work because we don't plot all signals with rts
+	- check to see if argrelmax(vOut['Vgs']) finds the same peaks it does with histogram.
+		- np.histogram(rtsData['Vgs'], bins='auto') does the same as plt.hist without plotting
+
+

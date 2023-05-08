@@ -87,7 +87,7 @@ void loop()
         }
         break;
       }
-    case 3: {                               // Current Source Characterization
+    case 3: {                               // idvg, rts NMOS Characterization on vout
         digitalWrite(Csin, LOW);             // close NMOS amp bypass
         digitalWrite(LED, LOW);
         if (debug == true) {
@@ -139,8 +139,8 @@ void loop()
         break;
       }
 
-    case 4: {                               // Current Source Characterization
-        digitalWrite(Csin, LOW);             // close NMOS amp bypass
+    case 4: {                               // // idvg, rts PMOS Characterization on vout
+        digitalWrite(Csin, LOW);             // close PMOS amp bypass
         digitalWrite(LED, LOW);
         if (debug == true) {
           Serial.println("H V");
@@ -190,7 +190,7 @@ void loop()
         break;
       }
 
-    case 5: {                               // idvg, rts NMOS Characterization
+    case 5: {                               // idvg, rts NMOS Characterization on The bypass
         digitalWrite(Csin, HIGH);             // close NMOS amp bypass
         digitalWrite(LED, LOW);
         if (debug == true) {
@@ -241,8 +241,8 @@ void loop()
         break;
       }
      
-     case 6: {                               // idvg, rts PMOS Characterization
-        digitalWrite(Csin, LOW);             // close NMOS amp bypass
+     case 6: {                               // idvg, rts PMOS Characterization on the bypass
+        digitalWrite(Csin, LOW);             // close PMOS amp bypass
         digitalWrite(LED, LOW);
         if (debug == true) {
           Serial.println("H V");
