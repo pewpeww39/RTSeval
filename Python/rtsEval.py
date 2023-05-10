@@ -63,9 +63,9 @@ def powerPico():                                                                
 #     plt.close(fig2)
 
 def bankNum(bank):
-    rowStart = 22 + 1
+    rowStart = 57 + 1
     rowEnd = 96 + 1 
-    if bank == 1:
+    if bank == 0:
         colStart = 0 + 1
         colEnd = colStart + 32
         Ibias = 1e-6
@@ -83,7 +83,7 @@ def bankNum(bank):
         limitv = 3.3
         rangev = 2
         vg = 1.2
-    elif bank == 2:
+    elif bank == 1:
         # colStart = desired column + 1
         colStart = 32+1
         colEnd = colStart + 32
@@ -99,7 +99,7 @@ def bankNum(bank):
         limitv = 3.3
         rangev = 2
         vg = 1.2
-    elif bank == 3:
+    elif bank == 2:
         colStart = 65
         colEnd = colStart + 32
         Ibias = 10e-6
@@ -114,7 +114,7 @@ def bankNum(bank):
         limitv = 3.3
         rangev = 2
         vg = 3.3
-    elif bank == 4:
+    elif bank == 3:
         colStart = 97
         colEnd = colStart + 32
         Ibias = 22e-6
@@ -129,7 +129,7 @@ def bankNum(bank):
         limitv = 3.3
         rangev = 4
         vg = 3.3
-    elif bank == 5:
+    elif bank == 4:
         colStart = 129
         colEnd = colStart + 32
         Ibias = 1e-6
@@ -144,7 +144,7 @@ def bankNum(bank):
         limitv = 3.3
         rangev = 1
         vg = 1.2
-    elif bank == 6:
+    elif bank == 5:
         colStart = 161
         colEnd = colStart + 32
         Ibias = 1e-6
@@ -159,7 +159,7 @@ def bankNum(bank):
         limitv = 3.3
         rangev = 1
         vg = 3.3
-    elif bank == 7:
+    elif bank == 6:
         colStart = 193
         colEnd = colStart + 32
         Ibias = 1e-6
@@ -174,7 +174,7 @@ def bankNum(bank):
         limitv = 3.3
         rangev = 1
         vg = 3.3
-    elif bank == 8:
+    elif bank == 7:
         colStart = 225
         colEnd = colStart + 32
         Ibias = 1e-6
@@ -239,9 +239,9 @@ def rtsMeasurement (bank, dieX, dieY):
             vOut['DieX'] = dieX
             vOut['DieY'] = dieY
             print(len(vOut))
-            rtsData = pd.concat([rtsData, vOut], axis = 0, ignore_index=True)           # concatente new data with old data
+            rtsData = pd.concat([rtsData, vOut], axis = 0, ignore_index=True)           # save the new data with old data
             
-            y,x = np.histogram(rtsData['Vgs'], bins='auto')
+            y,x = np.histogram(vOut['Vgs'], bins=50)
             peaks = argrelmax(y, order = 4)
             
             if len(peaks[0]) >= 2:
@@ -255,7 +255,6 @@ def rtsMeasurement (bank, dieX, dieY):
                 xMax = x[peaks]
                 # print(xMax, ' ', yMax)
                 rtsAmplitude = np.round(xMax[1]-xMax[0], 6)
-
                 plt.figure(figsize=(12,8))
                 plt.subplot(2,1,1)
                 plt.plot(vOut['Ticks'], vOut['Vgs'], label = "Vgs")
@@ -264,11 +263,12 @@ def rtsMeasurement (bank, dieX, dieY):
                 plt.ylabel("Vgs [V]")
                 plt.legend()
                 plt.subplot(2,1,2)
-                y,x,_ = plt.hist(vOut['Vgs'], label = "Vgs", histtype="stepfilled", bins=50)
+                plt.hist(vOut['Vgs'], label = "Vgs", histtype="stepfilled", bins=50)
                 plt.plot(xMax, yMax, 'x')
                 plt.ylabel("Count")
                 plt.xlabel("Vgs [V]")
                 plt.legend()
+                
                 plt.figtext(.5, .95, "Vg = 1.2 V, Vdd = 1.2 V, Samp Rate = " + str(sampRate) + " kHz, Ibias = " + str(Ibias) +
                             ' A, Rts Amplitude = ' + str(rtsAmplitude) + ' (V)', horizontalalignment='center', fontsize = 10)
                 plt.savefig(picLoc + "_C" + columnRX + "R" + rowRX + " " + dt_string + ".png")
@@ -293,4 +293,4 @@ def rtsMeasurement (bank, dieX, dieY):
 
 # for i in range(2):
 dt_string = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p")
-rtsMeasurement(1, '5L', '3')
+rtsMeasurement(0, '5L', '3')
