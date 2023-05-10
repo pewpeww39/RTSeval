@@ -815,6 +815,7 @@ class Keithley2600(Keithley2600Base):
             list_out.append(buffer.readings.getreading(i + 1))
 
         return list_out
+        # return [buffer.readings.getreading(i + 1) for i in range(int(buffer.n))]
 
     def set_integration_time(self, smu: KeithleyClass, t_int: float) -> None:
         """
@@ -1243,7 +1244,7 @@ class Keithley2600(Keithley2600Base):
 
             return v_smu1, i_smu1, timestamp
 
-    def sourceA_measAB(self, 
+    def sourceA_measAB(self,                            # timeseries evaluation
                     smu1: KeithleyClass,
                     smu2: KeithleyClass,
                     current: float,
@@ -1283,8 +1284,8 @@ class Keithley2600(Keithley2600Base):
             smu1.trigger.source.listi({current})
             smu1.trigger.source.action = smu1.ENABLE
             smu1.trigger.source.stimulus = self.trigger.EVENT_ID
-            smu1.trigger.measure.action = smu1.DISABLE # ASYNC                                # enable Asynchronous measurements
-            # smu1.trigger.measure.i(smu1.nvbuffer1)                                  # measure current and voltage on trigger, store in buffer of smu
+            smu1.trigger.measure.action = smu1.DISABLE # ASYNC                      # enable Asynchronous measurements
+            # smu1.trigger.measure.i(smu1.nvbuffer1)                                # measure current and voltage on trigger, store in buffer of smu
             smu2.trigger.source.action = smu2.DISABLE                               # disable channel b source
             smu2.trigger.measure.action = smu2.ASYNC                                # enable smu
             smu2.trigger.measure.v(smu2.nvbuffer2)                                  # measure current and voltage on trigger, store in buffer of smu

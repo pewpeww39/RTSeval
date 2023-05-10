@@ -11,10 +11,10 @@ import re
 from scipy.signal import find_peaks
 from scipy.signal import argrelmax
 
-smu = Keithley2600('TCPIP0::192.168.4.11::INSTR')               #set ip addr for smu
-pico = serial.Serial('COM4', baudrate=115200)
+smu = Keithley2600('TCPIP0::192.168.4.11::INSTR')               # set ip addr for smu
+pico = serial.Serial('COM4', baudrate=115200)                   # set com port for pico
 
-def write_cmd(x):
+def write_cmd(x):                                               # sends commands to pico
     pico.write(bytes(x, 'utf-8'))
     time.sleep(0.05)
 
@@ -24,7 +24,7 @@ def clearSMU():
     smu.smua.reset()
     smu.smub.reset()
 
-def inport(file, idex, head, col):
+def inport(file, idex, head, col):                              # inport csv to dataframe
     df = pd.DataFrame(pd.read_csv(file, index_col=[idex] , header=head), 
                             columns = col)
     return df
@@ -63,19 +63,19 @@ def powerPico():                                                                
 #     plt.close(fig2)
 
 def bankNum(bank):
-    rowStart = 64 + 1
+    rowStart = 57 + 1
     rowEnd = 96 + 1 
-    if bank == 1:
-        colStart = 5 + 1
-        colEnd = colStart + 1 # 32
-        Ibias = 10e-6
+    if bank == 0:
+        colStart = 0 + 1
+        colEnd = colStart + 32
+        Ibias = 1e-6
         timeTest = 20
         holdTime = 20
         # timeDelay = 0.001                             # 1 kHz
         # nplc = 0.05 / 60
         timeDelay = 0.0005          # measure delay     # 2 kHz
         nplc = 0.027 / 60           # integration time
-        csIn = 3                    # pico command
+        csIn = 5                     # pico command
         sampRate = 1 / (timeDelay * 1000)
         # picLoc = "C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\rtsData\\Bank 1\\rtsData_Ibias_" + str(Ibias) 
         picLoc = "C:\\Users\\UTChattsat\\Documents\\SkywaterData\\rtsData\\Bank 1\\rtsData_Ibias_" + str(Ibias)
@@ -83,7 +83,7 @@ def bankNum(bank):
         limitv = 3.3
         rangev = 2
         vg = 1.2
-    elif bank == 2:
+    elif bank == 1:
         # colStart = desired column + 1
         colStart = 32+1
         colEnd = colStart + 32
@@ -99,7 +99,7 @@ def bankNum(bank):
         limitv = 3.3
         rangev = 2
         vg = 1.2
-    elif bank == 3:
+    elif bank == 2:
         colStart = 65
         colEnd = colStart + 32
         Ibias = 10e-6
@@ -114,7 +114,7 @@ def bankNum(bank):
         limitv = 3.3
         rangev = 2
         vg = 3.3
-    elif bank == 4:
+    elif bank == 3:
         colStart = 97
         colEnd = colStart + 32
         Ibias = 22e-6
@@ -129,7 +129,7 @@ def bankNum(bank):
         limitv = 3.3
         rangev = 4
         vg = 3.3
-    elif bank == 5:
+    elif bank == 4:
         colStart = 129
         colEnd = colStart + 32
         Ibias = 1e-6
@@ -144,7 +144,7 @@ def bankNum(bank):
         limitv = 3.3
         rangev = 1
         vg = 1.2
-    elif bank == 6:
+    elif bank == 5:
         colStart = 161
         colEnd = colStart + 32
         Ibias = 1e-6
@@ -159,7 +159,7 @@ def bankNum(bank):
         limitv = 3.3
         rangev = 1
         vg = 3.3
-    elif bank == 7:
+    elif bank == 6:
         colStart = 193
         colEnd = colStart + 32
         Ibias = 1e-6
@@ -174,7 +174,7 @@ def bankNum(bank):
         limitv = 3.3
         rangev = 1
         vg = 3.3
-    elif bank == 8:
+    elif bank == 7:
         colStart = 225
         colEnd = colStart + 32
         Ibias = 1e-6
@@ -227,7 +227,7 @@ def rtsMeasurement (bank, dieX, dieY):
             smu.smub.measure.v()
             smu.apply_current(smu.smua, Ibias)
             time.sleep(holdTime)
-            vOut['Vs'] = smu.sourceA_measAB(smu.smua, smu.smub, Ibias, timeTest, holdTime, timeDelay, nplc, rangev, limitv)
+            vOut['Vs'] = smu.sourceA_measAB(smu.smua, smu.smub, Ibias, timeTest, holdTime, timeDelay, nplc, rangev, limitv)     # run the script on smu
             vOut['Vgs'] = np.full_like(vOut['Vs'], vg) - vOut['Vs']
             vOut['Ids'] = Ibias
             vOut['Sample_Rate(kHz)'] = sampRate
@@ -239,24 +239,10 @@ def rtsMeasurement (bank, dieX, dieY):
             vOut['DieX'] = dieX
             vOut['DieY'] = dieY
             print(len(vOut))
-            rtsData = pd.concat([rtsData, vOut], axis = 0, ignore_index=True)
-            # if saveCounter >= 10:
-            #     rtsData.to_csv(fileLoc + '_Loop.csv')
-            #     saveCounter = 0
-            # saveCounter = saveCounter + 1
-            plt.figure(figsize=(12,8))
-            plt.subplot(2,1,1)
-            plt.plot(vOut['Ticks'], vOut['Vgs'], label = "Vgs")
-            plt.title("RTS Data: " + str(spec[0]) + " " + str(spec[1]))
-            plt.xlabel("Time (sec)")
-            plt.ylabel("Vgs [V]")
-            plt.legend()
-            plt.subplot(2,1,2)
-            y,x,_ = plt.hist(vOut['Vgs'], label = "Vgs", histtype="stepfilled", bins=50)
-            peaks = argrelmax(y, order = 5)
-            # print((peaks[0]))
-            # peaks, _ = find_peaks(y, distance=25)
-            # # i_maxPeaks = peaks[np.argmax(y[peaks])]
+            rtsData = pd.concat([rtsData, vOut], axis = 0, ignore_index=True)           # save the new data with old data
+            
+            y,x = np.histogram(vOut['Vgs'], bins=50)
+            peaks = argrelmax(y, order = 4)
             
             if len(peaks[0]) >= 2:
                 peak = []
@@ -267,33 +253,44 @@ def rtsMeasurement (bank, dieX, dieY):
                         # print(peak)
                 # yMax = y[peak]
                 xMax = x[peaks]
-                print(xMax, ' ', yMax)
+                # print(xMax, ' ', yMax)
                 rtsAmplitude = np.round(xMax[1]-xMax[0], 6)
+                plt.figure(figsize=(12,8))
+                plt.subplot(2,1,1)
+                plt.plot(vOut['Ticks'], vOut['Vgs'], label = "Vgs")
+                plt.title("RTS Data: " + str(spec[0]) + " " + str(spec[1]))
+                plt.xlabel("Time (sec)")
+                plt.ylabel("Vgs [V]")
+                plt.legend()
+                plt.subplot(2,1,2)
+                plt.hist(vOut['Vgs'], label = "Vgs", histtype="stepfilled", bins=50)
                 plt.plot(xMax, yMax, 'x')
-            else:
-                rtsAmplitude = "???"
-            # print(y)
-            # rtsAmplitude = .000305 #np.round(xMax[1]-xMax[0], 6)
-            plt.ylabel("Count")
-            plt.xlabel("Vgs [V]")
-            plt.legend()
-            plt.figtext(.5, .95, "Vg = 1.2 V, Vdd = 1.2 V, Samp Rate = " + str(sampRate) + " kHz, Ibias = " + str(Ibias) +
-                         ' A, Rts Amplitude = ' + str(rtsAmplitude) + ' (V)', horizontalalignment='center', fontsize = 10)
-            plt.savefig(picLoc + "_C" + columnRX + "R" + rowRX + " " + dt_string + ".png")
-            fig1 = plt.show(block = False)
-            plt.pause(3)
-            plt.close(fig1)
+                plt.ylabel("Count")
+                plt.xlabel("Vgs [V]")
+                plt.legend()
+                
+                plt.figtext(.5, .95, "Vg = 1.2 V, Vdd = 1.2 V, Samp Rate = " + str(sampRate) + " kHz, Ibias = " + str(Ibias) +
+                            ' A, Rts Amplitude = ' + str(rtsAmplitude) + ' (V)', horizontalalignment='center', fontsize = 10)
+                plt.savefig(picLoc + "_C" + columnRX + "R" + rowRX + " " + dt_string + ".png")
+                fig1 = plt.show(block = False)
+                # plt.pause(.5)
+                plt.close(fig1)
+            # else:
+            #     rtsAmplitude = "???"
+            
             vOut = vOut.reset_index(drop = True, inplace=True)
             smu._write(value='smua.source.output = smua.OUTPUT_OFF')
             smu._write(value='smub.source.output = smub.OUTPUT_OFF')
-        rtsData.to_csv(fileLoc + '_Loop.csv')
+        # rtsData.to_csv(fileLoc + '_Loop'+ rowRX + '.csv')                                   # save after row completes
+        rtsData.to_feather(fileLoc + '_Row'+ rowRX + '.feather')   
+        rtsData = rtsData.reset_index(drop=True, inplace=True)                              # delete data frame after row completes
     write_cmd(str(9))                                                   # selects the switch case on the pico
     commandRX = pico.read_until().strip().decode()                                  # confirms mode selected
     print('pico reset the shift registers')
-    rtsData.to_csv(fileLoc + dt_string + '.csv')
+    # rtsData.to_csv(fileLoc + dt_string + '.csv')
     return rtsData
 
 
 # for i in range(2):
 dt_string = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p")
-rtsMeasurement(2, '5L', '3')
+rtsMeasurement(0, '5L', '3')
