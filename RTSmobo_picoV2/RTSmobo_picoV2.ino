@@ -191,7 +191,7 @@ void loop()
       }
 
     case 5: {                               // idvg, rts NMOS Characterization on The bypass
-        digitalWrite(Csin, HIGH);             // close NMOS amp bypass
+        digitalWrite(Csin, HIGH);             // open NMOS amp bypass
         digitalWrite(LED, LOW);
         if (debug == true) {
           Serial.println("H V");
