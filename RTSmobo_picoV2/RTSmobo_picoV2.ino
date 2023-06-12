@@ -294,11 +294,21 @@ void loop()
            
     case 7: {
 //        turnOff();
-        digitalWrite(vpwrHV, HIGH);
-        digitalWrite(vpwrLV, LOW);
+//        digitalWrite(vpwrHV, HIGH);
+//        digitalWrite(vpwrLV, LOW);
         command = 0;
         break;
       }
+
+    case 8: {
+      digitalWrite(resetBIN, HIGH);
+      digitalWrite(Csin, HIGH);
+      digitalWrite(HCLKin, HIGH);
+      digitalWrite(DHin, HIGH);       // set SDA_A pin to horSR value
+      digitalWrite(Din, HIGH);
+      digitalWrite(LED, HIGH);
+      break;
+    }
 
     
     case 9:
