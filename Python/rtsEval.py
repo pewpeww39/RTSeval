@@ -80,9 +80,9 @@ def bankNum(bank, bypass):
         select = 0
 
     if bank == 0:
-        colStart = 0 + 1
+        colStart = 0 + 1 
         colEnd = colStart + 32
-        Ibias = 1e-5
+        Ibias = 1e-6
         timeTest = 20
         holdTime = 20
         # timeDelay = 0.001                             # 1 kHz
@@ -116,7 +116,7 @@ def bankNum(bank, bypass):
     elif bank == 2:
         colStart = 64 + 1
         colEnd = colStart + 32
-        Ibias = 1e-8
+        Ibias = 1e-5
         timeTest = 20
         holdTime = 20
         timeDelay = 0.0005          # 2 kHz
@@ -129,9 +129,9 @@ def bankNum(bank, bypass):
         rangev = 3.3
         vg = 3.3
     elif bank == 3:
-        colStart = 97
+        colStart = 96 + 1
         colEnd = colStart + 32
-        Ibias = 22e-6
+        Ibias = 1e-7
         timeTest = 20
         holdTime = 20
         timeDelay = 0.0005          # 2 kHz
@@ -141,7 +141,7 @@ def bankNum(bank, bypass):
         picLoc = "C:\\Users\\UTChattsat\\Documents\\SkywaterData\\rtsData\\Bank 3\\rtsData_Ibias_" + str(Ibias)
         fileLoc = '~/Documents/SkywaterData/rtsData/Bank 3/rtsData'
         limitv = 3.3
-        rangev = 4
+        rangev = 3.3
         vg = 3.3
     elif bank == 4:
         colStart = 129
@@ -261,7 +261,7 @@ def rtsMeasurement (bank, dieX, dieY, bypass):
             rtsData = pd.concat([rtsData, vOut], axis = 0, ignore_index=True)           # save the new data with old data
             sig = savgol_filter(vOut.Vgs, window_length=51, polyorder=3)
             y1, x1 = np.histogram(sig, bins=50)
-            peak = find_peaks(y1, width=1, height=100)
+            peak = find_peaks(y1, width=1, height=100, distance=5)
             YMAX = y1[peak[0]]
             XMAX = x1[peak[0]]
             if len(peak[0]) >= 2:
@@ -366,12 +366,14 @@ def rtsMeasurement (bank, dieX, dieY, bypass):
     # rtsData.to_csv(fileLoc + dt_string + '.csv')
     print('Slow Trap Count:', SlowTrapCounter)
     print('RTS Count:', RTSCounter)
-    # totalRTS = SlowTrapCounter/DeviceCounter *100
-    # refinedRTS = RTSCounter/DeviceCounter *100
+    totalRTS = SlowTrapCounter/DeviceCounter *100
+    refinedRTS = RTSCounter/DeviceCounter *100
+    print('totalRTS: ', totalRTS)
+    print('refinedRTS: ', refinedRTS)
     return rtsData
 
 
 # for i in range(2):
 dt_string = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p")
-rtsMeasurement(0, '5L', '3', bypass=True)                                  # (bank number, dieX, dieY, bypass select)
-# rtsMeasurement(1, '2E', '6', bypass=True)   
+# rtsMeasurement(0, '5L', '3', bypass=True)                                  # (bank number, dieX, dieY, bypass select)
+rtsMeasurement(3, '2E', '6', bypass=True)                                    #New Chip currently being measured
