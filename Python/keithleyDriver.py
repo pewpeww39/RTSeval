@@ -1990,21 +1990,14 @@ class Keithley2600(Keithley2600Base):
             while self.status.operation.sweeping.condition == 0:                    # check if sweep has started 
                 # print('waiting')
                 self.trigger.wait(.001)
-                # # while loop that runs until the sweep ends
             while self.status.operation.sweeping.condition > 0:                     # check if sweep has ended
                 # print('running')
                 # self.waitcomplete()
                 self.trigger.wait(.001)
                 # self.display.trigger.clear()
             print('reading buffers')
-            # i_smu1 = self.read_buffer(smu1.nvbuffer1)
             v_smu1 = self.read_buffer(smu1.nvbuffer1)
             v_smu2 = self.read_buffer(smu2.nvbuffer1)
-            # sVal = []
-            # for i in range(len(v_smu1)):
-            #     timestamp = np.append(timestamp, smu1.nvbuffer2.timestamps[i+1])
-
-            # CLEAR BUFFERS:
             for smu in [smu1, smu2]:
                 smu.nvbuffer1.clear()
                 smu.nvbuffer2.clear()
@@ -2022,34 +2015,35 @@ class Keithley2600(Keithley2600Base):
                     t_int: float):
         
        with self._measurement_lock:
-            timestamp = []
-            smu1.source.func = smu1.OUTPUT_DCVOLTS          # SMU 1 is set to apply voltage
+            smu1.source.func = smu1.OUTPUT_DCVOLTS           # SMU 1 is set to apply voltage
             smu2.source.func = smu2.OUTPUT_DCVOLTS           # SUM 2 is set to measure voltage
             for smu in [smu1, smu2]:
-                # smu.source.rangei = pow(10, -6)
                 self.set_integration_time(smu, t_int)
-                # self.set_integration_time(smu, t_int)
                 smu.source.limitv = 3.3
                 smu.nvbuffer1.clear()
                 smu.nvbuffer2.clear()
                 smu.nvbuffer1.clearcache()
                 smu.nvbuffer2.clearcache()
-                # smu.nvbuffer2.appendmode = 1
             smu1.measure.autozero = smu1.AUTOZERO_AUTO
             smu2.measure.autozero = smu2.AUTOZERO_OFF
             smu1.measure.rangev = 2
             smu2.measure.rangev = 2
-            # smu2.nvbuffer2.collecttimestamps = 0
             
-            # smu1.sense = smu1.SENSE_LOCAL
-            # smu2.sense = smu2.SENSE_LOCAL
+            start, stop, num = vList
+            voltage = np.linspace( start, stop, num, True)
+
+            if len(voltage) > self.CHUNK_SIZE:
+                self.create_lua_attr("python_driver_list", [])
+                for num in voltage:
+                    self.table.insert(self.python_driver_list, num)
+                smu1.trigger.source.listv(self.python_driver_list)
+                self.delete_lua_attr("python_driver_list")
+            else:
+                smu1.trigger.source.listv(voltage)
 
             self.trigger.blender[1].orenable = True                                 # triggers when either stimuli are true (True = or statement)
             self.trigger.blender[1].stimulus[1] = smu2.trigger.MEASURE_COMPLETE_EVENT_ID
             self.trigger.blender[1].stimulus[2] = self.trigger.EVENT_ID
-            start, stop, num = vList
-            voltage = np.linspace( start, stop, num, True)
-            smu1.trigger.source.listv(voltage)
             smu1.trigger.source.action = smu1.ENABLE
             smu1.trigger.source.stimulus = self.trigger.blender[1].EVENT_ID
             smu1.trigger.measure.action = smu1.ENABLE # ASYNC                      # enable synchronous measurements
@@ -2059,27 +2053,9 @@ class Keithley2600(Keithley2600Base):
             smu2.trigger.measure.action = smu2.ASYNC                                # enable smu
             smu2.trigger.measure.v(smu2.nvbuffer1)                                  # measure current and voltage on trigger, store in buffer of smu
             smu2.trigger.measure.stimulus = smu1.trigger.SOURCE_COMPLETE_EVENT_ID
-            # smu1.nvbuffer1.collectsourcevalues = 0                                  # must be zero for async measurements
-                      # initiate measure trigger when timer is complete
-            
-            
+
             smu1.measure.delay = delay
             smu2.measure.delay = delay
-            # self.trigger.timer[1].delaylist = {delay}                                     # delay associated with timer cycle
-            # self.trigger.timer[1].count = 0                                         # triggers to execute, 0 = infinity
-            # self.trigger.timer[1].passthrough = False                                # Immediate trigger on stimulus 
-            # self.trigger.timer[1].stimulus = self.trigger.blender[1].EVENT_ID
-
-            # self.trigger.timer[2].delay = holdT
-            # self.trigger.timer[2].count = 1                                         # number of triggers to execute
-            # self.trigger.timer[2].passthrough = False                               # trigger event after delay expires
-            # self.trigger.timer[2].stimulus = self.trigger.EVENT_ID                  # initiate timer
-
-            # self.trigger.timer[3].delay = runT
-            # self.trigger.timer[3].count = 1                                         # number of triggers to execute
-            # self.trigger.timer[3].passthrough = False                               # trigger event after delay expires
-            # self.trigger.timer[3].stimulus = self.trigger.EVENT_ID#self.trigger.timer[2].EVENT_ID                  # initiate timer
-
 
             for smu in [smu1, smu2]:
                 smu.trigger.count = num                                               # number of triggers for pulse
@@ -2097,20 +2073,23 @@ class Keithley2600(Keithley2600Base):
             self.send_trigger()                                                     # start the sweep
 
             while self.status.operation.sweeping.condition == 0:                    # check if sweep has started 
-                # print('waiting')
                 self.trigger.wait(delay)
-                # # while loop that runs until the sweep ends
             while self.status.operation.sweeping.condition > 0:                     # check if sweep has ended
                 self.trigger.wait(delay)
                 # read buffer last measured current value, if > than threshold abort sweep and kill power
                 # .............................
+                if self.abort_event.is_set():
+                    v_smu1 = self.read_buffer(smu1.nvbuffer1)
+                    v_smu2 = self.read_buffer(smu2.nvbuffer1)
+                    return v_smu1, v_smu2
+
+                # setup smu to sweep through list on trigger
+                # send sweep_list over in chunks if too long
+                
+
             print('reading buffers')
-            # i_smu1 = self.read_buffer(smu1.nvbuffer1)
             v_smu1 = self.read_buffer(smu1.nvbuffer1)
             v_smu2 = self.read_buffer(smu2.nvbuffer1)
-            # sVal = []
-            # for i in range(len(v_smu1)):
-            #     timestamp = np.append(timestamp, smu1.nvbuffer2.timestamps[i+1])
 
             # CLEAR BUFFERS:
             for smu in [smu1, smu2]:
