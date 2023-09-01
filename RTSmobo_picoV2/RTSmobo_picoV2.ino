@@ -68,10 +68,8 @@ void loop()
         digitalWrite(resetBIN, LOW);        // by setting the SR inputs to low
         digitalWrite(Csin, HIGH);           // close NMOS amp bypass
         flashLED();
+        Serial.println(command);
         command = 0;
-        int commandTX = 1;
-        Serial.println(commandTX);
-        commandTX = 0;
         if (debug == true) {
           Serial.println("Ready for NMOS OpAmp characterization");
         }
@@ -82,6 +80,7 @@ void loop()
         digitalWrite(resetBIN, LOW);
         digitalWrite(Csin, LOW);              // close PMOS amp bypass
         flashLED();
+        Serial.println(command);
         command = 0;
         if (debug == true) {
           Serial.println("Ready for PMOS OpAmp characterization");
