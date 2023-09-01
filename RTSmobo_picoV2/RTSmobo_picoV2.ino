@@ -20,6 +20,7 @@
 #define ch1vo6          16  // Select which amplifier output is on channel 4  vout3
 #define ch1vo7          17  // Select which amplifier output is on channel 4  vout7
 #define Csin            18  // Vout amplifier bypass
+#define vPwr            20  // 3.3V and 1.2V power switch
 #define LED             25  // Pico LED
 
 int command = 0;
@@ -294,8 +295,8 @@ void loop()
            
     case 7: {
 //        turnOff();
-        digitalWrite(vpwrHV, HIGH);
-        digitalWrite(vpwrLV, LOW);
+        digitalWrite(vPwr, HIGH);
+//        digitalWrite(18, HIGH);
         command = 0;
         break;
       }
@@ -361,6 +362,7 @@ void turnOff()
   digitalWrite(ch1vo7, LOW);
   digitalWrite(Csin, LOW);
   digitalWrite(LED, LOW);
+  digitalWrite(vPwr, LOW);
 }
 
 void definePins()
@@ -385,4 +387,5 @@ void definePins()
   pinMode(ch1vo7, OUTPUT);
   pinMode(Csin, OUTPUT);
   pinMode(LED, OUTPUT);
+  pinMode(vPwr, OUTPUT);
 }
