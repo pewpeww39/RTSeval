@@ -35,3 +35,29 @@ changed the way rts amplitude is calculated
 	- added a filter for the signal
 		- produces more accurate histograms for amplitude calculations
 		- switched back to width = 1 because filtered data removes the aliasing/unwanted peaks
+
+5/26:
+switched to new board
+changed the com port in rtsEval.py to com5 from com4
+commented out the power function of case 7 in RTSmobo_picoV2 
+created a case 8 to test the function of resetBin, Csin, DHin, Din
+found a "dead soldier" that worked on bank 1 for rts measurements.
+	- dieX and dieY are currently unknown
+made the 10uA test plot all pictures to analyze for noise 
+	- (switched it back to needing two peaks to be rts)
+put the rts eval board into the custom faraday cage.
+fixed the initial spikes by turning channel b on at the same time as channel a
+	- channel A applys current for 20 sec before record
+	- channel B turns on and zeros out 20 sec before record
+
+6/2:
+updated code to calculate 1/f noise using welch's method
+updated code to extract the mean capture/emission times
+	- need to change time constants from # of data points to time
+	- unsure how reliable the method is
+		- some look reasonable
+		- some capture too many peaks and skews the results 
+			- to look at meaning change debug to True
+
+
+
