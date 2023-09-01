@@ -1930,17 +1930,22 @@ class Keithley2600(Keithley2600Base):
             smu2.measure.autozero = smu2.AUTOZERO_OFF
             smu1.measure.rangev = 2
             smu2.measure.rangev = 2
-            # smu2.nvbuffer2.collecttimestamps = 0
-            
-            # smu1.sense = smu1.SENSE_LOCAL
-            # smu2.sense = smu2.SENSE_LOCAL
+
+            start, stop, num = vList
+            voltage = np.linspace( start, stop, num, True)
+
+            if len(voltage) > self.CHUNK_SIZE:
+                self.create_lua_attr("python_driver_list", [])
+                for num in voltage:
+                    self.table.insert(self.python_driver_list, num)
+                smu1.trigger.source.listv(self.python_driver_list)
+                self.delete_lua_attr("python_driver_list")
+            else:
+                smu1.trigger.source.listv(voltage)
 
             self.trigger.blender[1].orenable = True                                 # triggers when either stimuli are true (True = or statement)
             self.trigger.blender[1].stimulus[1] = smu2.trigger.MEASURE_COMPLETE_EVENT_ID
             self.trigger.blender[1].stimulus[2] = self.trigger.EVENT_ID
-            start, stop, num = vList
-            voltage = np.linspace( start, stop, num, True)
-            smu1.trigger.source.listv(voltage)
             smu1.trigger.source.action = smu1.ENABLE
             smu1.trigger.source.stimulus = self.trigger.blender[1].EVENT_ID
             smu1.trigger.measure.action = smu1.ENABLE # ASYNC                      # enable synchronous measurements
