@@ -2012,12 +2012,13 @@ class Keithley2600(Keithley2600Base):
             return v_smu1, v_smu2
        
     def doe1Latch(self,                            # DOE 1 amp characterization evaluation
-                    smu1: KeithleyClass,
-                    smu2: KeithleyClass,
+                    smu1: KeithleyClass,                    # Source
+                    smu2: KeithleyClass,                    # Measure
                     vList: Sequence[float],
                     iLimit: float,
                     delay: float,
-                    t_int: float):
+                    t_int: float,
+                    expected: float):
         
        with self._measurement_lock:
             smu1.source.func = smu1.OUTPUT_DCVOLTS           # SMU 1 is set to apply voltage
@@ -2029,41 +2030,52 @@ class Keithley2600(Keithley2600Base):
                 smu.nvbuffer2.clear()
                 smu.nvbuffer1.clearcache()
                 smu.nvbuffer2.clearcache()
+
+            smu2.nvbuffer1.fillmode = smu2.FILL_WINDOW
+            smu2.nvbuffer1.fillcount = 1
+
             smu1.measure.autozero = smu1.AUTOZERO_AUTO
             smu2.measure.autozero = smu2.AUTOZERO_OFF
             smu1.measure.rangev = 2
             smu2.measure.rangev = 2
             
-            start, stop, num = vList
-            voltage = np.linspace( start, stop, num, True)
+            # start, stop, num = vList
+            # voltage = np.linspace( start, stop, num, True)
 
-            if len(voltage) > self.CHUNK_SIZE:
-                self.create_lua_attr("python_driver_list", [])
-                for num in voltage:
-                    self.table.insert(self.python_driver_list, num)
-                smu1.trigger.source.listv(self.python_driver_list)
-                self.delete_lua_attr("python_driver_list")
-            else:
-                smu1.trigger.source.listv(voltage)
+            # if len(voltage) > self.CHUNK_SIZE:
+            #     self.create_lua_attr("python_driver_list", [])
+            #     for num in voltage:
+            #         self.table.insert(self.python_driver_list, num)
+            #     smu1.trigger.source.listv(self.python_driver_list)
+            #     self.delete_lua_attr("python_driver_list")
+            # else:
+                # smu1.trigger.source.listv(voltage)
 
             self.trigger.blender[1].orenable = True                                 # triggers when either stimuli are true (True = or statement)
             self.trigger.blender[1].stimulus[1] = smu2.trigger.MEASURE_COMPLETE_EVENT_ID
             self.trigger.blender[1].stimulus[2] = self.trigger.EVENT_ID
+            
+            smu1.trigger.source.listv({5})
             smu1.trigger.source.action = smu1.ENABLE
-            smu1.trigger.source.stimulus = self.trigger.blender[1].EVENT_ID
+            smu1.trigger.source.stimulus = self.trigger.EVENT_ID
             smu1.trigger.measure.action = smu1.ENABLE # ASYNC                      # enable synchronous measurements
             smu1.trigger.measure.v(smu1.nvbuffer1)                                # measure current and voltage on trigger, store in buffer of smu
             smu1.trigger.measure.stimulus = smu1.trigger.SOURCE_COMPLETE_EVENT_ID
             smu2.trigger.source.action = smu2.DISABLE                               # disable channel b source
             smu2.trigger.measure.action = smu2.ASYNC                                # enable smu
-            smu2.trigger.measure.v(smu2.nvbuffer1)                                  # measure current and voltage on trigger, store in buffer of smu
-            smu2.trigger.measure.stimulus = smu1.trigger.SOURCE_COMPLETE_EVENT_ID
+            smu2.trigger.measure.i(smu2.nvbuffer1)                                  # measure current and voltage on trigger, store in buffer of smu
+            smu2.trigger.measure.stimulus = self.trigger.timer[1].EVENT_ID
 
-            smu1.measure.delay = delay
-            smu2.measure.delay = delay
+            smu1.measure.delay = 0
+            smu2.measure.delay = 0
+
+            self.trigger.timer[1].delaylist = {delay}                               # delay associated with timer cycle
+            self.trigger.timer[1].count = 0                                         # triggers to execute, 0 = infinity
+            self.trigger.timer[1].passthrough = False                               # Immediate trigger on stimulus 
+            self.trigger.timer[1].stimulus = self.trigger.blender[1].EVENT_ID
 
             for smu in [smu1, smu2]:
-                smu.trigger.count = num                                               # number of triggers for pulse
+                smu.trigger.count = 1                                             # number of triggers for pulse
                 smu.trigger.arm.stimulus = self.trigger.EVENT_ID                    # sweep start trigger
                 smu.trigger.arm.count = 1                                           # number of triggers for sweep
 
@@ -2080,9 +2092,15 @@ class Keithley2600(Keithley2600Base):
             while self.status.operation.sweeping.condition == 0:                    # check if sweep has started 
                 self.trigger.wait(delay)
             while self.status.operation.sweeping.condition > 0:                     # check if sweep has ended
-                self.trigger.wait(delay)
+                # self.trigger.wait(delay)
                 # read buffer last measured current value, if > than threshold abort sweep and kill power
-                # .............................
+                i_reading = self.read_buffer(smu2.nvbuffer1)
+
+                if i_reading > expected:                                            # check if current is higher than expected
+                    smu1.source.output = smu1.OUTPUT_OFF                            
+                    smu2.source.output = smu2.OUTPUT_OFF
+                print("Current is: " + i_reading + "Amps")
+
                 if self.abort_event.is_set():
                     v_smu1 = self.read_buffer(smu1.nvbuffer1)
                     v_smu2 = self.read_buffer(smu2.nvbuffer1)
@@ -2094,7 +2112,7 @@ class Keithley2600(Keithley2600Base):
 
             print('reading buffers')
             v_smu1 = self.read_buffer(smu1.nvbuffer1)
-            v_smu2 = self.read_buffer(smu2.nvbuffer1)
+            i_smu2 = self.read_buffer(smu2.nvbuffer1)
 
             # CLEAR BUFFERS:
             for smu in [smu1, smu2]:
@@ -2103,4 +2121,4 @@ class Keithley2600(Keithley2600Base):
                 smu.nvbuffer1.clearcache()
                 smu.nvbuffer2.clearcache()
             print('returning data')
-            return v_smu1, v_smu2
+            return v_smu1, i_smu2
