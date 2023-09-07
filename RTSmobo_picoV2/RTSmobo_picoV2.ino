@@ -20,6 +20,7 @@
 #define ch1vo6          16  // Select which amplifier output is on channel 4  vout3
 #define ch1vo7          17  // Select which amplifier output is on channel 4  vout7
 #define Csin            18  // Vout amplifier bypass
+#define vPwr            20  // 3.3V and 1.2V power switch
 #define LED             25  // Pico LED
 
 int command = 0;
@@ -67,10 +68,8 @@ void loop()
         digitalWrite(resetBIN, LOW);        // by setting the SR inputs to low
         digitalWrite(Csin, HIGH);           // close NMOS amp bypass
         flashLED();
+        Serial.println(command);
         command = 0;
-        int commandTX = 1;
-        Serial.println(commandTX);
-        commandTX = 0;
         if (debug == true) {
           Serial.println("Ready for NMOS OpAmp characterization");
         }
@@ -81,6 +80,7 @@ void loop()
         digitalWrite(resetBIN, LOW);
         digitalWrite(Csin, LOW);              // close PMOS amp bypass
         flashLED();
+        Serial.println(command);
         command = 0;
         if (debug == true) {
           Serial.println("Ready for PMOS OpAmp characterization");
@@ -294,8 +294,8 @@ void loop()
            
     case 7: {
 //        turnOff();
-//        digitalWrite(vpwrHV, HIGH);
-//        digitalWrite(vpwrLV, LOW);
+        digitalWrite(vPwr, HIGH);
+//        digitalWrite(18, HIGH);
         command = 0;
         break;
       }
@@ -371,6 +371,7 @@ void turnOff()
   digitalWrite(ch1vo7, LOW);
   digitalWrite(Csin, LOW);
   digitalWrite(LED, LOW);
+  digitalWrite(vPwr, LOW);
 }
 
 void definePins()
@@ -395,4 +396,5 @@ void definePins()
   pinMode(ch1vo7, OUTPUT);
   pinMode(Csin, OUTPUT);
   pinMode(LED, OUTPUT);
+  pinMode(vPwr, OUTPUT);
 }
