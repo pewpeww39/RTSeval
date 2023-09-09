@@ -1905,12 +1905,8 @@ class Keithley2600(Keithley2600Base):
                     smu1: KeithleyClass,
                     smu2: KeithleyClass,
                     vList: Sequence[float],
-                    runT: float,
-                    holdT: float,
                     delay: float,
-                    t_int: float,
-                    rangei: float,
-                    limitv: float):
+                    t_int: float):
         
        with self._measurement_lock:
             timestamp = []
@@ -1920,7 +1916,7 @@ class Keithley2600(Keithley2600Base):
                 # smu.source.rangei = pow(10, -6)
                 self.set_integration_time(smu, t_int)
                 # self.set_integration_time(smu, t_int)
-                smu.source.limitv = 3.3
+                smu.source.limitv = 2
                 smu.nvbuffer1.clear()
                 smu.nvbuffer2.clear()
                 smu.nvbuffer1.clearcache()
@@ -1928,39 +1924,46 @@ class Keithley2600(Keithley2600Base):
                 # smu.nvbuffer2.appendmode = 1
             smu1.measure.autozero = smu1.AUTOZERO_AUTO
             smu2.measure.autozero = smu2.AUTOZERO_OFF
+            smu2.nvbuffer2.collecttimestamps = 0
             smu1.measure.rangev = 2
             smu2.measure.rangev = 2
 
-            start, stop, num = vList
-            voltage = np.linspace( start, stop, num, True)
-
-            if len(voltage) > self.CHUNK_SIZE:
-                self.create_lua_attr("python_driver_list", [])
-                for num in voltage:
-                    self.table.insert(self.python_driver_list, num)
-                smu1.trigger.source.listv(self.python_driver_list)
-                self.delete_lua_attr("python_driver_list")
-            else:
-                smu1.trigger.source.listv(voltage)
-
+            # start, stop, num = vList
+            # voltage = np.linspace(0, 1.8, 10)
+            # voltage = {0, 0.2, 0.5, 0.8, 1, 1.8}
+            # if len(vList) > self.CHUNK_SIZE:
+            #     self.create_lua_attr("python_driver_list", [])
+            #     for num in vList:
+            #         self.table.insert(self.python_driver_list, num)
+            #     smu1.trigger.source.listv(self.python_driver_list)
+            #     self.delete_lua_attr("python_driver_list")
+            # else:
+            #     smu1.trigger.source.listv(vList)
+            # smu1.trigger.source.listv(vList)
             self.trigger.blender[1].orenable = True                                 # triggers when either stimuli are true (True = or statement)
-            self.trigger.blender[1].stimulus[1] = smu2.trigger.MEASURE_COMPLETE_EVENT_ID
-            self.trigger.blender[1].stimulus[2] = self.trigger.EVENT_ID
+            self.trigger.blender[1].stimulus[1] = smu1.trigger.PULSE_COMPLETE_EVENT_ID
+            self.trigger.blender[1].stimulus[2] = smu1.trigger.ARMED_EVENT_ID
+
+            self.trigger.blender[2].orenable = True                                 # triggers when either stimuli are true (True = or statement)
+            self.trigger.blender[2].stimulus[1] = smu1.trigger.SOURCE_COMPLETE_EVENT_ID
+            self.trigger.blender[2].stimulus[2] = self.trigger.EVENT_ID
+            start, stop, step = (0.1, 1.8, 50)
+            smu1.trigger.source.linearv(start, stop, step)
             smu1.trigger.source.action = smu1.ENABLE
-            smu1.trigger.source.stimulus = self.trigger.blender[1].EVENT_ID
+            smu1.trigger.source.stimulus = self.trigger.blender[1].EVENT_ID# self.trigger.blender[1].EVENT_ID
             smu1.trigger.measure.action = smu1.ENABLE # ASYNC                      # enable synchronous measurements
-            smu1.trigger.measure.v(smu1.nvbuffer1)                                # measure current and voltage on trigger, store in buffer of smu
+            smu1.trigger.measure.v(smu1.nvbuffer2)                                # measure current and voltage on trigger, store in buffer of smu
             smu1.trigger.measure.stimulus = smu1.trigger.SOURCE_COMPLETE_EVENT_ID
             smu2.trigger.source.action = smu2.DISABLE                               # disable channel b source
             smu2.trigger.measure.action = smu2.ASYNC                                # enable smu
-            smu2.trigger.measure.v(smu2.nvbuffer1)                                  # measure current and voltage on trigger, store in buffer of smu
+            smu2.trigger.measure.v(smu2.nvbuffer2)                                  # measure current and voltage on trigger, store in buffer of smu
             smu2.trigger.measure.stimulus = smu1.trigger.SOURCE_COMPLETE_EVENT_ID
             # smu1.nvbuffer1.collectsourcevalues = 0                                  # must be zero for async measurements
                       # initiate measure trigger when timer is complete
             
             
-            smu1.measure.delay = delay
-            smu2.measure.delay = delay
+            smu1.measure.delay = 0.1
+            smu2.measure.delay = 0.1
             # self.trigger.timer[1].delaylist = {delay}                                     # delay associated with timer cycle
             # self.trigger.timer[1].count = 0                                         # triggers to execute, 0 = infinity
             # self.trigger.timer[1].passthrough = False                                # Immediate trigger on stimulus 
@@ -1977,32 +1980,45 @@ class Keithley2600(Keithley2600Base):
             # self.trigger.timer[3].stimulus = self.trigger.EVENT_ID#self.trigger.timer[2].EVENT_ID                  # initiate timer
 
 
-            for smu in [smu1, smu2]:
-                smu.trigger.count = num                                               # number of triggers for pulse
-                smu.trigger.arm.stimulus = self.trigger.EVENT_ID                    # sweep start trigger
-                smu.trigger.arm.count = 1                                           # number of triggers for sweep
+            # for smu in [smu1, smu2]:
+            #     smu.trigger.count = 50                                             # number of triggers for pulse
+            #     smu.trigger.arm.stimulus = self.trigger.EVENT_ID                    # sweep start trigger
+            #     smu.trigger.arm.count = 1    
+            #     smu.trigger.endpulse.action = smu.SOURCE_HOLD                       # pulse action
+            #     smu.trigger.endpulse.stimulus = smu.trigger.MEASURE_COMPLETE_EVENT_ID # initiate pulse
+            #     smu.trigger.endsweep.action = smu.SOURCE_IDLE                       # turn off source after sweep 
+            
+            smu1.trigger.count = 50                                               # number of triggers for pulse
+            smu1.trigger.arm.stimulus = self.trigger.EVENT_ID                    # sweep start trigger
+            smu1.trigger.arm.count = 1    
+            smu1.trigger.endpulse.action = smu1.SOURCE_HOLD                       # pulse action
+            smu1.trigger.endpulse.stimulus = smu1.trigger.MEASURE_COMPLETE_EVENT_ID # initiate pulse
+            smu1.trigger.endsweep.action = smu1.SOURCE_IDLE                       # turn off source after sweep 
+            smu2.trigger.count = 50                                                # number of triggers for pulse
+            smu2.trigger.arm.stimulus = self.trigger.EVENT_ID                    # sweep start trigger
+            smu2.trigger.arm.count = 1 
+            smu2.trigger.endpulse.action = smu2.SOURCE_HOLD                       # pulse action
+            smu2.trigger.endpulse.stimulus = smu2.trigger.MEASURE_COMPLETE_EVENT_ID # initiate pulse
+            smu2.trigger.endsweep.action = smu2.SOURCE_IDLE                       # turn off source after sweep 
 
-                smu.trigger.endpulse.action = smu.SOURCE_HOLD                       # pulse action
-                smu.trigger.endpulse.stimulus = smu.trigger.SWEEP_COMPLETE_EVENT_ID # initiate pulse
-                smu.trigger.endsweep.action = smu.SOURCE_IDLE                       # turn off source after sweep 
-
-            smu1.source.output = smu1.OUTPUT_ON                                     # turn on smu
-            smu2.source.output = smu2.OUTPUT_ON
+            # smu1.source.output = smu1.OUTPUT_ON                                     # turn on smu
+            # smu2.source.output = smu2.OUTPUT_ON
             smu1.trigger.initiate()                                                 # move into the armed layer
             smu2.trigger.initiate()
             self.send_trigger()                                                     # start the sweep
-
+            # print('Configured')
             while self.status.operation.sweeping.condition == 0:                    # check if sweep has started 
                 # print('waiting')
                 self.trigger.wait(.001)
             while self.status.operation.sweeping.condition > 0:                     # check if sweep has ended
                 # print('running')
                 # self.waitcomplete()
-                self.trigger.wait(.001)
+                self.trigger.wait(0.001)
+                # time.sleep(0.001)
                 # self.display.trigger.clear()
             print('reading buffers')
-            v_smu1 = self.read_buffer(smu1.nvbuffer1)
-            v_smu2 = self.read_buffer(smu2.nvbuffer1)
+            v_smu1 = self.read_buffer(smu1.nvbuffer2)
+            v_smu2 = self.read_buffer(smu2.nvbuffer2)
             for smu in [smu1, smu2]:
                 smu.nvbuffer1.clear()
                 smu.nvbuffer2.clear()

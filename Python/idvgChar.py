@@ -13,7 +13,7 @@ import numpy as np
 
 dt_string = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p")
 
-pico = serial.Serial('COM4', baudrate=115200)
+pico = serial.Serial('COM3', baudrate=115200)
 smu = Keithley2600('TCPIP0::192.168.4.11::INSTR')               #set ip addr for smu
 smu._write(value='smua.source.autorangei = smua.AUTORANGE_ON')  #set auto range for smua 
 smu._write(value='smub.source.autorangev = smub.AUTORANGE_OFF')  #set auto range for smua 
