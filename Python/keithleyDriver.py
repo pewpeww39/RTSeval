@@ -1947,7 +1947,8 @@ class Keithley2600(Keithley2600Base):
             self.trigger.blender[2].orenable = True                                 # triggers when either stimuli are true (True = or statement)
             self.trigger.blender[2].stimulus[1] = smu1.trigger.SOURCE_COMPLETE_EVENT_ID
             self.trigger.blender[2].stimulus[2] = self.trigger.EVENT_ID
-            start, stop, step = (0.1, 1.8, 50)
+            # start, stop, step = (0.1, 1.8, 50)
+            start, stop, step =  vList
             smu1.trigger.source.linearv(start, stop, step)
             smu1.trigger.source.action = smu1.ENABLE
             smu1.trigger.source.stimulus = self.trigger.blender[1].EVENT_ID# self.trigger.blender[1].EVENT_ID
@@ -1962,8 +1963,8 @@ class Keithley2600(Keithley2600Base):
                       # initiate measure trigger when timer is complete
             
             
-            smu1.measure.delay = 0.1
-            smu2.measure.delay = 0.1
+            smu1.measure.delay = 0.001
+            smu2.measure.delay = 0.001
             # self.trigger.timer[1].delaylist = {delay}                                     # delay associated with timer cycle
             # self.trigger.timer[1].count = 0                                         # triggers to execute, 0 = infinity
             # self.trigger.timer[1].passthrough = False                                # Immediate trigger on stimulus 
@@ -1988,13 +1989,13 @@ class Keithley2600(Keithley2600Base):
             #     smu.trigger.endpulse.stimulus = smu.trigger.MEASURE_COMPLETE_EVENT_ID # initiate pulse
             #     smu.trigger.endsweep.action = smu.SOURCE_IDLE                       # turn off source after sweep 
             
-            smu1.trigger.count = 50                                               # number of triggers for pulse
+            smu1.trigger.count = step                                               # number of triggers for pulse
             smu1.trigger.arm.stimulus = self.trigger.EVENT_ID                    # sweep start trigger
             smu1.trigger.arm.count = 1    
             smu1.trigger.endpulse.action = smu1.SOURCE_HOLD                       # pulse action
             smu1.trigger.endpulse.stimulus = smu1.trigger.MEASURE_COMPLETE_EVENT_ID # initiate pulse
             smu1.trigger.endsweep.action = smu1.SOURCE_IDLE                       # turn off source after sweep 
-            smu2.trigger.count = 50                                                # number of triggers for pulse
+            smu2.trigger.count = step                                                # number of triggers for pulse
             smu2.trigger.arm.stimulus = self.trigger.EVENT_ID                    # sweep start trigger
             smu2.trigger.arm.count = 1 
             smu2.trigger.endpulse.action = smu2.SOURCE_HOLD                       # pulse action

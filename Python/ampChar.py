@@ -1,4 +1,6 @@
 import serial
+
+
 import sys
 import time
 import re
@@ -18,7 +20,7 @@ from datetime import datetime
 dt_string = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p")
 #print("date and time =", dt_string)
 
-pico = serial.Serial('COM5', baudrate=115200)
+pico = serial.Serial('COM6', baudrate=115200)
 smu = Keithley2600('TCPIP0::192.168.4.11::INSTR')               #set ip addr for smu
 # smu._write(value='smua.source.rangei = 3.3')
 # smu._write(value='smub.source.rangev = 3.3')
