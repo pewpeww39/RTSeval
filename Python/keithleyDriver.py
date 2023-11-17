@@ -1916,7 +1916,7 @@ class Keithley2600(Keithley2600Base):
                 # smu.source.rangei = pow(10, -6)
                 self.set_integration_time(smu, t_int)
                 # self.set_integration_time(smu, t_int)
-                smu.source.limitv = 2
+                smu.source.limitv = 3.3
                 smu.nvbuffer1.clear()
                 smu.nvbuffer2.clear()
                 smu.nvbuffer1.clearcache()
@@ -1926,7 +1926,7 @@ class Keithley2600(Keithley2600Base):
             smu2.measure.autozero = smu2.AUTOZERO_OFF
             smu2.nvbuffer2.collecttimestamps = 0
             smu1.measure.rangev = 2
-            smu2.measure.rangev = 2
+            smu2.measure.rangev = 20
 
             # start, stop, num = vList
             # voltage = np.linspace(0, 1.8, 10)
