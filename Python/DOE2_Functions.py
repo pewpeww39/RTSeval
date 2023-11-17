@@ -126,7 +126,7 @@ def doe1_ampCharacterization(amp, test):
     # print(test)
     time.sleep(5)
     # start_time, end_time, transients = oscope.save_measurements_timed(3)
-    data.vIn, data.vOut = smu.doe1AmpChar(smu.smua, smu.smub, vList, delay, t_int)
+    data.vIn, data.vOut = smu.doe1AmpChar(smu.smub, smu.smua, vList, delay, t_int)
     print(data)
     plt.plot(data.vIn, data.vOut, label = '0.5 mA')
     plt.title("Vin vs Vout")
@@ -258,10 +258,11 @@ test = int(input("Which test are you running? "))
 
 if test == 1:
     print("Amp Characterization is selected.")
-    doe1_ampCharacterization(0, 5)   # (amp, test)
+    amp = int(input("Which amp are you running? "))
+    doe1_ampCharacterization(amp, 1)   # (amp, test)
 elif test == 2:
     print("Latch up test is selected.")
-    doe1_Latchup(expectedLV=.00016, # LV threshold3
+    doe1_Latchup(expectedLV=.00016, # LV threshold
                  expectedHV=.0005, #input("Enter Latch_up Threshold: "), # HV threshold
                  latchup_recovery_time=2
     )
