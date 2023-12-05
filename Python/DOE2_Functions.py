@@ -16,9 +16,11 @@ rm = pyvisa.ResourceManager()
 
 # datetime object containing current date and time
 dt_string = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p")
-# oscope = OScope("TCPIP0::192.168.4.2::inst0::INSTR")
+# oscope = OScope("TCPIP0::192.168.4.2::inst0::11
+# INSTR")
 pico = serial.Serial('COM3', baudrate=115200)
-smu = Keithley2600('TCPIP0::192.168.4.12::INSTR')               #set ip addr for smu
+smu = Keithley2600('TCPIP0::192.168.4.11::INSTR')               #set ip addr for smu
+smu2 = Keithley2600('TCPIP0::192.168.4.12::INSTR')
 powerSupply = rm.open_resource('TCPIP0::192.168.4.3::INSTR') 
 p = Path.home()
 
@@ -32,6 +34,8 @@ def powerSupply_On():
 
 def powerSupply_Off():
     powerSupply.write("INST P6V")
+    powerSupply.write("OUTP OFF")
+    powerSupply.write("INST P25V")
     powerSupply.write("OUTP OFF")
     powerSupply.write("INST N25V")
     powerSupply.write("OUTP OFF")
@@ -87,9 +91,13 @@ def doe1_ampCharacterization(amp, test):
         select = 2                                                            # PMOS Op-Amp
 
     data = pd.DataFrame(data=[], index=[], columns=["vIn", "vOut"])           #create dataframe
+
+    
+    powerSupply_Set("P25V", "5.2", "1.0")
+    powerSupply_On()
     write_cmd(f"{7}")
     commandRX, rowRX, columnRX = tuple(pico.read_until().strip().decode().split(','))                            # confirms pico is on
-    time.sleep(0.5)
+    time.sleep(1)
     print("Power is turned on.")
     # powerSupply_Set("P6V", "3.3", "1.0")
     # powerSupply_On()
@@ -98,15 +106,15 @@ def doe1_ampCharacterization(amp, test):
 
     smu.smua.OUTPUT_DCVOLTS          # SMU 1 is set to apply voltage
     smu.smub.OUTPUT_DCAMPS           # SUM 2 is set to measure voltage
-    smu._write(value='smua.source.output = smua.OUTPUT_OFF')
-    smu._write(value='smub.source.output = smub.OUTPUT_OFF')
+    # smu._write(value='smua.source.output = smua.OUTPUT_OFF')
+    # smu._write(value='smub.source.output = smub.OUTPUT_OFF')
     time.sleep(1)
     write_cmd(f"{select}")  
     time.sleep(0.5)
     commandRX, rowRX, columnRX = tuple(pico.read_until().strip().decode().split(','))                            # confirms amp characterization is selected
     # if commandRX == 1 or commandRX == 2:
     print('pico selected amp characterization procedure.')
-    vList = (0, 1.8, 30)
+    vList = (0, 3.3, 50)
     # vList = (0, .3, 30)
     delay = 0
     t_int = 0.005
@@ -119,20 +127,20 @@ def doe1_ampCharacterization(amp, test):
     # print(test)
     time.sleep(5)
     # start_time, end_time, transients = oscope.save_measurements_timed(3)
-    data.vIn, data.vOut = smu.doe1AmpChar(smu.smua, smu.smub, vList, delay, t_int)
+    data.vIn, data.vOut = smu.doe1AmpChar(smu.smub, smu.smua, vList, delay, t_int)
     print(data)
     plt.plot(data.vIn, data.vOut, label = '0.5 mA')
     plt.title("Vin vs Vout")
     plt.xlabel("Vin")
     plt.ylabel("Vout")
     plt.legend()
-    plt.savefig(str(p) + "\\Documents\\LBNL2023\\ampCharacterization\\amp" + str(amp) + "_Vo_vs_Vin_testNumber_" + str(test) + ".png")
+    plt.savefig(str(p) + "\\Documents\\SkywaterData\\DOE2\\ampCharacterization\\amp" + str(amp) + "_Vo_vs_Vin_testNumber_" + str(test) + ".png")
     fig = plt.show(block=False)
     plt.pause(3)
     plt.close(fig)
     commandTX = write_cmd(f"{9}")          
     # print(data)
-    data.to_csv("~/Documents/LBNL2023/ampCharacterization/amp" + str(amp) + '.csv')
+    data.to_csv("~/Documents/SkywaterData/DOE2/ampCharacterization/amp" + str(amp) + '.csv')
     smu._write(value='smua.source.output = smua.OUTPUT_OFF')
     smu._write(value='smub.source.output = smub.OUTPUT_OFF')
     powerSupply_Off()
@@ -251,10 +259,11 @@ test = int(input("Which test are you running? "))
 
 if test == 1:
     print("Amp Characterization is selected.")
-    doe1_ampCharacterization(0, 1)   # (amp, test)
+    amp = int(input("Which amp are you running? "))
+    doe1_ampCharacterization(amp, 1)   # (amp, test)
 elif test == 2:
     print("Latch up test is selected.")
-    doe1_Latchup(expectedLV=.00016, # LV threshold3
+    doe1_Latchup(expectedLV=.00016, # LV threshold
                  expectedHV=.0005, #input("Enter Latch_up Threshold: "), # HV threshold
                  latchup_recovery_time=2
     )
