@@ -1,6 +1,7 @@
 from keithley2600 import Keithley2600
 import sys
 import logging
+import serial
 import re
 import threading
 import numpy as np
@@ -27,6 +28,7 @@ import pyvisa
 
 # local import
 from keithley2600.result_table import FETResultTable
+
 
 
 LuaReturnTypes = Union[float, str, bool, None, "_LuaFunction", "_LuaTable"]
@@ -785,6 +787,9 @@ class Keithley2600(Keithley2600Base):
     # =============================================================================
     # Define lower level control functions
     # =============================================================================
+    # def defPico():
+    #     pico = serial.Serial('COM3', baudrate=115200)
+    #     return pico
 
     def read_error_queue(self) -> List[Tuple[LuaReturnTypes, ...]]:
         """
@@ -1032,6 +1037,7 @@ class Keithley2600(Keithley2600Base):
     def idvgsChar(self,
         smu1: KeithleyClass,
         smu2: KeithleyClass,
+        # smu3: KeithleyClass,
         iList: Sequence[float],
         delay: float,
         t_int: float):
@@ -1055,7 +1061,7 @@ class Keithley2600(Keithley2600Base):
             
 
 
-            for smu in [smu1, smu2]:
+            for smu in [smu1, smu2]: #, smu3]:
                 smu.nvbuffer1.clear()
                 smu.nvbuffer2.clear()
                 smu.nvbuffer1.clearcache()
@@ -1082,7 +1088,12 @@ class Keithley2600(Keithley2600Base):
             self.trigger.blender[2].orenable = False
             self.trigger.blender[2].stimulus[1] = smu1.trigger.MEASURE_COMPLETE_EVENT_ID            #when moved from arm to trigger layer
             self.trigger.blender[2].stimulus[2] = smu2.trigger.MEASURE_COMPLETE_EVENT_ID   # when pulse is complete
-
+            # self.trigger.blender[2].stimulus[3] = smu3.trigger.MEASURE_COMPLETE_EVENT_ID
+            
+            # self.trigger.blender[4].orenable = True
+            # self.trigger.blender[4].stimulus[1] = smu3.trigger.ARMED_EVENT_ID            #when moved from arm to trigger layer
+            # self.trigger.blender[4].stimulus[2] = smu3.trigger.PULSE_COMPLETE_EVENT_ID   # when pulse is complete
+            
             # if len(iList) > self.CHUNK_SIZE:
             #     self.create_lua_attr("python_driver_list", [])
             #     for num in iList:
@@ -1093,11 +1104,15 @@ class Keithley2600(Keithley2600Base):
             start, stop, step, asymp = iList
             smu1.trigger.source.logi(start, stop, step, asymp)
             smu2.trigger.source.listi({0})
+            # smu3.trigger.source.listi({0})
 
             smu1.trigger.source.action = smu1.ENABLE
             smu2.trigger.source.action = smu2.ENABLE
+            # smu3.trigger.source.action = smu3.ENABLE
             smu1.trigger.source.stimulus = self.trigger.blender[1].EVENT_ID
             smu2.trigger.source.stimulus = self.trigger.blender[3].EVENT_ID
+            # smu3.trigger.source.stimulus = self.trigger.blender[4].EVENT_ID
+
             smu1.trigger.measure.action = smu1.ENABLE
             smu1.trigger.measure.stimulus = smu1.trigger.SOURCE_COMPLETE_EVENT_ID
             smu1.trigger.measure.iv(smu1.nvbuffer1, smu1.nvbuffer2)
@@ -1106,6 +1121,10 @@ class Keithley2600(Keithley2600Base):
             smu2.trigger.measure.stimulus = smu1.trigger.SOURCE_COMPLETE_EVENT_ID
             smu2.trigger.measure.v(smu2.nvbuffer2)
 
+            # smu3.trigger.measure.action = smu3.ENABLE
+            # smu3.trigger.measure.stimulus = smu1.trigger.SOURCE_COMPLETE_EVENT_ID
+            # smu3.trigger.measure.v(smu3.nvbuffer2)
+
             # self.trigger.timer[1].delay = delay
             # self.trigger.timer[1].count = 0
             # self.trigger.timer[1].passthrough = True
@@ -1113,22 +1132,31 @@ class Keithley2600(Keithley2600Base):
 
             smu1.trigger.count = step #len(iList)
             smu2.trigger.count = step #len(iList)
+            # smu3.trigger.count = step #len(iList)
+
             smu1.trigger.arm.stimulus = self.trigger.EVENT_ID
+            smu1.trigger.arm.count = 1
             smu2.trigger.arm.stimulus = self.trigger.EVENT_ID
             smu2.trigger.arm.count = 1
-            smu1.trigger.arm.count = 1
+            # smu3.trigger.arm.stimulus = self.trigger.EVENT_ID
+            # smu3.trigger.arm.count = 1
             smu1.trigger.endpulse.action = smu1.SOURCE_HOLD
             smu1.trigger.endpulse.stimulus = self.trigger.blender[2].EVENT_ID
             smu2.trigger.endpulse.action = smu2.SOURCE_IDLE
             smu2.trigger.endpulse.stimulus = self.trigger.blender[2].EVENT_ID
+            # smu3.trigger.endpulse.action = smu3.SOURCE_IDLE
+            # smu3.trigger.endpulse.stimulus = self.trigger.blender[2].EVENT_ID
             smu1.trigger.endsweep.action = smu1.SOURCE_IDLE
             smu2.trigger.endsweep.action = smu2.SOURCE_IDLE
+            # smu3.trigger.endsweep.action = smu3.SOURCE_IDLE
             # smu.trigger.source.set()
             # smu.trigger_autoclear = smu.
             smu1.source.output = smu1.OUTPUT_ON
             smu2.source.output = smu2.OUTPUT_ON
+            # smu3.source.output = smu3.OUTPUT_ON
             smu1.trigger.initiate()
             smu2.trigger.initiate()
+            # smu3.trigger.initiate()
             self.send_trigger()
             # smu.trigger.source.set()
             while self.status.operation.sweeping.condition == 0:
@@ -1146,15 +1174,17 @@ class Keithley2600(Keithley2600Base):
             v_smu1 = self.read_buffer(smu1.nvbuffer2)
             # i_smu2 = self.read_buffer(smu2.nvbuffer1)
             v_smu2 = self.read_buffer(smu2.nvbuffer2)
+            # i_smu2 = self.read_buffer(smu2.nvbuffer1)
+            # v_smu3 = self.read_buffer(smu3.nvbuffer2)
 
             # CLEAR BUFFERS:
-            for smu in [smu1, smu2]:
+            for smu in [smu1, smu2]: #, smu3]:
                 smu.nvbuffer1.clear()
                 smu.nvbuffer2.clear()
                 smu.nvbuffer1.clearcache()
                 smu.nvbuffer2.clearcache()
 
-            return i_smu1, v_smu1, v_smu2
+            return i_smu1, v_smu1, v_smu2 #, v_smu3
 
     def sourceA_measA(self, 
                     smu1: KeithleyClass,
@@ -1254,7 +1284,7 @@ class Keithley2600(Keithley2600Base):
                     t_int: float,
                     rangev: float,
                     limitv: float):
-        
+        # pico = serial.Serial(com, baudrate=115200)
         with self._measurement_lock:
             timestamp = []
             for smu in [smu1, smu2]:
