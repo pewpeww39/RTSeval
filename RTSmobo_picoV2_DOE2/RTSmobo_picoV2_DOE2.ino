@@ -65,10 +65,10 @@ void loop()
       }
     case 1: {                               // Pmos opamp characterization
 //        turnOff();
-        digitalWrite(CRSTbin, LOW); 
+        digitalWrite(CRSTbin, HIGH); 
         digitalWrite(resetBIN, LOW);        // by setting the SR inputs to low
         waitFor(50);
-        digitalWrite(resetBIN, HIGH);
+//        digitalWrite(resetBIN, HIGH);
         waitFor(50);
             for (int j = 129; j >= 1; j--) {      // for loop for the number of columns
               
@@ -212,12 +212,19 @@ void loop()
       }
 
     case 5: {                               // idvg, rts NMOS Characterization on The bypass
-        for (int j = 10; j >= 1; j--) {
-        digitalWrite(CRSTbin, HIGH);
-        waitFor(200);
-        digitalWrite(CRSTbin, LOW);
-        waitFor(200);
+        for (int j = rowSelect; j >= 1; j--) {
+          double period = colSelect;
+          double dutyCycle = 1;
+          float highTime = period * dutyCycle;
+          float lowTime = 1 - highTime;
+          digitalWrite(CRSTbin, HIGH);
+          waitFor(highTime * 1000);
+          digitalWrite(LED, HIGH);
+          digitalWrite(CRSTbin, LOW);
+          waitFor(lowTime * 1000);
+          digitalWrite(LED, LOW);
         }
+        Serial.println("done");
         command = 0;
         break;
       }
@@ -350,6 +357,7 @@ void loop()
       flashLED();
       command = 0;
       digitalWrite(resetBIN, LOW);
+      digitalWrite(CRSTbin, HIGH);
       
       
       break;

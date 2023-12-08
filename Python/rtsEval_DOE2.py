@@ -13,12 +13,17 @@ from scipy.signal import argrelmax, welch
 import pyvisa
 rm = pyvisa.ResourceManager()
 picoCom = 'COM3'
-smu = Keithley2600('TCPIP0::192.168.4.11::INSTR')               # set ip addr for smu
-smu2 = Keithley2600('TCPIP0::192.168.4.12::INSTR')               # set ip addr for smu
+smu = Keithley2600('TCPIP0::192.168.4.11::inst0::INSTR')               # set ip addr for smu
+# smu2 = Keithley2600('TCPIP0::192.168.4.12::INSTR')               # set ip addr for smu
 pico = serial.Serial('COM3', baudrate=115200)                   # set com port for pico com4 is old pico
 powerSupply = rm.open_resource('TCPIP0::192.168.4.3::INSTR')
-smu._write(value= 'smua.source.limitv = 3.3')                   #set v liimit smua
-smu._write(value= "smub.source.limitv = 3.3")                   #set v liimit smub
+# smu._write(value= "node[1].smua.source.limitv = 3.3")                   #set v liimit smua
+# smu._write(value= "node[1].smub.source.limitv = 3.3")                   #set v liimit smub
+
+def intializeTSPLINK():
+    node = smu._write(value="tsplink.reset()")
+    print(node)
+    # smu.dualSMU
 
 def write_cmd(x):                                               # sends commands to pico
     pico.write(bytes(x, 'utf-8'))
@@ -80,8 +85,8 @@ def bankNum(bank, bypass):
         # colEnd = colStart + 16
         colEnd = colStart + 1
         Iref = -1e-5
-        timeTest = 4
-        holdTime = 2
+        timeTest = 10
+        holdTime = 10
         # timeDelay = 0.001                             # 1 kHz
         # nplc = 0.05 / 60
         timeDelay = 0.0005          # measure delay     # 2 kHz
@@ -92,8 +97,10 @@ def bankNum(bank, bypass):
         picLoc = "C:\\Users\\jacob\\Documents\\SkywaterData\\DOE2\\rtsData\\Bank 0\\rtsData_Iref_" + str(Iref)
         fileLoc = '~/Documents/SkywaterData/DOE2/rtsData/Bank 0/rtsData'
         limitv = 3.3
-        rangev = 2
+        rangev = 20
         vg = 3.3
+        dutyCycle = 0.5
+        period = 1
     elif bank == 1:
         # colStart = desired column + 1
         colStart = 16+1
@@ -110,6 +117,8 @@ def bankNum(bank, bypass):
         limitv = 3.3
         rangev = 2
         vg = 1.2
+        dutyCycle = 0.5
+        period = 1
     elif bank == 2:
         colStart = 32 + 1
         colEnd = colStart + 16
@@ -125,6 +134,8 @@ def bankNum(bank, bypass):
         limitv = 3.3
         rangev = 3.3
         vg = 3.3
+        dutyCycle = 0.5
+        period = 1
     elif bank == 3:
         colStart = 48 + 1
         colEnd = colStart + 16
@@ -140,6 +151,8 @@ def bankNum(bank, bypass):
         limitv = 3.3
         rangev = 3.3
         vg = 3.3
+        dutyCycle = 0.5
+        period = 1
     elif bank == 4:
         colStart = 64 + 1
         colEnd = colStart + 16
@@ -155,6 +168,8 @@ def bankNum(bank, bypass):
         limitv = 3.3
         rangev = 1
         vg = 1.2
+        dutyCycle = 0.5
+        period = 1
     elif bank == 5:
         colStart = 80 + 1
         colEnd = colStart + 16
@@ -170,6 +185,8 @@ def bankNum(bank, bypass):
         limitv = 3.3
         rangev = 1
         vg = 3.3
+        dutyCycle = 0.5
+        period = 1
     elif bank == 6:
         colStart = 96 + 1
         colEnd = colStart + 16
@@ -185,6 +202,8 @@ def bankNum(bank, bypass):
         limitv = 3.3
         rangev = 1
         vg = 3.3
+        dutyCycle = 0.5
+        period = 1
     elif bank == 7:
         colStart = 112 + 1
         colEnd = colStart + 16
@@ -200,15 +219,21 @@ def bankNum(bank, bypass):
         limitv = 3.3
         rangev = 1
         vg = 3.3
-    return rowStart, rowEnd, colStart, colEnd, Iref, timeDelay, nplc, timeTest, holdTime, csIn, picLoc, fileLoc, limitv, rangev, sampRate, vg
+        dutyCycle = 0.5
+        period = 1
+    return rowStart, rowEnd, colStart, colEnd, Iref, timeDelay, nplc, timeTest, holdTime, csIn, picLoc, fileLoc, limitv, rangev, sampRate, vg, period
 
 def rtsMeasurement (bank, dieX, dieY, bypass):
     clearSMU()
-     
+    intializeTSPLINK()
+    # smu._write(value= 'node[1].smua.source.limitv = 3.3')                   #set v liimit smua
+    # smu._write(value= "node[1].smub.source.limitv = 3.3")                   #set v liimit smub
+    # smu._write(value= 'node[2].smua.source.limitv = 3.3')                   #set v liimit smua
+    # smu._write(value= "node[2].smub.source.limitv = 3.3")   
     rtsData = pd.DataFrame(data=[], index=[], columns=[]) 
     # specData = pd.DataFrame(pd.read_csv('~\miniconda3\envs\\testequ\RTSeval\Files\RTS_Array_Cells.csv',
     #                  index_col=[0] , header=0), columns = ['W/L', 'Type'])
-    rowStart, rowEnd, colStart, colEnd, Iref, timeDelay, nplc, timeTest, holdTime, csIn, picLoc, fileLoc, limitv, rangev, sampRate, vg = bankNum(bank, bypass)
+    rowStart, rowEnd, colStart, colEnd, Iref, timeDelay, nplc, timeTest, holdTime, csIn, picLoc, fileLoc, limitv, rangev, sampRate, vg, period = bankNum(bank, bypass)
 
 
     powerSupply_Set("P25V", "5.333", "1.0")
@@ -243,13 +268,15 @@ def rtsMeasurement (bank, dieX, dieY, bypass):
             # start_voltage_sweep = time.time()
             # spec = list(specData.iloc[col - 1])
             smu._write(value = "smua.measure.autozero = smua.AUTOZERO_AUTO")
-            smu._write(value='smua.source.output = smub.OUTPUT_ON')
+            smu._write(value = "smua.source.output = smub.OUTPUT_ON")
             smu.smua.measure.v()
             smu.apply_current(smu.smub, Iref)
-            smu2.apply_current(smu2.smua, 0.0)
+            smu._write(value="node[2].smua.source.func = smua.OUTPUT_DCAMPS")
+            smu._write(value="node[2].smua.source.output = smua.OUTPUT_ON")
+            # smu2.apply_current(smu2.smua, 0.0)
             time.sleep(holdTime)
             print("Starting Test")
-            write_cmd(f"{5}")  
+            write_cmd(f"{5},{timeTest}, {period}")  
             vOut['V_C Out'] = smu.sourceA_measAB(smu.smub, smu.smua, Iref, timeTest, holdTime, timeDelay, nplc, rangev, limitv)     # run the script on smu
             vOut['Vsg'] = np.full_like(vOut['V_C Out'], vg) - vOut['V_C Out']
             vOut['Id'] = Iref/10

@@ -12,7 +12,7 @@ from scipy.signal import find_peaks, savgol_filter, peak_widths
 from scipy.signal import argrelmax, welch
 
 smu = Keithley2600('TCPIP0::192.168.4.11::INSTR')               # set ip addr for smu
-pico = serial.Serial('COM5', baudrate=115200)                   # set com port for pico com4 is old pico
+pico = serial.Serial('COM3', baudrate=115200)                   # set com port for pico com4 is old pico
 
 def write_cmd(x):                                               # sends commands to pico
     pico.write(bytes(x, 'utf-8'))
