@@ -10,9 +10,20 @@ import matplotlib.pyplot as plt
 import re
 from scipy.signal import find_peaks, savgol_filter, peak_widths
 from scipy.signal import argrelmax, welch
-
-smu = Keithley2600('TCPIP0::192.168.4.11::INSTR')               # set ip addr for smu
+import pyvisa
+rm = pyvisa.ResourceManager()
+picoCom = 'COM3'
+smu = Keithley2600('TCPIP0::192.168.4.11::inst0::INSTR')               # set ip addr for smu
+# smu2 = Keithley2600('TCPIP0::192.168.4.12::INSTR')               # set ip addr for smu
 pico = serial.Serial('COM3', baudrate=115200)                   # set com port for pico com4 is old pico
+powerSupply = rm.open_resource('TCPIP0::192.168.4.3::INSTR')
+# smu._write(value= "node[1].smua.source.limitv = 3.3")                   #set v liimit smua
+# smu._write(value= "node[1].smub.source.limitv = 3.3")                   #set v liimit smub
+
+def intializeTSPLINK():
+    node = smu._write(value="tsplink.reset()")
+    print(node)
+    # smu.dualSMU
 
 def write_cmd(x):                                               # sends commands to pico
     pico.write(bytes(x, 'utf-8'))
@@ -35,40 +46,30 @@ def powerPico():                                                                
     print('pico turned on the power') 
     time.sleep(2)
 
-# def plotrts(fileLoc, row, rtsData):
-#     dt_string = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p")
-#     plt.plot(rtsData['Row 1'], label='Vs')
-#     plt.title("RTS Data: Column 1")
-#     plt.figtext(.2, .15, "Vg = 1.2 V, Vdd = 1.2 V", fontsize = 10)
-#     plt.figtext(.2, .2, "Ibias = 0.8 nA, AmpBias = .5 mA", fontsize = 10)
-#     plt.figtext(.2, .25, "column = 1, row = " , fontsize = 10)
-#     plt.xlabel("Time [mSec]")
-#     plt.ylabel("Voltage [V]")
-#     plt.legend()
-#     plt.savefig(fileLoc + " " + str(rowS) + " TS.png")
-#     fig1 = plt.show(block = False)
-#     # plt.pause(5)
-#     plt.close(fig1)
-#     plt.hist(rtsData['Row 1'], label = "Vs")
-#     plt.title("RTS Data: Column 1")
-#     plt.figtext(.2, .15, "Vg = 1.2 V, Vdd = 1.2 V", fontsize = 10)
-#     plt.figtext(.2, .2, "Ibias = 0.8 nA, AmpBias = .5 mA", fontsize = 10)
-#     plt.figtext(.2, .25, "column = 1, row = " , fontsize = 10)
-#     # plt.xlabel("Time [mSec]")
-#     plt.xlabel("Voltage [V]")
-#     plt.legend()
-#     plt.savefig(fileLoc + " " + str(rowS) + " Hist.png")
-#     fig2 = plt.show(block = False)
-#     # plt.pause(5)
-#     plt.close(fig2)
+def powerSupply_Set(channel, voltage, current):
+    powerSupply.write("INST "+channel) # Select +6V output ch 1
+    powerSupply.write("VOLT "+voltage) # Set output voltage to 3.0 V
+    powerSupply.write("CURR "+current) # Set output current to 1.0 A
+
+def powerSupply_On():
+    powerSupply.write("OUTP ON")
+
+def powerSupply_Off():
+    powerSupply.write("INST P6V")
+    powerSupply.write("OUTP OFF")
+    powerSupply.write("INST P25V")
+    powerSupply.write("OUTP OFF")
+    powerSupply.write("INST N25V")
+    powerSupply.write("OUTP OFF")
+
 debug = False
 
 def bankNum(bank, bypass):
     rowStart = 0 + 1
-    rowEnd = 96 + 1 
+    rowEnd = rowStart + 1 
 
     if bypass is True and bank in [0,1,2,3]:
-        select = 5
+        select = 3
     elif bypass is False and bank in [0,1,2,3]:
         select = 3
     elif bypass is True and bank in [4,5,6,7]:
@@ -81,139 +82,164 @@ def bankNum(bank, bypass):
 
     if bank == 0:
         colStart = 0 + 1 
-        colEnd = colStart + 32
-        Ibias = 1e-6
-        timeTest = 20
-        holdTime = 20
+        # colEnd = colStart + 16
+        colEnd = colStart + 1
+        Iref = -1e-5
+        timeTest = 10
+        holdTime = 10
         # timeDelay = 0.001                             # 1 kHz
         # nplc = 0.05 / 60
         timeDelay = 0.0005          # measure delay     # 2 kHz
         nplc = 0.027 / 60           # integration time
         csIn = select                     # pico command
         sampRate = 1 / (timeDelay * 1000)
-        # picLoc = "C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\rtsData\\Bank 1\\rtsData_Ibias_" + str(Ibias) 
-        picLoc = "C:\\Users\\UTChattsat\\Documents\\SkywaterData\\rtsData\\Bank 0\\rtsData_Ibias_" + str(Ibias)
-        fileLoc = '~/Documents/SkywaterData/rtsData/Bank 0/rtsData'
+        # picLoc = "C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\rtsData\\Bank 1\\rtsData_Iref_" + str(Iref) 
+        picLoc = "C:\\Users\\jacob\\Documents\\SkywaterData\\DOE2\\rtsData\\Bank 0\\rtsData_Iref_" + str(Iref)
+        fileLoc = '~/Documents/SkywaterData/DOE2/rtsData/Bank 0/rtsData'
         limitv = 3.3
-        rangev = 2
-        vg = 1.2
+        rangev = 20
+        vg = 3.3
+        dutyCycle = 0.5
+        period = 1
     elif bank == 1:
         # colStart = desired column + 1
-        colStart = 32+1
-        colEnd = colStart + 32
-        Ibias = 10e-9
+        colStart = 16+1
+        colEnd = colStart + 16
+        Iref = -10e-9
         timeTest = 20
         holdTime = 20
         timeDelay = 0.0005          # 2 kHz
         nplc = 0.027 / 60
         csIn = select
         sampRate = 1 / (timeDelay * 1000)
-        picLoc = "C:\\Users\\UTChattsat\\Documents\\SkywaterData\\rtsData\\Bank 1\\rtsData_Ibias_" + str(Ibias)
+        picLoc = "C:\\Users\\UTChattsat\\Documents\\SkywaterData\\rtsData\\Bank 1\\rtsData_Iref_" + str(Iref)
         fileLoc = '~/Documents/SkywaterData/rtsData/Bank 1/rtsData'
         limitv = 3.3
         rangev = 2
         vg = 1.2
+        dutyCycle = 0.5
+        period = 1
     elif bank == 2:
-        colStart = 64 + 1
-        colEnd = colStart + 32
-        Ibias = 1e-5
+        colStart = 32 + 1
+        colEnd = colStart + 16
+        Iref = -1e-5
         timeTest = 20
         holdTime = 20
         timeDelay = 0.0005          # 2 kHz
         nplc = 0.027 / 60
         csIn = select
         sampRate = 1 / (timeDelay * 1000)
-        picLoc = "C:\\Users\\UTChattsat\\Documents\\SkywaterData\\rtsData\\Bank 2\\rtsData_Ibias_" + str(Ibias)
+        picLoc = "C:\\Users\\UTChattsat\\Documents\\SkywaterData\\rtsData\\Bank 2\\rtsData_Iref_" + str(Iref)
         fileLoc = '~/Documents/SkywaterData/rtsData/Bank 2/rtsData'
         limitv = 3.3
         rangev = 3.3
         vg = 3.3
+        dutyCycle = 0.5
+        period = 1
     elif bank == 3:
-        colStart = 96 + 1
-        colEnd = colStart + 32
-        Ibias = 1e-7
+        colStart = 48 + 1
+        colEnd = colStart + 16
+        Iref = -1e-7
         timeTest = 20
         holdTime = 20
         timeDelay = 0.0005          # 2 kHz
         nplc = 0.027 / 60
         csIn = select
         sampRate = 1 / (timeDelay * 1000)
-        picLoc = "C:\\Users\\UTChattsat\\Documents\\SkywaterData\\rtsData\\Bank 3\\rtsData_Ibias_" + str(Ibias)
+        picLoc = "C:\\Users\\UTChattsat\\Documents\\SkywaterData\\rtsData\\Bank 3\\rtsData_Iref_" + str(Iref)
         fileLoc = '~/Documents/SkywaterData/rtsData/Bank 3/rtsData'
         limitv = 3.3
         rangev = 3.3
         vg = 3.3
+        dutyCycle = 0.5
+        period = 1
     elif bank == 4:
-        colStart = 129
-        colEnd = colStart + 32
-        Ibias = 1e-6
+        colStart = 64 + 1
+        colEnd = colStart + 16
+        Iref = -1e-6
         timeTest = 20
         holdTime = 20
         timeDelay = 0.0005          # 2 kHz
         nplc = 0.027 / 60
         csIn = select
         sampRate = 1 / (timeDelay * 1000)
-        picLoc = "C:\\Users\\UTChattsat\\Documents\\SkywaterData\\rtsData\\Bank 4\\rtsData_Ibias_" + str(Ibias)
+        picLoc = "C:\\Users\\UTChattsat\\Documents\\SkywaterData\\rtsData\\Bank 4\\rtsData_Iref_" + str(Iref)
         fileLoc = '~/Documents/SkywaterData/rtsData/Bank 4/rtsData'
         limitv = 3.3
         rangev = 1
         vg = 1.2
+        dutyCycle = 0.5
+        period = 1
     elif bank == 5:
-        colStart = 161
-        colEnd = colStart + 32
-        Ibias = 1e-6
+        colStart = 80 + 1
+        colEnd = colStart + 16
+        Iref = -1e-6
         timeTest = 20
         holdTime = 20
         timeDelay = 0.0005          # 2 kHz
         nplc = 0.027 / 60
         csIn = select
         sampRate = 1 / (timeDelay * 1000)
-        picLoc = "C:\\Users\\UTChattsat\\Documents\\SkywaterData\\rtsData\\Bank 5\\rtsData_Ibias_" + str(Ibias)
+        picLoc = "C:\\Users\\UTChattsat\\Documents\\SkywaterData\\rtsData\\Bank 5\\rtsData_Iref_" + str(Iref)
         fileLoc = '~/Documents/SkywaterData/rtsData/Bank 5/rtsData'
         limitv = 3.3
         rangev = 1
         vg = 3.3
+        dutyCycle = 0.5
+        period = 1
     elif bank == 6:
-        colStart = 193
-        colEnd = colStart + 32
-        Ibias = 1e-6
+        colStart = 96 + 1
+        colEnd = colStart + 16
+        Iref = -1e-6
         timeTest = 20
         holdTime = 20
         timeDelay = 0.0005          # 2 kHz
         nplc = 0.027 / 60
         csIn = select
         sampRate = 1 / (timeDelay * 1000)
-        picLoc = "C:\\Users\\UTChattsat\\Documents\\SkywaterData\\rtsData\\Bank 6\\rtsData_Ibias_" + str(Ibias)
+        picLoc = "C:\\Users\\UTChattsat\\Documents\\SkywaterData\\rtsData\\Bank 6\\rtsData_Iref_" + str(Iref)
         fileLoc = '~/Documents/SkywaterData/rtsData/Bank 6/rtsData'
         limitv = 3.3
         rangev = 1
         vg = 3.3
+        dutyCycle = 0.5
+        period = 1
     elif bank == 7:
-        colStart = 225
-        colEnd = colStart + 32
-        Ibias = 1e-6
+        colStart = 112 + 1
+        colEnd = colStart + 16
+        Iref = -1e-6
         timeTest = 20
         holdTime = 20
         timeDelay = 0.0005          # 2 kHz
         nplc = 0.027 / 60
         csIn = select
         sampRate = 1 / (timeDelay * 1000)
-        picLoc = "C:\\Users\\UTChattsat\\Documents\\SkywaterData\\rtsData\\Bank 7\\rtsData_Ibias_" + str(Ibias)
+        picLoc = "C:\\Users\\UTChattsat\\Documents\\SkywaterData\\rtsData\\Bank 7\\rtsData_Iref_" + str(Iref)
         fileLoc = '~/Documents/SkywaterData/rtsData/Bank 7/rtsData'
         limitv = 3.3
         rangev = 1
         vg = 3.3
-    return rowStart, rowEnd, colStart, colEnd, Ibias, timeDelay, nplc, timeTest, holdTime, csIn, picLoc, fileLoc, limitv, rangev, sampRate, vg
+        dutyCycle = 0.5
+        period = 1
+    return rowStart, rowEnd, colStart, colEnd, Iref, timeDelay, nplc, timeTest, holdTime, csIn, picLoc, fileLoc, limitv, rangev, sampRate, vg, period
 
 def rtsMeasurement (bank, dieX, dieY, bypass):
     clearSMU()
-     
+    intializeTSPLINK()
+    # smu._write(value= 'node[1].smua.source.limitv = 3.3')                   #set v liimit smua
+    # smu._write(value= "node[1].smub.source.limitv = 3.3")                   #set v liimit smub
+    # smu._write(value= 'node[2].smua.source.limitv = 3.3')                   #set v liimit smua
+    # smu._write(value= "node[2].smub.source.limitv = 3.3")   
     rtsData = pd.DataFrame(data=[], index=[], columns=[]) 
-    specData = pd.DataFrame(pd.read_csv('~\miniconda3\envs\\testequ\RTSeval\Files\RTS_Array_Cells.csv',
-                     index_col=[0] , header=0), columns = ['W/L', 'Type'])
-    rowStart, rowEnd, colStart, colEnd, Ibias, timeDelay, nplc, timeTest, holdTime, csIn, picLoc, fileLoc, limitv, rangev, sampRate, vg = bankNum(bank, bypass)
+    # specData = pd.DataFrame(pd.read_csv('~\miniconda3\envs\\testequ\RTSeval\Files\RTS_Array_Cells.csv',
+    #                  index_col=[0] , header=0), columns = ['W/L', 'Type'])
+    rowStart, rowEnd, colStart, colEnd, Iref, timeDelay, nplc, timeTest, holdTime, csIn, picLoc, fileLoc, limitv, rangev, sampRate, vg, period = bankNum(bank, bypass)
 
+
+    powerSupply_Set("P25V", "5.333", "1.0")
+    powerSupply_On()
     powerPico()  
+
     RTSCounter = 0                                                                # Counter variable for RTS detection(Jay Kim 06/06/23 9:04PM)
     SlowTrapCounter = 0                                                           # Counter variable for SlowTrapRTS detection(Jay Kim 06/06/23 9:04PM)
     DeviceCounter = 0                                                             # Counter variable for Device Counter(Jay Kim 06/06/23 9:04PM)
@@ -240,26 +266,31 @@ def rtsMeasurement (bank, dieX, dieY, bypass):
             print(f'pico loaded the shift registers')                           # confirms shift registers are loaded
             # end_response_time = time.time()
             # start_voltage_sweep = time.time()
-            spec = list(specData.iloc[col - 1])
-            smu._write(value = "smub.measure.autozero = smub.AUTOZERO_AUTO")
-            smu._write(value='smub.source.output = smub.OUTPUT_ON')
-            smu.smub.measure.v()
-            smu.apply_current(smu.smua, Ibias)
+            # spec = list(specData.iloc[col - 1])
+            smu._write(value = "smua.measure.autozero = smua.AUTOZERO_AUTO")
+            smu._write(value = "smua.source.output = smub.OUTPUT_ON")
+            smu.smua.measure.v()
+            smu.apply_current(smu.smub, Iref)
+            smu._write(value="node[2].smua.source.func = smua.OUTPUT_DCAMPS")
+            smu._write(value="node[2].smua.source.output = smua.OUTPUT_ON")
+            # smu2.apply_current(smu2.smua, 0.0)
             time.sleep(holdTime)
-            vOut['Vs'] = smu.sourceA_measAB(smu.smua, smu.smub, Ibias, timeTest, holdTime, timeDelay, nplc, rangev, limitv)     # run the script on smu
-            vOut['Vgs'] = np.full_like(vOut['Vs'], vg) - vOut['Vs']
-            vOut['Ids'] = Ibias
+            print("Starting Test")
+            write_cmd(f"{5},{timeTest}, {period}")  
+            vOut['V_C Out'] = smu.sourceA_measAB(smu.smub, smu.smua, Iref, timeTest, holdTime, timeDelay, nplc, rangev, limitv)     # run the script on smu
+            vOut['Vsg'] = np.full_like(vOut['V_C Out'], vg) - vOut['V_C Out']
+            vOut['Id'] = Iref/10
             vOut['Sample_Rate(kHz)'] = sampRate
-            vOut['Ticks'] = np.linspace(0, timeTest, len(vOut['Vs'])) 
+            vOut['Ticks'] = np.linspace(0, timeTest, len(vOut['V_C Out'])) 
             vOut['Column'] = columnRX
             vOut['Row'] = rowRX
-            vOut['W_L'] = spec[0] 
-            vOut['Type'] = spec[1] 
+            # vOut['W_L'] = spec[0] 
+            # vOut['Type'] = spec[1] 
             vOut['DieX'] = dieX
             vOut['DieY'] = dieY
             print(len(vOut))
             rtsData = pd.concat([rtsData, vOut], axis = 0, ignore_index=True)           # save the new data with old data
-            sig = savgol_filter(vOut.Vgs, window_length=51, polyorder=3)
+            sig = savgol_filter(vOut["V_C Out"], window_length=51, polyorder=3)
             y1, x1 = np.histogram(sig, bins=50)
             peak = find_peaks(y1, width=1, height=100, distance=5)
             YMAX = y1[peak[0]]
@@ -291,23 +322,23 @@ def rtsMeasurement (bank, dieX, dieY, bypass):
                 plt.figure(figsize=(12,14))
                 plt.subplot(3, 1, 1)
                 if debug is False:
-                    plt.plot(vOut['Ticks'], vOut['Vgs'], label = "Vgs")
+                    plt.plot(vOut['Ticks'], vOut['V_C Out'], label = "$V_{sg}$")
                     plt.plot(vOut.Ticks, sig, label = "Filterd Signal")
                     plt.xlabel("Time (sec)")
                 else:
-                    plt.plot(vOut['Vgs'], lbel='Vgs')
+                    plt.plot(vOut['Vsg'], lbel='Vsg')
                     plt.plot(sig, label='Filtered Signal')
                     plt.plot(peaks, sig[peaks], 'x', color='red')
                     plt.plot(peaks2, sig[peaks2], 'x', color='green')
                     plt.hlines(results_WH, results_ips, results_rps, color="C2")
                     plt.xlabel('Data Points')
-                plt.title("RTS Data: " + str(spec[0]) + " " + str(spec[1]))
-                plt.ylabel("$V_{gs}$ [V]")
+                plt.title("RTS Data: Col: " + str(col) + " Row: " + str(row)) # spec[0]) + " " + str(spec[1]))
+                plt.ylabel("$V_{sg}$ [V]")
                 plt.legend()
 
                 plt.subplot(3,2,3)
 
-                frq, P1d = welch(vOut.Vgs, fs=2000, window='hann', nperseg=20000,               #  Compute PSD using welch method
+                frq, P1d = welch(vOut.Vsg, fs=2000, window='hann', nperseg=20000,               #  Compute PSD using welch method
                                 noverlap=None, nfft=20000)
                 p1dSmooth = savgol_filter(P1d, window_length=5, polyorder=1)
 
@@ -321,12 +352,12 @@ def rtsMeasurement (bank, dieX, dieY, bypass):
 
                 # plt.subplot(2,1,2)
                 plt.subplot(3, 2, 4)    
-                plt.hist(vOut['Vgs'], label = "$V_{gs}$", histtype="stepfilled", bins=50)
+                plt.hist(vOut['Vsg'], label = "$V_{sg}$", histtype="stepfilled", bins=50)
                 plt.hist(sig, label = 'Filtered Signal', histtype="stepfilled", bins=50)
                 # plt.plot(xMax, yMax, 'x')
                 plt.plot(XMAX, YMAX, 'o')
                 plt.ylabel("Frequency")
-                plt.xlabel("$V_{gs}$ [V]")
+                plt.xlabel("$V_{sg}$ [V]")
                 plt.title('RTS Amplitude = ' + str(rtsAmplitude) + ' (V)')
                 plt.legend()
 
@@ -344,7 +375,7 @@ def rtsMeasurement (bank, dieX, dieY, bypass):
                 plt.ylabel('Frequency')
                 plt.title('Mean capture time: ' + str(meanTauC))
                 
-                plt.figtext(.5, .95, "$V_g$ = " + str(vg) +" V, $V_{dd}$ = "+ str(vg) + " V, Samp Rate = " + str(sampRate) + " kHz, $I_{ds}$ = " + str(Ibias) +
+                plt.figtext(.5, .95, "$V_{g}$ = " + str(vg) +" V, $V_{dd}$ = "+ str(vg) + " V, Samp Rate = " + str(sampRate) + " kHz, $I_{ds}$ = " + str(Iref) +
                             ' A', horizontalalignment='center', fontsize = 10)
                 plt.savefig(picLoc + "_C" + columnRX + "R" + rowRX + " " + dt_string + ".png")
                 plt.tight_layout()
@@ -357,8 +388,8 @@ def rtsMeasurement (bank, dieX, dieY, bypass):
             vOut = vOut.reset_index(drop = True, inplace=True)
             smu._write(value='smua.source.output = smua.OUTPUT_OFF')
             smu._write(value='smub.source.output = smub.OUTPUT_OFF')
-        # rtsData.to_csv(fileLoc + '_Loop'+ rowRX + '.csv')                                   # save after row completes
-        rtsData.to_feather(fileLoc + '_Row'+ rowRX + '.feather')   
+        rtsData.to_csv(fileLoc + '_Loop'+ rowRX + '.csv')                                   # save after row completes
+        # rtsData.to_feather(fileLoc + '_Row'+ rowRX + '.feather')   
         rtsData = rtsData.reset_index(drop=True, inplace=True)                              # delete data frame after row completes
     write_cmd(str(9))                                                   # selects the switch case on the pico
     commandRX = pico.read_until().strip().decode()                                  # confirms mode selected
@@ -376,4 +407,4 @@ def rtsMeasurement (bank, dieX, dieY, bypass):
 # for i in range(2):
 dt_string = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p")
 # rtsMeasurement(0, '5L', '3', bypass=True)                                  # (bank number, dieX, dieY, bypass select)
-rtsMeasurement(3, '2E', '6', bypass=True)                                    #New Chip currently being measured
+rtsMeasurement(0, '2E', '6', bypass=True)                                    #New Chip currently being measured

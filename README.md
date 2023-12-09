@@ -1,4 +1,4 @@
 RTS Evaluation Test Code.
 
-Data is stored in python -> data -> (component folder)
+Used for analyzing random telegraph signals in microelectonic devices.
 
