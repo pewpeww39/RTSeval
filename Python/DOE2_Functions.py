@@ -23,7 +23,7 @@ smu = Keithley2600('TCPIP0::192.168.4.11::INSTR')               #set ip addr for
 smu2 = Keithley2600('TCPIP0::192.168.4.12::INSTR')
 powerSupply = rm.open_resource('TCPIP0::192.168.4.3::INSTR') 
 p = Path.home()
-
+print(p)
 def powerSupply_Set(channel, voltage, current):
     powerSupply.write("INST "+channel) # Select +6V output ch 1
     powerSupply.write("VOLT "+voltage) # Set output voltage to 3.0 V
@@ -55,7 +55,10 @@ def write_cmd(x):
     pico.write(bytes(x, 'utf-8'))
     time.sleep(0.05)
 
-def bankNum(bank, bypass):
+def bankNum(bank, bypass, folder):
+    
+    picLoc = str(p) + "\\Documents\\SkywaterData\\DOE2\\" + str(folder) + "\\Bank " + str(bank) + "\\idvsgcharData"
+    fileLoc = '~\\Documents\\SkywaterData\\DOE2\\' + str(folder) + '\\Bank ' + str(bank) + '\\idvsgcharData'
     rowStart = 0 + 1
     rowEnd = rowStart + 1 
     # rowStart = 0 + 1
@@ -81,8 +84,6 @@ def bankNum(bank, bypass):
         csIn = select
         # picLoc = "C:\\Users\\UTChattsat\\miniconda3\\envs\\testequ\\RTSeval\\Python\\Data\\idvgsCharacterization\\Bank 1\\idvscharData"
         # fileLoc = '~/miniconda3/envs/testequ/RTSeval/Python/Data/idvgsCharacterization\\Bank 1\\idvscharData'
-        picLoc = "C:\\Users\\jacob\\Documents\\SkywaterData\\DOE2\\currentSweep\\Bank 0\\idvgscharData"
-        fileLoc = '~\\Documents\\SkywaterData\\DOE2\\currentSweep\\Bank 0\\idvgscharData'
         measDelay = -1
         nplc = 16/60
         limiti = 0.001
@@ -95,8 +96,8 @@ def bankNum(bank, bypass):
         colEnd = colStart + 16
         sweepList = (-1e-8, -4e-4, 50, 0)
         csIn = select
-        picLoc = "C:\\Users\\jacob\\Documents\\SkywaterData\\DOE2\\currentSweep\\Bank 1\\idvscharData"
-        fileLoc = '~\\Documents\\SkywaterData\\idvgsCharacterization\\Bank 2\\idvscharData'
+        # picLoc = str(p) + "\\Documents\\SkywaterData\\DOE2\\currentSweep\\Bank 1\\idvscharData"
+        # fileLoc = '~\\Documents\\SkywaterData\\idvgsCharacterization\\Bank 2\\idvscharData'
         measDelay = -1
         nplc = 16/60
         limiti = 0.001
@@ -107,8 +108,8 @@ def bankNum(bank, bypass):
         colEnd = colStart + 16
         sweepList = (-1e-8, -4e-4, 50, 0)
         csIn = select
-        picLoc = "C:\\Users\\jacob\\Documents\\SkywaterData\\DOE2\\currentSweep\\Bank 2\\idvscharData"
-        fileLoc = '~\\Documents\\SkywaterData\\idvgsCharacterization\\Bank 3\\idvscharData'
+        # picLoc = "C:\\Users\\jacob\\Documents\\SkywaterData\\DOE2\\currentSweep\\Bank 2\\idvscharData"
+        # fileLoc = '~\\Documents\\SkywaterData\\idvgsCharacterization\\Bank 3\\idvscharData'
         measDelay = -1
         nplc = 16/60
         limiti = 0.01
@@ -119,8 +120,8 @@ def bankNum(bank, bypass):
         colEnd = colStart + 16
         sweepList = (-1e-8, -4e-4, 50, 0)
         csIn = select
-        picLoc = "C:\\Users\\jacob\\Documents\\SkywaterData\\DOE2\\currentSweep\\Bank 3\\idvscharData"
-        fileLoc = '~\\Documents\\SkywaterData\\idvgsCharacterization\\Bank 4\\idvscharData'
+        # picLoc = "C:\\Users\\jacob\\Documents\\SkywaterData\\DOE2\\currentSweep\\Bank 3\\idvscharData"
+        # fileLoc = '~\\Documents\\SkywaterData\\idvgsCharacterization\\Bank 4\\idvscharData'
         measDelay = -1
         nplc = 16/60
         limiti = 0.001
@@ -131,8 +132,8 @@ def bankNum(bank, bypass):
         colEnd = colStart + 16
         sweepList = (-1e-8, -4e-4, 50, 0)
         csIn = 6
-        picLoc = "C:\\Users\\jacob\\Documents\\SkywaterData\\DOE2\\currentSweep\\Bank 4\\idvscharData"
-        fileLoc = '~/miniconda3/envs/testequ/RTSeval/Python/Data/idvgsCharacterization/Bank 5/idvscharData'
+        # picLoc = "C:\\Users\\jacob\\Documents\\SkywaterData\\DOE2\\currentSweep\\Bank 4\\idvscharData"
+        # fileLoc = '~/miniconda3/envs/testequ/RTSeval/Python/Data/idvgsCharacterization/Bank 5/idvscharData'
         limiti = 0.001
         rangei = pow(10, -3)
     elif bank == 5:
@@ -140,8 +141,8 @@ def bankNum(bank, bypass):
         colEnd = colStart + 16
         sweepList = (-1e-8, -4e-4, 50, 0)
         csIn = 6
-        picLoc = "C:\\Users\\jacob\\Documents\\SkywaterData\\DOE2\\currentSweep\\Bank 5\\idvscharData"
-        fileLoc = '~/miniconda3/envs/testequ/RTSeval/Python/Data/idvgsCharacterization/Bank 6/idvscharData'
+        # picLoc = "C:\\Users\\jacob\\Documents\\SkywaterData\\DOE2\\currentSweep\\Bank 5\\idvscharData"
+        # fileLoc = '~/miniconda3/envs/testequ/RTSeval/Python/Data/idvgsCharacterization/Bank 6/idvscharData'
         limiti = 0.001
         rangei = pow(10, -3)
     elif bank == 6:
@@ -149,8 +150,8 @@ def bankNum(bank, bypass):
         colEnd = colStart + 16
         sweepList = (-1e-8, -4e-4, 50, 0)
         csIn = 6
-        picLoc = "C:\\Users\\jacob\\Documents\\SkywaterData\\DOE2\\currentSweep\\Bank 6\\idvscharData"
-        fileLoc = '~/miniconda3/envs/testequ/RTSeval/Python/Data/idvgsCharacterization/Bank 7/idvscharData'
+        # picLoc = "C:\\Users\\jacob\\Documents\\SkywaterData\\DOE2\\currentSweep\\Bank 6\\idvscharData"
+        # fileLoc = '~/miniconda3/envs/testequ/RTSeval/Python/Data/idvgsCharacterization/Bank 7/idvscharData'
         limiti = 0.001
         rangei = pow(10, -3)
     elif bank == 7:
@@ -158,8 +159,8 @@ def bankNum(bank, bypass):
         colEnd = colStart + 16
         sweepList = (-1e-8, -1e-5, 50, 0)
         csIn = 6
-        picLoc = "C:\\Users\\jacob\\Documents\\SkywaterData\\DOE2\\currentSweep\\Bank 7\\idvscharData"
-        fileLoc = '~/miniconda3/envs/testequ/RTSeval/Python/Data/idvgsCharacterization/Bank 7/idvgscharData'
+        # picLoc = "C:\\Users\\jacob\\Documents\\SkywaterData\\DOE2\\currentSweep\\Bank 7\\idvscharData"
+        # fileLoc = '~/miniconda3/envs/testequ/RTSeval/Python/Data/idvgsCharacterization/Bank 7/idvgscharData'
         limiti = 0.001
         rangei = pow(10, -3)
     return rowStart, rowEnd, colStart, colEnd, sweepList, csIn, picLoc, fileLoc, measDelay, nplc, limiti, rangei, vg
@@ -241,8 +242,8 @@ def idvgsCharacterization(bank, dieX, dieY, bypass):
     #                     index_col=[0] , header=0), columns = ['W/L', 'Type'])
     debug = False
     row = 0
-
-    rowStart, rowEnd, colStart, colEnd, sweepList, csIn, picLoc, fileLoc, measDelay, nplc, limiti, rangei, vg = bankNum(bank, bypass)
+    folder = 'currentSweep'
+    rowStart, rowEnd, colStart, colEnd, sweepList, csIn, picLoc, fileLoc, measDelay, nplc, limiti, rangei, vg = bankNum(bank, bypass, folder)
 
     smu.apply_current(smu.smua, 0.0)
     smu.apply_current(smu.smub, 0.0)
