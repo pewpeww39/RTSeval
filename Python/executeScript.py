@@ -21,6 +21,30 @@ from pathlib import Path
 # smu.tsplink.reset()
 # smu._write(value="CurrentSweep()")
 p = Path.home()
-p = str(p) + "\\Documents\\SkywaterData\\DOE2\\currentSweep\\Bank 0\\idvgscharData"
-        
-print(p)
+p = str(p) + "\\Documents\\SkywaterData\\DOE2\\rtsData\\Bank 0\\"
+vOut = pd.DataFrame(pd.read_csv(p + "rtsData_Loop0.csv")) 
+sig = savgol_filter(vOut["V_C Out"], window_length=51, polyorder=3)
+sig2 = savgol_filter(vOut["Vsg"], window_length=51, polyorder=3)
+plt.figure(figsize=(8,11))
+plt.subplot(2,1,1)
+plt.plot(vOut['Ticks'], vOut['V_C Out'], label = "$V_{C}$ Out")
+plt.plot(vOut.Ticks, sig, label = "Filterd Signal")
+plt.xlabel("Time (sec)")
+plt.title("RTS Data: Col: " + str(1) + " Row: " + str(1)) # spec[0]) + " " + str(spec[1]))
+plt.ylabel("$V_{C}$ Out [V]")
+plt.legend()
+
+plt.subplot(2,1,2)
+plt.plot(vOut['Ticks'], vOut['Vsg'], label = "$V_{sg}$")
+plt.plot(vOut.Ticks, sig2, label = "Filterd Signal")
+plt.xlabel("Time (sec)")
+# plt.title("RTS Data: Col: " + str(1) + " Row: " + str(1)) # spec[0]) + " " + str(spec[1]))
+plt.ylabel("$V_{sg}$ [V]")
+plt.legend()
+plt.figtext(.5, .95, "$V_{g}$ = " + str(3.3) +" V, $V_{dd}$ = "+ str(3.3) + " V, Samp Rate = " + str(2) + " kHz, $I_{d}$ = " + str(1) +
+                            ' uA', horizontalalignment='center', fontsize = 10)
+plt.savefig(p + "_C" + str(1) + "R" + str(1) + "Id=1uA.png")
+plt.tight_layout()
+plt.show(block=False)
+plt.pause(3)
+print(vOut["V_C Out"])
