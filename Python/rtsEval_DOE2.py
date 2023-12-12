@@ -225,7 +225,6 @@ def bankNum(bank, bypass):
 
 def rtsMeasurement (bank, dieX, dieY, bypass):
     clearSMU()
-    intializeTSPLINK()
     # smu._write(value= 'node[1].smua.source.limitv = 3.3')                   #set v liimit smua
     # smu._write(value= "node[1].smub.source.limitv = 3.3")                   #set v liimit smub
     # smu._write(value= 'node[2].smua.source.limitv = 3.3')                   #set v liimit smua
@@ -279,7 +278,7 @@ def rtsMeasurement (bank, dieX, dieY, bypass):
             write_cmd(f"{5},{timeTest}, {period}")  
             vOut['V_C Out'] = smu.sourceA_measAB(smu.smub, smu.smua, Iref, timeTest, holdTime, timeDelay, nplc, rangev, limitv)     # run the script on smu
             vOut['Vsg'] = np.full_like(vOut['V_C Out'], vg) - vOut['V_C Out']
-            vOut['Id'] = Iref/10
+            vOut['Id'] = -Iref/10
             vOut['Sample_Rate(kHz)'] = sampRate
             vOut['Ticks'] = np.linspace(0, timeTest, len(vOut['V_C Out'])) 
             vOut['Column'] = columnRX
@@ -322,7 +321,7 @@ def rtsMeasurement (bank, dieX, dieY, bypass):
                 plt.figure(figsize=(12,14))
                 plt.subplot(3, 1, 1)
                 if debug is False:
-                    plt.plot(vOut['Ticks'], vOut['V_C Out'], label = "$V_{sg}$")
+                    plt.plot(vOut['Ticks'], vOut['V_C Out'], label = "$V_{C}$ Out")
                     plt.plot(vOut.Ticks, sig, label = "Filterd Signal")
                     plt.xlabel("Time (sec)")
                 else:
@@ -375,7 +374,7 @@ def rtsMeasurement (bank, dieX, dieY, bypass):
                 plt.ylabel('Frequency')
                 plt.title('Mean capture time: ' + str(meanTauC))
                 
-                plt.figtext(.5, .95, "$V_{g}$ = " + str(vg) +" V, $V_{dd}$ = "+ str(vg) + " V, Samp Rate = " + str(sampRate) + " kHz, $I_{ds}$ = " + str(Iref) +
+                plt.figtext(.5, .95, "$V_{g}$ = " + str(vg) +" V, $V_{dd}$ = "+ str(vg) + " V, Samp Rate = " + str(sampRate) + " kHz, $I_{d}$ = " + str(Iref) +
                             ' A', horizontalalignment='center', fontsize = 10)
                 plt.savefig(picLoc + "_C" + columnRX + "R" + rowRX + " " + dt_string + ".png")
                 plt.tight_layout()
@@ -407,4 +406,6 @@ def rtsMeasurement (bank, dieX, dieY, bypass):
 # for i in range(2):
 dt_string = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p")
 # rtsMeasurement(0, '5L', '3', bypass=True)                                  # (bank number, dieX, dieY, bypass select)
+
+# intializeTSPLINK()
 rtsMeasurement(0, '2E', '6', bypass=True)                                    #New Chip currently being measured
