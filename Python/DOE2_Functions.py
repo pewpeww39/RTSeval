@@ -23,11 +23,11 @@ smu = Keithley2600('TCPIP0::192.168.4.11::INSTR')               #set ip addr for
 smu2 = Keithley2600('TCPIP0::192.168.4.12::INSTR')
 powerSupply = rm.open_resource('TCPIP0::192.168.4.3::INSTR') 
 p = Path.home()
-print(p)
+# print(p)
 def powerSupply_Set(channel, voltage, current):
-    powerSupply.write("INST "+channel) # Select +6V output ch 1
-    powerSupply.write("VOLT "+voltage) # Set output voltage to 3.0 V
-    powerSupply.write("CURR "+current) # Set output current to 1.0 A
+    powerSupply.write("INST " + channel) # Select +6V output ch 1
+    powerSupply.write("VOLT " + voltage) # Set output voltage to 3.0 V
+    powerSupply.write("CURR " + current) # Set output current to 1.0 A
 
 def powerSupply_On():
     powerSupply.write("OUTP ON")
@@ -51,28 +51,26 @@ def clear ():
         _ = system('cls')
     else:
         _ = system('clear')
+
 def write_cmd(x):
     pico.write(bytes(x, 'utf-8'))
     time.sleep(0.05)
 
 def bankNum(bank, bypass, folder):
     
-    
-    # rowStart = 0 + 1
-    # rowEnd = 1 + 1 
-    if bypass is True and bank in [0,1,2,3]:
-        select = 3
-    elif bypass is False and bank in [0,1,2,3]:
-        select = 3
-    elif bypass is True and bank in [4,5,6,7]:
-        select = 6
-    elif bypass is False and bank in [4,5,6,7]:
-        select = 4
-    else:
-        print('Bypass not selected')
-        select = 0
-    if bank == 0:
-        
+    # if bypass is True and bank in [0,1,2,3]:
+    #     select = 3
+    # elif bypass is False and bank in [0,1,2,3]:
+    #     select = 3
+    # elif bypass is True and bank in [4,5,6,7]:
+    #     select = 3
+    # elif bypass is False and bank in [4,5,6,7]:
+    #     select = 3
+    # else:
+    #     print('Bypass not selected')
+    #     select = 0
+    select = 3
+    if bank == 0:        
         colStart = 0 + 1
         colEnd = colStart + 16 #17
         csIn = select                       # selects the switch case command for pi pico                                    
@@ -98,17 +96,17 @@ def bankNum(bank, bypass, folder):
         csIn = select
 
     elif bank == 5:
-        colStart = 81
+        colStart = 80 + 1
         colEnd = colStart + 16
         csIn = select
 
     elif bank == 6:
-        colStart = 96
+        colStart = 96 + 1
         colEnd = colStart + 16
         csIn = select
 
     elif bank == 7:
-        colStart = 113
+        colStart = 112 + 1
         colEnd = colStart + 16
         csIn = select
 
@@ -118,10 +116,10 @@ def bankNum(bank, bypass, folder):
     vg = 3.3
     
     if folder == 'currentSweep':                     
-        measDelay = -1
-        nplc = 16/60      
-        sweepList = (-1e-8, -1e-4, 50, 0)   # sweep parameters for currentSweep logarithmic sweep
-
+        measDelay = -1                      # measurement timer delay 
+        nplc = 16/60                        # integration time. has to be faster than measDelay
+        sweepList = (-1e-8, -1e-4, 50, 0)   # sweep parameters for currentSweep logarithmic sweep   
+                                            # Low number, High number, number of points, asymptote
         send = rowStart, rowEnd, colStart, colEnd, sweepList, csIn, fileLoc,
         fileLoc, measDelay, nplc, vg
         return send
@@ -139,6 +137,7 @@ def bankNum(bank, bypass, folder):
         send = rowStart, rowEnd, colStart, colEnd, csIn, fileLoc, measDelay,
         nplc, vg, Iref, timeTest, holdTime, sampRate, limitv, rangev, period    
         return send
+
 def powerPico():                                                                    # Turns on the vPwr pins for pi pico
     write_cmd(str(7))                                                               # selects the switch case on the pico
     pico.read_until().strip().decode()                                              # confirms mode selected
@@ -539,19 +538,18 @@ test = int(input("Which test are you running? "))
 try:
     if test == 1:
         print("Amp Characterization is selected.")
-        amp = int(input("Which amp are you running? "))
-        doe1_ampCharacterization(amp, 1)   # (amp, test)
+        bank = int(input("Which amp are you testing? "))
+        doe1_ampCharacterization(bank, 1)               # (amp, test)
 
     elif test == 2:
         print("Current sweep test is selected.")
-        bank = int(input("Which bank are you running? "))
+        bank = int(input("Which bank are you testing? "))
         idvgsCharacterization(bank, '2E', '6', True)   # (bank, DieX, DieY, Bypass)
         
     elif test == 3:        
         print("RTS Evaluation test is selected.")
-        bank = int(input("Which bank are you running? "))
-        print("RTS Evaluation test is selected.")
-        rtsEval(bank, '2E', '6')
+        bank = int(input("Which bank are you testing? "))
+        rtsEval(bank, '2E', '6', True)                  # (bank, DieX, DieY, Bypass)
         
     elif test == 4:
         print("Selected Shift Register SEU Test")
