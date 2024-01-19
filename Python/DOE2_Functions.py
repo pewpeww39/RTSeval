@@ -144,12 +144,83 @@ def powerPico():                                                                
     print('pico turned on the power') 
     time.sleep(2)
 
-def doe1_ampCharacterization(amp, test):
+def dual_doe2AmpC(amp, test):
     clearSMU()
     if amp in range(0,4):
         select = 1                                                            # NMOS Op-Amp
     elif amp in range(4,8):
-        select = 2                                                            # PMOS Op-Amp
+        select = 1                                                            # PMOS Op-Amp
+
+    data = pd.DataFrame(data=[], index=[], columns=["vIn", "cOut", "vOut", "ipdV"])           #create dataframe
+
+    
+    powerSupply_Set("P25V", "5.2", "1.0")
+    powerSupply_On()
+    write_cmd(f"{7}")
+    commandRX, rowRX, columnRX = tuple(pico.read_until().strip().decode().split(','))                            # confirms pico is on
+    time.sleep(1)
+    print("Power is turned on.")
+    # powerSupply_Set("P6V", "3.3", "1.0")
+    # powerSupply_On()
+    # powerSupply_Set("N25V", "1.2", "1.0")
+    # powerSupply_On()
+
+    smu.smub.OUTPUT_DCVOLTS          # SMU 1 is set to apply voltage
+    smu.smua.OUTPUT_DCAMPS           # SUM 2 is set to measure voltage
+    # smu._write(value='smua.source.output = smua.OUTPUT_OFF')
+    # smu._write(value='smub.source.output = smub.OUTPUT_OFF')
+    time.sleep(1)
+    write_cmd(f"{select}")  
+    time.sleep(0.5)
+    commandRX, rowRX, columnRX = tuple(pico.read_until().strip().decode().split(','))                            # confirms amp characterization is selected
+    # if commandRX == 1 or commandRX == 2:
+    print('pico selected amp characterization procedure.')
+    vList = (0, 3.3, 50)
+    # vList = (0, .3, 30)
+    delay = 0
+    t_int = 0.005
+    smu._write(value = "smub.measure.autozero = smub.AUTOZERO_AUTO")
+    smu._write(value='smua.source.output = smua.OUTPUT_ON')
+    smu._write(value='smub.source.output = smub.OUTPUT_ON')
+    time.sleep(1)
+    # smu.apply_voltage(smu.smua, 1.8)
+    smu.smub.measure.v()
+    # print(test)
+    time.sleep(5)
+    # start_time, end_time, transients = oscope.save_measurements_timed(3)
+    smu._query('ampCharacterization()')
+    data.cOut = smu.read_buffer(smu.smua.nvbuffer1)
+    data.vIn = smu.read_buffer(smu.smub.nvbuffer1)
+    data.ipdV = smu.read_buffer(smu.node[2].smua.nvbuffer1)
+    data.vOut = smu.read_buffer(smu.node[2].smub.nvbuffer1)
+    # data.vIn, data.vOut = smu.doe1AmpChar(smu.smub, smu.smua, vList, delay, t_int)
+    print(data)
+    plt.subplot(2,1,1)
+    plt.plot(data.vIn, data.vOut, label = '0.5 mA')
+    plt.title("Vin vs Vout")
+    plt.xlabel("Vin")
+    plt.ylabel("Vout")
+    plt.legend()
+    plt.subplot(2,1,2)
+    plt.plot(data.vIn, data.cOut)
+    plt.savefig(str(p) + "\\Documents\\SkywaterData\\DOE2\\ampCharacterization\\amp" + str(amp) + "_Vo_vs_Vin_testNumber_" + str(test) + ".png")
+    fig = plt.show(block=False)
+    plt.pause(3)
+    plt.close(fig)
+    commandTX = write_cmd(f"{9}")          
+    # print(data)
+    data.to_csv("~/Documents/SkywaterData/DOE2/ampCharacterization/amp" + str(amp) + '.csv')
+    smu._write(value='smua.source.output = smua.OUTPUT_OFF')
+    smu._write(value='smub.source.output = smub.OUTPUT_OFF')
+    powerSupply_Off()
+    return
+
+def doe2_ampCharacterization(amp, test):
+    clearSMU()
+    if amp in range(0,4):
+        select = 1                                                            # NMOS Op-Amp
+    elif amp in range(4,8):
+        select = 1                                                            # PMOS Op-Amp
 
     data = pd.DataFrame(data=[], index=[], columns=["vIn", "vOut"])           #create dataframe
 
@@ -165,8 +236,8 @@ def doe1_ampCharacterization(amp, test):
     # powerSupply_Set("N25V", "1.2", "1.0")
     # powerSupply_On()
 
-    smu.smua.OUTPUT_DCVOLTS          # SMU 1 is set to apply voltage
-    smu.smub.OUTPUT_DCAMPS           # SUM 2 is set to measure voltage
+    smu.smub.OUTPUT_DCVOLTS          # SMU 1 is set to apply voltage
+    smu.smua.OUTPUT_DCAMPS           # SUM 2 is set to measure voltage
     # smu._write(value='smua.source.output = smua.OUTPUT_OFF')
     # smu._write(value='smub.source.output = smub.OUTPUT_OFF')
     time.sleep(1)
@@ -539,7 +610,7 @@ try:
     if test == 1:
         print("Amp Characterization is selected.")
         bank = int(input("Which amp are you testing? "))
-        doe1_ampCharacterization(bank, 1)               # (amp, test)
+        doe2_ampCharacterization(bank, 1)               # (amp, test)
 
     elif test == 2:
         print("Current sweep test is selected.")
