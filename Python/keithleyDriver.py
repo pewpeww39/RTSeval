@@ -629,6 +629,9 @@ class Keithley2600Base(KeithleyClass):
             err = self._parse_response(err)
             if err[0] != 0:
                 raise KeithleyError(err[1])
+    
+    def sendIt(self, value: str) -> None:
+        self.connection.write(value)
 
     def _write(self, value: str) -> None:
         """
@@ -2322,7 +2325,8 @@ class Keithley2600(Keithley2600Base):
             
     #         smu1.trigger.initiate()                                                 # move into the armed layer
     #         smu2.trigger.initiate()
-    #         # self.node[1].smua._write(value='smua.trigger.initiate()')
+    #         # self._write(value='smua.trigger.initiate()')
+    #         # self._write('node[2].trigger.arm.set()')
     #         self.send_trigger()                                                     # start the sweep
     #         # self.node[1]._write("*trg")
     #         # self.node[2]._write("*trg")
