@@ -17,13 +17,6 @@ from pathlib import Path
 p = Path.home()
 debug = True
 
-def square_wave(x, a, b, p):
-    level = np.random.choice([0, 1], size=len(x), p=[0.5 * (1 - p), 0.5 * (1 + p)])
-    return a + b * level
-
-def model_func(x, a, b, p):
-    return square_wave(x, a, b, p)
-
                                                     
 def inport(fileLoc):
     data = pd.DataFrame(pd.read_csv(fileLoc))                                      # import function to pull in .feather files (binary)
@@ -33,7 +26,7 @@ fileLoc = str(p) + "\\skywaterTemp\\"
 data = inport(fileLoc + 'rtsEval.csv')
 grouped = data.groupby(data.Column)                                                     # group the data by the column "Column"
 
-columnRX = 12
+columnRX = 10
 
 data1 = grouped.get_group(columnRX)                                           # gets the group with the specified column number
 group = data1.groupby(data.Row)                                                 # group the data with the specified col # by column "Row"
@@ -45,7 +38,7 @@ y,x = np.histogram(vOut['V_C Out'], bins=50)                                    
 peak = find_peaks(y, distance=5, width=1, height=100)                           # find the peaks of the histogram
 XMAX = x[peak[0]]                                                               # find the X values of the peaks in histogram 
 YMAX = y[peak[0]]                                                               # find the Y values of the peaks in histogram
-size = 51                                                                       # window size of savgol_filter
+size = 10                                                                       # window size of savgol_filter
 sig = savgol_filter(vOut['V_C Out'], window_length=size, polyorder=3)                 # filter the signal to reduce noise
 y1,x1 = np.histogram(sig, bins=50)                                              # make a histogram of filtered signal
 peaks = find_peaks(y1, width=1, height=100)                                     # find the peaks
@@ -67,24 +60,44 @@ slopeSig    = savgol_filter(slopeSig1, window_length=10, polyorder=2)
 slopeSigN1  = (np.gradient(-sig, vOut.Ticks, edge_order=2))
 slopeSigN   = savgol_filter(slopeSigN1, window_length=10, polyorder=2)
 
+wSize = 16
+vOut['sig']    = savgol_filter(slopeSig1, window_length=10, polyorder=2)
+vOut['std']    = vOut['sig'].rolling(wSize).std()
+vOut['mean']   = vOut['sig'].rolling(wSize).mean()
 std         = np.std(slopeSig)
 mean        = np.mean(slopeSig)
 sigma       = mean+std*certainty
+sigmas       = np.mean(vOut['mean'])+np.std(vOut['std'])*certainty
 sigmaN      = mean-std*certainty
 edges       = find_peaks(slopeSig, height=sigma, width = 3)
 edgesF      = find_peaks(slopeSigN, height=np.abs(sigmaN), width = 3)
 
+critPoint   = find_peaks(vOut['std'], height = sigma, distance = 100)
+
+print("edges: " + str(edges[0]))
+print("critPoint: " + str(critPoint[0]))
 # for i in range(0, len(vOut.Ticks)):
-threshold = np.min(sig[edges[0]])
+stdThres  = np.mean(sig[critPoint[0]])
+threshold = np.mean(sig[edges[0]])
 # print(threshold)
 vOut['thres'] = np.full_like(vOut['V_C Out'], threshold)
 vOut['Integrate'] = np.full_like(vOut['V_C Out'], None)
 vOut['SteadyState'] = np.full_like(vOut['V_C Out'], None)
 # print(vOut.int)
-print(len(slopeSig))
-vOut.Integrate = np.where(sig > threshold, vOut['V_C Out'], None)
+point = critPoint[0] -int(wSize/2)
+print(point)
+if len(critPoint[0]) ==1:
+    vOut.Integrate = vOut['V_C Out'].iloc[point[0]:]
+    vOut.SteadyState = vOut['V_C Out'].iloc[:point[0]]
+elif len(critPoint[0]) > 1:
+    vOut.Integrate = vOut['V_C Out'].iloc[point[0]:point[1]]
+    # vOut.SteadyState = np.full_like(vOut['V_C Out'].iloc[point[0]:point[1]], None)
+    vOut.SteadyState = np.where(((sig < vOut['thres'])), vOut['V_C Out'], None)
+    # vOut.SteadyState = pd.concat([(vOut['V_C Out'].iloc[:point[0]]), (vOut['V_C Out'].iloc[point[1]:])], axis = 0, ignore_index=True)
+    #  = ((vOut['V_C Out'].iloc[:point[0]]) & (vOut['V_C Out'].iloc[point[1]:])) 
+# vOut.Integrate = np.where(sig > threshold, vOut['V_C Out'], None)
 # vOut.SteadyState = np.where(((vOut['V_C Out'] < vOut['thres']) & (vOut['Ticks'] < max(vOut['Ticks'])*.75)), vOut['V_C Out'], None)
-vOut.SteadyState = np.where(((sig < vOut['thres'])), vOut['V_C Out'], None)
+# vOut.SteadyState = np.where(((sig < vOut['thres'])), vOut['V_C Out'], None)
     # vOut['int'] = 1
 # vOut.int =  np.where(vOut.int == 1, vOut['V_C Out'], None)
 
@@ -96,12 +109,15 @@ layout = [
     ["D", "D", "E"]
 ]
 fig, axd = plt.subplot_mosaic(layout, figsize=(12,8))
-print(threshold)
+print("Threshold: " + str(threshold))
+# print("STD Threshold: " + str(stdThres))
 # plt.subplot(3, 3, 1)
 axd["A"].plot(vOut['Ticks'], vOut['Integrate'], label = "$V_{C}$ Out Integrate Mode", color='#B22222')
 axd["A"].plot(vOut['Ticks'], vOut['SteadyState'], label = "$V_{C}$ Out Steady State", color='dimgrey')
 axd["A"].plot(vOut['Ticks'], sig, label = "Filterd Signal", color='darkorange')
-axd['A'].hlines(threshold, 0, max(vOut['Ticks']), color="C2")
+axd["A"].plot(vOut['Ticks'][critPoint[0]-wSize/2], vOut['V_C Out'][critPoint[0]-wSize/2], 'x', color='black')
+axd['A'].hlines(threshold, 0, max(vOut['Ticks']), color="darkgreen")
+# axd['A'].hlines(stdThres, 0, max(vOut['Ticks']), color="black")
 axd["A"].set_xlabel("Time (sec)")
 axd["A"].set_ylabel("$V_{cout}$ [V]")
 axd["A"].set_title("RTS Data: Col: " + str(columnRX) + " Row: " + str(0)) # spec[0]) + " " + str(spec[1]))
@@ -113,12 +129,21 @@ dataTemp = pd.DataFrame(data=[], index=[], columns=[])
 dataTemp['data'] = vOut['Integrate']
 dataTemp['Ticks'] = vOut.Ticks
 dataTemp = dataTemp.dropna()
+print('Lenth of Integrate: ' + str(len(dataTemp)))
 filtI = savgol_filter(dataTemp.data, window_length=11, polyorder=3)
-axd["B"].plot(dataTemp['Ticks'], dataTemp['data'], label = "$V_{C}$ Out Integrate Mode", color='#B22222')
-axd["B"].plot(dataTemp['Ticks'], filtI, label = "Filtered Signal", color='darkorange')
+
+axd["B"].plot(vOut["Ticks"], vOut['std'], color='#B22222')
+axd["B"].hlines(sigma, 0, max(vOut['Ticks']), color='darkgreen')
+# print(critPoint[0])
+axd["B"].plot(vOut["Ticks"][critPoint[0]], vOut['std'][critPoint[0]], 'x')
 axd["B"].set_xlabel("Time (sec)")
-axd["B"].set_ylabel("$V_{cout}$ [V]")
+axd["B"].set_ylabel("$V_{cout}$ [V] STD")
 axd["B"].get_legend()
+# axd["B"].plot(dataTemp['Ticks'], dataTemp['data'], label = "$V_{C}$ Out Integrate Mode", color='#B22222')
+# axd["B"].plot(dataTemp['Ticks'], filtI, label = "Filtered Signal", color='darkorange')
+# axd["B"].set_xlabel("Time (sec)")
+# axd["B"].set_ylabel("$V_{cout}$ [V]")
+# axd["B"].get_legend()
 
 # plt.subplot(3,3,6) 
 y1, x1 = np.histogram(filtI, bins=50)
